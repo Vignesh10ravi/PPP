@@ -1,0 +1,4 @@
+Dataset samples: 300
+Existing valid checkpoints: 47
+Samples to solve: 253 using 1 worker processes
+[FAILED] v000_f000047: NameError: name 'np' is not defined

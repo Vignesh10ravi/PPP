@@ -1,0 +1,10 @@
+Macro det(F): 1.0789723563402422
+Macro F:
+ [[ 1.1930653   0.06938484  0.09975976]
+ [ 0.1035431   0.80416639  0.15564093]
+ [-0.1056132   0.18499003  1.15945735]]
+Solution vector finite: True
+Integral of J: 1.0607967455094356
+Integral of J squared: 1.2444220027742894
+Uniform macro J: 1.0789723563402422
+Diagnostic complete.

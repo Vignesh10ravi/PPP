@@ -1,0 +1,7 @@
+mesh elements:             206
+material points:           2884
+free degrees of freedom:   30
+max |F - F_target|:        4.441e-16
+relative stress variation: 4.774e-15
+free residual norm:        2.083e-16
+V5 PASS: multi-element affine patch is uniform and in equilibrium.

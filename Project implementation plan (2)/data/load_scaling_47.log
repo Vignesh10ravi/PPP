@@ -1,0 +1,6 @@
+alpha=0.00, det(Fmacro)=1.000000, negative_element_J_integrals=0, nonfinite_power_integrals=0, min_element_J_integral=4.843860e-05
+alpha=0.10, det(Fmacro)=1.015018, negative_element_J_integrals=0, nonfinite_power_integrals=0, min_element_J_integral=4.641297e-05
+alpha=0.25, det(Fmacro)=1.034972, negative_element_J_integrals=0, nonfinite_power_integrals=0, min_element_J_integral=3.046774e-05
+alpha=0.50, det(Fmacro)=1.060669, negative_element_J_integrals=5, nonfinite_power_integrals=5, min_element_J_integral=-1.478059e-05
+alpha=0.75, det(Fmacro)=1.075774, negative_element_J_integrals=50, nonfinite_power_integrals=50, min_element_J_integral=-1.750171e-04
+alpha=1.00, det(Fmacro)=1.078972, negative_element_J_integrals=81, nonfinite_power_integrals=81, min_element_J_integral=-3.402071e-04

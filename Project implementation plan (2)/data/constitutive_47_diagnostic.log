@@ -1,0 +1,6 @@
+J: integral=1.0607967455094356, finite=True
+J^(-2/3): integral=nan, finite=False
+I1: integral=3.784564711415924, finite=True
+inverse_F: integral=0.8266683171863604, finite=True
+inverse_transpose: integral=0.8266683171863604, finite=True
+Done.

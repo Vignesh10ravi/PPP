@@ -1,0 +1,29 @@
+Solving analytical Neo-Hookean problem
+[solve] ndof=78, free=42, constrained=36
+  iter  0  |R_free| = 8.392e-01
+  iter  1  |R_free| = 2.863e-01
+  iter  2  |R_free| = 2.973e-02
+  iter  3  |R_free| = 5.071e-04
+  iter  4  |R_free| = 1.966e-07
+  iter  5  |R_free| = 3.657e-14
+[solve] Converged in 5 iterations.
+
+Solving neural material problem
+[solve] ndof=78, free=42, constrained=36
+  iter  0  |R_free| = 8.106e-01
+  iter  1  |R_free| = 2.126e-01
+  iter  2  |R_free| = 2.092e-02
+  iter  3  |R_free| = 3.083e-04
+  iter  4  |R_free| = 9.797e-08
+  iter  5  |R_free| = 1.128e-14
+[solve] Converged in 5 iterations.
+expanded scalar DOF mask across 3 displacement components
+
+mesh elements:                 206
+analytical final residual:     3.657e-14
+neural final residual:         1.128e-14
+free displacement rel. error: 1.376e-02 (tol 1.500e-01)
+deformation-gradient error:    3.504e-03 (tol 1.500e-01)
+reaction-vector rel. error:    1.360e-01 (tol 1.500e-01)
+
+V6 PASS: matched neural and analytical FE responses agree.

@@ -1,0 +1,9 @@
+checkpoint: checkpoints/phase1_validated.pt
+validation samples: 256 (seed=2026, max_strain=0.2)
+
+quantity   relative L2 error   tolerance
+energy             5.367e-02   1.000e-01
+stress             3.274e-02   1.000e-01
+tangent            3.865e-02   2.500e-01
+
+V2b PASS: trained NN matches the analytical Neo-Hookean response.

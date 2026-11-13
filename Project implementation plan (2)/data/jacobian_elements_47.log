@@ -1,0 +1,20 @@
+Elements: 1442
+Macro det(F): 1.0789723563402422
+
+J:
+  returned entries: 1442
+  finite entries: 1442
+  non-finite entries: 0
+  minimum finite element integral: -0.00034020706391980996
+  maximum finite element integral: 0.0031856237759337676
+  first non-finite element indices: []
+
+J^(-2/3):
+  returned entries: 1442
+  finite entries: 1361
+  non-finite entries: 81
+  minimum finite element integral: 2.0035211656549194e-05
+  maximum finite element integral: 0.0034104407807055087
+  first non-finite element indices: [24, 35, 39, 84, 153, 169, 171, 175, 178, 183, 190, 194, 207, 209, 210, 217, 225, 285, 297, 302]
+
+Diagnostic complete.

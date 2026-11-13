@@ -1,0 +1,12 @@
+Total elements: 1442
+Problematic element integrals: 81
+Negative J integrals: 81
+Non-finite power integrals: 81
+First 30 problematic element indices: [24, 35, 39, 84, 153, 169, 171, 175, 178, 183, 190, 194, 207, 209, 210, 217, 225, 285, 297, 302, 313, 318, 349, 353, 366, 379, 389, 396, 451, 483]
+
+Details of the first 10 problematic elements:
+Traceback (most recent call last):
+  File "/home/vignesh/PPP/Project implementation plan (2)/diagnose_boundary_elements_47.py", line 76, in <module>
+    for index in problematic_indices[:10]:
+                 ^^^^^^^^^^^^^^^^^^^
+NameError: name 'problematic_indices' is not defined
