@@ -1,0 +1,91 @@
+{
+  "by_volume_fraction": {
+    "0.02": {
+      "n_samples": 105,
+      "predicted_symmetry_error_mean": 2.2347263750180046e-16,
+      "relative_frobenius_max": 0.19554586228743398,
+      "relative_frobenius_mean": 0.06655692533640378,
+      "relative_frobenius_median": 0.05599302883936495,
+      "relative_frobenius_p90": 0.16106361589600227,
+      "tangent_component_nrmse_train_scale": 0.05172991246082028,
+      "tangent_component_rmse": 193.82054144101423,
+      "worst_sample_id": "v000_f000109"
+    },
+    "0.05": {
+      "n_samples": 105,
+      "predicted_symmetry_error_mean": 2.1760969050103978e-16,
+      "relative_frobenius_max": 0.13623016805338697,
+      "relative_frobenius_mean": 0.05625507159141897,
+      "relative_frobenius_median": 0.05128725572575154,
+      "relative_frobenius_p90": 0.10417956556688805,
+      "tangent_component_nrmse_train_scale": 0.05381178226146525,
+      "tangent_component_rmse": 201.62084715922543,
+      "worst_sample_id": "v001_f000109"
+    },
+    "0.1": {
+      "n_samples": 105,
+      "predicted_symmetry_error_mean": 2.2087755962197398e-16,
+      "relative_frobenius_max": 0.21917125409860727,
+      "relative_frobenius_mean": 0.05014849431484015,
+      "relative_frobenius_median": 0.04746099572909973,
+      "relative_frobenius_p90": 0.082801931918597,
+      "tangent_component_nrmse_train_scale": 0.08100712773174742,
+      "tangent_component_rmse": 303.5157921336199,
+      "worst_sample_id": "v002_f000061"
+    }
+  },
+  "checkpoint_best_epoch": 1740,
+  "checkpoint_sha256": "4dee5259dc8979373fc2f00104fc5949c510b2708f658faf009c1838ac46ab7c",
+  "dataset_sha256": "8fd2e3f0d8bd16b6bc2361cd719515b873b3c7f1760015caacd11d3c1b00cdc2",
+  "evaluated_split": "test",
+  "evaluation_config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.51,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 30,
+    "n_deformations": 120,
+    "seed": 2720,
+    "split_fractions": [
+      0.05,
+      0.05,
+      0.9
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "evaluation_manifest_configuration_sha256": "0c409fc31624fbafebef6dd695eece78be0e600f31fc6e41587fde1573dae392",
+  "excluded_state_indices": [
+    0
+  ],
+  "independent_evaluation": true,
+  "overall": {
+    "n_samples": 315,
+    "predicted_symmetry_error_mean": 2.206532958749381e-16,
+    "relative_frobenius_max": 0.21917125409860727,
+    "relative_frobenius_mean": 0.05765349708088765,
+    "relative_frobenius_median": 0.049830569215044584,
+    "relative_frobenius_p90": 0.10258825535259353,
+    "tangent_component_nrmse_train_scale": 0.06359729160036906,
+    "tangent_component_rmse": 238.2849864959956,
+    "worst_sample_id": "v002_f000061"
+  },
+  "split_note": "Records are grouped by deformation state across volume fractions. If these results inform model selection, reserve new grouped deformation states for a final independent evaluation.",
+  "status": "complete",
+  "tangent_flattening": "row-major: (i,J) -> 3*i + J",
+  "training_dataset_path_for_scale": "/scratch4/vr80beqo/rve_phase4_compression_20261103/data/rve_phase4_compression.npz",
+  "training_dataset_sha256": "71435ef2dffaaa16095279d49427e9a04a43107cd9370c1af22a1007939d91ef",
+  "training_tangent_rms_scale": 3746.7788407299545
+}

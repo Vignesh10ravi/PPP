@@ -1,0 +1,55 @@
+#!/bin/bash
+#PBS -N rve_p7_aug_train
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=64GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_phase7_augmented_training.out
+#PBS -e /scratch/vr80beqo/rve_phase7_augmented_training.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source "$SCRATCH/venvs/ppp-rve-train-cpu/bin/activate"
+
+export OMP_NUM_THREADS=12
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=12
+export PYTHONUNBUFFERED=1
+
+PHASE6=/scratch/vr80beqo/rve_phase6_targeted_20261106/data
+PHASE7=/scratch/vr80beqo/rve_phase7_independent_20261107/data
+RUN_ROOT=/scratch/vr80beqo/rve_phase7_augmented_training_20261109
+DATA_DIR="$RUN_ROOT/data"
+TRAIN_DIR="$RUN_ROOT/training"
+mkdir -p "$DATA_DIR" "$TRAIN_DIR"
+
+python -c 'import numpy, torch; print("NumPy", numpy.__version__, "PyTorch", torch.__version__)'
+
+python -u -m src.merge_rve_training_data \
+  --phase6-dataset "$PHASE6/rve_phase6_targeted.npz" \
+  --phase6-manifest "$PHASE6/rve_phase6_targeted.manifest.json" \
+  --phase7-dataset "$PHASE7/rve_phase7_independent.npz" \
+  --phase7-manifest "$PHASE7/rve_phase7_independent.manifest.json" \
+  --output-dataset "$DATA_DIR/rve_phase6_phase7_training.npz" \
+  --output-manifest "$DATA_DIR/rve_phase6_phase7_training.manifest.json" \
+  2>&1 | tee "$DATA_DIR/merge.log"
+
+python -u -m src.train_rve \
+  --dataset "$DATA_DIR/rve_phase6_phase7_training.npz" \
+  --manifest "$DATA_DIR/rve_phase6_phase7_training.manifest.json" \
+  --checkpoint "$TRAIN_DIR/partial_icnn_phase6_phase7.pt" \
+  --report "$TRAIN_DIR/training_report.json" \
+  --epochs 3000 \
+  --batch-size 64 \
+  --learning-rate 1.0e-3 \
+  --stress-weight 1.0 \
+  --tangent-weight 0.10 \
+  --tangent-batch-size 8 \
+  --tangent-validation-states 12 \
+  --patience 20 \
+  --validation-interval 25 \
+  --seed 4103 \
+  --device cpu \
+  --torch-threads 12 \
+  2>&1 | tee "$TRAIN_DIR/training.log"

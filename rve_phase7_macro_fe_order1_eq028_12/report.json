@@ -1,0 +1,26 @@
+{
+  "status": "diagnostic_complete",
+  "checkpoint": "/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "volume_fraction": 0.05,
+  "requested_axial_stretch": 0.002828125,
+  "diagnostic_load_step": 1,
+  "diagnostic_newton_iteration": -1,
+  "diagnostic_axial_stretch": 0.002828125,
+  "prior_converged_load_steps": [],
+  "residual_before_diagnostic": 1.2176449623152904e-12,
+  "tangent_check": {
+    "state": "converged_equilibrium",
+    "free_residual_norm": 1.2176449623152904e-12,
+    "global_tangent_spectrum": {
+      "free_dofs": 249,
+      "relative_symmetry_error": 2.654938324184067e-16,
+      "minimum_eigenvalue_symmetric_part": 0.4004798707931724,
+      "maximum_eigenvalue_symmetric_part": 14465.847968085724,
+      "negative_eigenvalue_count": 0,
+      "minimum_absolute_eigenvalue": 0.4004798707931724,
+      "maximum_absolute_eigenvalue": 14465.847968085724,
+      "absolute_condition_estimate": 36121.28604475255
+    }
+  }
+}

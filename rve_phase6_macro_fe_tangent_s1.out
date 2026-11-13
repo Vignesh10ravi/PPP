@@ -1,0 +1,27 @@
+Macro-FE pICNN run: vf=0.05, axial stretch=0.05, load steps=10, maxh=0.25, order=1
+[load continuation] step=1/10, axial stretch=5.00000000e-03
+[solve] ndof=135, free=83, constrained=52
+  iter  0  |R_free| = 6.647e+01  min(J_q) = 1.000000e+00
+[solve line search] iteration=0, step=1.000000e+00, residual=2.298662e+00, min(J_q)=9.966079e-01, backtracks=0
+  iter  1  |R_free| = 2.299e+00  min(J_q) = 9.966079e-01
+[solve line search] iteration=1, step=1.000000e+00, residual=2.133289e+00, min(J_q)=9.968467e-01, backtracks=0
+  iter  2  |R_free| = 2.133e+00  min(J_q) = 9.968467e-01
+[solve tangent check] epsilon=1.000000e-05, relative_directional_error=4.608297e-06, ||Kdu||_free=1.505692e-02
+{
+  "status": "diagnostic_complete",
+  "checkpoint": "/scratch4/vr80beqo/rve_phase6_targeted_20261106/data/training_objective_tangent/partial_icnn_phase6_targeted.pt",
+  "checkpoint_sha256": "2efa831c053c7ed0282deadc456ee774fd1fad55463ead90a477d64e899b196d",
+  "volume_fraction": 0.05,
+  "requested_axial_stretch": 0.05,
+  "diagnostic_load_step": 1,
+  "diagnostic_newton_iteration": 2,
+  "diagnostic_axial_stretch": 0.005,
+  "prior_converged_load_steps": [],
+  "residual_before_diagnostic": 2.1332893771722934,
+  "tangent_check": {
+    "epsilon": 1e-05,
+    "relative_directional_error": 4.608296707334082e-06,
+    "free_tangent_action_norm": 0.015056922781202627
+  }
+}
+Diagnostic report saved: /scratch/vr80beqo/rve_phase6_macro_fe_tangent_step1/report.json

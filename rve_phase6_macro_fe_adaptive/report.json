@@ -1,0 +1,301 @@
+{
+  "status": "failed",
+  "error": "RuntimeError: load step at stretch 3.10937500e-02 did not converge; final free residual=1.104163e+01",
+  "failed_load_step": 9,
+  "load_steps": [
+    {
+      "step": 1,
+      "target_axial_stretch": 0.005,
+      "increment": 0.005,
+      "residual_history": [
+        54.95267555681285,
+        1.4314103802965334,
+        0.019037218129379013,
+        1.566095158897577e-05,
+        1.812507218865306e-10
+      ],
+      "converged": true
+    },
+    {
+      "step": 2,
+      "target_axial_stretch": 0.01,
+      "increment": 0.005,
+      "residual_history": [
+        107.59259367888797,
+        2.9901587408364874,
+        0.49264073123400015,
+        0.0037847310746848602,
+        5.203444753183084e-06,
+        4.778746076803099e-12
+      ],
+      "converged": true
+    },
+    {
+      "step": 3,
+      "target_axial_stretch": 0.015,
+      "increment": 0.004999999999999999,
+      "residual_history": [
+        160.6832231173183,
+        96.04707335472503,
+        35.37826062332531,
+        24.97579553432895,
+        13.042263599957026,
+        10.550524857451114,
+        8.750059008250371,
+        7.655496889511276,
+        3.8783827970106888,
+        0.744033939711565,
+        0.05938094825356617,
+        0.0015123175313779982,
+        1.0009347494374239e-07,
+        1.4971480235251033e-12
+      ],
+      "converged": true
+    },
+    {
+      "step": 4,
+      "target_axial_stretch": 0.02,
+      "increment": 0.005000000000000001,
+      "residual_history": [
+        215.04994413540334,
+        21.874183509702146,
+        8.461143724228856,
+        6.121285682227484,
+        4.57351504887508,
+        3.40664827348373,
+        1.6306623929095503,
+        0.49442488224742437,
+        0.03147831799257114,
+        0.00027432238035638123,
+        1.517667894186109e-08,
+        1.302198390328246e-12
+      ],
+      "converged": true
+    },
+    {
+      "step": 5,
+      "target_axial_stretch": 0.025,
+      "increment": 0.005000000000000001,
+      "residual_history": [
+        270.54771984770895,
+        159.88857258757102,
+        95.92966321729813,
+        53.69038900729504,
+        49.1553532606146,
+        30.713621383133194,
+        25.685673274855098,
+        17.371947246452446,
+        4.321961816646744,
+        3.6346077008314377,
+        2.8357050042310625,
+        2.217242171515969,
+        1.1311193243823794,
+        0.05776679642554326,
+        0.0044177116574514634,
+        8.677213362448842e-07,
+        1.9681453716789357e-12
+      ],
+      "converged": true
+    },
+    {
+      "step": 6,
+      "target_axial_stretch": 0.030000000000000002,
+      "increment": 0.005000000000000001,
+      "residual_history": [
+        326.90253953656907,
+        72.42504175255812,
+        61.9522086210893,
+        47.96306386526069,
+        26.726952027175425,
+        25.138818697787553,
+        19.055756198776027,
+        16.07009222884076,
+        13.826542485961637,
+        12.584331521368766,
+        6.688891453558563,
+        5.037714022454652,
+        2.4407903322300095,
+        1.9961184674055144,
+        0.09506325994568023,
+        0.0042705460350689955,
+        2.596021443814144e-06,
+        1.3916805486704672e-12
+      ],
+      "converged": true
+    },
+    {
+      "step": 7,
+      "target_axial_stretch": 0.030625000000000003,
+      "increment": 0.0006250000000000006,
+      "residual_history": [
+        333.98156342367207,
+        90.33759772734753,
+        73.02557303761093,
+        57.61189589768962,
+        28.3602327528319,
+        19.262697573253373,
+        8.685243774946143,
+        5.597030544448345,
+        4.479804510958411,
+        4.45935866559551,
+        0.30898306740165626,
+        0.25049518388088754,
+        0.005175814463334674,
+        1.2147966580459507e-05,
+        1.0195069901991825e-11
+      ],
+      "converged": true
+    },
+    {
+      "step": 8,
+      "target_axial_stretch": 0.030937500000000003,
+      "increment": 0.0003125000000000003,
+      "residual_history": [
+        337.5224109005781,
+        102.87035848296458,
+        73.68666389865025,
+        64.20244052891327,
+        39.6431373521834,
+        36.239926388109616,
+        25.007643674240406,
+        10.691583781460704,
+        7.023370879746548,
+        2.969715321696773,
+        1.6580732325880232,
+        0.7361011873307802,
+        0.05835645172234883,
+        0.0036682085030358457,
+        2.5278473747345574e-06,
+        5.234006276159607e-12
+      ],
+      "converged": true
+    }
+  ],
+  "load_attempts": [
+    {
+      "attempt": 1,
+      "accepted_step": 1,
+      "from_axial_stretch": 0.0,
+      "target_axial_stretch": 0.005,
+      "increment": 0.005,
+      "status": "accepted"
+    },
+    {
+      "attempt": 2,
+      "accepted_step": 2,
+      "from_axial_stretch": 0.005,
+      "target_axial_stretch": 0.01,
+      "increment": 0.005,
+      "status": "accepted"
+    },
+    {
+      "attempt": 3,
+      "accepted_step": 3,
+      "from_axial_stretch": 0.01,
+      "target_axial_stretch": 0.015,
+      "increment": 0.004999999999999999,
+      "status": "accepted"
+    },
+    {
+      "attempt": 4,
+      "accepted_step": 4,
+      "from_axial_stretch": 0.015,
+      "target_axial_stretch": 0.02,
+      "increment": 0.005000000000000001,
+      "status": "accepted"
+    },
+    {
+      "attempt": 5,
+      "accepted_step": 5,
+      "from_axial_stretch": 0.02,
+      "target_axial_stretch": 0.025,
+      "increment": 0.005000000000000001,
+      "status": "accepted"
+    },
+    {
+      "attempt": 6,
+      "accepted_step": 6,
+      "from_axial_stretch": 0.025,
+      "target_axial_stretch": 0.030000000000000002,
+      "increment": 0.005000000000000001,
+      "status": "accepted"
+    },
+    {
+      "attempt": 7,
+      "accepted_step": 7,
+      "from_axial_stretch": 0.030000000000000002,
+      "target_axial_stretch": 0.035,
+      "increment": 0.005000000000000001,
+      "status": "retry",
+      "error": "RuntimeError: macro-FE Newton line search could not find a finite, orientation-preserving residual-decreasing step at iteration 25; residual=2.429740e+00, last trial residual=2.429740e+00"
+    },
+    {
+      "attempt": 8,
+      "accepted_step": 7,
+      "from_axial_stretch": 0.030000000000000002,
+      "target_axial_stretch": 0.0325,
+      "increment": 0.0024999999999999988,
+      "status": "retry",
+      "error": "RuntimeError: load step at stretch 3.25000000e-02 did not converge; final free residual=8.956799e+00"
+    },
+    {
+      "attempt": 9,
+      "accepted_step": 7,
+      "from_axial_stretch": 0.030000000000000002,
+      "target_axial_stretch": 0.03125,
+      "increment": 0.0012499999999999976,
+      "status": "retry",
+      "error": "RuntimeError: macro-FE Newton line search could not find a finite, orientation-preserving residual-decreasing step at iteration 17; residual=8.309119e+00, last trial residual=8.309521e+00"
+    },
+    {
+      "attempt": 10,
+      "accepted_step": 7,
+      "from_axial_stretch": 0.030000000000000002,
+      "target_axial_stretch": 0.030625000000000003,
+      "increment": 0.0006250000000000006,
+      "status": "accepted"
+    },
+    {
+      "attempt": 11,
+      "accepted_step": 8,
+      "from_axial_stretch": 0.030625000000000003,
+      "target_axial_stretch": 0.03125,
+      "increment": 0.0006249999999999971,
+      "status": "retry",
+      "error": "RuntimeError: macro-FE Newton line search could not find a finite, orientation-preserving residual-decreasing step at iteration 17; residual=8.309119e+00, last trial residual=8.309521e+00"
+    },
+    {
+      "attempt": 12,
+      "accepted_step": 8,
+      "from_axial_stretch": 0.030625000000000003,
+      "target_axial_stretch": 0.030937500000000003,
+      "increment": 0.0003125000000000003,
+      "status": "accepted"
+    },
+    {
+      "attempt": 13,
+      "accepted_step": 9,
+      "from_axial_stretch": 0.030937500000000003,
+      "target_axial_stretch": 0.03125,
+      "increment": 0.0003124999999999968,
+      "status": "retry",
+      "error": "RuntimeError: macro-FE Newton line search could not find a finite, orientation-preserving residual-decreasing step at iteration 17; residual=8.309119e+00, last trial residual=8.309521e+00"
+    },
+    {
+      "attempt": 14,
+      "accepted_step": 9,
+      "from_axial_stretch": 0.030937500000000003,
+      "target_axial_stretch": 0.031093750000000003,
+      "increment": 0.00015625000000000014,
+      "status": "failed",
+      "error": "RuntimeError: load step at stretch 3.10937500e-02 did not converge; final free residual=1.104163e+01"
+    }
+  ],
+  "checkpoint": "/scratch4/vr80beqo/rve_phase6_targeted_20261106/data/training_objective_tangent/partial_icnn_phase6_targeted.pt",
+  "checkpoint_sha256": "2efa831c053c7ed0282deadc456ee774fd1fad55463ead90a477d64e899b196d",
+  "volume_fraction": 0.05,
+  "axial_stretch": 0.05,
+  "requested_load_steps": 10,
+  "mesh_maxh": 0.25,
+  "displacement_order": 1
+}

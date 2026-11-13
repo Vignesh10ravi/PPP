@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -N sample47
+#PBS -q teachingq
+#PBS -l select=1:ncpus=1:mpiprocs=1:mem=8GB
+#PBS -l walltime=00:30:00
+#PBS -o sample47.out
+#PBS -e sample47.err
+
+set -euo pipefail
+cd "$PBS_O_WORKDIR"
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+python -c 'import numpy, ngsolve; print("NumPy and NGSolve imports OK", ngsolve.__version__)'
+python -u diagnose_sample_47.py 2>&1 | tee data/sample_47_quadrature_diagnostics.log

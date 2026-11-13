@@ -1,0 +1,108 @@
+{
+  "by_volume_fraction": {
+    "0.02": {
+      "energy_mae": 3.7683512454829167,
+      "energy_max_abs_error_train_scale": 0.024857973580776446,
+      "energy_nmae_train_scale": 0.009354711495918088,
+      "energy_nrmse_train_scale": 0.011353684818864836,
+      "energy_rmse": 4.573596133526814,
+      "n_samples": 105,
+      "stress_component_mae": 21.758808122923895,
+      "stress_component_rmse": 30.043550384822556,
+      "stress_max_abs_component_error_train_scale": 0.21353817202044173,
+      "stress_nmae_train_scale": 0.017119607612221907,
+      "stress_nrmse_train_scale": 0.02363795806096137,
+      "worst_energy_sample_id": "v000_f000017",
+      "worst_stress_sample_id": "v000_f000061"
+    },
+    "0.05": {
+      "energy_mae": 3.5227827484325753,
+      "energy_max_abs_error_train_scale": 0.027034329610519804,
+      "energy_nmae_train_scale": 0.00874510206921037,
+      "energy_nrmse_train_scale": 0.011018420991481249,
+      "energy_rmse": 4.438542063496157,
+      "n_samples": 105,
+      "stress_component_mae": 20.425018414893774,
+      "stress_component_rmse": 27.91103511344457,
+      "stress_max_abs_component_error_train_scale": 0.19393962085950028,
+      "stress_nmae_train_scale": 0.016070195516223917,
+      "stress_nrmse_train_scale": 0.02196011686364876,
+      "worst_energy_sample_id": "v001_f000017",
+      "worst_stress_sample_id": "v001_f000061"
+    },
+    "0.1": {
+      "energy_mae": 3.9209861803196775,
+      "energy_max_abs_error_train_scale": 0.03471074726244099,
+      "energy_nmae_train_scale": 0.00973361879159752,
+      "energy_nrmse_train_scale": 0.012755503251864718,
+      "energy_rmse": 5.138289575995995,
+      "n_samples": 105,
+      "stress_component_mae": 23.01928496207579,
+      "stress_component_rmse": 32.1950247577889,
+      "stress_max_abs_component_error_train_scale": 0.23670633066910746,
+      "stress_nmae_train_scale": 0.01811133789306573,
+      "stress_nrmse_train_scale": 0.025330716085429188,
+      "worst_energy_sample_id": "v002_f000061",
+      "worst_stress_sample_id": "v002_f000061"
+    }
+  },
+  "checkpoint_best_epoch": 1575,
+  "checkpoint_sha256": "858bdc1a3671fcb2ca1edd2b13a9b63bd53e7fbd578faa7a2da50e7290b361d9",
+  "dataset_sha256": "8fd2e3f0d8bd16b6bc2361cd719515b873b3c7f1760015caacd11d3c1b00cdc2",
+  "evaluated_split": "test",
+  "evaluation_config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.51,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 30,
+    "n_deformations": 120,
+    "seed": 2720,
+    "split_fractions": [
+      0.05,
+      0.05,
+      0.9
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "evaluation_manifest_configuration_sha256": "0c409fc31624fbafebef6dd695eece78be0e600f31fc6e41587fde1573dae392",
+  "excluded_state_indices": [
+    0
+  ],
+  "independent_evaluation": true,
+  "overall": {
+    "energy_mae": 3.7373733914117224,
+    "energy_max_abs_error_train_scale": 0.03471074726244099,
+    "energy_nmae_train_scale": 0.009277810785575324,
+    "energy_nrmse_train_scale": 0.011733351656992812,
+    "energy_rmse": 4.72653703426463,
+    "n_samples": 315,
+    "stress_component_mae": 21.734370499964488,
+    "stress_component_rmse": 30.10072213964281,
+    "stress_max_abs_component_error_train_scale": 0.23670633066910746,
+    "stress_nmae_train_scale": 0.017100380340503853,
+    "stress_nrmse_train_scale": 0.02368294021271782,
+    "worst_energy_sample_id": "v002_f000061",
+    "worst_stress_sample_id": "v002_f000061"
+  },
+  "status": "complete",
+  "test_set_was_used_for_model_selection": false,
+  "training_dataset_sha256": "71435ef2dffaaa16095279d49427e9a04a43107cd9370c1af22a1007939d91ef",
+  "training_scales": {
+    "energy_rms": 402.8292317862749,
+    "stress_rms": 1270.9875492350657
+  }
+}

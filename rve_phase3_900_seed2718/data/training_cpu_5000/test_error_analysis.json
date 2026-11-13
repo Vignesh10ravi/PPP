@@ -1,0 +1,74 @@
+{
+  "by_volume_fraction": {
+    "0.02": {
+      "energy_mae": 0.18964558111157293,
+      "energy_max_abs_error_train_scale": 0.0018830363458531018,
+      "energy_nmae_train_scale": 0.000521086301142651,
+      "energy_nrmse_train_scale": 0.0006672814042447499,
+      "energy_rmse": 0.24285222888309793,
+      "n_samples": 45,
+      "stress_component_mae": 1.2755193875400617,
+      "stress_component_rmse": 2.5171560393392145,
+      "stress_max_abs_component_error_train_scale": 0.018565745515270765,
+      "stress_nmae_train_scale": 0.000993876453566037,
+      "stress_nrmse_train_scale": 0.001961351698679857,
+      "worst_energy_sample_id": "v000_f000282",
+      "worst_stress_sample_id": "v000_f000129"
+    },
+    "0.05": {
+      "energy_mae": 0.2101531298058007,
+      "energy_max_abs_error_train_scale": 0.0020031278525285065,
+      "energy_nmae_train_scale": 0.0005774345831956405,
+      "energy_nrmse_train_scale": 0.0007078616519280572,
+      "energy_rmse": 0.25762111579621894,
+      "n_samples": 45,
+      "stress_component_mae": 1.6500468359045946,
+      "stress_component_rmse": 4.981096709334753,
+      "stress_max_abs_component_error_train_scale": 0.04365988921353005,
+      "stress_nmae_train_scale": 0.001285705817964458,
+      "stress_nrmse_train_scale": 0.003881238325895374,
+      "worst_energy_sample_id": "v001_f000282",
+      "worst_stress_sample_id": "v001_f000129"
+    },
+    "0.1": {
+      "energy_mae": 0.21807359697411333,
+      "energy_max_abs_error_train_scale": 0.0022676013741366402,
+      "energy_nmae_train_scale": 0.0005991975313005566,
+      "energy_nrmse_train_scale": 0.0007524327589035639,
+      "energy_rmse": 0.2738424470126043,
+      "n_samples": 45,
+      "stress_component_mae": 1.3511019968023341,
+      "stress_component_rmse": 2.0042142994200924,
+      "stress_max_abs_component_error_train_scale": 0.009175076562187781,
+      "stress_nmae_train_scale": 0.0010527699336484756,
+      "stress_nrmse_train_scale": 0.0015616708139071058,
+      "worst_energy_sample_id": "v002_f000282",
+      "worst_stress_sample_id": "v002_f000129"
+    }
+  },
+  "checkpoint_best_epoch": 4990,
+  "checkpoint_sha256": "dfe71a3a4872796fedcc3925efb4a8098ef240a4aed5faa5003d9ed7b4f91da5",
+  "dataset_sha256": "5bcd1e393fe99c868e01f0885ce6d1f53a7753f8d1f8acc91abc4ec27a48c989",
+  "evaluated_split": "test",
+  "overall": {
+    "energy_mae": 0.20595743596382898,
+    "energy_max_abs_error_train_scale": 0.0022676013741366402,
+    "energy_nmae_train_scale": 0.0005659061385462827,
+    "energy_nrmse_train_scale": 0.000710044047317346,
+    "energy_rmse": 0.2584153827744706,
+    "n_samples": 135,
+    "stress_component_mae": 1.4255560734156634,
+    "stress_component_rmse": 3.4236566179124606,
+    "stress_max_abs_component_error_train_scale": 0.04365988921353005,
+    "stress_nmae_train_scale": 0.0011107840683929901,
+    "stress_nrmse_train_scale": 0.0026676910840227087,
+    "worst_energy_sample_id": "v002_f000282",
+    "worst_stress_sample_id": "v001_f000129"
+  },
+  "status": "complete",
+  "test_set_was_used_for_model_selection": false,
+  "training_scales": {
+    "energy_rms": 363.9427493981579,
+    "stress_rms": 1283.3782136235216
+  }
+}

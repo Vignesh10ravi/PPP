@@ -1,0 +1,133 @@
+{
+  "config": {
+    "bulk_modulus": 10000.0,
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.3,
+    "mu": 1.0,
+    "n_deformations": 3,
+    "seed": 1729,
+    "split_fractions": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "deformation_sha256": "858bbe6e6209e3dd7ae0c5518e539878e6de04f7fa78b81510bcc3211a056e6e",
+  "fields": {
+    "condensed_residual": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    },
+    "condition_number": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    },
+    "deformation_gradient": {
+      "dtype": "float64",
+      "shape": [
+        9,
+        3,
+        3
+      ]
+    },
+    "determinant": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    },
+    "energy": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    },
+    "mixed_residual": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    },
+    "rotation": {
+      "dtype": "float64",
+      "shape": [
+        9,
+        3,
+        3
+      ]
+    },
+    "rotation_residual": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    },
+    "sample_id": {
+      "dtype": "<U12",
+      "shape": [
+        9
+      ]
+    },
+    "split": {
+      "dtype": "<U10",
+      "shape": [
+        9
+      ]
+    },
+    "state_index": {
+      "dtype": "int64",
+      "shape": [
+        9
+      ]
+    },
+    "stress": {
+      "dtype": "float64",
+      "shape": [
+        9,
+        3,
+        3
+      ]
+    },
+    "tangent": {
+      "dtype": "float64",
+      "shape": [
+        9,
+        9,
+        9
+      ]
+    },
+    "tangent_symmetry_error": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    },
+    "volume_fraction": {
+      "dtype": "float64",
+      "shape": [
+        9
+      ]
+    }
+  },
+  "n_samples": 9,
+  "ngsolve_version": "6.2.2607",
+  "schema_version": 1,
+  "split_counts": {
+    "test": 3,
+    "train": 3,
+    "validation": 3
+  }
+}

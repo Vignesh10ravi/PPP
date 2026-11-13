@@ -1,0 +1,95 @@
+{
+  "config": {
+    "conflict_policy": "test > validation > train",
+    "cross_source_grouping": "round deformation_gradient to 12 decimals",
+    "dataset_kind": "Phase 6 + Phase 7 grouped pICNN training dataset",
+    "excluded_phase6_test_records": 189,
+    "n_deformation_states": 556,
+    "phase6_dataset_sha256": "9e8a47be77ce7fb5076d73744c50f753374fc0741b6a64cc0dcff2990fdc1b26",
+    "phase6_split_policy": "include train and validation; exclude test",
+    "phase7_dataset_sha256": "54ccf791bad2f22ed17445d45e150f9f55fcfe22497f23ce3d0cae4eee361985",
+    "phase7_split_policy": "retain train, validation, and test assignments",
+    "split_counts": {
+      "test": 537,
+      "train": 909,
+      "validation": 225
+    },
+    "split_state_counts": {
+      "test": 178,
+      "train": 303,
+      "validation": 75
+    }
+  },
+  "configuration_sha256": "619b318781e1c17efed61ee6952ff642ddf750baca0bdd8567ecd4c695e7124b",
+  "dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "fields": {
+    "deformation_gradient": {
+      "dtype": "float64",
+      "shape": [
+        1671,
+        3,
+        3
+      ]
+    },
+    "energy": {
+      "dtype": "float64",
+      "shape": [
+        1671
+      ]
+    },
+    "sample_id": {
+      "dtype": "<U19",
+      "shape": [
+        1671
+      ]
+    },
+    "split": {
+      "dtype": "<U10",
+      "shape": [
+        1671
+      ]
+    },
+    "state_index": {
+      "dtype": "int64",
+      "shape": [
+        1671
+      ]
+    },
+    "stress": {
+      "dtype": "float64",
+      "shape": [
+        1671,
+        3,
+        3
+      ]
+    },
+    "tangent": {
+      "dtype": "float64",
+      "shape": [
+        1671,
+        9,
+        9
+      ]
+    },
+    "volume_fraction": {
+      "dtype": "float64",
+      "shape": [
+        1671
+      ]
+    }
+  },
+  "n_deformation_states": 556,
+  "n_samples": 1671,
+  "split_counts": {
+    "test": 537,
+    "train": 909,
+    "validation": 225
+  },
+  "split_scope_note": "Phase 7 test records are excluded from fitting and kept as the test split. Phase 6 test records are omitted from this composite. For a new independent claim on the retrained model, generate a fresh grouped holdout because the Phase 7 set was previously evaluated with the prior checkpoint.",
+  "split_state_counts": {
+    "test": 178,
+    "train": 303,
+    "validation": 75
+  },
+  "tangent_flattening": "row-major: (i,J) -> 3*i + J"
+}

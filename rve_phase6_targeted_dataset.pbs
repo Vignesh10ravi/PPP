@@ -1,0 +1,50 @@
+#!/bin/bash
+#PBS -N rve_phase6_target
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=96GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_phase6_targeted_20261106.out
+#PBS -e /scratch/vr80beqo/rve_phase6_targeted_20261106.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+RUN_ROOT=/scratch/vr80beqo/rve_phase6_targeted_20261106
+DATA_DIR="$RUN_ROOT/data"
+mkdir -p "$DATA_DIR"
+
+python -c 'import numpy, ngsolve; print("NumPy", numpy.__version__, "NGSolve", ngsolve.__version__)'
+python -u -m src.generate_rve_dataset_parallel \
+  --output "$DATA_DIR/rve_phase6_targeted.npz" \
+  --work-directory "$DATA_DIR/rve_phase6_targeted_work" \
+  --volume-fractions 0.02 0.05 0.10 \
+  --n-deformations 420 \
+  --n-compression-deformations 60 \
+  --compression-determinant-range 0.51 0.60 \
+  --n-expansion-deformations 60 \
+  --expansion-determinant-range 1.50 1.80 \
+  --seed 3141 \
+  --max-strain 0.20 \
+  --determinant-floor 0.50 \
+  --max-condition-number 3.0 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --microscopic-jacobian-floor 1.0e-8 \
+  --workers 4 \
+  2>&1 | tee "$DATA_DIR/generation.log"
+
+python -u -m src.audit_rve_dataset \
+  --dataset "$DATA_DIR/rve_phase6_targeted.npz" \
+  --manifest "$DATA_DIR/rve_phase6_targeted.manifest.json" \
+  2>&1 | tee "$DATA_DIR/audit.log"

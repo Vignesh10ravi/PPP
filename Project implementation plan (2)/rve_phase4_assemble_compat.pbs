@@ -1,0 +1,40 @@
+#!/bin/bash
+#PBS -N rve_phase4_assemble
+#PBS -q teachingq
+#PBS -l select=1:ncpus=1:mem=16GB
+#PBS -l walltime=01:00:00
+#PBS -o /scratch/vr80beqo/rve_phase4_compression_20261103/rve_phase4_assemble_compat.out
+#PBS -e /scratch/vr80beqo/rve_phase4_compression_20261103/rve_phase4_assemble_compat.err
+
+set -o pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+RUN_ROOT=/scratch/vr80beqo/rve_phase4_compression_20261103
+
+python -u resume_rve_phase4_assembly.py \
+  --output "$RUN_ROOT/data/rve_phase4_compression.npz" \
+  --work-directory "$RUN_ROOT/data/rve_phase4_compression_work" \
+  --volume-fractions 0.02 0.05 0.10 \
+  --n-deformations 360 \
+  --n-compression-deformations 60 \
+  --compression-determinant-range 0.51 0.70 \
+  --seed 2719 \
+  --max-strain 0.20 \
+  --determinant-floor 0.50 \
+  --max-condition-number 3.0 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --microscopic-jacobian-floor 1.0e-8 \
+  --workers 1 \
+  2>&1 | tee "$RUN_ROOT/data/rve_phase4_assembly_compat.log"

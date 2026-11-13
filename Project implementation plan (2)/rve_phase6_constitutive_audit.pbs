@@ -1,0 +1,33 @@
+#!/bin/bash
+#PBS -N rve_phase6_const
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=16GB
+#PBS -l walltime=04:00:00
+#PBS -o /scratch/vr80beqo/rve_phase6_constitutive_audit.out
+#PBS -e /scratch/vr80beqo/rve_phase6_constitutive_audit.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source "$SCRATCH/venvs/ppp-rve-train-cpu/bin/activate"
+
+export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=4
+
+PHASE6=/scratch/vr80beqo/rve_phase6_targeted_20261106
+PHASE5=/scratch/vr80beqo/rve_phase5_independent_eval_20261104
+OUT_DIR="$PHASE6/data/training_objective_tangent/evaluation"
+mkdir -p "$OUT_DIR"
+
+python -u -m benchmarks.rve_surrogate_constitutive_checks \
+  --dataset "$PHASE5/data/rve_phase5_independent.npz" \
+  --manifest "$PHASE5/data/rve_phase5_independent.manifest.json" \
+  --checkpoint "$PHASE6/data/training_objective_tangent/partial_icnn_phase6_targeted.pt" \
+  --training-dataset "$PHASE6/data/rve_phase6_targeted.npz" \
+  --report "$OUT_DIR/constitutive_checks.json" \
+  --states-per-det-bin 2 \
+  --fd-step 1.0e-5 \
+  --torch-threads 4 \
+  2>&1 | tee "$OUT_DIR/constitutive_checks_phase5.log"

@@ -1,0 +1,4 @@
+/var/spool/pbs/mom_priv/jobs/1422408.mmaster02.SC: Zeile 41: 1077599 Getötet                python -u -m benchmarks.phase6_macro_fe_demo --checkpoint "$CHECKPOINT" --output "$OUT_DIR/report.json" --volume-fraction 0.05 --stretch 0.05 --maxh 0.20 --order 1 --integration-order 4 --max-iter 200 --load-steps 100 --tolerance 1.0e-8 --merit-function energy --load-predictor secant 2>&1
+     1077600 Fertig                  | tee "$OUT_DIR/run.log"
+Cgroup mem limit exceeded: oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=1422408.mmaster02,mems_allowed=0-3,oom_memcg=/pbspro.service/jobid/1422408.mmaster02,task_memcg=/pbspro.service/jobid/1422408.mmaster02,task=python,pid=1077599,uid=54214
+

@@ -1,0 +1,32 @@
+#!/bin/bash
+#PBS -N rve_phase4_tangent
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=16GB
+#PBS -l walltime=04:00:00
+#PBS -o /scratch/vr80beqo/rve_phase4_compression_20261103/rve_phase4_tangent.out
+#PBS -e /scratch/vr80beqo/rve_phase4_compression_20261103/rve_phase4_tangent.err
+
+set -o pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source "$SCRATCH/venvs/ppp-rve-train-cpu/bin/activate"
+
+export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=4
+
+RUN_ROOT=/scratch/vr80beqo/rve_phase4_compression_20261103
+TRAIN_DIR="$RUN_ROOT/data/training_phase4"
+TANGENT_DIR="$TRAIN_DIR/tangent"
+mkdir -p "$TANGENT_DIR"
+
+python -u -m benchmarks.rve_surrogate_tangent_evaluation \
+  --dataset "$RUN_ROOT/data/rve_phase4_compression.npz" \
+  --manifest "$RUN_ROOT/data/rve_phase4_compression.manifest.json" \
+  --checkpoint "$TRAIN_DIR/partial_icnn_phase4.pt" \
+  --report "$TANGENT_DIR/tangent_report.json" \
+  --csv "$TANGENT_DIR/tangent_predictions.csv" \
+  --device cpu \
+  --torch-threads 4 \
+  2>&1 | tee "$TANGENT_DIR/tangent_evaluation.log"

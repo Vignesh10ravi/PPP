@@ -1,0 +1,28 @@
+#!/bin/bash
+#PBS -N rve_constitutive
+#PBS -q teachingq
+#PBS -l select=1:ncpus=1:mem=96GB
+#PBS -l walltime=08:00:00
+#PBS -o /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/rve_constitutive_audit.out
+#PBS -e /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/rve_constitutive_audit.err
+
+set -o pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+python -u -m benchmarks.rve_constitutive_checks \
+  --dataset /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/data/rve_phase2_microj.npz \
+  --output /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/data/rve_constitutive_checks.json \
+  --sample-ids v000_f000047 v001_f000047 v002_f000086 \
+  --maxh 0.22 \
+  --integration-order 10 \
+  --fd-step 1.0e-4 \
+  --jacobian-floor 1.0e-8 \
+  2>&1 | tee /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/data/rve_constitutive_checks.log

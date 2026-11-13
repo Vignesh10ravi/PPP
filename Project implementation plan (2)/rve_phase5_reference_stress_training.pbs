@@ -1,0 +1,42 @@
+#!/bin/bash
+#PBS -N rve_phase5_reftrain
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=32GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_phase5_reference_stress_training.out
+#PBS -e /scratch/vr80beqo/rve_phase5_reference_stress_training.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source "$SCRATCH/venvs/ppp-rve-train-cpu/bin/activate"
+
+export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=4
+
+BASE_ROOT=/scratch/vr80beqo/rve_phase4_compression_20261103
+TRAIN_DIR="$BASE_ROOT/data/training_phase5_reference_stress"
+mkdir -p "$TRAIN_DIR"
+
+python -c 'import numpy, torch; print("NumPy", numpy.__version__, "PyTorch", torch.__version__)'
+python -u -m src.train_rve \
+  --dataset "$BASE_ROOT/data/rve_phase4_compression.npz" \
+  --manifest "$BASE_ROOT/data/rve_phase4_compression.manifest.json" \
+  --checkpoint "$TRAIN_DIR/partial_icnn_phase5_reference_stress.pt" \
+  --report "$TRAIN_DIR/training_report.json" \
+  --epochs 3000 \
+  --batch-size 64 \
+  --learning-rate 1.0e-3 \
+  --stress-weight 1.0 \
+  --reference-stress-weight 1.0 \
+  --tangent-weight 0.10 \
+  --tangent-batch-size 8 \
+  --tangent-validation-states 12 \
+  --patience 20 \
+  --validation-interval 25 \
+  --seed 2719 \
+  --device cpu \
+  --torch-threads 4 \
+  2>&1 | tee "$TRAIN_DIR/training.log"

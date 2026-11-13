@@ -1,0 +1,38 @@
+#!/bin/bash
+#PBS -N rve_pilot_train
+#PBS -q teachingq
+#PBS -l select=1:ncpus=1:mem=32GB
+#PBS -l walltime=08:00:00
+#PBS -o /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/rve_pilot_training.out
+#PBS -e /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/rve_pilot_training.err
+
+set -o pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+RUN_DIR=/scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101
+TRAIN_DIR="$RUN_DIR/data/training_pilot"
+mkdir -p "$TRAIN_DIR"
+
+python -c 'import torch; print("PyTorch", torch.__version__)'
+python -u -m src.train_rve \
+  --dataset "$RUN_DIR/data/rve_phase2_microj.npz" \
+  --manifest "$RUN_DIR/data/rve_phase2_microj.manifest.json" \
+  --checkpoint "$TRAIN_DIR/partial_icnn_pilot.pt" \
+  --report "$TRAIN_DIR/training_report.json" \
+  --epochs 2000 \
+  --batch-size 64 \
+  --learning-rate 1.0e-3 \
+  --stress-weight 1.0 \
+  --patience 30 \
+  --validation-interval 10 \
+  --device cpu \
+  --torch-threads 1 \
+  2>&1 | tee "$TRAIN_DIR/training.log"

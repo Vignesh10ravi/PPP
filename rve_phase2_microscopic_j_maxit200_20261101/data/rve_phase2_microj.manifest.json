@@ -1,0 +1,181 @@
+{
+  "config": {
+    "bulk_modulus": 10000.0,
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_deformations": 100,
+    "seed": 1729,
+    "split_fractions": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "configuration_sha256": "1da3ec768d1de1427706d6d8fd07618b84a8da012df44c033fd9ff9ea5247477",
+  "dataset_sha256": "024a9ae4fd6cb11d575f59738e7b6085934699d7c472c58e405fe4ddfbaf86e6",
+  "deformation_sha256": "d800d2e0982330f7f12f240dcde8dac774ff626763f7465d625276f803d56a38",
+  "fields": {
+    "condensed_residual": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "condition_number": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "deformation_gradient": {
+      "dtype": "float64",
+      "shape": [
+        300,
+        3,
+        3
+      ]
+    },
+    "determinant": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "energy": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "maximum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "minimum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "minimum_particle_clearance": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "mixed_iterations": {
+      "dtype": "int64",
+      "shape": [
+        300
+      ]
+    },
+    "mixed_residual": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "rotation": {
+      "dtype": "float64",
+      "shape": [
+        300,
+        3,
+        3
+      ]
+    },
+    "rotation_iterations": {
+      "dtype": "int64",
+      "shape": [
+        300
+      ]
+    },
+    "rotation_residual": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "sample_id": {
+      "dtype": "<U12",
+      "shape": [
+        300
+      ]
+    },
+    "solver_status": {
+      "dtype": "<U9",
+      "shape": [
+        300
+      ]
+    },
+    "split": {
+      "dtype": "<U10",
+      "shape": [
+        300
+      ]
+    },
+    "state_index": {
+      "dtype": "int32",
+      "shape": [
+        300
+      ]
+    },
+    "stress": {
+      "dtype": "float64",
+      "shape": [
+        300,
+        3,
+        3
+      ]
+    },
+    "tangent": {
+      "dtype": "float64",
+      "shape": [
+        300,
+        9,
+        9
+      ]
+    },
+    "tangent_symmetry_error": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "volume_fraction": {
+      "dtype": "float64",
+      "shape": [
+        300
+      ]
+    },
+    "volume_index": {
+      "dtype": "int32",
+      "shape": [
+        300
+      ]
+    }
+  },
+  "n_samples": 300,
+  "ngsolve_version": "6.2.2608",
+  "output": "/scratch4/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/data/rve_phase2_microj.npz",
+  "schema_version": 2,
+  "source_revision_sha256": "f3ddac2765ad5aba15f47a78f1b968e2b833d54493ceb4b1db6a75e8fd0dcb5b",
+  "split_counts": {
+    "test": 45,
+    "train": 207,
+    "validation": 48
+  },
+  "tangent_flattening": "row-major: (i,J) -> 3*i + J"
+}

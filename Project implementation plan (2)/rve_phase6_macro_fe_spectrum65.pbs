@@ -1,0 +1,38 @@
+#!/bin/bash
+#PBS -N phase6_macro_spec65
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=16GB
+#PBS -l walltime=01:00:00
+#PBS -o /scratch/vr80beqo/rve_phase6_macro_fe_spectrum65.out
+#PBS -e /scratch/vr80beqo/rve_phase6_macro_fe_spectrum65.err
+
+set -o pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=4
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+PHASE6=/scratch/vr80beqo/rve_phase6_targeted_20261106
+OUT_DIR=/scratch/vr80beqo/rve_phase6_macro_fe_spectrum65
+mkdir -p "$OUT_DIR"
+
+python -u -m benchmarks.phase6_macro_fe_demo \
+  --checkpoint "$PHASE6/data/training_objective_tangent/partial_icnn_phase6_targeted.pt" \
+  --output "$OUT_DIR/report.json" \
+  --volume-fraction 0.05 \
+  --stretch 0.05 \
+  --maxh 0.25 \
+  --order 1 \
+  --max-iter 100 \
+  --load-steps 100 \
+  --tangent-check-at-load-step 65 \
+  --tangent-check-iteration 20 \
+  --tangent-check-only \
+  --tolerance 1.0e-8 \
+  2>&1 | tee "$OUT_DIR/run.log"

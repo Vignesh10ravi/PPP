@@ -1,0 +1,34 @@
+{
+  "config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.51,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 60,
+    "n_deformations": 360,
+    "seed": 2719,
+    "split_fractions": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "configuration_sha256": "5246046c74b4b44cdd05792ef883e3d43ecae7a50d2b29f4ddd6137e3c2aab36",
+  "deformation_sha256": "cd7482638596b70aec4953ff6e9c5de6a8653deeb8ec2fef4ab2f69d1df4b00a",
+  "schema_version": 2,
+  "source_revision_sha256": "8e9f85d718e882ffac6644a018e7225a0975d670dabf098175ec0c5bfbdbd828"
+}

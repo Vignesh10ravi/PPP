@@ -1,0 +1,7 @@
+Merged dataset saved: /scratch/vr80beqo/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.npz
+Manifest saved: /scratch/vr80beqo/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.manifest.json
+Records: 1671; grouped deformation states: 556
+Split records: {'train': 909, 'validation': 225, 'test': 537}
+Split deformation states: {'train': 303, 'validation': 75, 'test': 178}
+Excluded Phase 6 test records: 189
+Dataset SHA-256: 8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336

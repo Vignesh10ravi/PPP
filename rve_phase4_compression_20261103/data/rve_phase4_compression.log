@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/vr80beqo/PPP/Project implementation plan (2)/src/generate_rve_dataset_parallel.py", line 420, in <module>
+    main()
+  File "/home/vr80beqo/PPP/Project implementation plan (2)/src/generate_rve_dataset_parallel.py", line 405, in main
+    output = generate_parallel_dataset(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vr80beqo/PPP/Project implementation plan (2)/src/generate_rve_dataset_parallel.py", line 213, in generate_parallel_dataset
+    raise ValueError(
+ValueError: Work directory /scratch4/vr80beqo/rve_phase4_compression_20261103/data/rve_phase4_compression_work belongs to a different run/configuration. Choose a new --work-directory or use the matching configuration.

@@ -1,0 +1,28 @@
+#!/bin/bash
+#PBS -N tangent129
+#PBS -q teachingq
+#PBS -l select=1:ncpus=1:mem=64GB
+#PBS -l walltime=08:00:00
+#PBS -o /scratch/vr80beqo/rve_phase3_900_seed2718/data/tangent_outlier.out
+#PBS -e /scratch/vr80beqo/rve_phase3_900_seed2718/data/tangent_outlier.err
+
+set -o pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+
+python -u -m benchmarks.rve_constitutive_checks \
+  --dataset /scratch/vr80beqo/rve_phase3_900_seed2718/data/rve_phase3_900.npz \
+  --output /scratch/vr80beqo/rve_phase3_900_seed2718/data/tangent_outlier_audit.json \
+  --sample-ids v000_f000129 v001_f000129 v002_f000129 \
+  --maxh 0.22 \
+  --integration-order 10 \
+  --fd-step 1.0e-4 \
+  --jacobian-floor 1.0e-8 \
+  2>&1 | tee /scratch/vr80beqo/rve_phase3_900_seed2718/data/tangent_outlier_audit.log

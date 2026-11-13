@@ -1,0 +1,42 @@
+#!/bin/bash
+#PBS -N p7_h016_40c_128g
+#PBS -q teachingq
+#PBS -l select=2:ncpus=20:mem=64GB
+#PBS -l place=group=host
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_phase7_macro_fe_order1_energy_secant40_h016_mem128.out
+#PBS -e /scratch/vr80beqo/rve_phase7_macro_fe_order1_energy_secant40_h016_mem128.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=40
+export TORCH_NUM_THREADS=40
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+OUT_DIR=/scratch/vr80beqo/rve_phase7_macro_fe_order1_energy_secant40_h016_mem128
+mkdir -p "$OUT_DIR"
+test -f "$CHECKPOINT"
+
+python -u -m benchmarks.phase6_macro_fe_demo \
+  --checkpoint "$CHECKPOINT" \
+  --output "$OUT_DIR/report.json" \
+  --volume-fraction 0.05 \
+  --stretch 0.05 \
+  --maxh 0.16 \
+  --order 1 \
+  --integration-order 4 \
+  --max-iter 200 \
+  --load-steps 100 \
+  --tolerance 1.0e-8 \
+  --merit-function energy \
+  --load-predictor secant \
+  2>&1 | tee "$OUT_DIR/run.log"

@@ -1,0 +1,99 @@
+#!/bin/bash
+#PBS -N rve_phase5_eval
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=32GB
+#PBS -l walltime=06:00:00
+#PBS -o /scratch/vr80beqo/rve_phase5_independent_evaluation.out
+#PBS -e /scratch/vr80beqo/rve_phase5_independent_evaluation.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source "$SCRATCH/venvs/ppp-rve-train-cpu/bin/activate"
+
+export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=4
+
+BASE_ROOT=/scratch/vr80beqo/rve_phase4_compression_20261103
+EVAL_ROOT=/scratch/vr80beqo/rve_phase5_independent_eval_20261104
+DATASET="$EVAL_ROOT/data/rve_phase5_independent.npz"
+MANIFEST="$EVAL_ROOT/data/rve_phase5_independent.manifest.json"
+CHECKPOINT="$BASE_ROOT/data/training_phase4_tangentloss/partial_icnn_phase4_tangent.pt"
+TRAINING_DATASET="$BASE_ROOT/data/rve_phase4_compression.npz"
+OUT_DIR="$EVAL_ROOT/evaluation"
+mkdir -p "$OUT_DIR"
+
+python -c 'import numpy, torch; print("NumPy", numpy.__version__, "PyTorch", torch.__version__)'
+python - <<'PY'
+import numpy as np
+
+old_path = "/scratch/vr80beqo/rve_phase4_compression_20261103/data/rve_phase4_compression.npz"
+new_path = "/scratch/vr80beqo/rve_phase5_independent_eval_20261104/data/rve_phase5_independent.npz"
+
+def state_records(path):
+    with np.load(path, allow_pickle=False) as archive:
+        states = archive["state_index"]
+        splits = archive["split"].astype(str)
+        gradients = archive["deformation_gradient"]
+        result = {}
+        for state in np.unique(states):
+            indices = np.flatnonzero(states == state)
+            state_splits = np.unique(splits[indices])
+            if len(state_splits) != 1:
+                raise RuntimeError(f"state {state} appears in multiple splits")
+            result[int(state)] = (gradients[indices[0]], state_splits[0])
+        return result
+
+old_states = state_records(old_path)
+new_states = state_records(new_path)
+identity = np.eye(3)
+old_gradients = np.stack(
+    [gradient for gradient, _ in old_states.values()
+     if not np.allclose(gradient, identity, rtol=0.0, atol=1.0e-12)]
+)
+new_test_gradients = np.stack(
+    [gradient for gradient, split in new_states.values()
+     if split == "test"
+     and not np.allclose(gradient, identity, rtol=0.0, atol=1.0e-12)]
+)
+distances = np.max(
+    np.abs(new_test_gradients[:, None, :, :] - old_gradients[None, :, :, :]),
+    axis=(2, 3),
+)
+closest = float(np.min(distances))
+if closest <= 1.0e-12:
+    raise RuntimeError("independent test set overlaps Phase 4 beyond the shared identity state")
+print(
+    f"Independent deformation groups verified: {len(new_test_gradients)} test states; "
+    f"shared identity/reference state excluded; nearest Phase 4 non-reference "
+    f"state max-entry distance={closest:.6e}"
+)
+PY
+
+python -u -m benchmarks.rve_test_set_evaluation \
+  --dataset "$DATASET" \
+  --manifest "$MANIFEST" \
+  --checkpoint "$CHECKPOINT" \
+  --report "$OUT_DIR/energy_stress_report.json" \
+  --csv "$OUT_DIR/energy_stress_predictions.csv" \
+  --device cpu \
+  --torch-threads 4 \
+  --allow-independent-dataset \
+  --exclude-state-index 0 \
+  2>&1 | tee "$OUT_DIR/energy_stress_evaluation.log"
+
+python -u -m benchmarks.rve_surrogate_tangent_evaluation \
+  --dataset "$DATASET" \
+  --manifest "$MANIFEST" \
+  --checkpoint "$CHECKPOINT" \
+  --training-dataset "$TRAINING_DATASET" \
+  --report "$OUT_DIR/tangent_report.json" \
+  --csv "$OUT_DIR/tangent_predictions.csv" \
+  --device cpu \
+  --torch-threads 4 \
+  --split test \
+  --allow-independent-dataset \
+  --exclude-state-index 0 \
+  2>&1 | tee "$OUT_DIR/tangent_evaluation.log"

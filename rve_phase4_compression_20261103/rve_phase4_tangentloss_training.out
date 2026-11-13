@@ -1,0 +1,91 @@
+NumPy 2.4.6 PyTorch 2.15.0+cpu
+/scratch/vr80beqo/venvs/ppp-rve-train-cpu/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+epoch=25 train_loss=1.992614e+00 validation_loss=5.786713e+00 selection_loss=5.886590e+00 tangent_rel_frob_mse=9.986316e-01 energy_rmse=7.538416e+02 stress_rmse=1.921125e+03
+epoch=50 train_loss=1.992761e+00 validation_loss=5.745120e+00 selection_loss=5.844232e+00 tangent_rel_frob_mse=9.905611e-01 energy_rmse=7.508234e+02 stress_rmse=1.915395e+03
+epoch=75 train_loss=1.094972e+00 validation_loss=3.423450e+00 selection_loss=3.503958e+00 tangent_rel_frob_mse=9.561206e-01 energy_rmse=5.467442e+02 stress_rmse=1.598261e+03
+epoch=100 train_loss=2.521493e-01 validation_loss=8.960301e-01 selection_loss=9.753221e-01 tangent_rel_frob_mse=7.108773e-01 energy_rmse=2.150619e+02 stress_rmse=9.934895e+02
+epoch=125 train_loss=1.368909e-01 validation_loss=5.154181e-01 selection_loss=5.774710e-01 tangent_rel_frob_mse=5.478422e-01 energy_rmse=1.522385e+02 stress_rmse=7.758151e+02
+epoch=150 train_loss=9.369284e-02 validation_loss=3.064528e-01 selection_loss=3.639818e-01 tangent_rel_frob_mse=5.025687e-01 energy_rmse=1.095178e+02 stress_rmse=6.128988e+02
+epoch=175 train_loss=8.195031e-02 validation_loss=2.217061e-01 selection_loss=2.772071e-01 tangent_rel_frob_mse=4.608604e-01 energy_rmse=8.871226e+01 stress_rmse=5.289628e+02
+epoch=200 train_loss=7.686356e-02 validation_loss=1.846127e-01 selection_loss=2.386494e-01 tangent_rel_frob_mse=5.041799e-01 energy_rmse=7.895530e+01 stress_rmse=4.859694e+02
+epoch=225 train_loss=7.268647e-02 validation_loss=1.622012e-01 selection_loss=2.157121e-01 tangent_rel_frob_mse=4.565613e-01 energy_rmse=7.262151e+01 stress_rmse=4.577335e+02
+epoch=250 train_loss=7.044044e-02 validation_loss=1.485480e-01 selection_loss=2.018532e-01 tangent_rel_frob_mse=5.380343e-01 energy_rmse=6.870751e+01 stress_rmse=4.392847e+02
+epoch=275 train_loss=6.890034e-02 validation_loss=1.390952e-01 selection_loss=1.923730e-01 tangent_rel_frob_mse=4.574372e-01 energy_rmse=6.608553e+01 stress_rmse=4.256987e+02
+epoch=300 train_loss=6.728662e-02 validation_loss=1.318805e-01 selection_loss=1.850432e-01 tangent_rel_frob_mse=5.072846e-01 energy_rmse=6.416657e+01 stress_rmse=4.147925e+02
+epoch=325 train_loss=6.613101e-02 validation_loss=1.255800e-01 selection_loss=1.787084e-01 tangent_rel_frob_mse=4.384481e-01 energy_rmse=6.228076e+01 stress_rmse=4.052763e+02
+epoch=350 train_loss=6.523206e-02 validation_loss=1.196880e-01 selection_loss=1.727392e-01 tangent_rel_frob_mse=5.028348e-01 energy_rmse=6.045895e+01 stress_rmse=3.961777e+02
+epoch=375 train_loss=6.462419e-02 validation_loss=1.139797e-01 selection_loss=1.670319e-01 tangent_rel_frob_mse=5.368787e-01 energy_rmse=5.883746e+01 stress_rmse=3.868606e+02
+epoch=400 train_loss=6.401556e-02 validation_loss=1.120483e-01 selection_loss=1.650854e-01 tangent_rel_frob_mse=5.474543e-01 energy_rmse=5.903185e+01 stress_rmse=3.825090e+02
+epoch=425 train_loss=6.366774e-02 validation_loss=1.080631e-01 selection_loss=1.610642e-01 tangent_rel_frob_mse=5.115053e-01 energy_rmse=5.774046e+01 stress_rmse=3.760009e+02
+epoch=450 train_loss=6.320641e-02 validation_loss=1.046513e-01 selection_loss=1.576640e-01 tangent_rel_frob_mse=5.247301e-01 energy_rmse=5.728875e+01 stress_rmse=3.693000e+02
+epoch=475 train_loss=6.276708e-02 validation_loss=1.023043e-01 selection_loss=1.554485e-01 tangent_rel_frob_mse=5.701528e-01 energy_rmse=5.660336e+01 stress_rmse=3.651960e+02
+epoch=500 train_loss=6.248542e-02 validation_loss=9.845660e-02 selection_loss=1.512934e-01 tangent_rel_frob_mse=4.994871e-01 energy_rmse=5.488230e+01 stress_rmse=3.592529e+02
+epoch=525 train_loss=6.240989e-02 validation_loss=9.547783e-02 selection_loss=1.483028e-01 tangent_rel_frob_mse=5.155243e-01 energy_rmse=5.441235e+01 stress_rmse=3.532167e+02
+epoch=550 train_loss=6.173501e-02 validation_loss=9.490176e-02 selection_loss=1.477720e-01 tangent_rel_frob_mse=5.154532e-01 energy_rmse=5.465963e+01 stress_rmse=3.515152e+02
+epoch=575 train_loss=6.138568e-02 validation_loss=9.277078e-02 selection_loss=1.455387e-01 tangent_rel_frob_mse=4.204141e-01 energy_rmse=5.424238e+01 stress_rmse=3.472360e+02
+epoch=600 train_loss=6.121878e-02 validation_loss=9.231543e-02 selection_loss=1.453225e-01 tangent_rel_frob_mse=4.729088e-01 energy_rmse=5.428584e+01 stress_rmse=3.461074e+02
+epoch=625 train_loss=6.102064e-02 validation_loss=8.763983e-02 selection_loss=1.403245e-01 tangent_rel_frob_mse=4.130915e-01 energy_rmse=5.209431e+01 stress_rmse=3.384645e+02
+epoch=650 train_loss=6.085909e-02 validation_loss=8.778222e-02 selection_loss=1.405463e-01 tangent_rel_frob_mse=4.623334e-01 energy_rmse=5.280121e+01 stress_rmse=3.377130e+02
+epoch=675 train_loss=6.023388e-02 validation_loss=8.711627e-02 selection_loss=1.398754e-01 tangent_rel_frob_mse=4.881292e-01 energy_rmse=5.294142e+01 stress_rmse=3.358968e+02
+epoch=700 train_loss=6.062209e-02 validation_loss=8.599855e-02 selection_loss=1.387360e-01 tangent_rel_frob_mse=4.789453e-01 energy_rmse=5.237700e+01 stress_rmse=3.340851e+02
+epoch=725 train_loss=5.987601e-02 validation_loss=8.681410e-02 selection_loss=1.397250e-01 tangent_rel_frob_mse=4.718210e-01 energy_rmse=5.324969e+01 stress_rmse=3.346829e+02
+epoch=750 train_loss=6.038647e-02 validation_loss=8.169876e-02 selection_loss=1.340899e-01 tangent_rel_frob_mse=5.018284e-01 energy_rmse=5.104196e+01 stress_rmse=3.256400e+02
+epoch=775 train_loss=5.923594e-02 validation_loss=8.353920e-02 selection_loss=1.362884e-01 tangent_rel_frob_mse=5.129608e-01 energy_rmse=5.208172e+01 stress_rmse=3.285530e+02
+epoch=800 train_loss=5.909399e-02 validation_loss=8.047949e-02 selection_loss=1.329674e-01 tangent_rel_frob_mse=4.297146e-01 energy_rmse=5.097518e+01 stress_rmse=3.227067e+02
+epoch=825 train_loss=5.867374e-02 validation_loss=8.141636e-02 selection_loss=1.338829e-01 tangent_rel_frob_mse=5.544561e-01 energy_rmse=5.145364e+01 stress_rmse=3.242918e+02
+epoch=850 train_loss=5.898927e-02 validation_loss=8.311337e-02 selection_loss=1.356769e-01 tangent_rel_frob_mse=4.997671e-01 energy_rmse=5.299775e+01 stress_rmse=3.260383e+02
+epoch=875 train_loss=5.819532e-02 validation_loss=8.247071e-02 selection_loss=1.349688e-01 tangent_rel_frob_mse=5.313080e-01 energy_rmse=5.268409e+01 stress_rmse=3.249504e+02
+epoch=900 train_loss=5.842624e-02 validation_loss=8.014146e-02 selection_loss=1.325228e-01 tangent_rel_frob_mse=4.855614e-01 energy_rmse=5.164642e+01 stress_rmse=3.207925e+02
+epoch=925 train_loss=5.822590e-02 validation_loss=8.141794e-02 selection_loss=1.337901e-01 tangent_rel_frob_mse=4.606049e-01 energy_rmse=5.238921e+01 stress_rmse=3.228011e+02
+epoch=950 train_loss=5.792115e-02 validation_loss=7.940170e-02 selection_loss=1.317354e-01 tangent_rel_frob_mse=4.343538e-01 energy_rmse=5.127700e+01 stress_rmse=3.195173e+02
+epoch=975 train_loss=5.755693e-02 validation_loss=7.957178e-02 selection_loss=1.318535e-01 tangent_rel_frob_mse=4.469181e-01 energy_rmse=5.159721e+01 stress_rmse=3.194341e+02
+epoch=1000 train_loss=5.743830e-02 validation_loss=7.949295e-02 selection_loss=1.314632e-01 tangent_rel_frob_mse=3.498868e-01 energy_rmse=5.239007e+01 stress_rmse=3.179466e+02
+epoch=1025 train_loss=5.720535e-02 validation_loss=7.787427e-02 selection_loss=1.298259e-01 tangent_rel_frob_mse=5.259181e-01 energy_rmse=5.158746e+01 stress_rmse=3.151285e+02
+epoch=1050 train_loss=5.719201e-02 validation_loss=7.575091e-02 selection_loss=1.278197e-01 tangent_rel_frob_mse=3.624055e-01 energy_rmse=5.058531e+01 stress_rmse=3.112799e+02
+epoch=1075 train_loss=5.693737e-02 validation_loss=7.820913e-02 selection_loss=1.301946e-01 tangent_rel_frob_mse=4.579279e-01 energy_rmse=5.206310e+01 stress_rmse=3.152081e+02
+epoch=1100 train_loss=5.681398e-02 validation_loss=7.586749e-02 selection_loss=1.275256e-01 tangent_rel_frob_mse=4.223580e-01 energy_rmse=5.109418e+01 stress_rmse=3.107546e+02
+epoch=1125 train_loss=5.625352e-02 validation_loss=7.768454e-02 selection_loss=1.292236e-01 tangent_rel_frob_mse=4.346100e-01 energy_rmse=5.241561e+01 stress_rmse=3.132763e+02
+epoch=1150 train_loss=5.622956e-02 validation_loss=7.396307e-02 selection_loss=1.250401e-01 tangent_rel_frob_mse=4.501484e-01 energy_rmse=5.086156e+01 stress_rmse=3.061504e+02
+epoch=1175 train_loss=5.588594e-02 validation_loss=7.477604e-02 selection_loss=1.256327e-01 tangent_rel_frob_mse=4.015912e-01 energy_rmse=5.131553e+01 stress_rmse=3.075380e+02
+epoch=1200 train_loss=5.567952e-02 validation_loss=7.395673e-02 selection_loss=1.237571e-01 tangent_rel_frob_mse=3.292911e-01 energy_rmse=5.158646e+01 stress_rmse=3.049239e+02
+epoch=1225 train_loss=5.508814e-02 validation_loss=7.369180e-02 selection_loss=1.203490e-01 tangent_rel_frob_mse=4.309693e-01 energy_rmse=5.252616e+01 stress_rmse=3.026163e+02
+epoch=1250 train_loss=5.143840e-02 validation_loss=6.577972e-02 selection_loss=1.008203e-01 tangent_rel_frob_mse=3.153690e-01 energy_rmse=5.124242e+01 stress_rmse=2.830574e+02
+epoch=1275 train_loss=4.210654e-02 validation_loss=5.273890e-02 selection_loss=7.833804e-02 tangent_rel_frob_mse=2.466244e-01 energy_rmse=4.756119e+01 stress_rmse=2.503519e+02
+epoch=1300 train_loss=3.123679e-02 validation_loss=3.730580e-02 selection_loss=5.552665e-02 tangent_rel_frob_mse=1.692354e-01 energy_rmse=4.085350e+01 stress_rmse=2.089239e+02
+epoch=1325 train_loss=2.083797e-02 validation_loss=2.418547e-02 selection_loss=3.517392e-02 tangent_rel_frob_mse=1.065563e-01 energy_rmse=3.403640e+01 stress_rmse=1.659422e+02
+epoch=1350 train_loss=1.292655e-02 validation_loss=1.352252e-02 selection_loss=1.918215e-02 tangent_rel_frob_mse=6.358374e-02 energy_rmse=2.659072e+01 stress_rmse=1.216781e+02
+epoch=1375 train_loss=7.161146e-03 validation_loss=7.406451e-03 selection_loss=1.032762e-02 tangent_rel_frob_mse=3.445497e-02 energy_rmse=1.968383e+01 stress_rmse=9.004089e+01
+epoch=1400 train_loss=2.493952e-03 validation_loss=2.809943e-03 selection_loss=3.810051e-03 tangent_rel_frob_mse=9.586770e-03 energy_rmse=1.185964e+01 stress_rmse=5.602704e+01
+epoch=1425 train_loss=1.568752e-03 validation_loss=2.553694e-03 selection_loss=3.307267e-03 tangent_rel_frob_mse=4.782253e-03 energy_rmse=1.146966e+01 stress_rmse=5.306271e+01
+epoch=1450 train_loss=1.193482e-03 validation_loss=2.610518e-03 selection_loss=3.271687e-03 tangent_rel_frob_mse=5.509584e-03 energy_rmse=1.021062e+01 stress_rmse=5.638423e+01
+epoch=1475 train_loss=9.933368e-04 validation_loss=2.934278e-03 selection_loss=3.581040e-03 tangent_rel_frob_mse=4.089530e-03 energy_rmse=1.079889e+01 stress_rmse=5.982599e+01
+epoch=1500 train_loss=8.459722e-04 validation_loss=2.683368e-03 selection_loss=3.396134e-03 tangent_rel_frob_mse=3.206613e-03 energy_rmse=9.600258e+00 stress_rmse=5.845714e+01
+epoch=1525 train_loss=7.478236e-04 validation_loss=1.942893e-03 selection_loss=2.558398e-03 tangent_rel_frob_mse=2.779100e-03 energy_rmse=7.980187e+00 stress_rmse=5.004598e+01
+epoch=1550 train_loss=6.326685e-04 validation_loss=1.858058e-03 selection_loss=2.494663e-03 tangent_rel_frob_mse=3.527553e-03 energy_rmse=7.807648e+00 stress_rmse=4.893542e+01
+epoch=1575 train_loss=5.566593e-04 validation_loss=1.722282e-03 selection_loss=2.345805e-03 tangent_rel_frob_mse=2.464972e-03 energy_rmse=6.977776e+00 stress_rmse=4.793213e+01
+epoch=1600 train_loss=4.862295e-04 validation_loss=1.989643e-03 selection_loss=2.779615e-03 tangent_rel_frob_mse=3.433840e-03 energy_rmse=8.912518e+00 stress_rmse=4.922736e+01
+epoch=1625 train_loss=4.241281e-04 validation_loss=1.941679e-03 selection_loss=2.781456e-03 tangent_rel_frob_mse=1.952920e-03 energy_rmse=8.049953e+00 stress_rmse=4.991499e+01
+epoch=1650 train_loss=3.699557e-04 validation_loss=2.209618e-03 selection_loss=3.003683e-03 tangent_rel_frob_mse=4.308093e-03 energy_rmse=7.657959e+00 stress_rmse=5.464096e+01
+epoch=1675 train_loss=3.156313e-04 validation_loss=2.144461e-03 selection_loss=3.038418e-03 tangent_rel_frob_mse=5.659396e-03 energy_rmse=6.115158e+00 stress_rmse=5.560499e+01
+epoch=1700 train_loss=2.773294e-04 validation_loss=2.432382e-03 selection_loss=3.282151e-03 tangent_rel_frob_mse=2.865479e-03 energy_rmse=5.938589e+00 stress_rmse=5.981816e+01
+epoch=1725 train_loss=2.531931e-04 validation_loss=2.955505e-03 selection_loss=3.921993e-03 tangent_rel_frob_mse=2.235742e-03 energy_rmse=8.296980e+00 stress_rmse=6.394569e+01
+epoch=1750 train_loss=2.227887e-04 validation_loss=2.711640e-03 selection_loss=3.540948e-03 tangent_rel_frob_mse=2.228144e-03 energy_rmse=5.469429e+00 stress_rmse=6.389529e+01
+epoch=1775 train_loss=1.827248e-04 validation_loss=2.876977e-03 selection_loss=4.067743e-03 tangent_rel_frob_mse=1.144227e-03 energy_rmse=5.918290e+00 stress_rmse=6.556532e+01
+epoch=1800 train_loss=1.615962e-04 validation_loss=3.199759e-03 selection_loss=4.273384e-03 tangent_rel_frob_mse=3.058621e-03 energy_rmse=6.715765e+00 stress_rmse=6.870179e+01
+epoch=1825 train_loss=1.440507e-04 validation_loss=3.062479e-03 selection_loss=4.090858e-03 tangent_rel_frob_mse=7.683837e-04 energy_rmse=5.521275e+00 stress_rmse=6.814459e+01
+epoch=1850 train_loss=1.216913e-04 validation_loss=3.181808e-03 selection_loss=4.133914e-03 tangent_rel_frob_mse=1.949065e-03 energy_rmse=5.720283e+00 stress_rmse=6.938429e+01
+epoch=1875 train_loss=1.256677e-04 validation_loss=2.643929e-03 selection_loss=3.373880e-03 tangent_rel_frob_mse=1.009956e-03 energy_rmse=4.535854e+00 stress_rmse=6.376687e+01
+epoch=1900 train_loss=9.419747e-05 validation_loss=3.201400e-03 selection_loss=3.663056e-03 tangent_rel_frob_mse=5.634483e-03 energy_rmse=6.075773e+00 stress_rmse=6.931149e+01
+epoch=1925 train_loss=8.401227e-05 validation_loss=3.230445e-03 selection_loss=3.633877e-03 tangent_rel_frob_mse=7.377816e-03 energy_rmse=5.783942e+00 stress_rmse=6.989605e+01
+epoch=1950 train_loss=7.320179e-05 validation_loss=3.438154e-03 selection_loss=3.811836e-03 tangent_rel_frob_mse=5.664828e-04 energy_rmse=5.596320e+00 stress_rmse=7.240337e+01
+epoch=1975 train_loss=6.560444e-05 validation_loss=3.693751e-03 selection_loss=3.993505e-03 tangent_rel_frob_mse=5.295936e-04 energy_rmse=6.370325e+00 stress_rmse=7.458510e+01
+epoch=2000 train_loss=6.766800e-05 validation_loss=3.083964e-03 selection_loss=3.318011e-03 tangent_rel_frob_mse=5.095885e-04 energy_rmse=5.466614e+00 stress_rmse=6.844246e+01
+epoch=2025 train_loss=7.947071e-05 validation_loss=2.948679e-03 selection_loss=3.193042e-03 tangent_rel_frob_mse=1.028789e-03 energy_rmse=4.223474e+00 stress_rmse=6.771817e+01
+epoch=2050 train_loss=7.229302e-05 validation_loss=3.605582e-03 selection_loss=3.822492e-03 tangent_rel_frob_mse=4.773026e-04 energy_rmse=6.368135e+00 stress_rmse=7.362598e+01
+epoch=2075 train_loss=4.539213e-05 validation_loss=3.097523e-03 selection_loss=3.276185e-03 tangent_rel_frob_mse=4.752755e-04 energy_rmse=4.754848e+00 stress_rmse=6.912814e+01
+Early stopping at epoch 2075
+Best epoch: 1575
+Test metrics: {'loss': 0.0005669462505297415, 'energy_loss_normalized': 0.00014067334255700605, 'stress_loss_normalized': 0.0004262729079727355, 'energy_rmse': 4.777788068769055, 'stress_rmse': 26.241288865511716}
+Checkpoint: /scratch/vr80beqo/rve_phase4_compression_20261103/data/training_phase4_tangentloss/partial_icnn_phase4_tangent.pt
+Training report: /scratch/vr80beqo/rve_phase4_compression_20261103/data/training_phase4_tangentloss/training_report.json

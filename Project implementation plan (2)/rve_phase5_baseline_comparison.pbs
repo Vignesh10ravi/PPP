@@ -1,0 +1,53 @@
+#!/bin/bash
+#PBS -N rve_phase5_basecmp
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=32GB
+#PBS -l walltime=06:00:00
+#PBS -o /scratch/vr80beqo/rve_phase5_baseline_comparison.out
+#PBS -e /scratch/vr80beqo/rve_phase5_baseline_comparison.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source "$SCRATCH/venvs/ppp-rve-train-cpu/bin/activate"
+
+export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=4
+
+BASE_ROOT=/scratch/vr80beqo/rve_phase4_compression_20261103
+EVAL_ROOT=/scratch/vr80beqo/rve_phase5_independent_eval_20261104
+DATASET="$EVAL_ROOT/data/rve_phase5_independent.npz"
+MANIFEST="$EVAL_ROOT/data/rve_phase5_independent.manifest.json"
+CHECKPOINT="$BASE_ROOT/data/training_phase4/partial_icnn_phase4.pt"
+TRAINING_DATASET="$BASE_ROOT/data/rve_phase4_compression.npz"
+OUT_DIR="$EVAL_ROOT/evaluation/baseline"
+mkdir -p "$OUT_DIR"
+
+python -c 'import numpy, torch; print("NumPy", numpy.__version__, "PyTorch", torch.__version__)'
+python -u -m benchmarks.rve_test_set_evaluation \
+  --dataset "$DATASET" \
+  --manifest "$MANIFEST" \
+  --checkpoint "$CHECKPOINT" \
+  --report "$OUT_DIR/energy_stress_report.json" \
+  --csv "$OUT_DIR/energy_stress_predictions.csv" \
+  --device cpu \
+  --torch-threads 4 \
+  --allow-independent-dataset \
+  --exclude-state-index 0 \
+  2>&1 | tee "$OUT_DIR/energy_stress_evaluation.log"
+
+python -u -m benchmarks.rve_surrogate_tangent_evaluation \
+  --dataset "$DATASET" \
+  --manifest "$MANIFEST" \
+  --checkpoint "$CHECKPOINT" \
+  --training-dataset "$TRAINING_DATASET" \
+  --report "$OUT_DIR/tangent_report.json" \
+  --csv "$OUT_DIR/tangent_predictions.csv" \
+  --device cpu \
+  --torch-threads 4 \
+  --split test \
+  --allow-independent-dataset \
+  --exclude-state-index 0 \
+  2>&1 | tee "$OUT_DIR/tangent_evaluation.log"

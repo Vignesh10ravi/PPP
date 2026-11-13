@@ -1,0 +1,19 @@
+Macro-FE pICNN run: vf=0.05, axial stretch=0.05, maxh=0.25, order=1
+[solve] ndof=135, free=83, constrained=52
+  iter  0  |R_free| = 5.546e+02
+  iter  1  |R_free| = nan
+
+UMFPACK V5.7.4 (Feb 1, 2016): WARNING: matrix is singular
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/vr80beqo/PPP/Project implementation plan (2)/benchmarks/phase6_macro_fe_demo.py", line 117, in <module>
+    main()
+  File "/home/vr80beqo/PPP/Project implementation plan (2)/benchmarks/phase6_macro_fe_demo.py", line 61, in main
+    displacement, residual_history = solve(
+                                     ^^^^^^
+  File "/home/vr80beqo/PPP/Project implementation plan (2)/src/ngsolve_umat.py", line 306, in solve
+    inv_K = K.Inverse(freedofs=fd, inverse="umfpack")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+netgen.libngpy._meshing.NgException: UmfpackInverse: Numeric factorization failed.

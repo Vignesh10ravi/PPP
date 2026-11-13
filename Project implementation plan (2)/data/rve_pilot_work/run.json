@@ -1,0 +1,26 @@
+{
+  "config": {
+    "bulk_modulus": 10000.0,
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.3,
+    "mu": 1.0,
+    "n_deformations": 3,
+    "seed": 1729,
+    "split_fractions": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "deformation_sha256": "858bbe6e6209e3dd7ae0c5518e539878e6de04f7fa78b81510bcc3211a056e6e",
+  "schema_version": 1
+}

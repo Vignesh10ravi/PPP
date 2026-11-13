@@ -1,0 +1,161 @@
+{
+  "audit_script_sha256": "f3b630746d358d0e38b761e42d164d236a8e7283b3b283e595e034f4093e6cc6",
+  "configuration": {
+    "bulk_modulus": 10000.0,
+    "fd_step": 0.0001,
+    "integration_order": 10,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "sample_ids": [
+      "v000_f000047",
+      "v001_f000047",
+      "v002_f000086"
+    ],
+    "tolerances": {
+      "energy_gradient": 0.0005,
+      "objectivity_energy": 1e-06,
+      "objectivity_stress": 5e-05,
+      "stress_agreement": 5e-05,
+      "tangent_directional": 0.005
+    }
+  },
+  "dataset_path": "/scratch4/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/data/rve_phase2_microj.npz",
+  "dataset_sha256": "024a9ae4fd6cb11d575f59738e7b6085934699d7c472c58e405fe4ddfbaf86e6",
+  "results": [
+    {
+      "checks": {
+        "energy_gradient": true,
+        "microscopic_jacobian": true,
+        "objectivity_energy": true,
+        "objectivity_stress": true,
+        "stress_agreement": true,
+        "tangent_directional": true
+      },
+      "deformation_gradient": [
+        [
+          1.1930653042037076,
+          0.0693848364083956,
+          0.09975975865163134
+        ],
+        [
+          0.10354310283285945,
+          0.8041663877406635,
+          0.15564092845614352
+        ],
+        [
+          -0.1056132032148804,
+          0.18499003495714889,
+          1.1594573457705741
+        ]
+      ],
+      "metrics": {
+        "base_stress_work_vs_condensed_relative_error": 1.3543505954663899e-15,
+        "condensed_residual": 5.902641802500014e-13,
+        "direction_count": 9,
+        "finite_difference_step": 0.0001,
+        "max_energy_gradient_relative_error": 1.531941765015311e-11,
+        "max_tangent_directional_relative_error": 8.822088720895475e-12,
+        "maximum_sampled_microscopic_j": 1.520787756517023,
+        "minimum_sampled_microscopic_j": 0.7028459656134665,
+        "mixed_residual": 1.297130113002539e-13,
+        "objectivity_energy_relative_error": 2.002374223505589e-15,
+        "objectivity_stress_relative_error": 8.936193877267597e-16,
+        "rotation_residual": 2.2500854734443236e-15
+      },
+      "sample_id": "v000_f000047",
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient": true,
+        "microscopic_jacobian": true,
+        "objectivity_energy": true,
+        "objectivity_stress": true,
+        "stress_agreement": true,
+        "tangent_directional": true
+      },
+      "deformation_gradient": [
+        [
+          1.1930653042037076,
+          0.0693848364083956,
+          0.09975975865163134
+        ],
+        [
+          0.10354310283285945,
+          0.8041663877406635,
+          0.15564092845614352
+        ],
+        [
+          -0.1056132032148804,
+          0.18499003495714889,
+          1.1594573457705741
+        ]
+      ],
+      "metrics": {
+        "base_stress_work_vs_condensed_relative_error": 8.753253277682652e-16,
+        "condensed_residual": 7.507006824805525e-13,
+        "direction_count": 9,
+        "finite_difference_step": 0.0001,
+        "max_energy_gradient_relative_error": 1.8124186758335822e-11,
+        "max_tangent_directional_relative_error": 1.08020500247727e-11,
+        "maximum_sampled_microscopic_j": 1.5861343794145204,
+        "minimum_sampled_microscopic_j": 0.6513902528672765,
+        "mixed_residual": 1.2751180877904758e-13,
+        "objectivity_energy_relative_error": 8.656272261436875e-16,
+        "objectivity_stress_relative_error": 1.7475765025682599e-15,
+        "rotation_residual": 3.9821271690023596e-15
+      },
+      "sample_id": "v001_f000047",
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient": true,
+        "microscopic_jacobian": true,
+        "objectivity_energy": true,
+        "objectivity_stress": true,
+        "stress_agreement": true,
+        "tangent_directional": true
+      },
+      "deformation_gradient": [
+        [
+          0.9908135462224097,
+          0.09913630280567887,
+          0.04072256214757383
+        ],
+        [
+          -0.07721347092827556,
+          0.81361049392867,
+          -0.19153921821677003
+        ],
+        [
+          0.07988076067918848,
+          -0.171456847924124,
+          1.1255537235929693
+        ]
+      ],
+      "metrics": {
+        "base_stress_work_vs_condensed_relative_error": 9.942085247555376e-16,
+        "condensed_residual": 4.430852564460935e-13,
+        "direction_count": 9,
+        "finite_difference_step": 0.0001,
+        "max_energy_gradient_relative_error": 2.0302729682411635e-11,
+        "max_tangent_directional_relative_error": 3.947815978078108e-11,
+        "maximum_sampled_microscopic_j": 1.2411299291883817,
+        "minimum_sampled_microscopic_j": 0.466132525664656,
+        "mixed_residual": 3.6272829046296684e-11,
+        "objectivity_energy_relative_error": 4.6449514519696725e-15,
+        "objectivity_stress_relative_error": 2.3001965140324783e-15,
+        "rotation_residual": 1.762040664797909e-12
+      },
+      "sample_id": "v002_f000086",
+      "status": "pass",
+      "volume_fraction": 0.1
+    }
+  ],
+  "source_revision_sha256": "f3ddac2765ad5aba15f47a78f1b968e2b833d54493ceb4b1db6a75e8fd0dcb5b",
+  "status": "pass"
+}

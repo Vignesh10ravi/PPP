@@ -1,0 +1,29 @@
+#!/bin/bash
+#PBS -N rve_test_eval
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=4GB
+#PBS -l walltime=00:30:00
+#PBS -o /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/data/training_pilot_cpu/test_eval.out
+#PBS -e /scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101/data/training_pilot_cpu/test_eval.err
+
+set -o pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source /scratch/vr80beqo/venvs/ppp-rve-train-cpu/bin/activate
+export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=4
+
+RUN_DIR=/scratch/vr80beqo/rve_phase2_microscopic_j_maxit200_20261101
+OUT_DIR="$RUN_DIR/data/training_pilot_cpu"
+
+python -u -m benchmarks.rve_test_set_evaluation \
+  --dataset "$RUN_DIR/data/rve_phase2_microj.npz" \
+  --manifest "$RUN_DIR/data/rve_phase2_microj.manifest.json" \
+  --checkpoint "$OUT_DIR/partial_icnn_pilot.pt" \
+  --report "$OUT_DIR/test_error_analysis.json" \
+  --csv "$OUT_DIR/test_predictions.csv" \
+  --device cpu \
+  --torch-threads 4 \
+  2>&1 | tee "$OUT_DIR/test_error_analysis.log"
