@@ -1,0 +1,365 @@
+"""Small macro-FE integration check for the frozen Phase 6 pICNN."""
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+
+import numpy as np
+import torch
+from netgen.occ import Box, OCCGeometry, Pnt, X
+from ngsolve import CF, Det, Grad, Id, Mesh, x
+from ngsolve.comp import IntegrationRuleSpace
+from ngsolve import GridFunction
+
+from src.ngsolve_umat import solve
+from src.picnn import HyperelasticNN
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--checkpoint", required=True, type=Path)
+    parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--volume-fraction", type=float, default=0.05)
+    parser.add_argument("--stretch", type=float, default=0.05)
+    parser.add_argument("--maxh", type=float, default=0.25)
+    parser.add_argument("--order", type=int, default=1)
+    parser.add_argument(
+        "--integration-order",
+        type=int,
+        default=None,
+        help="quadrature order (default: twice the displacement order)",
+    )
+    parser.add_argument("--max-iter", type=int, default=30)
+    parser.add_argument("--load-steps", type=int, default=10)
+    parser.add_argument(
+        "--merit-function",
+        choices=("residual", "energy"),
+        default="residual",
+        help="line-search merit; energy uses the discrete hyperelastic potential",
+    )
+    parser.add_argument(
+        "--load-predictor",
+        choices=("previous", "secant"),
+        default="previous",
+        help="initial guess for each continuation step",
+    )
+    parser.add_argument("--tangent-check-at-load-step", type=int, default=0)
+    parser.add_argument("--tangent-check-iteration", type=int, default=0)
+    parser.add_argument("--tangent-check-only", action="store_true")
+    parser.add_argument("--tolerance", type=float, default=1.0e-8)
+    args = parser.parse_args()
+    if args.load_steps < 1:
+        parser.error("--load-steps must be at least 1")
+    integration_order = (
+        2 * args.order
+        if args.integration_order is None
+        else args.integration_order
+    )
+    if integration_order < 2 * args.order:
+        parser.error(
+            "--integration-order must be at least twice --order "
+            f"({2 * args.order})"
+        )
+
+    torch.set_default_dtype(torch.float64)
+    torch_threads = max(
+        1,
+        int(os.environ.get("TORCH_NUM_THREADS", os.environ.get("NGS_NUM_THREADS", "1"))),
+    )
+    torch.set_num_threads(torch_threads)
+    torch.set_num_interop_threads(1)
+    print(
+        "CPU threads: "
+        f"NGSolve={os.environ.get('NGS_NUM_THREADS', '1')}, "
+        f"PyTorch={torch_threads}",
+        flush=True,
+    )
+
+    checkpoint_path = args.checkpoint.resolve()
+    checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+    model = HyperelasticNN(n_ctx=1).to(dtype=torch.float64, device="cpu")
+    model.load_state_dict(checkpoint["state_dict"])
+    model.eval()
+
+    box = Box(Pnt(0, 0, 0), Pnt(1, 1, 1))
+    box.faces.Min(X).name = "left"
+    box.faces.Max(X).name = "right"
+    mesh = Mesh(OCCGeometry(box).GenerateMesh(maxh=args.maxh))
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+
+    print(
+        f"Macro-FE pICNN run: vf={args.volume_fraction:g}, "
+        f"axial stretch={args.stretch:g}, load steps={args.load_steps}, "
+        f"maxh={args.maxh:g}, order={args.order}, "
+        f"integration order={integration_order}, "
+        f"merit={args.merit_function}, predictor={args.load_predictor}",
+        flush=True,
+    )
+    displacement = None
+    previous_accepted_displacement = None
+    last_accepted_increment = None
+    load_step_reports = []
+    load_attempt_reports = []
+    failed_load_step = None
+    base_increment = args.stretch / args.load_steps
+    minimum_increment = base_increment / 128.0
+    load_increment = base_increment
+    current_stretch = 0.0
+    attempt_number = 0
+    try:
+        while current_stretch < args.stretch - 1.0e-14:
+            attempt_number += 1
+            if attempt_number > args.load_steps * 128:
+                raise RuntimeError("load continuation exceeded its attempt limit")
+
+            load_step = len(load_step_reports) + 1
+            failed_load_step = load_step
+            target_stretch = min(args.stretch, current_stretch + load_increment)
+            attempted_increment = target_stretch - current_stretch
+            boundary_displacement = CF((target_stretch * x, 0, 0))
+            print(
+                f"[load continuation] attempt={attempt_number}, "
+                f"accepted_step={load_step}, "
+                f"increment={attempted_increment:.8e}, "
+                f"axial_stretch={target_stretch:.8e}",
+                flush=True,
+            )
+            predictor_ratio = None
+            if displacement is None:
+                initial_guess = boundary_displacement
+                predictor_description = "affine_boundary_field"
+            elif (
+                args.load_predictor == "secant"
+                and previous_accepted_displacement is not None
+                and last_accepted_increment is not None
+                and last_accepted_increment > 0.0
+            ):
+                predictor_ratio = min(
+                    attempted_increment / last_accepted_increment,
+                    2.0,
+                )
+                initial_guess = GridFunction(displacement.space)
+                initial_guess.vec.data = displacement.vec
+                initial_guess.vec.FV().NumPy()[:] += (
+                    predictor_ratio
+                    * (
+                        displacement.vec.FV().NumPy()
+                        - previous_accepted_displacement.vec.FV().NumPy()
+                    )
+                )
+                predictor_description = "secant_extrapolation"
+            else:
+                initial_guess = displacement
+                predictor_description = "previous_equilibrium"
+            print(
+                f"[load predictor] type={predictor_description}"
+                + (
+                    f", increment_ratio={predictor_ratio:.6e}"
+                    if predictor_ratio is not None
+                    else ""
+                ),
+                flush=True,
+            )
+            try:
+                solve_result = solve(
+                    mesh,
+                    model,
+                    bc_cf=boundary_displacement,
+                    dirichlet="left|right",
+                    order=args.order,
+                    max_iter=args.max_iter,
+                    tol=args.tolerance,
+                    context=args.volume_fraction,
+                    initial_cf=initial_guess,
+                    integration_order=integration_order,
+                    merit_function=args.merit_function,
+                    diagnose_tangent=(
+                        load_step == args.tangent_check_at_load_step
+                    ),
+                    diagnose_tangent_only=(
+                        args.tangent_check_only
+                        and load_step == args.tangent_check_at_load_step
+                    ),
+                    diagnose_tangent_iteration=args.tangent_check_iteration,
+                )
+                if (
+                    args.tangent_check_only
+                    and load_step == args.tangent_check_at_load_step
+                ):
+                    displacement, residual_history, tangent_diagnostic = solve_result
+                    diagnostic_report = {
+                        "status": "diagnostic_complete",
+                        "checkpoint": str(checkpoint_path),
+                        "checkpoint_sha256": sha256_file(checkpoint_path),
+                        "volume_fraction": args.volume_fraction,
+                        "requested_axial_stretch": args.stretch,
+                        "diagnostic_load_step": load_step,
+                        "diagnostic_newton_iteration": args.tangent_check_iteration,
+                        "diagnostic_axial_stretch": target_stretch,
+                        "displacement_order": args.order,
+                        "integration_order": integration_order,
+                        "merit_function": args.merit_function,
+                        "load_predictor": args.load_predictor,
+                        "prior_converged_load_steps": load_step_reports,
+                        "residual_before_diagnostic": float(residual_history[-1]),
+                        "tangent_check": tangent_diagnostic,
+                    }
+                    args.output.write_text(
+                        json.dumps(diagnostic_report, indent=2) + "\n",
+                        encoding="utf-8",
+                    )
+                    print(json.dumps(diagnostic_report, indent=2), flush=True)
+                    print(f"Diagnostic report saved: {args.output}", flush=True)
+                    return
+                candidate, residual_history = solve_result
+                step_converged = bool(
+                    residual_history and residual_history[-1] < args.tolerance
+                )
+                if not step_converged:
+                    final_residual = (
+                        residual_history[-1] if residual_history else float("inf")
+                    )
+                    raise RuntimeError(
+                        f"load step at stretch {target_stretch:.8e} did not "
+                        f"converge; final free residual={final_residual:.6e}"
+                    )
+            except Exception as attempt_error:
+                load_attempt_reports.append(
+                    {
+                        "attempt": attempt_number,
+                        "accepted_step": load_step,
+                        "from_axial_stretch": current_stretch,
+                        "target_axial_stretch": target_stretch,
+                        "increment": attempted_increment,
+                        "status": "retry" if load_increment > minimum_increment else "failed",
+                        "error": f"{type(attempt_error).__name__}: {attempt_error}",
+                    }
+                )
+                print(
+                    f"[load continuation retry] target={target_stretch:.8e}, "
+                    f"increment={attempted_increment:.8e}, "
+                    f"error={type(attempt_error).__name__}: {attempt_error}",
+                    flush=True,
+                )
+                if load_increment <= minimum_increment * (1.0 + 1.0e-12):
+                    raise
+                load_increment = max(load_increment / 2.0, minimum_increment)
+                failed_load_step = None
+                continue
+
+            if displacement is not None:
+                previous_accepted_displacement = GridFunction(displacement.space)
+                previous_accepted_displacement.vec.data = displacement.vec
+            displacement = candidate
+            last_accepted_increment = attempted_increment
+            current_stretch = target_stretch
+            load_step_reports.append(
+                {
+                    "step": load_step,
+                    "target_axial_stretch": target_stretch,
+                    "increment": attempted_increment,
+                    "residual_history": [float(value) for value in residual_history],
+                    "converged": True,
+                }
+            )
+            load_attempt_reports.append(
+                {
+                    "attempt": attempt_number,
+                    "accepted_step": load_step,
+                    "from_axial_stretch": current_stretch - attempted_increment,
+                    "target_axial_stretch": target_stretch,
+                    "increment": attempted_increment,
+                    "status": "accepted",
+                }
+            )
+            failed_load_step = None
+    except Exception as exc:
+        failure_report = {
+            "status": "failed",
+            "error": f"{type(exc).__name__}: {exc}",
+            "failed_load_step": failed_load_step,
+            "load_steps": load_step_reports,
+            "load_attempts": load_attempt_reports,
+            "checkpoint": str(checkpoint_path),
+            "checkpoint_sha256": sha256_file(checkpoint_path),
+            "volume_fraction": args.volume_fraction,
+            "axial_stretch": args.stretch,
+            "requested_load_steps": args.load_steps,
+            "mesh_maxh": args.maxh,
+            "displacement_order": args.order,
+            "integration_order": integration_order,
+            "merit_function": args.merit_function,
+            "load_predictor": args.load_predictor,
+        }
+        args.output.write_text(
+            json.dumps(failure_report, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        raise
+
+    coefficients = displacement.vec.FV().NumPy().copy()
+    finite_solution = bool(np.isfinite(coefficients).all())
+    final_residual = float(residual_history[-1]) if residual_history else float("inf")
+
+    quadrature = IntegrationRuleSpace(mesh, order=integration_order)
+    jacobian = GridFunction(quadrature)
+    jacobian.Interpolate(Det(Id(3) + Grad(displacement)))
+    sampled_j = jacobian.vec.FV().NumPy().copy()
+    finite_jacobian = bool(np.isfinite(sampled_j).all())
+    minimum_j = float(np.min(sampled_j)) if sampled_j.size else float("nan")
+    maximum_j = float(np.max(sampled_j)) if sampled_j.size else float("nan")
+
+    converged = bool(load_step_reports) and all(
+        step["converged"] for step in load_step_reports
+    )
+    admissible = finite_jacobian and minimum_j > 0.0
+    status = "complete" if finite_solution and converged and admissible else "failed"
+    report = {
+        "status": status,
+        "checkpoint": str(checkpoint_path),
+        "checkpoint_sha256": sha256_file(checkpoint_path),
+        "volume_fraction": args.volume_fraction,
+        "axial_stretch": args.stretch,
+        "mesh_maxh": args.maxh,
+        "displacement_order": args.order,
+        "integration_order": integration_order,
+        "merit_function": args.merit_function,
+        "load_predictor": args.load_predictor,
+        "mesh_elements": int(mesh.ne),
+        "solution_dofs": int(len(coefficients)),
+        "load_steps": load_step_reports,
+        "load_attempts": load_attempt_reports,
+        "final_axial_stretch": current_stretch,
+        "newton_iterations": sum(
+            max(len(step["residual_history"]) - 1, 0)
+            for step in load_step_reports
+        ),
+        "residual_history": [float(value) for value in residual_history],
+        "final_free_residual": final_residual,
+        "residual_tolerance": args.tolerance,
+        "minimum_sampled_jacobian": minimum_j,
+        "maximum_sampled_jacobian": maximum_j,
+        "all_solution_values_finite": finite_solution,
+        "all_sampled_jacobians_finite": finite_jacobian,
+        "converged": converged,
+        "orientation_preserving_at_sampled_points": admissible,
+    }
+    args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(report, indent=2), flush=True)
+    print(f"Report saved: {args.output}", flush=True)
+    if status != "complete":
+        raise RuntimeError("macro-FE integration check did not pass")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,11 @@
+PASS: 15 samples passed stored-data integrity checks
+Dataset SHA-256: 7027e7d3b7fca128036bd1cc6ba6b0fe978a67c3e30957c9ad804ec8329de63f
+Configuration SHA-256: d38acd025a4765e48a938b83beec2e4bc13f5845f203f7c1ab0bda1603e924e1
+Source revision SHA-256: b907f7946a365305bb067cc8432dcfbdc12b4b65071920479b817f4967807d08
+Microscopic J range at integration quadrature points: [9.219591e-01, 1.085472e+00]
+Microscopic-J safety floor: 1.000000e-08
+Max mixed residual: 4.590e-11
+Max rotation residual: 4.376e-11
+Max condensed residual: 5.874e-13
+Max tangent symmetry error: 7.387e-16
+Note: microscopic extrema are sampled at the configured integration quadrature points.

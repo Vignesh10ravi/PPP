@@ -1,0 +1,37 @@
+NumPy 2.4.6 PyTorch 2.15.0+cpu
+/scratch/vr80beqo/venvs/ppp-rve-train-cpu/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+epoch=5 selection=1.009105e+00 original_ratio=1.0315 shear_ratio=0.9867
+epoch=10 selection=1.027021e+00 original_ratio=1.0814 shear_ratio=0.9726
+epoch=15 selection=1.036137e+00 original_ratio=1.1150 shear_ratio=0.9573
+epoch=20 selection=1.134489e+00 original_ratio=1.3230 shear_ratio=0.9460
+epoch=25 selection=1.048620e+00 original_ratio=1.1652 shear_ratio=0.9321
+epoch=30 selection=1.063655e+00 original_ratio=1.2061 shear_ratio=0.9212
+epoch=35 selection=1.080892e+00 original_ratio=1.2540 shear_ratio=0.9078
+epoch=40 selection=1.041007e+00 original_ratio=1.1856 shear_ratio=0.8964
+epoch=45 selection=1.051010e+00 original_ratio=1.2179 shear_ratio=0.8841
+epoch=50 selection=1.062522e+00 original_ratio=1.2521 shear_ratio=0.8729
+epoch=55 selection=1.070516e+00 original_ratio=1.2802 shear_ratio=0.8608
+epoch=60 selection=1.059360e+00 original_ratio=1.2697 shear_ratio=0.8490
+epoch=65 selection=1.055365e+00 original_ratio=1.2729 shear_ratio=0.8378
+epoch=70 selection=1.081698e+00 original_ratio=1.3367 shear_ratio=0.8267
+epoch=75 selection=1.078155e+00 original_ratio=1.3406 shear_ratio=0.8157
+epoch=80 selection=1.076546e+00 original_ratio=1.3487 shear_ratio=0.8044
+epoch=85 selection=1.097587e+00 original_ratio=1.4023 shear_ratio=0.7928
+epoch=90 selection=1.102675e+00 original_ratio=1.4229 shear_ratio=0.7824
+epoch=95 selection=1.124060e+00 original_ratio=1.4764 shear_ratio=0.7717
+epoch=100 selection=1.091329e+00 original_ratio=1.4209 shear_ratio=0.7618
+early stopping at epoch 100
+{
+  "status": "complete",
+  "best_epoch": 0,
+  "candidate_improved_validation": false,
+  "best_selection_score": 1.0,
+  "original_test_frozen_stress_rmse": 2.479871493189397,
+  "original_test_candidate_stress_rmse": 2.479871493189397,
+  "shear_test_frozen_mean_P01_error": 0.587970317615952,
+  "shear_test_candidate_mean_P01_error": 0.587970317615952,
+  "candidate_checkpoint": "/scratch4/vr80beqo/rve_shear_tangent_calibration_20261115/partial_icnn_phase7_shear_tangent_calibrated.pt",
+  "report": "/scratch4/vr80beqo/rve_shear_tangent_calibration_20261115/shear_tangent_calibration_report.json",
+  "csv": "/scratch4/vr80beqo/rve_shear_tangent_calibration_20261115/previously_inspected_shear_development_comparison.csv"
+}

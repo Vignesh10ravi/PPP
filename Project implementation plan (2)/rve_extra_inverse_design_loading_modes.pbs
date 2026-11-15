@@ -1,0 +1,64 @@
+#!/bin/bash
+#PBS -N rve_inv_modes_retry
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=96GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_extra_inverse_design_loading_modes_retry.out
+#PBS -e /scratch/vr80beqo/rve_extra_inverse_design_loading_modes_retry.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=12
+export TORCH_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+OUT_DIR=/scratch/vr80beqo/rve_extra_inverse_design_loading_modes_retry_20261114
+mkdir -p "$OUT_DIR"
+test -f "$CHECKPOINT"
+
+run_case() {
+  local label="$1"
+  local response="$2"
+  local i="$3"
+  local j="$4"
+  shift 4
+
+  python -u -m benchmarks.rve_inverse_design_target_sweep \
+    --checkpoint "$CHECKPOINT" \
+    --expected-checkpoint-sha256 32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70 \
+    --target-fractions 0.25 0.50 0.75 \
+    --response "$response" \
+    --i "$i" --j "$j" \
+    --deformation-gradient "$@" \
+    --volume-fraction-bounds 0.02 0.10 \
+    --grid-size 101 \
+    --gradient-fd-step 1.0e-5 \
+    --gradient-tolerance 1.0e-5 \
+    --target-error-limit 0.05 \
+    --max-condition-number 3.0 \
+    --torch-threads 1 \
+    --maxh 0.22 \
+    --mu 1.0 \
+    --bulk-modulus 10000 \
+    --displacement-order 2 \
+    --integration-order 10 \
+    --microscopic-jacobian-floor 1.0e-8 \
+    --output "$OUT_DIR/${label}.json" \
+    --csv "$OUT_DIR/${label}.csv" \
+    2>&1 | tee "$OUT_DIR/${label}_run.log"
+}
+
+# F = [[1, 0.05, 0], [0, 1, 0], [0, 0, 1]], response P01.
+run_case simple_shear stress 0 1 1 0.05 0 0 1 0 0 0 1
+
+# F = diag(0.95, 1, 1), response P00.
+run_case uniaxial_compression stress 0 0 0.95 0 0 0 1 0 0 0 0 1

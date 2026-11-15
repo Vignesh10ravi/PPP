@@ -1,0 +1,1227 @@
+{
+  "best_epoch": 2750,
+  "checkpoint_path": "/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "direct_rve_validation": {
+    "all_direct_rve_solvers_converged": true,
+    "energy_mae": 0.03689931986869367,
+    "energy_rmse": 0.06411438193946216,
+    "n_direct_rve_cases": 9,
+    "status": "pass",
+    "stress_component_mae": 0.36510786245363863,
+    "stress_component_rmse": 1.0175436660788897,
+    "stress_frobenius_rmse": 3.0526309982366695
+  },
+  "load_cases": {
+    "simple_shear_5pct": {
+      "condition_number": 1.0512656225593564,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.05,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "determinant": 1.0
+    },
+    "uniaxial_5pct": {
+      "condition_number": 1.05,
+      "deformation_gradient": [
+        [
+          1.05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "determinant": 1.05
+    },
+    "uniaxial_compression_5pct": {
+      "condition_number": 1.0526315789473684,
+      "deformation_gradient": [
+        [
+          0.95,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "determinant": 0.95
+    }
+  },
+  "runtime_environment": {
+    "hostname": "mnode102.cluster",
+    "platform": "Linux-4.18.0-553.184.1.el8_10.x86_64-x86_64-with-glibc2.28",
+    "python": "3.11.7",
+    "pytorch": "2.15.0+cpu",
+    "torch_threads": 1
+  },
+  "rve_configuration": {
+    "bulk_modulus": 10000.0,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0
+  },
+  "schema_version": 1,
+  "status": "pass",
+  "surrogate_map": [
+    {
+      "d_energy_d_vf": -20.749580439402962,
+      "d_p00_d_vf": -733.6272178242834,
+      "d_p01_d_vf": 0.0,
+      "deformation_condition_number": 1.05,
+      "deformation_determinant": 1.05,
+      "deformation_gradient": [
+        [
+          1.05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 12.733114765893975,
+        "maximum_microscopic_jacobian": 1.0893955720931436,
+        "minimum_microscopic_jacobian": 1.0033099142274624,
+        "minimum_particle_clearance": 0.331610969903937,
+        "mixed_residual": 1.0809501003539198e-13,
+        "response": 12.733114765893975,
+        "rotation": [
+          [
+            0.999999997849063,
+            4.149777108580813e-05,
+            -5.0791819122642486e-05
+          ],
+          [
+            -4.149814902561168e-05,
+            0.9999999991112756,
+            -7.439926897852334e-06
+          ],
+          [
+            5.079151033711725e-05,
+            7.442034648342413e-06,
+            0.9999999986824193
+          ]
+        ],
+        "rotation_residual": 1.8901531965061825e-13,
+        "solver_status": "converged",
+        "stress": [
+          [
+            509.3232719619183,
+            -1.454876197645868e-06,
+            1.390989448551397e-06
+          ],
+          [
+            -1.3855962111119081e-06,
+            534.6852795866898,
+            -2.5464968704783406e-06
+          ],
+          [
+            1.3247518528795182e-06,
+            -2.5464969410157615e-06,
+            534.6852817057126
+          ]
+        ],
+        "volume_fraction": 0.02
+      },
+      "energy": 12.764646592508427,
+      "finite_difference_sensitivities": {
+        "energy": -20.74957970705782,
+        "p00": -733.6272603879478,
+        "p01": 0.0
+      },
+      "load_case": "uniaxial_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          508.4262010263101,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          533.6686772986986,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          533.6686772986986
+        ]
+      ],
+      "tangent_frobenius_norm": 33110.93706617438,
+      "volume_fraction": 0.02
+    },
+    {
+      "d_energy_d_vf": 19.061219590872497,
+      "d_p00_d_vf": 575.3240622109806,
+      "d_p01_d_vf": 0.0,
+      "deformation_condition_number": 1.05,
+      "deformation_determinant": 1.05,
+      "deformation_gradient": [
+        [
+          1.05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 13.087722717230937,
+        "maximum_microscopic_jacobian": 1.0947323561426214,
+        "minimum_microscopic_jacobian": 1.0061755753756,
+        "minimum_particle_clearance": 0.2714609251329584,
+        "mixed_residual": 1.3581164725759165e-13,
+        "response": 13.087722717230937,
+        "rotation": [
+          [
+            0.9999999941687455,
+            -0.00010776251866745061,
+            7.053255775215229e-06
+          ],
+          [
+            0.00010776242449005578,
+            0.9999999941045007,
+            1.33513477647597e-05
+          ],
+          [
+            -7.054694508500877e-06,
+            -1.3350587610958866e-05,
+            0.9999999998859965
+          ]
+        ],
+        "rotation_residual": 8.534370000938806e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            523.5073522509665,
+            4.424370090477152e-05,
+            1.3391413419237559e-06
+          ],
+          [
+            4.21368500145426e-05,
+            549.5701274373035,
+            8.806532978130309e-06
+          ],
+          [
+            1.2753712506263955e-06,
+            8.806533340108714e-06,
+            549.570134029331
+          ]
+        ],
+        "volume_fraction": 0.05
+      },
+      "energy": 13.044901661950405,
+      "finite_difference_sensitivities": {
+        "energy": 19.06121877368605,
+        "p00": 575.3241355250793,
+        "p01": 0.0
+      },
+      "load_case": "uniaxial_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          526.0060929232441,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          552.1005525234295,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          552.1005525234295
+        ]
+      ],
+      "tangent_frobenius_norm": 35135.963953172904,
+      "volume_fraction": 0.05
+    },
+    {
+      "d_energy_d_vf": -14.296506333798789,
+      "d_p00_d_vf": -467.301367968867,
+      "d_p01_d_vf": 0.0,
+      "deformation_condition_number": 1.05,
+      "deformation_determinant": 1.05,
+      "deformation_gradient": [
+        [
+          1.05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 13.736862565489094,
+        "maximum_microscopic_jacobian": 1.112523605319379,
+        "minimum_microscopic_jacobian": 0.9954871116554145,
+        "minimum_particle_clearance": 0.21205880885151385,
+        "mixed_residual": 1.7860761230801637e-12,
+        "response": 13.736862565489094,
+        "rotation": [
+          [
+            0.9999999904979208,
+            -9.267928866725871e-05,
+            0.0001020524761790856
+          ],
+          [
+            9.267934449068481e-05,
+            0.9999999957051225,
+            -5.422781275989632e-07
+          ],
+          [
+            -0.0001020524254828315,
+            5.51736279059999e-07,
+            0.999999994792499
+          ]
+        ],
+        "rotation_residual": 1.8067431922824737e-11,
+        "solver_status": "converged",
+        "stress": [
+          [
+            549.472380916787,
+            8.128774867488357e-06,
+            4.3983177947879565e-06
+          ],
+          [
+            7.741694529887072e-06,
+            576.815191030557,
+            1.0647184266426446e-06
+          ],
+          [
+            4.188889793544856e-06,
+            1.0647124858858063e-06,
+            576.8151304067645
+          ]
+        ],
+        "volume_fraction": 0.1
+      },
+      "energy": 13.563825542333177,
+      "finite_difference_sensitivities": {
+        "energy": -14.29650237696478,
+        "p00": -467.30128528906783,
+        "p01": 0.0
+      },
+      "load_case": "uniaxial_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          545.2961676618397,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          572.3065033616222,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          572.3065033616222
+        ]
+      ],
+      "tangent_frobenius_norm": 37241.433907999075,
+      "volume_fraction": 0.1
+    },
+    {
+      "d_energy_d_vf": 0.007496472535422072,
+      "d_p00_d_vf": 0.02448911122883146,
+      "d_p01_d_vf": 0.29986012105577114,
+      "deformation_condition_number": 1.0512656225593564,
+      "deformation_determinant": 1.0,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.05,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 0.0013081506230434646,
+        "maximum_microscopic_jacobian": 1.0382579098513414,
+        "minimum_microscopic_jacobian": 0.9612468002625785,
+        "minimum_particle_clearance": 0.331610969903937,
+        "mixed_residual": 6.116965647533722e-15,
+        "response": 0.0013081506230434646,
+        "rotation": [
+          [
+            0.9996850425886455,
+            0.025096108405536444,
+            3.1103615419425134e-05
+          ],
+          [
+            -0.02509610746356132,
+            0.9996850426365435,
+            -3.031417608319061e-05
+          ],
+          [
+            -3.185458695595145e-05,
+            2.952404873366648e-05,
+            0.9999999990568079
+          ]
+        ],
+        "rotation_residual": 2.6772767431968614e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -0.0009003931034493382,
+            0.05232693926013744,
+            -1.4026629783929376e-06
+          ],
+          [
+            0.052370806895859635,
+            -0.0008773526834035922,
+            -6.3028175806067075e-06
+          ],
+          [
+            -1.0875234530602755e-06,
+            -6.302819222976037e-06,
+            -0.0009058357740941863
+          ]
+        ],
+        "volume_fraction": 0.02
+      },
+      "energy": 0.0019080149722867645,
+      "finite_difference_sensitivities": {
+        "energy": 0.0074965328167309045,
+        "p00": 0.024488599592586976,
+        "p01": 0.2998601156226077
+      },
+      "load_case": "simple_shear_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          0.005064646271421225,
+          0.07632072177308241,
+          0.0
+        ],
+        [
+          0.07606748945948993,
+          0.005064646271421225,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.008642974607937504
+        ]
+      ],
+      "tangent_frobenius_norm": 30718.376741266235,
+      "volume_fraction": 0.02
+    },
+    {
+      "d_energy_d_vf": 0.00974787692530299,
+      "d_p00_d_vf": 0.03903563898711582,
+      "d_p01_d_vf": 0.38991720824564247,
+      "deformation_condition_number": 1.0512656225593564,
+      "deformation_determinant": 1.0,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.05,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 0.0013933544926890687,
+        "maximum_microscopic_jacobian": 1.0363342026130113,
+        "minimum_microscopic_jacobian": 0.9656952455623525,
+        "minimum_particle_clearance": 0.2714609251329584,
+        "mixed_residual": 1.1422994207458684e-13,
+        "response": 0.0013933544926890687,
+        "rotation": [
+          [
+            0.999684971210847,
+            0.025098961130819417,
+            2.2030003352574383e-05
+          ],
+          [
+            -0.025098960719464075,
+            0.9996849712879906,
+            -1.87545121344365e-05
+          ],
+          [
+            -2.249378204009666e-05,
+            1.8195673734374034e-05,
+            0.9999999995814736
+          ]
+        ],
+        "rotation_residual": 6.570586852926744e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -0.0009613784177331593,
+            0.05573590147024154,
+            1.5385628967206703e-05
+          ],
+          [
+            0.05578721358898097,
+            -0.0010262424806573667,
+            2.8733507126751664e-06
+          ],
+          [
+            1.5241957533844853e-05,
+            2.8733509018752793e-06,
+            -0.0010116745368215216
+          ]
+        ],
+        "volume_fraction": 0.05
+      },
+      "energy": 0.002164003466077702,
+      "finite_difference_sensitivities": {
+        "energy": 0.009747918738867156,
+        "p00": 0.039035967347444966,
+        "p01": 0.38991720578904204
+      },
+      "load_case": "simple_shear_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          0.006062337286493857,
+          0.0865603103564358,
+          0.0
+        ],
+        [
+          0.08625719349208794,
+          0.006062337286493857,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.010139784653802053
+        ]
+      ],
+      "tangent_frobenius_norm": 31108.67752014894,
+      "volume_fraction": 0.05
+    },
+    {
+      "d_energy_d_vf": 0.011088029781149089,
+      "d_p00_d_vf": 0.012567368294185144,
+      "d_p01_d_vf": 0.4435240023183479,
+      "deformation_condition_number": 1.0512656225593564,
+      "deformation_determinant": 1.0,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.05,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 0.0015310183991065216,
+        "maximum_microscopic_jacobian": 1.04257525724578,
+        "minimum_microscopic_jacobian": 0.9610501210537413,
+        "minimum_particle_clearance": 0.21205880885151385,
+        "mixed_residual": 1.3534078338493903e-13,
+        "response": 0.0015310183991065216,
+        "rotation": [
+          [
+            0.9996884980068484,
+            0.02495802323843083,
+            6.347315159734285e-05
+          ],
+          [
+            -0.02495802432004244,
+            0.9996884998619135,
+            1.6305728108936327e-05
+          ],
+          [
+            -6.304642096078436e-05,
+            -1.7884813303397746e-05,
+            0.9999999978526412
+          ]
+        ],
+        "rotation_residual": 7.1682633624601684e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -0.001230383086540623,
+            0.06125046192585304,
+            2.22574213664153e-05
+          ],
+          [
+            0.061302117768253526,
+            -0.0010331168396290223,
+            -4.504911256302919e-06
+          ],
+          [
+            2.248267409179023e-05,
+            -4.504911421152183e-06,
+            -0.0011774330554531298
+          ]
+        ],
+        "volume_fraction": 0.1
+      },
+      "energy": 0.0026842481165658683,
+      "finite_difference_sensitivities": {
+        "energy": 0.011088013707194476,
+        "p00": 0.012567033991217611,
+        "p01": 0.44352399747593635
+      },
+      "load_case": "simple_shear_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          0.007677827467887255,
+          0.10737022515029622,
+          0.0
+        ],
+        [
+          0.10698633377688793,
+          0.007677827467887255,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.01278343827380013
+        ]
+      ],
+      "tangent_frobenius_norm": 32646.054861072047,
+      "volume_fraction": 0.1
+    },
+    {
+      "d_energy_d_vf": -24.521977958042953,
+      "d_p00_d_vf": 973.8511614102645,
+      "d_p01_d_vf": 0.0,
+      "deformation_condition_number": 1.0526315789473684,
+      "deformation_determinant": 0.95,
+      "deformation_gradient": [
+        [
+          0.95,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 12.73325955737233,
+        "maximum_microscopic_jacobian": 0.9943400915952874,
+        "minimum_microscopic_jacobian": 0.9118223020409496,
+        "minimum_particle_clearance": 0.331610969903937,
+        "mixed_residual": 8.213600598846713e-13,
+        "response": 12.73325955737233,
+        "rotation": [
+          [
+            0.9999999972140704,
+            -5.106557465505573e-05,
+            5.444415679846945e-05
+          ],
+          [
+            5.1065220225162935e-05,
+            0.9999999986749728,
+            6.511341390484538e-06
+          ],
+          [
+            -5.444448923172122e-05,
+            -6.508561169471807e-06,
+            0.9999999984967181
+          ]
+        ],
+        "rotation_residual": 3.436345776362696e-13,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -509.33197270663607,
+            1.5901899368990437e-06,
+            -1.8452372005799177e-06
+          ],
+          [
+            1.6738844482684168e-06,
+            -483.7592275523964,
+            2.796154994219558e-06
+          ],
+          [
+            -1.9423549627218704e-06,
+            2.7961548074539704e-06,
+            -483.75922932468603
+          ]
+        ],
+        "volume_fraction": 0.02
+      },
+      "energy": 12.735672681260155,
+      "finite_difference_sensitivities": {
+        "energy": -24.521990272319268,
+        "p00": 973.8518793710681,
+        "p01": 0.0
+      },
+      "load_case": "uniaxial_compression_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          -508.85442827476163,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -483.2808364632165,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -483.2808364632165
+        ]
+      ],
+      "tangent_frobenius_norm": 27574.129925652647,
+      "volume_fraction": 0.02
+    },
+    {
+      "d_energy_d_vf": 32.02412058367827,
+      "d_p00_d_vf": -1624.5233122966965,
+      "d_p01_d_vf": 0.0,
+      "deformation_condition_number": 1.0526315789473684,
+      "deformation_determinant": 0.95,
+      "deformation_gradient": [
+        [
+          0.95,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 13.087895146692718,
+        "maximum_microscopic_jacobian": 0.9927928984477519,
+        "minimum_microscopic_jacobian": 0.9041398594498563,
+        "minimum_particle_clearance": 0.2714609251329584,
+        "mixed_residual": 5.122025798421375e-13,
+        "response": 13.087895146692718,
+        "rotation": [
+          [
+            0.9999999966165116,
+            8.10729414362051e-05,
+            -1.3933953859760944e-05
+          ],
+          [
+            -8.10731086187653e-05,
+            0.9999999966415988,
+            -1.1998068104031242e-05
+          ],
+          [
+            1.393298109430191e-05,
+            1.1999197732379623e-05,
+            0.9999999998309457
+          ]
+        ],
+        "rotation_residual": 1.2778614835981731e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -523.5177175027396,
+            -4.767846981837626e-05,
+            -3.0528867377653253e-06
+          ],
+          [
+            -5.018786299746704e-05,
+            -497.2265210684685,
+            -1.0274293170315881e-05
+          ],
+          [
+            -3.2135662048087986e-06,
+            -1.0274293714863198e-05,
+            -497.22653468856305
+          ]
+        ],
+        "volume_fraction": 0.05
+      },
+      "energy": 13.070778597754781,
+      "finite_difference_sensitivities": {
+        "energy": 32.02411971301444,
+        "p00": -1624.5232502569704,
+        "p01": 0.0
+      },
+      "load_case": "uniaxial_compression_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          -524.0500974992765,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -497.70095581996065,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -497.70095581996065
+        ]
+      ],
+      "tangent_frobenius_norm": 28454.08072876394,
+      "volume_fraction": 0.05
+    },
+    {
+      "d_energy_d_vf": -52.19541185793696,
+      "d_p00_d_vf": 2137.078330740413,
+      "d_p01_d_vf": 0.0,
+      "deformation_condition_number": 1.0526315789473684,
+      "deformation_determinant": 0.95,
+      "deformation_gradient": [
+        [
+          0.95,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "direct_rve": {
+        "energy": 13.737102547322959,
+        "maximum_microscopic_jacobian": 1.0031735355139286,
+        "minimum_microscopic_jacobian": 0.8923164929361799,
+        "minimum_particle_clearance": 0.21205880885151385,
+        "mixed_residual": 3.42391579117526e-11,
+        "response": 13.737102547322959,
+        "rotation": [
+          [
+            0.999999988734714,
+            9.768663082577024e-05,
+            -0.00011396444226248398
+          ],
+          [
+            -9.76869212183871e-05,
+            0.9999999952254005,
+            -2.5425347996911877e-06
+          ],
+          [
+            0.00011396419334669116,
+            2.5536676065378492e-06,
+            0.9999999935028206
+          ]
+        ],
+        "rotation_residual": 1.9142944378681292e-11,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -549.4868209457987,
+            -1.6146154152906454e-05,
+            4.973113568412617e-06
+          ],
+          [
+            -1.6995936221229566e-05,
+            -521.8767936706354,
+            -5.168628184257625e-06
+          ],
+          [
+            5.2348689314899235e-06,
+            -5.16863069018587e-06,
+            -521.8767224391682
+          ]
+        ],
+        "volume_fraction": 0.1
+      },
+      "energy": 13.67445198942147,
+      "finite_difference_sensitivities": {
+        "energy": -52.19542217673733,
+        "p00": 2137.0787593241403,
+        "p01": 0.0
+      },
+      "load_case": "uniaxial_compression_5pct",
+      "repeatability_scaled_error": 0.0,
+      "stress": [
+        [
+          -548.5885671165961,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -520.9782578670856,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -520.9782578670856
+        ]
+      ],
+      "tangent_frobenius_norm": 30006.623962483634,
+      "volume_fraction": 0.1
+    }
+  ],
+  "training_dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "verification": {
+    "autograd_vs_finite_difference": [
+      {
+        "autograd_derivative": -20.749580439402962,
+        "finite_difference_derivative": -20.74957970705782,
+        "load_case": "uniaxial_5pct",
+        "response": "energy",
+        "scaled_error": 3.5294455465725695e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": -733.6272178242834,
+        "finite_difference_derivative": -733.6272603879478,
+        "load_case": "uniaxial_5pct",
+        "response": "p00",
+        "scaled_error": 5.801810626391346e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 0.0,
+        "finite_difference_derivative": 0.0,
+        "load_case": "uniaxial_5pct",
+        "response": "p01",
+        "scaled_error": 0.0,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 19.061219590872497,
+        "finite_difference_derivative": 19.06121877368605,
+        "load_case": "uniaxial_5pct",
+        "response": "energy",
+        "scaled_error": 4.2871676841837443e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": 575.3240622109806,
+        "finite_difference_derivative": 575.3241355250793,
+        "load_case": "uniaxial_5pct",
+        "response": "p00",
+        "scaled_error": 1.2743094574430231e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": 0.0,
+        "finite_difference_derivative": 0.0,
+        "load_case": "uniaxial_5pct",
+        "response": "p01",
+        "scaled_error": 0.0,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": -14.296506333798789,
+        "finite_difference_derivative": -14.29650237696478,
+        "load_case": "uniaxial_5pct",
+        "response": "energy",
+        "scaled_error": 2.7676929709286144e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": -467.301367968867,
+        "finite_difference_derivative": -467.30128528906783,
+        "load_case": "uniaxial_5pct",
+        "response": "p00",
+        "scaled_error": 1.769303597866879e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": 0.0,
+        "finite_difference_derivative": 0.0,
+        "load_case": "uniaxial_5pct",
+        "response": "p01",
+        "scaled_error": 0.0,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": 0.007496472535422072,
+        "finite_difference_derivative": 0.0074965328167309045,
+        "load_case": "simple_shear_5pct",
+        "response": "energy",
+        "scaled_error": 6.028130883264232e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 0.02448911122883146,
+        "finite_difference_derivative": 0.024488599592586976,
+        "load_case": "simple_shear_5pct",
+        "response": "p00",
+        "scaled_error": 5.116362444858302e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 0.29986012105577114,
+        "finite_difference_derivative": 0.2998601156226077,
+        "load_case": "simple_shear_5pct",
+        "response": "p01",
+        "scaled_error": 5.43316341916622e-09,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 0.00974787692530299,
+        "finite_difference_derivative": 0.009747918738867156,
+        "load_case": "simple_shear_5pct",
+        "response": "energy",
+        "scaled_error": 4.181356416665949e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": 0.03903563898711582,
+        "finite_difference_derivative": 0.039035967347444966,
+        "load_case": "simple_shear_5pct",
+        "response": "p00",
+        "scaled_error": 3.283603291492909e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": 0.38991720824564247,
+        "finite_difference_derivative": 0.38991720578904204,
+        "load_case": "simple_shear_5pct",
+        "response": "p01",
+        "scaled_error": 2.4566004230841543e-09,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": 0.011088029781149089,
+        "finite_difference_derivative": 0.011088013707194476,
+        "load_case": "simple_shear_5pct",
+        "response": "energy",
+        "scaled_error": 1.607395461351857e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": 0.012567368294185144,
+        "finite_difference_derivative": 0.012567033991217611,
+        "load_case": "simple_shear_5pct",
+        "response": "p00",
+        "scaled_error": 3.3430296753240996e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": 0.4435240023183479,
+        "finite_difference_derivative": 0.44352399747593635,
+        "load_case": "simple_shear_5pct",
+        "response": "p01",
+        "scaled_error": 4.842411527317125e-09,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": -24.521977958042953,
+        "finite_difference_derivative": -24.521990272319268,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "energy",
+        "scaled_error": 5.021727917817378e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 973.8511614102645,
+        "finite_difference_derivative": 973.8518793710681,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "p00",
+        "scaled_error": 7.372381969323824e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 0.0,
+        "finite_difference_derivative": 0.0,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "p01",
+        "scaled_error": 0.0,
+        "step": 1e-05,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 32.02412058367827,
+        "finite_difference_derivative": 32.02411971301444,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "energy",
+        "scaled_error": 2.7187751282840357e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": -1624.5233122966965,
+        "finite_difference_derivative": -1624.5232502569704,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "p00",
+        "scaled_error": 3.8189495741727126e-08,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": 0.0,
+        "finite_difference_derivative": 0.0,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "p01",
+        "scaled_error": 0.0,
+        "step": 1e-05,
+        "volume_fraction": 0.05
+      },
+      {
+        "autograd_derivative": -52.19541185793696,
+        "finite_difference_derivative": -52.19542217673733,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "energy",
+        "scaled_error": 1.976955054731065e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": 2137.078330740413,
+        "finite_difference_derivative": 2137.0787593241403,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "p00",
+        "scaled_error": 2.0054652890118954e-07,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      },
+      {
+        "autograd_derivative": 0.0,
+        "finite_difference_derivative": 0.0,
+        "load_case": "uniaxial_compression_5pct",
+        "response": "p01",
+        "scaled_error": 0.0,
+        "step": 1e-05,
+        "volume_fraction": 0.1
+      }
+    ],
+    "finite_difference_rule": "central difference in the interior; second-order one-sided difference at either volume-fraction bound",
+    "maximum_repeatability_scaled_error": 0.0,
+    "maximum_scaled_derivative_error": 7.372381969323824e-07,
+    "repeatability_status": "pass",
+    "repeatability_tolerance": 1e-12,
+    "status": "pass",
+    "tolerance": 1e-05
+  },
+  "volume_fraction_bounds": [
+    0.02,
+    0.1
+  ],
+  "volume_fractions": [
+    0.02,
+    0.05,
+    0.1
+  ]
+}

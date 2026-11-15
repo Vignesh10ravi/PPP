@@ -1,0 +1,127 @@
+#!/bin/bash
+#PBS -N p7_shear_macro12
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=32GB
+#PBS -l walltime=08:00:00
+#PBS -o /scratch/vr80beqo/rve_phase7_macro_fe_selected_shear12.out
+#PBS -e /scratch/vr80beqo/rve_phase7_macro_fe_selected_shear12.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=12
+export TORCH_NUM_THREADS=12
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+OUT_DIR=/scratch4/vr80beqo/rve_phase7_macro_fe_selected_shear_20261116
+BASELINE_DIR=/scratch/vr80beqo/rve_phase7_macro_fe_order1_energy_secant12
+BASELINE_REPORT="$BASELINE_DIR/report.json"
+BASELINE_LOG="$BASELINE_DIR/run.log"
+FROZEN_SHA256=32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70
+CHECKPOINT=/scratch/vr80beqo/rve_shear_adaptation_finetune_20261115/partial_icnn_phase7_shear_adapted.pt
+CANDIDATE_SHA256=5c1c606057eb39e2ce779ead2872d6c06a4d29c5a6e423d27dd415a681566a1e
+mkdir -p "$OUT_DIR"
+
+test -f "$BASELINE_REPORT"
+test -f "$BASELINE_LOG"
+test -f "$CHECKPOINT"
+ACTUAL_CANDIDATE_SHA256=$(sha256sum "$CHECKPOINT" | awk '{print $1}')
+test "$ACTUAL_CANDIDATE_SHA256" = "$CANDIDATE_SHA256"
+
+set +e
+python -u -m benchmarks.phase6_macro_fe_demo \
+  --checkpoint "$CHECKPOINT" \
+  --output "$OUT_DIR/report.json" \
+  --volume-fraction 0.05 \
+  --stretch 0.05 \
+  --maxh 0.25 \
+  --order 1 \
+  --integration-order 4 \
+  --max-iter 200 \
+  --load-steps 100 \
+  --tolerance 1.0e-8 \
+  --merit-function energy \
+  --load-predictor secant \
+  2>&1 | tee "$OUT_DIR/run.log"
+SOLVER_STATUS=${PIPESTATUS[0]}
+set -e
+
+python - "$BASELINE_REPORT" "$BASELINE_LOG" "$OUT_DIR/report.json" "$OUT_DIR/run.log" "$OUT_DIR/comparison.json" <<'PY'
+import json
+import re
+import sys
+from pathlib import Path
+
+baseline_report_path, baseline_log_path, candidate_report_path, candidate_log_path, output_path = map(Path, sys.argv[1:])
+baseline = json.loads(baseline_report_path.read_text(encoding="utf-8"))
+candidate = json.loads(candidate_report_path.read_text(encoding="utf-8"))
+if baseline.get("status") != "complete":
+    raise SystemExit("Reference macro-FE report is not complete")
+if baseline.get("checkpoint_sha256") != "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70":
+    raise SystemExit("Reference report does not use the expected frozen checkpoint")
+if candidate.get("checkpoint_sha256") != "5c1c606057eb39e2ce779ead2872d6c06a4d29c5a6e423d27dd415a681566a1e":
+    raise SystemExit("Macro-FE report does not use the selected full fine-tune")
+
+def last_energy(path):
+    values = re.findall(r"energy = ([-+0-9.eE]+)", path.read_text(encoding="utf-8", errors="replace"))
+    return float(values[-1]) if values else None
+
+matched_fields = (
+    "volume_fraction", "axial_stretch", "mesh_maxh", "displacement_order",
+    "integration_order", "merit_function", "load_predictor",
+)
+mismatches = {
+    key: [baseline.get(key), candidate.get(key)]
+    for key in matched_fields
+    if baseline.get(key) != candidate.get(key)
+}
+if mismatches:
+    raise SystemExit(f"Baseline and candidate setup differ: {mismatches}")
+
+baseline_energy = last_energy(baseline_log_path)
+candidate_energy = last_energy(candidate_log_path)
+relative_energy_difference = None
+if baseline_energy is not None and candidate_energy is not None:
+    relative_energy_difference = abs(candidate_energy - baseline_energy) / max(
+        abs(candidate_energy), abs(baseline_energy), 1.0e-30
+    )
+
+comparison = {
+    "status": "complete" if candidate.get("status") == "complete" else "failed",
+    "matched_setup": {key: candidate.get(key) for key in matched_fields},
+    "frozen_checkpoint_sha256": baseline.get("checkpoint_sha256"),
+    "candidate_checkpoint_sha256": candidate.get("checkpoint_sha256"),
+    "frozen": {
+        "status": baseline.get("status"),
+        "final_axial_stretch": baseline.get("final_axial_stretch"),
+        "final_free_residual": baseline.get("final_free_residual"),
+        "minimum_sampled_jacobian": baseline.get("minimum_sampled_jacobian"),
+        "final_logged_energy": baseline_energy,
+    },
+    "selected_full_finetune": {
+        "status": candidate.get("status"),
+        "final_axial_stretch": candidate.get("final_axial_stretch"),
+        "final_free_residual": candidate.get("final_free_residual"),
+        "minimum_sampled_jacobian": candidate.get("minimum_sampled_jacobian"),
+        "final_logged_energy": candidate_energy,
+    },
+    "relative_final_energy_difference": relative_energy_difference,
+    "interpretation": (
+        "Matched-mesh macro-FE integration comparison; energy is not claimed "
+        "to be mesh-converged by this run."
+    ),
+}
+output_path.write_text(json.dumps(comparison, indent=2) + "\n", encoding="utf-8")
+print(json.dumps(comparison, indent=2))
+if comparison["status"] != "complete":
+    raise SystemExit("Selected full fine-tune did not complete the macro-FE run")
+PY
+
+exit "$SOLVER_STATUS"

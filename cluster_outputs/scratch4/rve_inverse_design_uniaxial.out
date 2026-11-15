@@ -1,0 +1,187 @@
+Checkpoint SHA-256: 32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70
+Training dataset SHA-256: 8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336
+Best epoch: 2750
+[DIRECT RVE] start vf=0.020000
+[INITIAL STATE] solution_size=7518, finite=True, min=-1.145942e-02, max=1.076496e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=8.305683e+03, max_abs=5.094263e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=9.561874e-05, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.634501e-02, max_abs=1.297211e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=3.234501e-08, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=9.321452e-06, max_abs=6.496628e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.341294e-14, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  0: |moment| = 7.481e-06
+[INITIAL STATE] solution_size=7518, finite=True, min=-8.415441e-03, max=5.094392e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.366342e-01, max_abs=1.748863e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.293867e-04, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.556981e-02, max_abs=1.016209e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.408261e-07, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.220369e-05, max_abs=1.353471e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=1.080950e-13, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  1: |moment| = 1.890e-13
+[DIRECT RVE] equilibrium converged vf=0.020000 mixed=1.081e-13 rotation=1.890e-13
+[DIRECT RVE] homogenized stress recovered vf=0.020000
+[DIRECT RVE] start vf=0.100000
+[INITIAL STATE] solution_size=5102, finite=True, min=-2.824600e-02, max=1.975003e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=7.078218e+03, max_abs=5.495859e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=3.754311e-04, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.167392e-02, max_abs=1.497641e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.437814e-07, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.331230e-05, max_abs=8.026932e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=8.885923e-14, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  0: |moment| = 8.385e-05
+[INITIAL STATE] solution_size=5102, finite=True, min=-1.439706e-02, max=5.496009e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.352726e-01, max_abs=3.943065e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=3.318561e-04, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.221456e-02, max_abs=9.556390e-03
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=4.459041e-07, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.393415e-05, max_abs=1.636879e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=1.786076e-12, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  1: |moment| = 1.807e-11
+[DIRECT RVE] equilibrium converged vf=0.100000 mixed=1.786e-12 rotation=1.807e-11
+[DIRECT RVE] homogenized stress recovered vf=0.100000
+[DESIGN] endpoint responses=[509.3232719619183, 549.472380916787]; target=529.39783 source=midpoint_of_direct_rve_endpoint_responses
+[DESIGN] predicted optimum vf=0.058651 response=529.39783 target=529.39783 in_predicted_range=True
+[DIRECT RVE] start vf=0.048651
+[INITIAL STATE] solution_size=5069, finite=True, min=-2.042506e-02, max=1.514829e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=6.736921e+03, max_abs=5.231274e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.897882e-04, positive_measure=9.562302e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.737582e-02, max_abs=1.405593e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=6.475082e-08, positive_measure=9.562302e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=9.882686e-06, max_abs=7.189108e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.739161e-14, positive_measure=9.562302e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  0: |moment| = 3.524e-05
+[INITIAL STATE] solution_size=5069, finite=True, min=-1.131967e-02, max=5.231373e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.003940e-01, max_abs=2.766622e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.218021e-04, positive_measure=9.562302e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.261971e-02, max_abs=1.025446e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.358307e-07, positive_measure=9.562302e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.305420e-05, max_abs=1.294052e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=1.706367e-13, positive_measure=9.562302e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  1: |moment| = 1.167e-11
+[DIRECT RVE] equilibrium converged vf=0.048651 mixed=1.706e-13 rotation=1.167e-11
+[DIRECT RVE] homogenized stress recovered vf=0.048651
+[DIRECT RVE] start vf=0.058651
+[INITIAL STATE] solution_size=6085, finite=True, min=-2.461540e-02, max=1.551947e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=7.597547e+03, max_abs=5.282526e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.075186e-04, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.775191e-02, max_abs=1.525154e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=8.100540e-08, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.301482e-05, max_abs=1.118368e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.365496e-14, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  0: |moment| = 4.151e-05
+[INITIAL STATE] solution_size=6085, finite=True, min=-1.205129e-02, max=5.282678e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.258800e-01, max_abs=2.449697e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.512623e-04, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.266861e-02, max_abs=1.083176e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.997565e-07, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.742093e-05, max_abs=2.106656e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=9.398447e-13, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  1: |moment| = 4.344e-12
+[DIRECT RVE] equilibrium converged vf=0.058651 mixed=9.398e-13 rotation=4.344e-12
+[DIRECT RVE] homogenized stress recovered vf=0.058651
+[DIRECT RVE] start vf=0.068651
+[INITIAL STATE] solution_size=4821, finite=True, min=-2.215719e-02, max=2.613676e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=6.637887e+03, max_abs=5.333699e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.682441e-04, positive_measure=9.377851e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.143937e-02, max_abs=1.732348e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.001963e-07, positive_measure=9.377851e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.453548e-05, max_abs=1.245523e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=8.044540e-14, positive_measure=9.377851e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  0: |moment| = 9.210e-05
+[INITIAL STATE] solution_size=4821, finite=True, min=-1.270059e-02, max=5.333873e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.991011e-01, max_abs=3.770996e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=3.025142e-04, positive_measure=9.377851e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.477074e-02, max_abs=1.161149e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=4.136270e-07, positive_measure=9.377851e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.986895e-05, max_abs=2.190423e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=2.370555e-12, positive_measure=9.377851e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  1: |moment| = 8.289e-11
+[DIRECT RVE] equilibrium converged vf=0.068651 mixed=2.371e-12 rotation=8.289e-11
+[DIRECT RVE] homogenized stress recovered vf=0.068651
+{
+  "report": "/scratch4/vr80beqo/rve_inverse_design_uniaxial/rve_inverse_design_uniaxial.json",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "predicted_volume_fraction": 0.05865149996188015,
+  "predicted_response": 529.3978264345969,
+  "validation_status": "pass"
+}

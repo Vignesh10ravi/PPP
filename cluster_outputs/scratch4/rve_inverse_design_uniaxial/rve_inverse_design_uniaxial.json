@@ -1,0 +1,742 @@
+{
+  "best_epoch": 2750,
+  "checkpoint_path": "/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "deformation_condition_number": 1.05,
+  "deformation_determinant": 1.05,
+  "deformation_gradient": [
+    [
+      1.05,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "optimization": {
+    "evaluations": 213,
+    "grid_size": 101,
+    "predicted_response": 529.3978264345969,
+    "predicted_response_range": [
+      506.3122358969349,
+      546.3140076296104
+    ],
+    "relative_target_error": 8.983315680680181e-12,
+    "sampled_local_minima": 3,
+    "search_grid": [
+      {
+        "predicted_response": 508.4262010263101,
+        "volume_fraction": 0.02
+      },
+      {
+        "predicted_response": 507.8794061822109,
+        "volume_fraction": 0.0208
+      },
+      {
+        "predicted_response": 507.4132386502597,
+        "volume_fraction": 0.0216
+      },
+      {
+        "predicted_response": 507.02830322653426,
+        "volume_fraction": 0.0224
+      },
+      {
+        "predicted_response": 506.7251915522529,
+        "volume_fraction": 0.023200000000000002
+      },
+      {
+        "predicted_response": 506.5044754876426,
+        "volume_fraction": 0.024
+      },
+      {
+        "predicted_response": 506.3666801848358,
+        "volume_fraction": 0.024800000000000003
+      },
+      {
+        "predicted_response": 506.3122358969349,
+        "volume_fraction": 0.0256
+      },
+      {
+        "predicted_response": 506.3414084993274,
+        "volume_fraction": 0.0264
+      },
+      {
+        "predicted_response": 506.454209982855,
+        "volume_fraction": 0.027200000000000002
+      },
+      {
+        "predicted_response": 506.6502917993257,
+        "volume_fraction": 0.028
+      },
+      {
+        "predicted_response": 506.92882508656476,
+        "volume_fraction": 0.0288
+      },
+      {
+        "predicted_response": 507.2883790233891,
+        "volume_fraction": 0.0296
+      },
+      {
+        "predicted_response": 507.7267947839455,
+        "volume_fraction": 0.030400000000000003
+      },
+      {
+        "predicted_response": 508.2410802936811,
+        "volume_fraction": 0.0312
+      },
+      {
+        "predicted_response": 508.82732543840757,
+        "volume_fraction": 0.032
+      },
+      {
+        "predicted_response": 509.48065293526633,
+        "volume_fraction": 0.0328
+      },
+      {
+        "predicted_response": 510.1952132285596,
+        "volume_fraction": 0.033600000000000005
+      },
+      {
+        "predicted_response": 510.96422967481976,
+        "volume_fraction": 0.0344
+      },
+      {
+        "predicted_response": 511.7800962953179,
+        "volume_fraction": 0.0352
+      },
+      {
+        "predicted_response": 512.6345256737841,
+        "volume_fraction": 0.036000000000000004
+      },
+      {
+        "predicted_response": 513.5187397645859,
+        "volume_fraction": 0.0368
+      },
+      {
+        "predicted_response": 514.4236921387819,
+        "volume_fraction": 0.0376
+      },
+      {
+        "predicted_response": 515.3403071657458,
+        "volume_fraction": 0.038400000000000004
+      },
+      {
+        "predicted_response": 516.2597202533334,
+        "volume_fraction": 0.0392
+      },
+      {
+        "predicted_response": 517.1735037130011,
+        "volume_fraction": 0.04
+      },
+      {
+        "predicted_response": 518.0738649313553,
+        "volume_fraction": 0.0408
+      },
+      {
+        "predicted_response": 518.9538069035989,
+        "volume_fraction": 0.0416
+      },
+      {
+        "predicted_response": 519.807245243961,
+        "volume_fraction": 0.0424
+      },
+      {
+        "predicted_response": 520.629079923765,
+        "volume_fraction": 0.0432
+      },
+      {
+        "predicted_response": 521.4152236724076,
+        "volume_fraction": 0.044
+      },
+      {
+        "predicted_response": 522.1625918440195,
+        "volume_fraction": 0.044800000000000006
+      },
+      {
+        "predicted_response": 522.8690604275071,
+        "volume_fraction": 0.0456
+      },
+      {
+        "predicted_response": 523.5333997617981,
+        "volume_fraction": 0.0464
+      },
+      {
+        "predicted_response": 524.1551915464033,
+        "volume_fraction": 0.047200000000000006
+      },
+      {
+        "predicted_response": 524.7347361198827,
+        "volume_fraction": 0.048
+      },
+      {
+        "predicted_response": 525.2729559494046,
+        "volume_fraction": 0.0488
+      },
+      {
+        "predicted_response": 525.7713000487311,
+        "volume_fraction": 0.049600000000000005
+      },
+      {
+        "predicted_response": 526.2316527931898,
+        "volume_fraction": 0.0504
+      },
+      {
+        "predicted_response": 526.6562494498303,
+        "volume_fraction": 0.0512
+      },
+      {
+        "predicted_response": 527.0475997609328,
+        "volume_fraction": 0.052000000000000005
+      },
+      {
+        "predicted_response": 527.4084201394844,
+        "volume_fraction": 0.0528
+      },
+      {
+        "predicted_response": 527.741574455179,
+        "volume_fraction": 0.05360000000000001
+      },
+      {
+        "predicted_response": 528.0500229903637,
+        "volume_fraction": 0.054400000000000004
+      },
+      {
+        "predicted_response": 528.3367788961059,
+        "volume_fraction": 0.0552
+      },
+      {
+        "predicted_response": 528.6048713476421,
+        "volume_fraction": 0.05600000000000001
+      },
+      {
+        "predicted_response": 528.8573145530772,
+        "volume_fraction": 0.0568
+      },
+      {
+        "predicted_response": 529.0970817839407,
+        "volume_fraction": 0.0576
+      },
+      {
+        "predicted_response": 529.3270836467564,
+        "volume_fraction": 0.05840000000000001
+      },
+      {
+        "predicted_response": 529.5501498864223,
+        "volume_fraction": 0.0592
+      },
+      {
+        "predicted_response": 529.7690140915256,
+        "volume_fraction": 0.06
+      },
+      {
+        "predicted_response": 529.9863007512831,
+        "volume_fraction": 0.06080000000000001
+      },
+      {
+        "predicted_response": 530.2045141888375,
+        "volume_fraction": 0.0616
+      },
+      {
+        "predicted_response": 530.4260289632157,
+        "volume_fraction": 0.0624
+      },
+      {
+        "predicted_response": 530.6530813922018,
+        "volume_fraction": 0.0632
+      },
+      {
+        "predicted_response": 530.887761900116,
+        "volume_fraction": 0.064
+      },
+      {
+        "predicted_response": 531.1320079395964,
+        "volume_fraction": 0.0648
+      },
+      {
+        "predicted_response": 531.3875972759861,
+        "volume_fraction": 0.0656
+      },
+      {
+        "predicted_response": 531.6561414576972,
+        "volume_fraction": 0.0664
+      },
+      {
+        "predicted_response": 531.939079328592,
+        "volume_fraction": 0.0672
+      },
+      {
+        "predicted_response": 532.2376704682365,
+        "volume_fraction": 0.068
+      },
+      {
+        "predicted_response": 532.552988476642,
+        "volume_fraction": 0.0688
+      },
+      {
+        "predicted_response": 532.8859140498425,
+        "volume_fraction": 0.06960000000000001
+      },
+      {
+        "predicted_response": 533.237127824671,
+        "volume_fraction": 0.0704
+      },
+      {
+        "predicted_response": 533.6071030044313,
+        "volume_fraction": 0.0712
+      },
+      {
+        "predicted_response": 533.9960978125328,
+        "volume_fraction": 0.07200000000000001
+      },
+      {
+        "predicted_response": 534.4041478592726,
+        "volume_fraction": 0.0728
+      },
+      {
+        "predicted_response": 534.8310585465169,
+        "volume_fraction": 0.0736
+      },
+      {
+        "predicted_response": 535.2763976770439,
+        "volume_fraction": 0.07440000000000001
+      },
+      {
+        "predicted_response": 535.739488477574,
+        "volume_fraction": 0.0752
+      },
+      {
+        "predicted_response": 536.2194032871639,
+        "volume_fraction": 0.076
+      },
+      {
+        "predicted_response": 536.714958203368,
+        "volume_fraction": 0.07680000000000001
+      },
+      {
+        "predicted_response": 537.224709015919,
+        "volume_fraction": 0.0776
+      },
+      {
+        "predicted_response": 537.7469487890212,
+        "volume_fraction": 0.0784
+      },
+      {
+        "predicted_response": 538.279707476775,
+        "volume_fraction": 0.0792
+      },
+      {
+        "predicted_response": 538.820753967494,
+        "volume_fraction": 0.08
+      },
+      {
+        "predicted_response": 539.3676009500159,
+        "volume_fraction": 0.0808
+      },
+      {
+        "predicted_response": 539.9175129740806,
+        "volume_fraction": 0.0816
+      },
+      {
+        "predicted_response": 540.4675180350005,
+        "volume_fraction": 0.0824
+      },
+      {
+        "predicted_response": 541.0144229471489,
+        "volume_fraction": 0.08320000000000001
+      },
+      {
+        "predicted_response": 541.554832679466,
+        "volume_fraction": 0.084
+      },
+      {
+        "predicted_response": 542.0851737081111,
+        "volume_fraction": 0.0848
+      },
+      {
+        "predicted_response": 542.601721298227,
+        "volume_fraction": 0.08560000000000001
+      },
+      {
+        "predicted_response": 543.1006304603807,
+        "volume_fraction": 0.0864
+      },
+      {
+        "predicted_response": 543.5779701441634,
+        "volume_fraction": 0.08720000000000001
+      },
+      {
+        "predicted_response": 544.0297600394015,
+        "volume_fraction": 0.08800000000000001
+      },
+      {
+        "predicted_response": 544.4520091656796,
+        "volume_fraction": 0.0888
+      },
+      {
+        "predicted_response": 544.8407552575072,
+        "volume_fraction": 0.08960000000000001
+      },
+      {
+        "predicted_response": 545.192103810954,
+        "volume_fraction": 0.09040000000000001
+      },
+      {
+        "predicted_response": 545.5022655645425,
+        "volume_fraction": 0.0912
+      },
+      {
+        "predicted_response": 545.7675911591305,
+        "volume_fraction": 0.09200000000000001
+      },
+      {
+        "predicted_response": 545.9846017710024,
+        "volume_fraction": 0.09280000000000001
+      },
+      {
+        "predicted_response": 546.1500146482231,
+        "volume_fraction": 0.0936
+      },
+      {
+        "predicted_response": 546.2607627044781,
+        "volume_fraction": 0.09440000000000001
+      },
+      {
+        "predicted_response": 546.3140076296104,
+        "volume_fraction": 0.0952
+      },
+      {
+        "predicted_response": 546.3071463463375,
+        "volume_fraction": 0.096
+      },
+      {
+        "predicted_response": 546.2378110528407,
+        "volume_fraction": 0.09680000000000001
+      },
+      {
+        "predicted_response": 546.1038635085597,
+        "volume_fraction": 0.0976
+      },
+      {
+        "predicted_response": 545.9033846093807,
+        "volume_fraction": 0.0984
+      },
+      {
+        "predicted_response": 545.6346606208599,
+        "volume_fraction": 0.09920000000000001
+      },
+      {
+        "predicted_response": 545.2961676618397,
+        "volume_fraction": 0.1
+      }
+    ],
+    "target_in_predicted_range": true,
+    "target_response": 529.3978264393527,
+    "volume_fraction": 0.05865149996188015
+  },
+  "response": "stress",
+  "rve_configuration": {
+    "bulk_modulus": 10000.0,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0
+  },
+  "schema_version": 1,
+  "status": "running_direct_rve_validation",
+  "stress_component_ij": [
+    0,
+    0
+  ],
+  "target_response": 529.3978264393527,
+  "target_source": "midpoint_of_direct_rve_endpoint_responses",
+  "training_dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "validation": {
+    "direct_rve_results": [
+      {
+        "energy": 13.074059377262818,
+        "maximum_microscopic_jacobian": 1.1142979882420132,
+        "minimum_microscopic_jacobian": 0.9913542422435527,
+        "minimum_particle_clearance": 0.2735342438529639,
+        "mixed_residual": 1.706366743199218e-13,
+        "relative_target_error": 0.012159106196585737,
+        "response": 522.9608220474349,
+        "rotation": [
+          [
+            0.9999999924027497,
+            -3.9242754630803824e-05,
+            -0.00011685249962681584
+          ],
+          [
+            3.924389640692825e-05,
+            0.9999999991822435,
+            9.768811696542193e-06
+          ],
+          [
+            0.00011685211617617695,
+            -9.773397369734898e-06,
+            0.9999999931250317
+          ]
+        ],
+        "rotation_residual": 1.1671737955975236e-11,
+        "solver_status": "converged",
+        "stress": [
+          [
+            522.9608220474349,
+            5.2066854056572235e-05,
+            -3.565547779156271e-05
+          ],
+          [
+            4.958748325744331e-05,
+            548.9963962803407,
+            2.1057946598508235e-05
+          ],
+          [
+            -3.3957607903827795e-05,
+            2.1057942796395937e-05,
+            548.9964250100277
+          ]
+        ],
+        "volume_fraction": 0.048651499961880146
+      },
+      {
+        "energy": 13.203660861421595,
+        "maximum_microscopic_jacobian": 1.0990112093299325,
+        "minimum_microscopic_jacobian": 0.9939616167434984,
+        "minimum_particle_clearance": 0.25897421573697044,
+        "mixed_residual": 9.398447468456536e-13,
+        "relative_target_error": 0.002366902702904468,
+        "response": 528.1447932930416,
+        "rotation": [
+          [
+            0.9999999927722664,
+            9.118536455572582e-05,
+            -7.836259597441295e-05
+          ],
+          [
+            -9.118604518727729e-05,
+            0.9999999958048628,
+            -8.68213979643637e-06
+          ],
+          [
+            7.836180396158274e-05,
+            8.689285308955043e-06,
+            0.999999996891962
+          ]
+        ],
+        "rotation_residual": 4.3441446169706446e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            528.1447932930416,
+            2.571558071352408e-06,
+            -2.5768719451654733e-05
+          ],
+          [
+            2.449102677839609e-06,
+            554.4365298833385,
+            1.1382274409170971e-05
+          ],
+          [
+            -2.4541641494323693e-05,
+            1.1382275784770936e-05,
+            554.4365448329031
+          ]
+        ],
+        "volume_fraction": 0.05865149996188015
+      },
+      {
+        "energy": 13.331325368335982,
+        "maximum_microscopic_jacobian": 1.11239980825049,
+        "minimum_microscopic_jacobian": 0.9830351970141976,
+        "minimum_particle_clearance": 0.24598824968897315,
+        "mixed_residual": 2.3705552520140095e-12,
+        "relative_target_error": 0.007278862495673142,
+        "response": 533.251240423513,
+        "rotation": [
+          [
+            0.999999976816617,
+            -0.00020057877356233688,
+            7.832573704695799e-05
+          ],
+          [
+            0.00020057525759155451,
+            0.999999978877031,
+            4.489436173823083e-05
+          ],
+          [
+            -7.83347402485128e-05,
+            -4.487865049252663e-05,
+            0.9999999959247876
+          ]
+        ],
+        "rotation_residual": 8.288607990780298e-11,
+        "solver_status": "converged",
+        "stress": [
+          [
+            533.251240423513,
+            3.023885756914431e-06,
+            1.629593005094158e-05
+          ],
+          [
+            2.87981801300706e-06,
+            559.7940828577531,
+            1.535491704639431e-05
+          ],
+          [
+            1.5519904079210663e-05,
+            1.5354921462118823e-05,
+            559.7940608406395
+          ]
+        ],
+        "volume_fraction": 0.06865149996188015
+      }
+    ],
+    "endpoint_rve_results": [
+      {
+        "energy": 12.733114765893975,
+        "maximum_microscopic_jacobian": 1.0893955720931436,
+        "minimum_microscopic_jacobian": 1.0033099142274624,
+        "minimum_particle_clearance": 0.331610969903937,
+        "mixed_residual": 1.0809501003539198e-13,
+        "relative_target_error": 0.03791960124289273,
+        "response": 509.3232719619183,
+        "rotation": [
+          [
+            0.999999997849063,
+            4.149777108580813e-05,
+            -5.0791819122642486e-05
+          ],
+          [
+            -4.149814902561168e-05,
+            0.9999999991112756,
+            -7.439926897852334e-06
+          ],
+          [
+            5.079151033711725e-05,
+            7.442034648342413e-06,
+            0.9999999986824193
+          ]
+        ],
+        "rotation_residual": 1.8901531965061825e-13,
+        "solver_status": "converged",
+        "stress": [
+          [
+            509.3232719619183,
+            -1.454876197645868e-06,
+            1.390989448551397e-06
+          ],
+          [
+            -1.3855962111119081e-06,
+            534.6852795866898,
+            -2.5464968704783406e-06
+          ],
+          [
+            1.3247518528795182e-06,
+            -2.5464969410157615e-06,
+            534.6852817057126
+          ]
+        ],
+        "volume_fraction": 0.02
+      },
+      {
+        "energy": 13.736862565489094,
+        "maximum_microscopic_jacobian": 1.112523605319379,
+        "minimum_microscopic_jacobian": 0.9954871116554145,
+        "minimum_particle_clearance": 0.21205880885151385,
+        "mixed_residual": 1.7860761230801637e-12,
+        "relative_target_error": 0.037919601242892516,
+        "response": 549.472380916787,
+        "rotation": [
+          [
+            0.9999999904979208,
+            -9.267928866725871e-05,
+            0.0001020524761790856
+          ],
+          [
+            9.267934449068481e-05,
+            0.9999999957051225,
+            -5.422781275989632e-07
+          ],
+          [
+            -0.0001020524254828315,
+            5.51736279059999e-07,
+            0.999999994792499
+          ]
+        ],
+        "rotation_residual": 1.8067431922824737e-11,
+        "solver_status": "converged",
+        "stress": [
+          [
+            549.472380916787,
+            8.128774867488357e-06,
+            4.3983177947879565e-06
+          ],
+          [
+            7.741694529887072e-06,
+            576.815191030557,
+            1.0647184266426446e-06
+          ],
+          [
+            4.188889793544856e-06,
+            1.0647124858858063e-06,
+            576.8151304067645
+          ]
+        ],
+        "volume_fraction": 0.1
+      }
+    ],
+    "local_target_error_check": true,
+    "status": "pass",
+    "target_error_limit": 0.05,
+    "verified_optimum_response": 528.1447932930416,
+    "verified_target_relative_error": 0.002366902702904468
+  },
+  "verification": {
+    "autograd_vs_finite_difference": [
+      {
+        "autograd_derivative": 1135.3868248104645,
+        "finite_difference_derivative": 1135.3865828368725,
+        "response": 517.1735037130011,
+        "scaled_error": 2.131199576174075e-07,
+        "volume_fraction": 0.04
+      },
+      {
+        "autograd_derivative": 280.03654986756374,
+        "finite_difference_derivative": 280.0366397423204,
+        "response": 529.3978264345969,
+        "scaled_error": 3.2093927691281875e-07,
+        "volume_fraction": 0.05865149996188015
+      },
+      {
+        "autograd_derivative": 272.0596120940281,
+        "finite_difference_derivative": 272.05969549868314,
+        "response": 529.7690140915256,
+        "scaled_error": 3.065674791058222e-07,
+        "volume_fraction": 0.06
+      },
+      {
+        "autograd_derivative": 680.4778649915488,
+        "finite_difference_derivative": 680.4777801335149,
+        "response": 538.820753967494,
+        "scaled_error": 1.247035918152589e-07,
+        "volume_fraction": 0.08
+      }
+    ],
+    "maximum_scaled_derivative_error": 3.2093927691281875e-07,
+    "status": "pass",
+    "tolerance": 1e-05
+  },
+  "volume_fraction_bounds": [
+    0.02,
+    0.1
+  ]
+}

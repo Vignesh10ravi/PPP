@@ -1,0 +1,40 @@
+#!/bin/bash
+#PBS -N rve_shear_adapt_data
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=96GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_shear_adaptation_data_20261115.out
+#PBS -e /scratch/vr80beqo/rve_shear_adaptation_data_20261115.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+RUN_ROOT=/scratch/vr80beqo/rve_shear_adaptation_20261115
+DATA_DIR="$RUN_ROOT/data"
+mkdir -p "$DATA_DIR"
+
+python -c 'import numpy, ngsolve; print("NumPy", numpy.__version__, "NGSolve", ngsolve.__version__)'
+python -u -m src.generate_shear_adaptation_dataset \
+  --output "$DATA_DIR/rve_shear_adaptation.npz" \
+  --work-directory "$DATA_DIR/rve_shear_adaptation_work" \
+  --train-amplitudes 0.01 0.02 0.04 0.06 0.08 0.09 \
+  --validation-amplitudes 0.03 0.07 \
+  --test-amplitudes 0.045 0.055 0.095 \
+  --volume-fractions 0.02 0.05 0.10 \
+  --seed 20261115 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --workers 12 \
+  2>&1 | tee "$DATA_DIR/generation.log"

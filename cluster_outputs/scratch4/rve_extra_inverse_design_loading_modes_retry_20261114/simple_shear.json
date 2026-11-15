@@ -1,0 +1,1617 @@
+{
+  "best_epoch": 2750,
+  "checkpoint_path": "/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "deformation_condition_number": 1.0512656225593564,
+  "deformation_determinant": 1.0,
+  "deformation_gradient": [
+    [
+      1.0,
+      0.05,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "direct_rve_endpoint_response_range": [
+    0.05232693926013744,
+    0.06125046192585304
+  ],
+  "direct_rve_endpoint_results": [
+    {
+      "energy": 0.0013081506230434646,
+      "maximum_microscopic_jacobian": 1.0382579098513414,
+      "minimum_microscopic_jacobian": 0.9612468002625785,
+      "minimum_particle_clearance": 0.331610969903937,
+      "mixed_residual": 6.116965647533722e-15,
+      "response": 0.05232693926013744,
+      "rotation": [
+        [
+          0.9996850425886455,
+          0.025096108405536444,
+          3.1103615419425134e-05
+        ],
+        [
+          -0.02509610746356132,
+          0.9996850426365435,
+          -3.031417608319061e-05
+        ],
+        [
+          -3.185458695595145e-05,
+          2.952404873366648e-05,
+          0.9999999990568079
+        ]
+      ],
+      "rotation_residual": 2.6772767431968614e-12,
+      "solver_status": "converged",
+      "stress": [
+        [
+          -0.0009003931034493382,
+          0.05232693926013744,
+          -1.4026629783929376e-06
+        ],
+        [
+          0.052370806895859635,
+          -0.0008773526834035922,
+          -6.3028175806067075e-06
+        ],
+        [
+          -1.0875234530602755e-06,
+          -6.302819222976037e-06,
+          -0.0009058357740941863
+        ]
+      ],
+      "volume_fraction": 0.02
+    },
+    {
+      "energy": 0.0015310183991065216,
+      "maximum_microscopic_jacobian": 1.04257525724578,
+      "minimum_microscopic_jacobian": 0.9610501210537413,
+      "minimum_particle_clearance": 0.21205880885151385,
+      "mixed_residual": 1.3534078338493903e-13,
+      "response": 0.06125046192585304,
+      "rotation": [
+        [
+          0.9996884980068484,
+          0.02495802323843083,
+          6.347315159734285e-05
+        ],
+        [
+          -0.02495802432004244,
+          0.9996884998619135,
+          1.6305728108936327e-05
+        ],
+        [
+          -6.304642096078436e-05,
+          -1.7884813303397746e-05,
+          0.9999999978526412
+        ]
+      ],
+      "rotation_residual": 7.1682633624601684e-12,
+      "solver_status": "converged",
+      "stress": [
+        [
+          -0.001230383086540623,
+          0.06125046192585304,
+          2.22574213664153e-05
+        ],
+        [
+          0.061302117768253526,
+          -0.0010331168396290223,
+          -4.504911256302919e-06
+        ],
+        [
+          2.248267409179023e-05,
+          -4.504911421152183e-06,
+          -0.0011774330554531298
+        ]
+      ],
+      "volume_fraction": 0.1
+    }
+  ],
+  "response": "stress",
+  "rve_configuration": {
+    "bulk_modulus": 10000.0,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0
+  },
+  "schema_version": 1,
+  "status": "partial",
+  "stress_component_ij": [
+    0,
+    1
+  ],
+  "summary": {
+    "maximum_direct_target_error": 0.11339697531686614,
+    "maximum_surrogate_to_direct_error": 0.45853594443318385,
+    "n_missed": 2,
+    "n_passed": 1,
+    "n_targets": 3
+  },
+  "target_error_limit": 0.05,
+  "targets": [
+    {
+      "direct_rve_relative_target_error": 0.04089020912917012,
+      "direct_rve_result": {
+        "energy": 0.0013081506230434646,
+        "maximum_microscopic_jacobian": 1.0382579098513414,
+        "minimum_microscopic_jacobian": 0.9612468002625785,
+        "minimum_particle_clearance": 0.331610969903937,
+        "mixed_residual": 6.116965647533722e-15,
+        "response": 0.05232693926013744,
+        "rotation": [
+          [
+            0.9996850425886455,
+            0.025096108405536444,
+            3.1103615419425134e-05
+          ],
+          [
+            -0.02509610746356132,
+            0.9996850426365435,
+            -3.031417608319061e-05
+          ],
+          [
+            -3.185458695595145e-05,
+            2.952404873366648e-05,
+            0.9999999990568079
+          ]
+        ],
+        "rotation_residual": 2.6772767431968614e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -0.0009003931034493382,
+            0.05232693926013744,
+            -1.4026629783929376e-06
+          ],
+          [
+            0.052370806895859635,
+            -0.0008773526834035922,
+            -6.3028175806067075e-06
+          ],
+          [
+            -1.0875234530602755e-06,
+            -6.302819222976037e-06,
+            -0.0009058357740941863
+          ]
+        ],
+        "volume_fraction": 0.02
+      },
+      "optimizer": {
+        "evaluations": 138,
+        "grid_size": 101,
+        "predicted_response": 0.07632072177308241,
+        "predicted_response_range": [
+          0.07632072177308241,
+          0.10737022515029622
+        ],
+        "relative_target_error": 0.3988961046428993,
+        "sampled_local_minima": 1,
+        "search_grid": [
+          {
+            "predicted_response": 0.07632072177308241,
+            "volume_fraction": 0.02
+          },
+          {
+            "predicted_response": 0.07656111333235932,
+            "volume_fraction": 0.0208
+          },
+          {
+            "predicted_response": 0.07680256766437174,
+            "volume_fraction": 0.0216
+          },
+          {
+            "predicted_response": 0.07704516869480209,
+            "volume_fraction": 0.0224
+          },
+          {
+            "predicted_response": 0.07728900010683473,
+            "volume_fraction": 0.023200000000000002
+          },
+          {
+            "predicted_response": 0.07753414482203189,
+            "volume_fraction": 0.024
+          },
+          {
+            "predicted_response": 0.07778068452752922,
+            "volume_fraction": 0.024800000000000003
+          },
+          {
+            "predicted_response": 0.07802869924635324,
+            "volume_fraction": 0.0256
+          },
+          {
+            "predicted_response": 0.07827826694715705,
+            "volume_fraction": 0.0264
+          },
+          {
+            "predicted_response": 0.07852946318933073,
+            "volume_fraction": 0.027200000000000002
+          },
+          {
+            "predicted_response": 0.07878236079926285,
+            "volume_fraction": 0.028
+          },
+          {
+            "predicted_response": 0.07903702958071133,
+            "volume_fraction": 0.0288
+          },
+          {
+            "predicted_response": 0.07929353601155988,
+            "volume_fraction": 0.0296
+          },
+          {
+            "predicted_response": 0.07955194303217453,
+            "volume_fraction": 0.030400000000000003
+          },
+          {
+            "predicted_response": 0.0798123097755163,
+            "volume_fraction": 0.0312
+          },
+          {
+            "predicted_response": 0.08007469134568017,
+            "volume_fraction": 0.032
+          },
+          {
+            "predicted_response": 0.08033913859786822,
+            "volume_fraction": 0.0328
+          },
+          {
+            "predicted_response": 0.08060569792490338,
+            "volume_fraction": 0.033600000000000005
+          },
+          {
+            "predicted_response": 0.08087441104865163,
+            "volume_fraction": 0.0344
+          },
+          {
+            "predicted_response": 0.08114531481543107,
+            "volume_fraction": 0.0352
+          },
+          {
+            "predicted_response": 0.08141844099526957,
+            "volume_fraction": 0.036000000000000004
+          },
+          {
+            "predicted_response": 0.08169381608569803,
+            "volume_fraction": 0.0368
+          },
+          {
+            "predicted_response": 0.08197146112162518,
+            "volume_fraction": 0.0376
+          },
+          {
+            "predicted_response": 0.08225139149370736,
+            "volume_fraction": 0.038400000000000004
+          },
+          {
+            "predicted_response": 0.08253361677846838,
+            "volume_fraction": 0.0392
+          },
+          {
+            "predicted_response": 0.08281814058421207,
+            "volume_fraction": 0.04
+          },
+          {
+            "predicted_response": 0.08310496041745752,
+            "volume_fraction": 0.0408
+          },
+          {
+            "predicted_response": 0.08339406757517852,
+            "volume_fraction": 0.0416
+          },
+          {
+            "predicted_response": 0.08368544706849768,
+            "volume_fraction": 0.0424
+          },
+          {
+            "predicted_response": 0.08397907758363765,
+            "volume_fraction": 0.0432
+          },
+          {
+            "predicted_response": 0.08427493148582985,
+            "volume_fraction": 0.044
+          },
+          {
+            "predicted_response": 0.08457297487150936,
+            "volume_fraction": 0.044800000000000006
+          },
+          {
+            "predicted_response": 0.08487316767346752,
+            "volume_fraction": 0.0456
+          },
+          {
+            "predicted_response": 0.08517546382270161,
+            "volume_fraction": 0.0464
+          },
+          {
+            "predicted_response": 0.08547981146951716,
+            "volume_fraction": 0.047200000000000006
+          },
+          {
+            "predicted_response": 0.08578615326503956,
+            "volume_fraction": 0.048
+          },
+          {
+            "predicted_response": 0.08609442670273851,
+            "volume_fraction": 0.0488
+          },
+          {
+            "predicted_response": 0.08640456451792368,
+            "volume_fraction": 0.049600000000000005
+          },
+          {
+            "predicted_response": 0.08671649514151314,
+            "volume_fraction": 0.0504
+          },
+          {
+            "predicted_response": 0.0870301432027831,
+            "volume_fraction": 0.0512
+          },
+          {
+            "predicted_response": 0.08734543007436028,
+            "volume_fraction": 0.052000000000000005
+          },
+          {
+            "predicted_response": 0.08766227445147719,
+            "volume_fraction": 0.0528
+          },
+          {
+            "predicted_response": 0.08798059295654204,
+            "volume_fraction": 0.05360000000000001
+          },
+          {
+            "predicted_response": 0.08830030075940909,
+            "volume_fraction": 0.054400000000000004
+          },
+          {
+            "predicted_response": 0.08862131220340448,
+            "volume_fraction": 0.0552
+          },
+          {
+            "predicted_response": 0.08894354142716183,
+            "volume_fraction": 0.05600000000000001
+          },
+          {
+            "predicted_response": 0.08926690297264123,
+            "volume_fraction": 0.0568
+          },
+          {
+            "predicted_response": 0.08959131237031703,
+            "volume_fraction": 0.0576
+          },
+          {
+            "predicted_response": 0.08991668669337975,
+            "volume_fraction": 0.05840000000000001
+          },
+          {
+            "predicted_response": 0.0902429450738591,
+            "volume_fraction": 0.0592
+          },
+          {
+            "predicted_response": 0.09057000917478307,
+            "volume_fraction": 0.06
+          },
+          {
+            "predicted_response": 0.09089780361379415,
+            "volume_fraction": 0.06080000000000001
+          },
+          {
+            "predicted_response": 0.0912262563349886,
+            "volume_fraction": 0.0616
+          },
+          {
+            "predicted_response": 0.09155529892709394,
+            "volume_fraction": 0.0624
+          },
+          {
+            "predicted_response": 0.09188486688740387,
+            "volume_fraction": 0.0632
+          },
+          {
+            "predicted_response": 0.09221489983212554,
+            "volume_fraction": 0.064
+          },
+          {
+            "predicted_response": 0.09254534165493077,
+            "volume_fraction": 0.0648
+          },
+          {
+            "predicted_response": 0.09287614063652642,
+            "volume_fraction": 0.0656
+          },
+          {
+            "predicted_response": 0.09320724950895468,
+            "volume_fraction": 0.0664
+          },
+          {
+            "predicted_response": 0.09353862547909213,
+            "volume_fraction": 0.0672
+          },
+          {
+            "predicted_response": 0.09387023021643778,
+            "volume_fraction": 0.068
+          },
+          {
+            "predicted_response": 0.09420202981074974,
+            "volume_fraction": 0.0688
+          },
+          {
+            "predicted_response": 0.09453399470541768,
+            "volume_fraction": 0.06960000000000001
+          },
+          {
+            "predicted_response": 0.09486609961263716,
+            "volume_fraction": 0.0704
+          },
+          {
+            "predicted_response": 0.095198323416476,
+            "volume_fraction": 0.0712
+          },
+          {
+            "predicted_response": 0.09553064906980258,
+            "volume_fraction": 0.07200000000000001
+          },
+          {
+            "predicted_response": 0.09586306349077621,
+            "volume_fraction": 0.0728
+          },
+          {
+            "predicted_response": 0.09619555746418067,
+            "volume_fraction": 0.0736
+          },
+          {
+            "predicted_response": 0.09652812555232738,
+            "volume_fraction": 0.07440000000000001
+          },
+          {
+            "predicted_response": 0.0968607660195663,
+            "volume_fraction": 0.0752
+          },
+          {
+            "predicted_response": 0.0971934807736328,
+            "volume_fraction": 0.076
+          },
+          {
+            "predicted_response": 0.09752627532615028,
+            "volume_fraction": 0.07680000000000001
+          },
+          {
+            "predicted_response": 0.0978591587736129,
+            "volume_fraction": 0.0776
+          },
+          {
+            "predicted_response": 0.09819214379911836,
+            "volume_fraction": 0.0784
+          },
+          {
+            "predicted_response": 0.09852524669404031,
+            "volume_fraction": 0.0792
+          },
+          {
+            "predicted_response": 0.09885848739774336,
+            "volume_fraction": 0.08
+          },
+          {
+            "predicted_response": 0.09919188955239366,
+            "volume_fraction": 0.0808
+          },
+          {
+            "predicted_response": 0.09952548056893287,
+            "volume_fraction": 0.0816
+          },
+          {
+            "predicted_response": 0.09985929169939667,
+            "volume_fraction": 0.0824
+          },
+          {
+            "predicted_response": 0.10019335811000608,
+            "volume_fraction": 0.08320000000000001
+          },
+          {
+            "predicted_response": 0.10052771894885858,
+            "volume_fraction": 0.084
+          },
+          {
+            "predicted_response": 0.10086241740163981,
+            "volume_fraction": 0.0848
+          },
+          {
+            "predicted_response": 0.10119750072855874,
+            "volume_fraction": 0.08560000000000001
+          },
+          {
+            "predicted_response": 0.10153302027571982,
+            "volume_fraction": 0.0864
+          },
+          {
+            "predicted_response": 0.10186903145436692,
+            "volume_fraction": 0.08720000000000001
+          },
+          {
+            "predicted_response": 0.10220559368188287,
+            "volume_fraction": 0.08800000000000001
+          },
+          {
+            "predicted_response": 0.10254277027908337,
+            "volume_fraction": 0.0888
+          },
+          {
+            "predicted_response": 0.10288062831920011,
+            "volume_fraction": 0.08960000000000001
+          },
+          {
+            "predicted_response": 0.10321923842497256,
+            "volume_fraction": 0.09040000000000001
+          },
+          {
+            "predicted_response": 0.10355867451144023,
+            "volume_fraction": 0.0912
+          },
+          {
+            "predicted_response": 0.10389901347330771,
+            "volume_fraction": 0.09200000000000001
+          },
+          {
+            "predicted_response": 0.10424033481710798,
+            "volume_fraction": 0.09280000000000001
+          },
+          {
+            "predicted_response": 0.1045827202397741,
+            "volume_fraction": 0.0936
+          },
+          {
+            "predicted_response": 0.10492625315659991,
+            "volume_fraction": 0.09440000000000001
+          },
+          {
+            "predicted_response": 0.10527101818288734,
+            "volume_fraction": 0.0952
+          },
+          {
+            "predicted_response": 0.10561710057480429,
+            "volume_fraction": 0.096
+          },
+          {
+            "predicted_response": 0.10596458563605944,
+            "volume_fraction": 0.09680000000000001
+          },
+          {
+            "predicted_response": 0.10631355809793305,
+            "volume_fraction": 0.0976
+          },
+          {
+            "predicted_response": 0.10666410148092947,
+            "volume_fraction": 0.0984
+          },
+          {
+            "predicted_response": 0.10701629744683933,
+            "volume_fraction": 0.09920000000000001
+          },
+          {
+            "predicted_response": 0.10737022515029622,
+            "volume_fraction": 0.1
+          }
+        ],
+        "target_in_predicted_range": false,
+        "target_response": 0.054557819926566345,
+        "volume_fraction": 0.02
+      },
+      "predicted_relative_target_error": 0.3988961046428993,
+      "predicted_response": 0.07632072177308241,
+      "predicted_volume_fraction": 0.02,
+      "status": "pass",
+      "surrogate_to_direct_relative_error": 0.45853594443318385,
+      "target_fraction_of_endpoint_span": 0.25,
+      "target_in_predicted_response_range": false,
+      "target_response": 0.054557819926566345,
+      "target_source": "fraction_of_direct_rve_endpoint_response_span"
+    },
+    {
+      "direct_rve_relative_target_error": 0.07856776588066794,
+      "direct_rve_result": {
+        "energy": 0.0013081506230434646,
+        "maximum_microscopic_jacobian": 1.0382579098513414,
+        "minimum_microscopic_jacobian": 0.9612468002625785,
+        "minimum_particle_clearance": 0.331610969903937,
+        "mixed_residual": 6.116965647533722e-15,
+        "response": 0.05232693926013744,
+        "rotation": [
+          [
+            0.9996850425886455,
+            0.025096108405536444,
+            3.1103615419425134e-05
+          ],
+          [
+            -0.02509610746356132,
+            0.9996850426365435,
+            -3.031417608319061e-05
+          ],
+          [
+            -3.185458695595145e-05,
+            2.952404873366648e-05,
+            0.9999999990568079
+          ]
+        ],
+        "rotation_residual": 2.6772767431968614e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -0.0009003931034493382,
+            0.05232693926013744,
+            -1.4026629783929376e-06
+          ],
+          [
+            0.052370806895859635,
+            -0.0008773526834035922,
+            -6.3028175806067075e-06
+          ],
+          [
+            -1.0875234530602755e-06,
+            -6.302819222976037e-06,
+            -0.0009058357740941863
+          ]
+        ],
+        "volume_fraction": 0.02
+      },
+      "optimizer": {
+        "evaluations": 138,
+        "grid_size": 101,
+        "predicted_response": 0.07632072177308241,
+        "predicted_response_range": [
+          0.07632072177308241,
+          0.10737022515029622
+        ],
+        "relative_target_error": 0.34394203382241856,
+        "sampled_local_minima": 1,
+        "search_grid": [
+          {
+            "predicted_response": 0.07632072177308241,
+            "volume_fraction": 0.02
+          },
+          {
+            "predicted_response": 0.07656111333235932,
+            "volume_fraction": 0.0208
+          },
+          {
+            "predicted_response": 0.07680256766437174,
+            "volume_fraction": 0.0216
+          },
+          {
+            "predicted_response": 0.07704516869480209,
+            "volume_fraction": 0.0224
+          },
+          {
+            "predicted_response": 0.07728900010683473,
+            "volume_fraction": 0.023200000000000002
+          },
+          {
+            "predicted_response": 0.07753414482203189,
+            "volume_fraction": 0.024
+          },
+          {
+            "predicted_response": 0.07778068452752922,
+            "volume_fraction": 0.024800000000000003
+          },
+          {
+            "predicted_response": 0.07802869924635324,
+            "volume_fraction": 0.0256
+          },
+          {
+            "predicted_response": 0.07827826694715705,
+            "volume_fraction": 0.0264
+          },
+          {
+            "predicted_response": 0.07852946318933073,
+            "volume_fraction": 0.027200000000000002
+          },
+          {
+            "predicted_response": 0.07878236079926285,
+            "volume_fraction": 0.028
+          },
+          {
+            "predicted_response": 0.07903702958071133,
+            "volume_fraction": 0.0288
+          },
+          {
+            "predicted_response": 0.07929353601155988,
+            "volume_fraction": 0.0296
+          },
+          {
+            "predicted_response": 0.07955194303217453,
+            "volume_fraction": 0.030400000000000003
+          },
+          {
+            "predicted_response": 0.0798123097755163,
+            "volume_fraction": 0.0312
+          },
+          {
+            "predicted_response": 0.08007469134568017,
+            "volume_fraction": 0.032
+          },
+          {
+            "predicted_response": 0.08033913859786822,
+            "volume_fraction": 0.0328
+          },
+          {
+            "predicted_response": 0.08060569792490338,
+            "volume_fraction": 0.033600000000000005
+          },
+          {
+            "predicted_response": 0.08087441104865163,
+            "volume_fraction": 0.0344
+          },
+          {
+            "predicted_response": 0.08114531481543107,
+            "volume_fraction": 0.0352
+          },
+          {
+            "predicted_response": 0.08141844099526957,
+            "volume_fraction": 0.036000000000000004
+          },
+          {
+            "predicted_response": 0.08169381608569803,
+            "volume_fraction": 0.0368
+          },
+          {
+            "predicted_response": 0.08197146112162518,
+            "volume_fraction": 0.0376
+          },
+          {
+            "predicted_response": 0.08225139149370736,
+            "volume_fraction": 0.038400000000000004
+          },
+          {
+            "predicted_response": 0.08253361677846838,
+            "volume_fraction": 0.0392
+          },
+          {
+            "predicted_response": 0.08281814058421207,
+            "volume_fraction": 0.04
+          },
+          {
+            "predicted_response": 0.08310496041745752,
+            "volume_fraction": 0.0408
+          },
+          {
+            "predicted_response": 0.08339406757517852,
+            "volume_fraction": 0.0416
+          },
+          {
+            "predicted_response": 0.08368544706849768,
+            "volume_fraction": 0.0424
+          },
+          {
+            "predicted_response": 0.08397907758363765,
+            "volume_fraction": 0.0432
+          },
+          {
+            "predicted_response": 0.08427493148582985,
+            "volume_fraction": 0.044
+          },
+          {
+            "predicted_response": 0.08457297487150936,
+            "volume_fraction": 0.044800000000000006
+          },
+          {
+            "predicted_response": 0.08487316767346752,
+            "volume_fraction": 0.0456
+          },
+          {
+            "predicted_response": 0.08517546382270161,
+            "volume_fraction": 0.0464
+          },
+          {
+            "predicted_response": 0.08547981146951716,
+            "volume_fraction": 0.047200000000000006
+          },
+          {
+            "predicted_response": 0.08578615326503956,
+            "volume_fraction": 0.048
+          },
+          {
+            "predicted_response": 0.08609442670273851,
+            "volume_fraction": 0.0488
+          },
+          {
+            "predicted_response": 0.08640456451792368,
+            "volume_fraction": 0.049600000000000005
+          },
+          {
+            "predicted_response": 0.08671649514151314,
+            "volume_fraction": 0.0504
+          },
+          {
+            "predicted_response": 0.0870301432027831,
+            "volume_fraction": 0.0512
+          },
+          {
+            "predicted_response": 0.08734543007436028,
+            "volume_fraction": 0.052000000000000005
+          },
+          {
+            "predicted_response": 0.08766227445147719,
+            "volume_fraction": 0.0528
+          },
+          {
+            "predicted_response": 0.08798059295654204,
+            "volume_fraction": 0.05360000000000001
+          },
+          {
+            "predicted_response": 0.08830030075940909,
+            "volume_fraction": 0.054400000000000004
+          },
+          {
+            "predicted_response": 0.08862131220340448,
+            "volume_fraction": 0.0552
+          },
+          {
+            "predicted_response": 0.08894354142716183,
+            "volume_fraction": 0.05600000000000001
+          },
+          {
+            "predicted_response": 0.08926690297264123,
+            "volume_fraction": 0.0568
+          },
+          {
+            "predicted_response": 0.08959131237031703,
+            "volume_fraction": 0.0576
+          },
+          {
+            "predicted_response": 0.08991668669337975,
+            "volume_fraction": 0.05840000000000001
+          },
+          {
+            "predicted_response": 0.0902429450738591,
+            "volume_fraction": 0.0592
+          },
+          {
+            "predicted_response": 0.09057000917478307,
+            "volume_fraction": 0.06
+          },
+          {
+            "predicted_response": 0.09089780361379415,
+            "volume_fraction": 0.06080000000000001
+          },
+          {
+            "predicted_response": 0.0912262563349886,
+            "volume_fraction": 0.0616
+          },
+          {
+            "predicted_response": 0.09155529892709394,
+            "volume_fraction": 0.0624
+          },
+          {
+            "predicted_response": 0.09188486688740387,
+            "volume_fraction": 0.0632
+          },
+          {
+            "predicted_response": 0.09221489983212554,
+            "volume_fraction": 0.064
+          },
+          {
+            "predicted_response": 0.09254534165493077,
+            "volume_fraction": 0.0648
+          },
+          {
+            "predicted_response": 0.09287614063652642,
+            "volume_fraction": 0.0656
+          },
+          {
+            "predicted_response": 0.09320724950895468,
+            "volume_fraction": 0.0664
+          },
+          {
+            "predicted_response": 0.09353862547909213,
+            "volume_fraction": 0.0672
+          },
+          {
+            "predicted_response": 0.09387023021643778,
+            "volume_fraction": 0.068
+          },
+          {
+            "predicted_response": 0.09420202981074974,
+            "volume_fraction": 0.0688
+          },
+          {
+            "predicted_response": 0.09453399470541768,
+            "volume_fraction": 0.06960000000000001
+          },
+          {
+            "predicted_response": 0.09486609961263716,
+            "volume_fraction": 0.0704
+          },
+          {
+            "predicted_response": 0.095198323416476,
+            "volume_fraction": 0.0712
+          },
+          {
+            "predicted_response": 0.09553064906980258,
+            "volume_fraction": 0.07200000000000001
+          },
+          {
+            "predicted_response": 0.09586306349077621,
+            "volume_fraction": 0.0728
+          },
+          {
+            "predicted_response": 0.09619555746418067,
+            "volume_fraction": 0.0736
+          },
+          {
+            "predicted_response": 0.09652812555232738,
+            "volume_fraction": 0.07440000000000001
+          },
+          {
+            "predicted_response": 0.0968607660195663,
+            "volume_fraction": 0.0752
+          },
+          {
+            "predicted_response": 0.0971934807736328,
+            "volume_fraction": 0.076
+          },
+          {
+            "predicted_response": 0.09752627532615028,
+            "volume_fraction": 0.07680000000000001
+          },
+          {
+            "predicted_response": 0.0978591587736129,
+            "volume_fraction": 0.0776
+          },
+          {
+            "predicted_response": 0.09819214379911836,
+            "volume_fraction": 0.0784
+          },
+          {
+            "predicted_response": 0.09852524669404031,
+            "volume_fraction": 0.0792
+          },
+          {
+            "predicted_response": 0.09885848739774336,
+            "volume_fraction": 0.08
+          },
+          {
+            "predicted_response": 0.09919188955239366,
+            "volume_fraction": 0.0808
+          },
+          {
+            "predicted_response": 0.09952548056893287,
+            "volume_fraction": 0.0816
+          },
+          {
+            "predicted_response": 0.09985929169939667,
+            "volume_fraction": 0.0824
+          },
+          {
+            "predicted_response": 0.10019335811000608,
+            "volume_fraction": 0.08320000000000001
+          },
+          {
+            "predicted_response": 0.10052771894885858,
+            "volume_fraction": 0.084
+          },
+          {
+            "predicted_response": 0.10086241740163981,
+            "volume_fraction": 0.0848
+          },
+          {
+            "predicted_response": 0.10119750072855874,
+            "volume_fraction": 0.08560000000000001
+          },
+          {
+            "predicted_response": 0.10153302027571982,
+            "volume_fraction": 0.0864
+          },
+          {
+            "predicted_response": 0.10186903145436692,
+            "volume_fraction": 0.08720000000000001
+          },
+          {
+            "predicted_response": 0.10220559368188287,
+            "volume_fraction": 0.08800000000000001
+          },
+          {
+            "predicted_response": 0.10254277027908337,
+            "volume_fraction": 0.0888
+          },
+          {
+            "predicted_response": 0.10288062831920011,
+            "volume_fraction": 0.08960000000000001
+          },
+          {
+            "predicted_response": 0.10321923842497256,
+            "volume_fraction": 0.09040000000000001
+          },
+          {
+            "predicted_response": 0.10355867451144023,
+            "volume_fraction": 0.0912
+          },
+          {
+            "predicted_response": 0.10389901347330771,
+            "volume_fraction": 0.09200000000000001
+          },
+          {
+            "predicted_response": 0.10424033481710798,
+            "volume_fraction": 0.09280000000000001
+          },
+          {
+            "predicted_response": 0.1045827202397741,
+            "volume_fraction": 0.0936
+          },
+          {
+            "predicted_response": 0.10492625315659991,
+            "volume_fraction": 0.09440000000000001
+          },
+          {
+            "predicted_response": 0.10527101818288734,
+            "volume_fraction": 0.0952
+          },
+          {
+            "predicted_response": 0.10561710057480429,
+            "volume_fraction": 0.096
+          },
+          {
+            "predicted_response": 0.10596458563605944,
+            "volume_fraction": 0.09680000000000001
+          },
+          {
+            "predicted_response": 0.10631355809793305,
+            "volume_fraction": 0.0976
+          },
+          {
+            "predicted_response": 0.10666410148092947,
+            "volume_fraction": 0.0984
+          },
+          {
+            "predicted_response": 0.10701629744683933,
+            "volume_fraction": 0.09920000000000001
+          },
+          {
+            "predicted_response": 0.10737022515029622,
+            "volume_fraction": 0.1
+          }
+        ],
+        "target_in_predicted_range": false,
+        "target_response": 0.05678870059299524,
+        "volume_fraction": 0.02
+      },
+      "predicted_relative_target_error": 0.34394203382241856,
+      "predicted_response": 0.07632072177308241,
+      "predicted_volume_fraction": 0.02,
+      "status": "target_miss",
+      "surrogate_to_direct_relative_error": 0.45853594443318385,
+      "target_fraction_of_endpoint_span": 0.5,
+      "target_in_predicted_response_range": false,
+      "target_response": 0.05678870059299524,
+      "target_source": "fraction_of_direct_rve_endpoint_response_span"
+    },
+    {
+      "direct_rve_relative_target_error": 0.11339697531686614,
+      "direct_rve_result": {
+        "energy": 0.0013081506230434646,
+        "maximum_microscopic_jacobian": 1.0382579098513414,
+        "minimum_microscopic_jacobian": 0.9612468002625785,
+        "minimum_particle_clearance": 0.331610969903937,
+        "mixed_residual": 6.116965647533722e-15,
+        "response": 0.05232693926013744,
+        "rotation": [
+          [
+            0.9996850425886455,
+            0.025096108405536444,
+            3.1103615419425134e-05
+          ],
+          [
+            -0.02509610746356132,
+            0.9996850426365435,
+            -3.031417608319061e-05
+          ],
+          [
+            -3.185458695595145e-05,
+            2.952404873366648e-05,
+            0.9999999990568079
+          ]
+        ],
+        "rotation_residual": 2.6772767431968614e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -0.0009003931034493382,
+            0.05232693926013744,
+            -1.4026629783929376e-06
+          ],
+          [
+            0.052370806895859635,
+            -0.0008773526834035922,
+            -6.3028175806067075e-06
+          ],
+          [
+            -1.0875234530602755e-06,
+            -6.302819222976037e-06,
+            -0.0009058357740941863
+          ]
+        ],
+        "volume_fraction": 0.02
+      },
+      "optimizer": {
+        "evaluations": 138,
+        "grid_size": 101,
+        "predicted_response": 0.07632072177308241,
+        "predicted_response_range": [
+          0.07632072177308241,
+          0.10737022515029622
+        ],
+        "relative_target_error": 0.2931423799435321,
+        "sampled_local_minima": 1,
+        "search_grid": [
+          {
+            "predicted_response": 0.07632072177308241,
+            "volume_fraction": 0.02
+          },
+          {
+            "predicted_response": 0.07656111333235932,
+            "volume_fraction": 0.0208
+          },
+          {
+            "predicted_response": 0.07680256766437174,
+            "volume_fraction": 0.0216
+          },
+          {
+            "predicted_response": 0.07704516869480209,
+            "volume_fraction": 0.0224
+          },
+          {
+            "predicted_response": 0.07728900010683473,
+            "volume_fraction": 0.023200000000000002
+          },
+          {
+            "predicted_response": 0.07753414482203189,
+            "volume_fraction": 0.024
+          },
+          {
+            "predicted_response": 0.07778068452752922,
+            "volume_fraction": 0.024800000000000003
+          },
+          {
+            "predicted_response": 0.07802869924635324,
+            "volume_fraction": 0.0256
+          },
+          {
+            "predicted_response": 0.07827826694715705,
+            "volume_fraction": 0.0264
+          },
+          {
+            "predicted_response": 0.07852946318933073,
+            "volume_fraction": 0.027200000000000002
+          },
+          {
+            "predicted_response": 0.07878236079926285,
+            "volume_fraction": 0.028
+          },
+          {
+            "predicted_response": 0.07903702958071133,
+            "volume_fraction": 0.0288
+          },
+          {
+            "predicted_response": 0.07929353601155988,
+            "volume_fraction": 0.0296
+          },
+          {
+            "predicted_response": 0.07955194303217453,
+            "volume_fraction": 0.030400000000000003
+          },
+          {
+            "predicted_response": 0.0798123097755163,
+            "volume_fraction": 0.0312
+          },
+          {
+            "predicted_response": 0.08007469134568017,
+            "volume_fraction": 0.032
+          },
+          {
+            "predicted_response": 0.08033913859786822,
+            "volume_fraction": 0.0328
+          },
+          {
+            "predicted_response": 0.08060569792490338,
+            "volume_fraction": 0.033600000000000005
+          },
+          {
+            "predicted_response": 0.08087441104865163,
+            "volume_fraction": 0.0344
+          },
+          {
+            "predicted_response": 0.08114531481543107,
+            "volume_fraction": 0.0352
+          },
+          {
+            "predicted_response": 0.08141844099526957,
+            "volume_fraction": 0.036000000000000004
+          },
+          {
+            "predicted_response": 0.08169381608569803,
+            "volume_fraction": 0.0368
+          },
+          {
+            "predicted_response": 0.08197146112162518,
+            "volume_fraction": 0.0376
+          },
+          {
+            "predicted_response": 0.08225139149370736,
+            "volume_fraction": 0.038400000000000004
+          },
+          {
+            "predicted_response": 0.08253361677846838,
+            "volume_fraction": 0.0392
+          },
+          {
+            "predicted_response": 0.08281814058421207,
+            "volume_fraction": 0.04
+          },
+          {
+            "predicted_response": 0.08310496041745752,
+            "volume_fraction": 0.0408
+          },
+          {
+            "predicted_response": 0.08339406757517852,
+            "volume_fraction": 0.0416
+          },
+          {
+            "predicted_response": 0.08368544706849768,
+            "volume_fraction": 0.0424
+          },
+          {
+            "predicted_response": 0.08397907758363765,
+            "volume_fraction": 0.0432
+          },
+          {
+            "predicted_response": 0.08427493148582985,
+            "volume_fraction": 0.044
+          },
+          {
+            "predicted_response": 0.08457297487150936,
+            "volume_fraction": 0.044800000000000006
+          },
+          {
+            "predicted_response": 0.08487316767346752,
+            "volume_fraction": 0.0456
+          },
+          {
+            "predicted_response": 0.08517546382270161,
+            "volume_fraction": 0.0464
+          },
+          {
+            "predicted_response": 0.08547981146951716,
+            "volume_fraction": 0.047200000000000006
+          },
+          {
+            "predicted_response": 0.08578615326503956,
+            "volume_fraction": 0.048
+          },
+          {
+            "predicted_response": 0.08609442670273851,
+            "volume_fraction": 0.0488
+          },
+          {
+            "predicted_response": 0.08640456451792368,
+            "volume_fraction": 0.049600000000000005
+          },
+          {
+            "predicted_response": 0.08671649514151314,
+            "volume_fraction": 0.0504
+          },
+          {
+            "predicted_response": 0.0870301432027831,
+            "volume_fraction": 0.0512
+          },
+          {
+            "predicted_response": 0.08734543007436028,
+            "volume_fraction": 0.052000000000000005
+          },
+          {
+            "predicted_response": 0.08766227445147719,
+            "volume_fraction": 0.0528
+          },
+          {
+            "predicted_response": 0.08798059295654204,
+            "volume_fraction": 0.05360000000000001
+          },
+          {
+            "predicted_response": 0.08830030075940909,
+            "volume_fraction": 0.054400000000000004
+          },
+          {
+            "predicted_response": 0.08862131220340448,
+            "volume_fraction": 0.0552
+          },
+          {
+            "predicted_response": 0.08894354142716183,
+            "volume_fraction": 0.05600000000000001
+          },
+          {
+            "predicted_response": 0.08926690297264123,
+            "volume_fraction": 0.0568
+          },
+          {
+            "predicted_response": 0.08959131237031703,
+            "volume_fraction": 0.0576
+          },
+          {
+            "predicted_response": 0.08991668669337975,
+            "volume_fraction": 0.05840000000000001
+          },
+          {
+            "predicted_response": 0.0902429450738591,
+            "volume_fraction": 0.0592
+          },
+          {
+            "predicted_response": 0.09057000917478307,
+            "volume_fraction": 0.06
+          },
+          {
+            "predicted_response": 0.09089780361379415,
+            "volume_fraction": 0.06080000000000001
+          },
+          {
+            "predicted_response": 0.0912262563349886,
+            "volume_fraction": 0.0616
+          },
+          {
+            "predicted_response": 0.09155529892709394,
+            "volume_fraction": 0.0624
+          },
+          {
+            "predicted_response": 0.09188486688740387,
+            "volume_fraction": 0.0632
+          },
+          {
+            "predicted_response": 0.09221489983212554,
+            "volume_fraction": 0.064
+          },
+          {
+            "predicted_response": 0.09254534165493077,
+            "volume_fraction": 0.0648
+          },
+          {
+            "predicted_response": 0.09287614063652642,
+            "volume_fraction": 0.0656
+          },
+          {
+            "predicted_response": 0.09320724950895468,
+            "volume_fraction": 0.0664
+          },
+          {
+            "predicted_response": 0.09353862547909213,
+            "volume_fraction": 0.0672
+          },
+          {
+            "predicted_response": 0.09387023021643778,
+            "volume_fraction": 0.068
+          },
+          {
+            "predicted_response": 0.09420202981074974,
+            "volume_fraction": 0.0688
+          },
+          {
+            "predicted_response": 0.09453399470541768,
+            "volume_fraction": 0.06960000000000001
+          },
+          {
+            "predicted_response": 0.09486609961263716,
+            "volume_fraction": 0.0704
+          },
+          {
+            "predicted_response": 0.095198323416476,
+            "volume_fraction": 0.0712
+          },
+          {
+            "predicted_response": 0.09553064906980258,
+            "volume_fraction": 0.07200000000000001
+          },
+          {
+            "predicted_response": 0.09586306349077621,
+            "volume_fraction": 0.0728
+          },
+          {
+            "predicted_response": 0.09619555746418067,
+            "volume_fraction": 0.0736
+          },
+          {
+            "predicted_response": 0.09652812555232738,
+            "volume_fraction": 0.07440000000000001
+          },
+          {
+            "predicted_response": 0.0968607660195663,
+            "volume_fraction": 0.0752
+          },
+          {
+            "predicted_response": 0.0971934807736328,
+            "volume_fraction": 0.076
+          },
+          {
+            "predicted_response": 0.09752627532615028,
+            "volume_fraction": 0.07680000000000001
+          },
+          {
+            "predicted_response": 0.0978591587736129,
+            "volume_fraction": 0.0776
+          },
+          {
+            "predicted_response": 0.09819214379911836,
+            "volume_fraction": 0.0784
+          },
+          {
+            "predicted_response": 0.09852524669404031,
+            "volume_fraction": 0.0792
+          },
+          {
+            "predicted_response": 0.09885848739774336,
+            "volume_fraction": 0.08
+          },
+          {
+            "predicted_response": 0.09919188955239366,
+            "volume_fraction": 0.0808
+          },
+          {
+            "predicted_response": 0.09952548056893287,
+            "volume_fraction": 0.0816
+          },
+          {
+            "predicted_response": 0.09985929169939667,
+            "volume_fraction": 0.0824
+          },
+          {
+            "predicted_response": 0.10019335811000608,
+            "volume_fraction": 0.08320000000000001
+          },
+          {
+            "predicted_response": 0.10052771894885858,
+            "volume_fraction": 0.084
+          },
+          {
+            "predicted_response": 0.10086241740163981,
+            "volume_fraction": 0.0848
+          },
+          {
+            "predicted_response": 0.10119750072855874,
+            "volume_fraction": 0.08560000000000001
+          },
+          {
+            "predicted_response": 0.10153302027571982,
+            "volume_fraction": 0.0864
+          },
+          {
+            "predicted_response": 0.10186903145436692,
+            "volume_fraction": 0.08720000000000001
+          },
+          {
+            "predicted_response": 0.10220559368188287,
+            "volume_fraction": 0.08800000000000001
+          },
+          {
+            "predicted_response": 0.10254277027908337,
+            "volume_fraction": 0.0888
+          },
+          {
+            "predicted_response": 0.10288062831920011,
+            "volume_fraction": 0.08960000000000001
+          },
+          {
+            "predicted_response": 0.10321923842497256,
+            "volume_fraction": 0.09040000000000001
+          },
+          {
+            "predicted_response": 0.10355867451144023,
+            "volume_fraction": 0.0912
+          },
+          {
+            "predicted_response": 0.10389901347330771,
+            "volume_fraction": 0.09200000000000001
+          },
+          {
+            "predicted_response": 0.10424033481710798,
+            "volume_fraction": 0.09280000000000001
+          },
+          {
+            "predicted_response": 0.1045827202397741,
+            "volume_fraction": 0.0936
+          },
+          {
+            "predicted_response": 0.10492625315659991,
+            "volume_fraction": 0.09440000000000001
+          },
+          {
+            "predicted_response": 0.10527101818288734,
+            "volume_fraction": 0.0952
+          },
+          {
+            "predicted_response": 0.10561710057480429,
+            "volume_fraction": 0.096
+          },
+          {
+            "predicted_response": 0.10596458563605944,
+            "volume_fraction": 0.09680000000000001
+          },
+          {
+            "predicted_response": 0.10631355809793305,
+            "volume_fraction": 0.0976
+          },
+          {
+            "predicted_response": 0.10666410148092947,
+            "volume_fraction": 0.0984
+          },
+          {
+            "predicted_response": 0.10701629744683933,
+            "volume_fraction": 0.09920000000000001
+          },
+          {
+            "predicted_response": 0.10737022515029622,
+            "volume_fraction": 0.1
+          }
+        ],
+        "target_in_predicted_range": false,
+        "target_response": 0.059019581259424136,
+        "volume_fraction": 0.02
+      },
+      "predicted_relative_target_error": 0.2931423799435321,
+      "predicted_response": 0.07632072177308241,
+      "predicted_volume_fraction": 0.02,
+      "status": "target_miss",
+      "surrogate_to_direct_relative_error": 0.45853594443318385,
+      "target_fraction_of_endpoint_span": 0.75,
+      "target_in_predicted_response_range": false,
+      "target_response": 0.059019581259424136,
+      "target_source": "fraction_of_direct_rve_endpoint_response_span"
+    }
+  ],
+  "training_dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "validation_scope": "multiple targets derived from the direct-RVE endpoint span; not external experimental targets",
+  "verification": {
+    "autograd_vs_finite_difference": [
+      {
+        "autograd_derivative": 0.29986012105577114,
+        "finite_difference_derivative": 0.2998601156226077,
+        "response": 0.07632072177308241,
+        "scaled_error": 5.43316341916622e-09,
+        "volume_fraction": 0.02
+      },
+      {
+        "autograd_derivative": 0.357090936784746,
+        "finite_difference_derivative": 0.3570909366000518,
+        "response": 0.08281814058421207,
+        "scaled_error": 1.8469420437483564e-10,
+        "volume_fraction": 0.04
+      },
+      {
+        "autograd_derivative": 0.4093019599978939,
+        "finite_difference_derivative": 0.40930195759625304,
+        "response": 0.09057000917478307,
+        "scaled_error": 2.4016408861626815e-09,
+        "volume_fraction": 0.06
+      },
+      {
+        "autograd_derivative": 0.41664647136660227,
+        "finite_difference_derivative": 0.4166464721983009,
+        "response": 0.09885848739774336,
+        "scaled_error": 8.316986543910332e-10,
+        "volume_fraction": 0.08
+      }
+    ],
+    "maximum_scaled_derivative_error": 5.43316341916622e-09,
+    "status": "pass",
+    "tolerance": 1e-05
+  },
+  "volume_fraction_bounds": [
+    0.02,
+    0.1
+  ]
+}

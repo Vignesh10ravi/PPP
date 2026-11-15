@@ -1,0 +1,72 @@
+{
+  "allow_empty_splits": true,
+  "config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.52,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "expansion_determinant_range": [
+      1.5,
+      1.8
+    ],
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.1,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 0,
+    "n_deformations": 5,
+    "n_expansion_deformations": 0,
+    "seed": 20261115,
+    "split_fractions": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "configuration_sha256": "d38acd025a4765e48a938b83beec2e4bc13f5845f203f7c1ab0bda1603e924e1",
+  "deformation_design": {
+    "evaluation_only": true,
+    "excluded_previous_amplitudes": [
+      0.01,
+      0.02,
+      0.025,
+      0.03,
+      0.04,
+      0.045,
+      0.05,
+      0.055,
+      0.06,
+      0.07,
+      0.075,
+      0.08,
+      0.09,
+      0.095
+    ],
+    "holdout_amplitudes": [
+      0.035,
+      0.065,
+      0.085,
+      0.1
+    ],
+    "includes_identity_reference": true,
+    "load_mode": "positive simple shear, F[0,1]=gamma",
+    "matches_adaptation_dataset_microstructure_seed": true,
+    "microstructure_seed": 20261115,
+    "purpose": "new independent final direct-RVE evaluation of the context adapter; all states are held out from fitting and model selection",
+    "split_unit": "deformation state; all states assigned to test"
+  },
+  "deformation_sha256": "05b3cc3d9177fd469ef76759482cde273936d023afbb6494fea8d9dfbd61d8da",
+  "schema_version": 2,
+  "source_revision_sha256": "b907f7946a365305bb067cc8432dcfbdc12b4b65071920479b817f4967807d08",
+  "split_assignments_sha256": "8ecd486b402e4cfce4dee7efe017fbda4e8c415b8caaeb7f8ddfe1bd636b8b01"
+}

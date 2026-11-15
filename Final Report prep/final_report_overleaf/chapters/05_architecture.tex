@@ -1,0 +1,92 @@
+\chapter{Program Architecture and Flow}
+\label{ch:architecture}
+
+\section{Module structure}
+
+\begin{table}[H]
+\centering
+\caption{Core implementation modules.}
+\label{tab:modules}
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}X@{}}
+\toprule
+Module & Responsibility\\
+\midrule
+\texttt{picnn.py} & Partial ICNN architecture and reference normalization\\
+\texttt{constitutive.py} & AD stress and full tangent extraction\\
+\texttt{ngsolve\_umat.py} & Phase~1 integration-point bridge and Newton solve\\
+\texttt{rve.py} & Periodic geometry and rigid kinematic utilities\\
+\texttt{mixed\_matrix.py} & Taylor--Hood mixed matrix formulation\\
+\texttt{rve\_solver.py} & Coupled periodic nonlinear RVE solution\\
+\texttt{free\_particle.py} & Free finite rotation and rotational condensation\\
+\texttt{homogenization.py} & Energy, stress, and Hill--Mandel work\\
+\texttt{rve\_tangent.py} & Condensed macroscopic tangent\\
+\texttt{rve\_dataset.py} & Deterministic sampling, checkpoints, and serialization\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{End-to-end flow}
+
+The implementation proceeds in the same order as the two project stages:
+\begin{enumerate}
+  \item \textbf{Phase 1 proof of concept:}
+    \begin{enumerate}[label=\alph*)]
+      \item sample analytical neo-Hookean labels and train the pICNN;
+      \item use PyTorch automatic differentiation to obtain energy, stress,
+            and the full tangent;
+      \item transfer material values at NGSolve integration points and solve
+            the displacement problem;
+      \item pass the reference, response, tangent, equilibrium, patch, and
+            matched-FE verification gates.
+    \end{enumerate}
+  \item \textbf{Phase 2 multiscale extension:}
+    \begin{enumerate}[label=\alph*)]
+      \item construct periodic RVEs and solve the mixed matrix and rigid
+            particle equilibrium problem;
+      \item homogenize energy and work-conjugate stress, and condense the
+            consistent tangent;
+      \item checkpoint the grouped dataset, train and evaluate the
+            volume-fraction-conditioned pICNN, and run macroscopic NGSolve
+            problems.
+    \end{enumerate}
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\small
+\begin{tabular}{c}
+\fbox{\parbox{0.88\textwidth}{\centering
+  \textbf{Phase 1: prove the PyTorch--NGSolve material interface}\\
+  Analytical compressible neo-Hookean data \(\rightarrow\) train the pICNN
+  \(\rightarrow\) differentiate energy in PyTorch to obtain \(\Pstress\) and
+  the full \(9\times9\) tangent.}}
+\\[-1mm] \(\Downarrow\) \\[-1mm]
+\fbox{\parbox{0.88\textwidth}{\centering
+  Transfer integration-point material values through
+  \texttt{IntegrationRuleSpace}; solve an NGSolve displacement problem with
+  the consistent Newton tangent.}}
+\\[-1mm] \(\Downarrow\) \\[-1mm]
+\fbox{\parbox{0.88\textwidth}{\centering
+  \textbf{Phase 1 gate:} reference state, analytical response, tangent,
+  nonlinear solve, affine patch, and matched FE checks. Passing this gate
+  precedes RVE data generation.}}
+\\[1mm] \(\Downarrow\) \\[-1mm]
+\fbox{\parbox{0.88\textwidth}{\centering
+  \textbf{Phase 2: solve periodic rigid-particle RVEs}\\
+  Mixed displacement--pressure PDMS matrix; exact rigid-sphere kinematics;
+  equilibrium in displacement, pressure, and free rotation.}}
+\\[-1mm] \(\Downarrow\) \\[-1mm]
+\fbox{\parbox{0.88\textwidth}{\centering
+  Homogenize energy and work-conjugate stress; compute the consistent
+  macroscopic tangent by energy-Hessian condensation; checkpoint grouped
+  data over deformation states and particle volume fractions.}}
+\\[-1mm] \(\Downarrow\) \\[-1mm]
+\fbox{\parbox{0.88\textwidth}{\centering
+  Train and evaluate the volume-fraction-conditioned pICNN; apply boundary
+  conditions in the macroscopic NGSolve problem and evaluate the learned
+  constitutive response at its integration points.}}
+\end{tabular}
+\caption{Implemented two-stage workflow. The Phase~1 constitutive bridge was
+verified before the Phase~2 RVE data-generation and homogenization workflow.}
+\label{fig:flowchart}
+\end{figure}

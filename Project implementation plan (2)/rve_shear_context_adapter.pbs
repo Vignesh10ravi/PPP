@@ -1,0 +1,60 @@
+#!/bin/bash
+#PBS -N shear_context_adapt
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=16GB
+#PBS -l walltime=08:00:00
+#PBS -o /scratch/vr80beqo/rve_shear_context_adapter_20261115.pbs.out
+#PBS -e /scratch/vr80beqo/rve_shear_context_adapter_20261115.pbs.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load python/gcc/11.4.0/3.11.7
+source "$SCRATCH/venvs/ppp-rve-train-cpu/bin/activate"
+
+export OMP_NUM_THREADS=12
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=12
+export PYTHONUNBUFFERED=1
+
+BASE_DATA=/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data
+SHEAR_DATA=/scratch4/vr80beqo/rve_shear_adaptation_20261115/data
+BASELINE_CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+OUT_DIR=/scratch4/vr80beqo/rve_shear_context_adapter_20261115
+mkdir -p "$OUT_DIR"
+
+test -f "$BASE_DATA/rve_phase6_phase7_training.npz"
+test -f "$BASE_DATA/rve_phase6_phase7_training.manifest.json"
+test -f "$SHEAR_DATA/rve_shear_adaptation.npz"
+test -f "$SHEAR_DATA/rve_shear_adaptation.manifest.json"
+test -f "$BASELINE_CHECKPOINT"
+
+python -c 'import numpy, torch; print("NumPy", numpy.__version__, "PyTorch", torch.__version__)'
+python -u -m src.train_rve_shear_context_adapter \
+  --base-dataset "$BASE_DATA/rve_phase6_phase7_training.npz" \
+  --base-manifest "$BASE_DATA/rve_phase6_phase7_training.manifest.json" \
+  --shear-dataset "$SHEAR_DATA/rve_shear_adaptation.npz" \
+  --shear-manifest "$SHEAR_DATA/rve_shear_adaptation.manifest.json" \
+  --initialize-from "$BASELINE_CHECKPOINT" \
+  --expected-checkpoint-sha256 32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70 \
+  --checkpoint "$OUT_DIR/partial_icnn_phase7_shear_context_adapter.pt" \
+  --report "$OUT_DIR/shear_context_adapter_report.json" \
+  --test-csv "$OUT_DIR/previously_inspected_shear_development_comparison.csv" \
+  --epochs 1000 \
+  --batch-size 64 \
+  --shear-batch-size 16 \
+  --shear-tangent-batch-size 8 \
+  --original-tangent-batch-size 8 \
+  --original-tangent-validation-states 12 \
+  --learning-rate 1.0e-5 \
+  --original-tangent-weight 0.10 \
+  --shear-response-weight 1.0 \
+  --shear-tangent-weight 1.0 \
+  --targeted-shear-tangent-weight 3.0 \
+  --low-shear-max-amplitude 0.02 \
+  --max-original-validation-regression 0.02 \
+  --validation-interval 5 \
+  --patience 30 \
+  --seed 20261118 \
+  --torch-threads 12 \
+  2>&1 | tee "$OUT_DIR/training.log"

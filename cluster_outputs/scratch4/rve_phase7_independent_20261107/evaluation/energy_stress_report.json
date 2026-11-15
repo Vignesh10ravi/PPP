@@ -1,0 +1,113 @@
+{
+  "by_volume_fraction": {
+    "0.02": {
+      "energy_mae": 0.8312882458591611,
+      "energy_max_abs_error_train_scale": 0.005532306534445624,
+      "energy_nmae_train_scale": 0.0008491267402671383,
+      "energy_nrmse_train_scale": 0.0013581756653408977,
+      "energy_rmse": 1.3296430472259482,
+      "n_samples": 177,
+      "stress_component_mae": 2.6444678287478163,
+      "stress_component_rmse": 5.043795190994363,
+      "stress_max_abs_component_error_train_scale": 0.014788507697751153,
+      "stress_nmae_train_scale": 0.0010835842708860797,
+      "stress_nrmse_train_scale": 0.0020667209769461466,
+      "worst_energy_sample_id": "v000_f000171",
+      "worst_stress_sample_id": "v000_f000180"
+    },
+    "0.05": {
+      "energy_mae": 0.7766221377344684,
+      "energy_max_abs_error_train_scale": 0.007321581868512793,
+      "energy_nmae_train_scale": 0.0007932875600234234,
+      "energy_nrmse_train_scale": 0.0014265797192261152,
+      "energy_rmse": 1.3966100655370293,
+      "n_samples": 177,
+      "stress_component_mae": 2.6982511464696786,
+      "stress_component_rmse": 5.3201195126778416,
+      "stress_max_abs_component_error_train_scale": 0.02018217680338787,
+      "stress_nmae_train_scale": 0.001105622261473802,
+      "stress_nrmse_train_scale": 0.0021799462865470056,
+      "worst_energy_sample_id": "v001_f000180",
+      "worst_stress_sample_id": "v001_f000180"
+    },
+    "0.1": {
+      "energy_mae": 0.7285532429523645,
+      "energy_max_abs_error_train_scale": 0.011333111003907508,
+      "energy_nmae_train_scale": 0.0007441871617706045,
+      "energy_nrmse_train_scale": 0.0014201655644621044,
+      "energy_rmse": 1.390330659637309,
+      "n_samples": 177,
+      "stress_component_mae": 3.4476790997875675,
+      "stress_component_rmse": 6.715134623688323,
+      "stress_max_abs_component_error_train_scale": 0.02319430750500532,
+      "stress_nmae_train_scale": 0.0014127042132940039,
+      "stress_nrmse_train_scale": 0.0027515608910079425,
+      "worst_energy_sample_id": "v002_f000180",
+      "worst_stress_sample_id": "v002_f000180"
+    }
+  },
+  "checkpoint_best_epoch": 2500,
+  "checkpoint_sha256": "2efa831c053c7ed0282deadc456ee774fd1fad55463ead90a477d64e899b196d",
+  "dataset_sha256": "54ccf791bad2f22ed17445d45e150f9f55fcfe22497f23ce3d0cae4eee361985",
+  "evaluated_split": "test",
+  "evaluation_config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.51,
+      0.6
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "expansion_determinant_range": [
+      1.5,
+      1.8
+    ],
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 50,
+    "n_deformations": 200,
+    "n_expansion_deformations": 50,
+    "seed": 4103,
+    "split_fractions": [
+      0.05,
+      0.05,
+      0.9
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "evaluation_manifest_configuration_sha256": "fc7b64ec8fefd1c8656ae21ad78feefcb0ee1c07cbc337f5a0fde8fad6a337a6",
+  "excluded_state_indices": [
+    0
+  ],
+  "independent_evaluation": true,
+  "overall": {
+    "energy_mae": 0.7788212088486647,
+    "energy_max_abs_error_train_scale": 0.011333111003907508,
+    "energy_nmae_train_scale": 0.0007955338206870554,
+    "energy_nrmse_train_scale": 0.0014019796793243735,
+    "energy_rmse": 1.372526824427992,
+    "n_samples": 531,
+    "stress_component_mae": 2.930132691668354,
+    "stress_component_rmse": 5.739819235601155,
+    "stress_max_abs_component_error_train_scale": 0.02319430750500532,
+    "stress_nmae_train_scale": 0.001200636915217962,
+    "stress_nrmse_train_scale": 0.0023519204029688687,
+    "worst_energy_sample_id": "v002_f000180",
+    "worst_stress_sample_id": "v002_f000180"
+  },
+  "status": "complete",
+  "test_set_was_used_for_model_selection": false,
+  "training_dataset_sha256": "9e8a47be77ce7fb5076d73744c50f753374fc0741b6a64cc0dcff2990fdc1b26",
+  "training_scales": {
+    "energy_rms": 978.9919530712634,
+    "stress_rms": 2440.481926325264
+  }
+}

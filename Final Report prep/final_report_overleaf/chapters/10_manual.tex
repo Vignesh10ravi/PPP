@@ -1,0 +1,226 @@
+\chapter{User Manual}
+\label{ch:manual}
+
+\section{Environment}
+
+\begin{lstlisting}[language=bash]
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+\end{lstlisting}
+
+The Phase~7 production logs report Python~3.11.7, NumPy~2.4.6,
+PyTorch~2.15.0+cpu, and NGSolve~6.2.2608.
+The versions in \texttt{requirements.txt} are minimum-version constraints,
+not a fully pinned lockfile. For comparison with the reported cluster
+results, use the versions above and record the operating system, BLAS
+backend, thread counts, and NGSolve build. The Phase~1 baseline package
+captures an earlier local environment; results from that environment should
+not be combined with Phase~7 production metrics without qualification.
+
+\section{Repository layout and numerical stages}
+
+Run commands from the repository root so Python resolves the \texttt{src}
+and \texttt{tests} packages. The material model
+(\texttt{src/picnn.py}), its energy derivatives
+(\texttt{src/constitutive.py}), and the NGSolve integration-point bridge
+(\texttt{src/ngsolve\_umat.py}) are separate modules. Phase~2 separates
+periodic geometry and kinematics (\texttt{src/rve.py}), mixed matrix
+equations (\texttt{src/mixed\_matrix.py}), nonlinear RVE solution
+(\texttt{src/rve\_solver.py} and \texttt{src/free\_particle.py}), and
+homogenization. Dataset generation, integrity auditing, and training have
+their own entry points, so each stage can be checked before an expensive
+production run.
+
+The workflow has two stages. Phase~1 trains on analytical neo-Hookean data
+and demonstrates pICNN inference inside an NGSolve solve. Phase~2 computes
+homogenized labels from periodic particle RVEs, audits and trains on those
+labels, and evaluates the surrogate in a displacement FE problem. Phase~2
+does not replace the small Phase~1 proof that the PyTorch--NGSolve interface
+works.
+
+\section{Phase 1 verification}
+
+\begin{lstlisting}[language=bash]
+python -m tests.verify_model_interface
+python -m tests.verify_reference
+python -m tests.verify_tangent
+python -m tests.verify_neohooke_response
+python -m tests.verify_element
+python -m tests.verify_patch
+python -m tests.verify_fe_comparison
+\end{lstlisting}
+
+The V4 equilibrium check uses a seeded pICNN by default and does not require a
+checkpoint. To repeat it with the trained Phase~1 material, pass the checkpoint
+explicitly:
+\begin{lstlisting}[language=bash]
+python -m tests.verify_element --ckpt checkpoints/phase1_validated.pt
+\end{lstlisting}
+Run the checks in the listed order because each adds one layer of
+complexity: API shapes, reference normalization, constitutive accuracy,
+tangent consistency, nonlinear equilibrium, patch consistency, and then a
+matched analytical-versus-neural FE comparison. A passing V4 solve verifies
+assembly and convergence for its loading case; V5 and V6 separately check
+uniform-field reproduction and agreement with the reference material.
+
+\section{Phase 2 verification}
+
+\begin{lstlisting}[language=bash]
+python -m tests.verify_periodic_rve
+python -m tests.verify_rigid_particle
+python -m tests.verify_mixed_matrix
+python -m tests.verify_coupled_rve
+python -m tests.verify_hill_mandel
+python -m tests.verify_homogenized_tangent
+python -m tests.verify_free_rotation
+python -m tests.verify_translation_gauge
+python -m tests.verify_free_rotation_tangent
+python -m tests.verify_rve_dataset
+\end{lstlisting}
+
+\section{Dataset generation}
+
+\begin{lstlisting}[language=bash]
+python -m src.generate_rve_dataset \
+  --output data/rve_phase2.npz \
+  --volume-fractions 0.02 0.05 0.10 \
+  --n-deformations 100 \
+  --seed 1729
+\end{lstlisting}
+
+This standard configuration creates 100 deformation states and evaluates
+each at three volume fractions, for 300 records. Other controls include
+\texttt{--maxh}, \texttt{--max-strain},
+\texttt{--determinant-floor}, \texttt{--max-condition-number},
+\texttt{--bulk-modulus}, and \texttt{--microscopic-jacobian-floor}.
+Compression and expansion tails are configured through
+\texttt{DatasetConfig} or the parallel campaign entry point. Pass
+\texttt{--work-directory} to choose a separate checkpoint directory. The
+generator resumes valid completed samples by default;
+\texttt{--no-resume} starts a new work set.
+
+The adjacent JSON manifest must be retained with the NPZ. Interrupted runs
+should resume from atomic per-sample checkpoints rather than overwrite
+completed states.
+
+Before training or publishing the array file, validate its manifest, hashes,
+shapes, split grouping, reference states, residuals, tangent symmetry,
+rotation orthogonality, and Jacobian range:
+\begin{lstlisting}[language=bash]
+python -m src.audit_rve_dataset --dataset data/rve_phase2.npz \
+  --manifest data/rve_phase2.manifest.json
+\end{lstlisting}
+This audit does not rerun finite-element calculations. It checks integrity
+of stored records but cannot establish physical representativeness of the
+chosen RVE or mesh convergence.
+
+\section{Surrogate and macro-FE execution}
+
+The final fine-tuning command was:
+\begin{lstlisting}[language=bash]
+python -u -m src.train_rve \
+  --dataset data/rve_phase6_phase7_training.npz \
+  --manifest data/rve_phase6_phase7_training.manifest.json \
+  --checkpoint training/partial_icnn_phase6_phase7_finetuned.pt \
+  --report training/training_report.json \
+  --initialize-from partial_icnn_phase6_targeted.pt \
+  --epochs 3000 --batch-size 64 --learning-rate 1.0e-4 \
+  --stress-weight 1.0 --tangent-weight 0.10 \
+  --tangent-batch-size 8 --tangent-validation-states 12 \
+  --patience 20 --validation-interval 25 \
+  --seed 4103 --device cpu --torch-threads 12
+\end{lstlisting}
+
+The independent Phase~7 data were generated with
+\texttt{generate\_rve\_dataset\_parallel}: 200 deformation states in total,
+including 50 targeted compression states in \(J\in[0.51,0.60]\) and 50
+expansion states in \(J\in[1.50,1.80]\), split fractions
+\(0.05/0.05/0.90\), seed 4103, \(h=0.22\), displacement order 2,
+integration order 10, and 12 workers. The archived script is
+\texttt{rve\_phase7\_independent\_dataset.pbs}.
+
+The completed macroscopic command was:
+\begin{lstlisting}[language=bash]
+python -u -m benchmarks.phase6_macro_fe_demo \
+  --checkpoint partial_icnn_phase6_phase7_finetuned.pt \
+  --output report.json --volume-fraction 0.05 --stretch 0.05 \
+  --maxh 0.25 --order 1 --integration-order 4 \
+  --max-iter 200 --load-steps 100 --tolerance 1.0e-8 \
+  --merit-function energy --load-predictor secant
+\end{lstlisting}
+For the mesh study, only \texttt{--maxh} and cluster thread allocation changed
+to 0.20/40 and 0.16/40. Exact PBS scripts and standard output must be retained
+with each \texttt{report.json}. Failed runs must not be overwritten; their
+reports document the failed load step and residual.
+
+The training report records split counts, input normalization, epoch history,
+the selected validation checkpoint, and test metrics. A fine-tuned model
+keeps the parent checkpoint's feature and context normalization fixed; do
+not refit that normalization on held-out states. The macro-FE command uses
+the selected checkpoint, a fixed volume-fraction context, target stretch,
+mesh size, element order, quadrature order, and load-step strategy. Its JSON
+result is the primary numerical record and should be archived with the
+matching source revision, PBS script, job output, environment versions, and
+checkpoint hash.
+
+\section{Cluster execution and output interpretation}
+
+The supplied PBS scripts document production resource requests and the
+sequence of RVE generation, model training, and macro-FE checks. Set
+\texttt{NGS\_NUM\_THREADS} to the allocated NGSolve thread count and
+\texttt{TORCH\_NUM\_THREADS} to the PyTorch intra-op count before launching
+the job. For process-parallel dataset generation, each worker constructs its
+own NGSolve mesh; mesh and solver objects are not shared across processes.
+Use persistent scratch storage for the work directory, retain per-sample
+checkpoints until the final NPZ and manifest pass the audit, and copy the
+frozen artifacts to durable project storage.
+
+Read macro-FE reports as solver records, not as experimental validation.
+Final residuals establish equilibrium only for the saved mesh, element
+order, quadrature, boundary conditions, and loading path. Compare response
+quantities such as reactions or stored energy across refined meshes before
+claiming convergence. Preserve failed-run reports too: failure at a
+particular load increment helps distinguish load-path instability from a
+broken constitutive call and should not be hidden by a later run with
+different controls.
+
+\section{Expected artifacts}
+
+At minimum, archive the input dataset and manifest, any resumed work
+directory required to reconstruct it, training report and checkpoint,
+macro-FE JSON report, job script and standard output, and environment
+record. Compute SHA-256 hashes for large frozen data and checkpoints. The
+manifest's configuration and source hashes identify the solver inputs; a
+Git commit and log should also be retained when the source repository is
+available. Keep exploratory, failed, and production runs under distinct
+names so each report table can be traced to the exact configuration that
+produced it.
+
+\section{Regenerating report figures}
+
+The included plotting script recreates the verification and pilot-dataset
+figures from their archived numerical sources:
+\begin{lstlisting}[language=bash]
+python figure_sources/generate_report_figures.py
+\end{lstlisting}
+The script writes vector PDF figures for LaTeX and high-resolution PNG
+previews into \texttt{figures/}. Its inputs include the Phase~2 pilot NPZ and
+manifest in \texttt{figure\_sources/}; the Phase~1 tangent and Newton values
+are read from the archived verification logs recorded in this report. The
+figures distinguish a verification diagnostic from a constitutive response
+curve: in particular, the pilot plot of \(\det\Fbar\) shows loading coverage,
+not a stress--strain relation, because the sampled gradients include
+different distortional components.
+
+For further result figures, retain predictions and reference targets at the
+same sample IDs. A useful surrogate assessment is a parity plot for energy
+and stress, supplemented by relative tangent-error distributions grouped by
+volume fraction and determinant range. A component-scale mesh study should
+export reaction force or stored energy at every accepted load step for each
+mesh; final residuals alone cannot support a response-convergence plot. A
+periodic RVE mesh rendering and a schematic of opposite-face identifications
+and the rigid cavity trace would also clarify the boundary conditions. These
+figures require the raw Phase~6/7 evaluation predictions and macro-FE
+response histories, which are not present in this report package and must
+not be reconstructed from summary metrics alone.

@@ -1,0 +1,57 @@
+CPU threads: NGSolve=1, PyTorch=1
+Macro-FE pICNN run: vf=0.05, axial stretch=0.005, load steps=10, maxh=0.16, order=2, integration order=6, merit=energy, predictor=secant
+[load continuation] attempt=1, accepted_step=1, increment=5.00000000e-04, axial_stretch=5.00000000e-04
+[load predictor] type=affine_boundary_field
+[solve] ndof=8928, free=7782, constrained=1146
+[solve] initial_guess=coefficient_function_interpolation, displacement_norm=3.741657e-03
+[UMAT stage] begin residual/tangent evaluation
+[UMAT stage] before IntegrationRuleSpace(order=6)
+[UMAT stage] after IntegrationRuleSpace
+[UMAT stage] after integration measure setup
+[UMAT stage] before deformation-gradient interpolation
+[UMAT stage] after deformation-gradient interpolation
+[UMAT stage] after reading F at 623574 quadrature points
+[UMAT stage] before PyTorch stress/tangent evaluation
+[UMAT stage] after PyTorch stress/tangent evaluation
+[UMAT stage] before energy GridFunction/integration
+[UMAT stage] after energy integration
+[UMAT stage] created stress quadrature GridFunction
+[UMAT stage] created tangent quadrature GridFunction
+[UMAT stage] before residual LinearForm.Assemble
+[UMAT stage] after residual LinearForm.Assemble
+[UMAT stage] before tangent BilinearForm.Assemble
+Fatal Python error: Segmentation fault
+
+Current thread 0x0000152cc3350740 (most recent call first):
+  File "/scratch4/vr80beqo/rve_phase7_macro_fe_order2_quadcheck_0p5pct_h016_q6_stages_1c/code/src/ngsolve_umat.py", line 387 in _residual_and_stiffness
+  File "/scratch4/vr80beqo/rve_phase7_macro_fe_order2_quadcheck_0p5pct_h016_q6_stages_1c/code/src/ngsolve_umat.py", line 495 in solve
+  File "/scratch4/vr80beqo/rve_phase7_macro_fe_order2_quadcheck_0p5pct_h016_q6_stages_1c/code/benchmarks/phase6_macro_fe_demo.py", line 174 in main
+  File "/scratch4/vr80beqo/rve_phase7_macro_fe_order2_quadcheck_0p5pct_h016_q6_stages_1c/code/benchmarks/phase6_macro_fe_demo.py", line 365 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+
+Extension modules: numpy._core._multiarray_umath, numpy.linalg._umath_linalg, torch._C, torch._C._dynamo.autograd_compiler, torch._C._dynamo.eval_frame, torch._C._dynamo.guards, torch._C._dynamo.utils, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._pcg64, numpy.random._generator, numpy.random._mt19937, numpy.random._philox, numpy.random._sfc64, numpy.random.mtrand (total: 22)
+Command terminated by signal 11
+	Command being timed: "python -X faulthandler -u -m benchmarks.phase6_macro_fe_demo --checkpoint /scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt --output /scratch/vr80beqo/rve_phase7_macro_fe_order2_quadcheck_0p5pct_h016_q6_stages_1c/report.json --volume-fraction 0.05 --stretch 0.005 --maxh 0.16 --order 2 --integration-order 6 --max-iter 200 --load-steps 10 --tolerance 1.0e-8 --merit-function energy --load-predictor secant"
+	User time (seconds): 25.17
+	System time (seconds): 12.97
+	Percent of CPU this job got: 94%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:40.18
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 5582436
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 508043
+	Voluntary context switches: 6529
+	Involuntary context switches: 22345
+	Swaps: 0
+	File system inputs: 1656
+	File system outputs: 96
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

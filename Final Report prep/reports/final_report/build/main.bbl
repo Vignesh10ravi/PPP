@@ -1,0 +1,56 @@
+\begin{thebibliography}{1}
+
+\bibitem{holzapfel2000}
+Gerhard~A. Holzapfel.
+\newblock {\em Nonlinear Solid Mechanics: A Continuum Approach for
+  Engineering}.
+\newblock Wiley, 2000.
+
+\bibitem{ball1977}
+John~M. Ball.
+\newblock Convexity conditions and existence theorems in nonlinear elasticity.
+\newblock {\em Archive for Rational Mechanics and Analysis}, 63(4):337--403,
+  1977.
+
+\bibitem{amos2017}
+Brandon Amos, Lei Xu, and J.~Zico Kolter.
+\newblock Input convex neural networks.
+\newblock In {\em Proceedings of the 34th International Conference on Machine
+  Learning}, pages 146--155, 2017.
+
+\bibitem{kalina2022}
+Karl~A. Kalina, Lennart Linden, J{\"o}rg Brummund, Philipp Metsch, and Markus
+  K\"astner.
+\newblock Automated constitutive modeling of isotropic hyperelasticity based on
+  artificial neural networks.
+\newblock {\em Computational Mechanics}, 69(1):213--232, 2022.
+
+\bibitem{linden2023}
+Lennart Linden, Dominik~K. Klein, Karl~A. Kalina, J{\"o}rg Brummund, Oliver
+  Weeger, and Markus K\"astner.
+\newblock Neural networks meet hyperelasticity: A guide to enforcing physics.
+\newblock {\em Journal of the Mechanics and Physics of Solids}, 179:105363,
+  2023.
+
+\bibitem{ngsolve_periodic}
+{Netgen/NGSolve}.
+\newblock Periodic spaces.
+\newblock
+  \url{https://docu.ngsolve.org/latest/i-tutorials/unit-2.12-periodicity/periodicity.html}.
+\newblock NGSolve documentation, accessed 2026-11-12.
+
+\bibitem{ngsolve_tensorflow}
+{Netgen/NGSolve}.
+\newblock Ngsolve with tensorflow.
+\newblock
+  \url{https://docu.ngsolve.org/latest/i-tutorials/unit-10.2-tensorflow/TensorFlowNGSolve.html}.
+\newblock NGSolve documentation, accessed 2026-11-12.
+
+\bibitem{czarnecki2017}
+Wojciech~M. Czarnecki, Simon Osindero, Max Jaderberg, Grzegorz Swirszcz, and
+  Razvan Pascanu.
+\newblock Sobolev training for neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems 30}, pages
+  4281--4290, 2017.
+
+\end{thebibliography}

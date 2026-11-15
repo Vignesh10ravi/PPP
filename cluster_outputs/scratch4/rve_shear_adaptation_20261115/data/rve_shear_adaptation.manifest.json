@@ -1,0 +1,221 @@
+{
+  "config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.52,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "expansion_determinant_range": [
+      1.5,
+      1.8
+    ],
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.1,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 0,
+    "n_deformations": 11,
+    "n_expansion_deformations": 0,
+    "seed": 20261115,
+    "split_fractions": [
+      0.55,
+      0.18,
+      0.27
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "configuration_sha256": "f4b178c384504da05731dc07421dbee8caf967a2ce4fcbb28d92cebe8045a4cc",
+  "dataset_sha256": "2b228d6bf7462ed70800d5becb86657f55a057c637ceecb0f6bc983056f6b8d2",
+  "deformation_design": {
+    "amplitudes_by_split": {
+      "test": [
+        0.045,
+        0.055,
+        0.095
+      ],
+      "train": [
+        0.01,
+        0.02,
+        0.04,
+        0.06,
+        0.08,
+        0.09
+      ],
+      "validation": [
+        0.03,
+        0.07
+      ]
+    },
+    "excluded_existing_baseline_amplitudes": [
+      0.025,
+      0.05,
+      0.075
+    ],
+    "load_mode": "positive simple shear, F[0,1]=gamma",
+    "purpose": "separate shear-aware fine-tuning; final-test states are excluded from fitting",
+    "split_unit": "deformation state; each state is repeated at every volume fraction"
+  },
+  "deformation_sha256": "7e26e025adaf97adfa0a26777f60dfbca83dd980008faabcfe1c27e62cbcbc99",
+  "fields": {
+    "condensed_residual": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "condition_number": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "deformation_gradient": {
+      "dtype": "float64",
+      "shape": [
+        33,
+        3,
+        3
+      ]
+    },
+    "determinant": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "energy": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "maximum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "minimum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "minimum_particle_clearance": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "mixed_iterations": {
+      "dtype": "int64",
+      "shape": [
+        33
+      ]
+    },
+    "mixed_residual": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "rotation": {
+      "dtype": "float64",
+      "shape": [
+        33,
+        3,
+        3
+      ]
+    },
+    "rotation_iterations": {
+      "dtype": "int64",
+      "shape": [
+        33
+      ]
+    },
+    "rotation_residual": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "sample_id": {
+      "dtype": "<U12",
+      "shape": [
+        33
+      ]
+    },
+    "solver_status": {
+      "dtype": "<U9",
+      "shape": [
+        33
+      ]
+    },
+    "split": {
+      "dtype": "<U10",
+      "shape": [
+        33
+      ]
+    },
+    "state_index": {
+      "dtype": "int32",
+      "shape": [
+        33
+      ]
+    },
+    "stress": {
+      "dtype": "float64",
+      "shape": [
+        33,
+        3,
+        3
+      ]
+    },
+    "tangent": {
+      "dtype": "float64",
+      "shape": [
+        33,
+        9,
+        9
+      ]
+    },
+    "tangent_symmetry_error": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "volume_fraction": {
+      "dtype": "float64",
+      "shape": [
+        33
+      ]
+    },
+    "volume_index": {
+      "dtype": "int32",
+      "shape": [
+        33
+      ]
+    }
+  },
+  "n_samples": 33,
+  "ngsolve_version": "6.2.2608",
+  "output": "/scratch4/vr80beqo/rve_shear_adaptation_20261115/data/rve_shear_adaptation.npz",
+  "schema_version": 2,
+  "source_revision_sha256": "eace4b1f7b9d24a2b91b86e520647baf9f16cfe3a2474f8a88eecfa7a60643e3",
+  "split_assignments_sha256": "e5c9733cc160bcdcfad72dd8626727d4c6a801e6215440317892278288361bb4",
+  "split_counts": {
+    "test": 9,
+    "train": 18,
+    "validation": 6
+  },
+  "tangent_flattening": "row-major: (i,J) -> 3*i + J"
+}

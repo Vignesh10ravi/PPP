@@ -1,0 +1,183 @@
+[TARGET SWEEP] direct-RVE endpoint vf=0.020000
+[DIRECT RVE] start vf=0.020000
+[INITIAL STATE] solution_size=7518, finite=True, min=-1.145942e-02, max=1.076496e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=8.305683e+03, max_abs=5.094263e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=9.561874e-05, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.634501e-02, max_abs=1.297211e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=3.234501e-08, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=9.321452e-06, max_abs=6.496628e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.341294e-14, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[INITIAL STATE] solution_size=7518, finite=True, min=-8.415441e-03, max=5.094392e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.366342e-01, max_abs=1.748863e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.293867e-04, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.556981e-02, max_abs=1.016209e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.408261e-07, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.220369e-05, max_abs=1.353471e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=1.080950e-13, positive_measure=9.818244e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[DIRECT RVE] equilibrium converged vf=0.020000 mixed=1.081e-13 rotation=1.890e-13
+[DIRECT RVE] homogenized stress recovered vf=0.020000
+[TARGET SWEEP] direct-RVE endpoint vf=0.100000
+[DIRECT RVE] start vf=0.100000
+[INITIAL STATE] solution_size=5102, finite=True, min=-2.824600e-02, max=1.975003e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=7.078218e+03, max_abs=5.495859e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=3.754311e-04, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.167392e-02, max_abs=1.497641e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.437814e-07, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.331230e-05, max_abs=8.026932e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=8.885923e-14, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[INITIAL STATE] solution_size=5102, finite=True, min=-1.439706e-02, max=5.496009e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.352726e-01, max_abs=3.943065e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=3.318561e-04, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.221456e-02, max_abs=9.556390e-03
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=4.459041e-07, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.393415e-05, max_abs=1.636879e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=1.786076e-12, positive_measure=9.101109e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[DIRECT RVE] equilibrium converged vf=0.100000 mixed=1.786e-12 rotation=1.807e-11
+[DIRECT RVE] homogenized stress recovered vf=0.100000
+[TARGET SWEEP] fraction=0.250 vf=0.041978 predicted=519.36055
+[DIRECT RVE] start vf=0.041978
+[INITIAL STATE] solution_size=7013, finite=True, min=-1.914648e-02, max=1.647780e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=8.115016e+03, max_abs=5.197055e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.557565e-04, positive_measure=9.624368e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.549457e-02, max_abs=1.450228e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=5.593543e-08, positive_measure=9.624368e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=9.624368e-06, max_abs=7.634538e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.118265e-14, positive_measure=9.624368e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[INITIAL STATE] solution_size=7013, finite=True, min=-1.077981e-02, max=5.197200e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.909260e-01, max_abs=2.613843e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.605699e-04, positive_measure=9.624368e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.097133e-02, max_abs=1.057391e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.557855e-07, positive_measure=9.624368e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.803948e-05, max_abs=1.375580e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=9.980383e-14, positive_measure=9.624368e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[DIRECT RVE] equilibrium converged vf=0.041978 mixed=9.980e-14 rotation=9.992e-12
+[DIRECT RVE] homogenized stress recovered vf=0.041978
+[TARGET SWEEP] fraction=0.500 vf=0.058651 predicted=529.39783
+[DIRECT RVE] start vf=0.058651
+[INITIAL STATE] solution_size=6085, finite=True, min=-2.461540e-02, max=1.551947e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=7.597547e+03, max_abs=5.282526e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.075186e-04, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.775191e-02, max_abs=1.525154e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=8.100540e-08, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.301482e-05, max_abs=1.118368e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.365496e-14, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[INITIAL STATE] solution_size=6085, finite=True, min=-1.205129e-02, max=5.282678e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.258800e-01, max_abs=2.449697e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.512623e-04, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.266861e-02, max_abs=1.083176e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.997565e-07, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.742093e-05, max_abs=2.106656e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=9.398447e-13, positive_measure=9.468475e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[DIRECT RVE] equilibrium converged vf=0.058651 mixed=9.398e-13 rotation=4.344e-12
+[DIRECT RVE] homogenized stress recovered vf=0.058651
+[TARGET SWEEP] fraction=0.750 vf=0.080898 predicted=539.4351
+[DIRECT RVE] start vf=0.080898
+[INITIAL STATE] solution_size=5122, finite=True, min=-2.657663e-02, max=2.286535e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=6.995670e+03, max_abs=5.399205e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=3.112236e-04, positive_measure=9.263817e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.022593e-02, max_abs=1.406453e-02
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.252857e-07, positive_measure=9.263817e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.296848e-05, max_abs=9.130639e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.855310e-14, positive_measure=9.263817e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[INITIAL STATE] solution_size=5122, finite=True, min=-1.341110e-02, max=5.399346e+02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.966054e-01, max_abs=3.649513e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=3.413188e-04, positive_measure=9.263817e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.439233e-02, max_abs=8.976595e-03
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=7.597730e-07, positive_measure=9.263817e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.995520e-05, max_abs=1.463093e-05
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=9.477711e-12, positive_measure=9.263817e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[DIRECT RVE] equilibrium converged vf=0.080898 mixed=9.478e-12 rotation=6.070e-12
+[DIRECT RVE] homogenized stress recovered vf=0.080898
+{
+  "status": "pass",
+  "summary": {
+    "n_targets": 3,
+    "n_passed": 3,
+    "n_missed": 0,
+    "maximum_direct_target_error": 0.002366902702904468,
+    "maximum_surrogate_to_direct_error": 0.002372518213693834
+  },
+  "maximum_scaled_derivative_error": 3.2093927691281875e-07,
+  "report": "/scratch4/vr80beqo/rve_extra_inverse_design_target_sweep_20261114/rve_inverse_design_target_sweep.json",
+  "csv": "/scratch4/vr80beqo/rve_extra_inverse_design_target_sweep_20261114/rve_inverse_design_target_sweep.csv"
+}

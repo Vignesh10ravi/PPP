@@ -1,0 +1,69 @@
+{
+  "config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.52,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "expansion_determinant_range": [
+      1.5,
+      1.8
+    ],
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.1,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 0,
+    "n_deformations": 11,
+    "n_expansion_deformations": 0,
+    "seed": 20261115,
+    "split_fractions": [
+      0.55,
+      0.18,
+      0.27
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "configuration_sha256": "f4b178c384504da05731dc07421dbee8caf967a2ce4fcbb28d92cebe8045a4cc",
+  "deformation_design": {
+    "amplitudes_by_split": {
+      "test": [
+        0.045,
+        0.055,
+        0.095
+      ],
+      "train": [
+        0.01,
+        0.02,
+        0.04,
+        0.06,
+        0.08,
+        0.09
+      ],
+      "validation": [
+        0.03,
+        0.07
+      ]
+    },
+    "excluded_existing_baseline_amplitudes": [
+      0.025,
+      0.05,
+      0.075
+    ],
+    "load_mode": "positive simple shear, F[0,1]=gamma",
+    "purpose": "separate shear-aware fine-tuning; final-test states are excluded from fitting",
+    "split_unit": "deformation state; each state is repeated at every volume fraction"
+  },
+  "deformation_sha256": "7e26e025adaf97adfa0a26777f60dfbca83dd980008faabcfe1c27e62cbcbc99",
+  "schema_version": 2,
+  "source_revision_sha256": "eace4b1f7b9d24a2b91b86e520647baf9f16cfe3a2474f8a88eecfa7a60643e3",
+  "split_assignments_sha256": "e5c9733cc160bcdcfad72dd8626727d4c6a801e6215440317892278288361bb4"
+}

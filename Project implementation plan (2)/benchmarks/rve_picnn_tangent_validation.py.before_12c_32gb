@@ -1,0 +1,342 @@
+"""Compare pICNN tangents with condensed free-rotation RVE tangents.
+
+The representative states align with the macro-FE stretch checks and the
+simple-shear study. Each direct tangent is computed from an equilibrated RVE
+with fluctuations, pressure, and particle rotation condensed consistently.
+"""
+
+import argparse
+import csv
+import hashlib
+import json
+import time
+from pathlib import Path
+
+import numpy as np
+import torch
+from torch.func import jacrev
+
+from src.free_particle import solve_free_rotating_particle
+from src.homogenization import homogenized_first_piola
+from src.picnn import HyperelasticNN
+from src.rve import make_periodic_particle_cell_mesh
+from src.rve_dataset import (
+    _homogenized_energy,
+    microscopic_jacobian_extrema,
+    particle_radius,
+)
+from src.rve_tangent import condensed_free_rotation_tangent
+from benchmarks.rve_inverse_design import _polar_rotation
+
+
+def _sha256_file(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def _matrix_cf(matrix):
+    from ngsolve import CF
+
+    return CF(tuple(np.asarray(matrix, dtype=float).ravel()), dims=(3, 3))
+
+
+def _load_states():
+    return {
+        "uniaxial_stretch_0p5pct": np.diag([1.005, 1.0, 1.0]),
+        "uniaxial_stretch_1pct": np.diag([1.01, 1.0, 1.0]),
+        "simple_shear_5pct": np.asarray(
+            [[1.0, 0.05, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+            dtype=float,
+        ),
+    }
+
+
+def _picnn_response(model, gradient, volume_fraction):
+    dtype = next(model.parameters()).dtype
+    device = next(model.parameters()).device
+    F = torch.as_tensor(gradient, dtype=dtype, device=device)
+    context = torch.as_tensor(
+        [[float(volume_fraction)]], dtype=dtype, device=device
+    )
+    reference = model.reference(dtype, device, context)
+
+    def energy_single(value):
+        return model.energy(value.unsqueeze(0), context, ref=reference).squeeze()
+
+    energy = energy_single(F)
+    stress = jacrev(energy_single)(F)
+    tangent = jacrev(jacrev(energy_single))(F).reshape(9, 9)
+    return (
+        float(energy.detach().cpu()),
+        stress.detach().cpu().numpy(),
+        tangent.detach().cpu().numpy(),
+    )
+
+
+def _relative_error(actual, reference, floor):
+    return float(
+        np.linalg.norm(np.asarray(actual) - np.asarray(reference))
+        / max(float(np.linalg.norm(reference)), floor)
+    )
+
+
+def _run_state(
+    name,
+    gradient,
+    volume_fraction,
+    mesh,
+    model,
+    args,
+):
+    state_start = time.perf_counter()
+    free_state = solve_free_rotating_particle(
+        mesh,
+        gradient,
+        initial_rotation=_polar_rotation(gradient),
+        mu=args.mu,
+        bulk_modulus=args.bulk_modulus,
+        displacement_order=args.displacement_order,
+        integration_order=args.integration_order,
+        verbose=False,
+    )
+    direct_tangent = condensed_free_rotation_tangent(
+        mesh,
+        free_state.solution,
+        _matrix_cf(gradient),
+        free_state.rotation,
+        mu=args.mu,
+        bulk_modulus=args.bulk_modulus,
+        integration_order=args.integration_order,
+        equilibrium_tol=args.equilibrium_tolerance,
+    )
+    _, pressure = free_state.solution.components
+    direct_energy = float(_homogenized_energy(
+        mesh,
+        free_state.deformation_gradient,
+        pressure,
+        args.mu,
+        args.bulk_modulus,
+        args.integration_order,
+    ))
+    work_stress = np.asarray(homogenized_first_piola(
+        mesh,
+        free_state.stress,
+        free_state.solution.space.components[0],
+        integration_order=args.integration_order,
+    ), dtype=float)
+    direct_stress = np.asarray(direct_tangent.stress, dtype=float)
+    direct_A = np.asarray(direct_tangent.tangent, dtype=float)
+    picnn_energy, picnn_stress, picnn_A = _picnn_response(
+        model, gradient, volume_fraction
+    )
+    minimum_j, maximum_j = microscopic_jacobian_extrema(
+        mesh, free_state.deformation_gradient, args.integration_order
+    )
+    if minimum_j <= args.microscopic_jacobian_floor:
+        raise RuntimeError(
+            f"{name}: minimum microscopic J {minimum_j:.6e} is below the floor"
+        )
+    if direct_A.shape != (9, 9) or picnn_A.shape != (9, 9):
+        raise ValueError(f"{name}: expected 9x9 material tangents")
+    if not all(np.isfinite(array).all() for array in (
+        direct_A, picnn_A, direct_stress, picnn_stress
+    )):
+        raise FloatingPointError(f"{name}: nonfinite stress or tangent")
+
+    symmetric_direct = 0.5 * (direct_A + direct_A.T)
+    symmetric_picnn = 0.5 * (picnn_A + picnn_A.T)
+    energy_scale = max(abs(direct_energy), args.response_error_floor)
+    p00_scale = max(abs(float(direct_stress[0, 0])), args.response_error_floor)
+    p01_scale = max(abs(float(direct_stress[0, 1])), args.response_error_floor)
+    result = {
+        "state": name,
+        "volume_fraction": float(volume_fraction),
+        "deformation_gradient": np.asarray(gradient).tolist(),
+        "determinant": float(np.linalg.det(gradient)),
+        "energy_pICNN": picnn_energy,
+        "energy_direct_rve": direct_energy,
+        "energy_absolute_error": abs(picnn_energy - direct_energy),
+        "energy_relative_error": abs(picnn_energy - direct_energy) / energy_scale,
+        "stress_pICNN": picnn_stress.tolist(),
+        "stress_direct_rve": direct_stress.tolist(),
+        "stress_from_work_average": work_stress.tolist(),
+        "stress_relative_error": _relative_error(
+            picnn_stress, direct_stress, args.response_error_floor
+        ),
+        "stress_energy_derivative_agreement": _relative_error(
+            direct_stress, work_stress, args.response_error_floor
+        ),
+        "P00_absolute_error": abs(
+            float(picnn_stress[0, 0] - direct_stress[0, 0])
+        ),
+        "P00_relative_error": abs(
+            float(picnn_stress[0, 0] - direct_stress[0, 0])
+        ) / p00_scale,
+        "P01_absolute_error": abs(
+            float(picnn_stress[0, 1] - direct_stress[0, 1])
+        ),
+        "P01_relative_error": abs(
+            float(picnn_stress[0, 1] - direct_stress[0, 1])
+        ) / p01_scale,
+        "tangent_pICNN": picnn_A.tolist(),
+        "tangent_direct_rve": direct_A.tolist(),
+        "tangent_relative_frobenius_error": _relative_error(
+            picnn_A, direct_A, args.tangent_error_floor
+        ),
+        "tangent_major_symmetry_error_pICNN": float(
+            np.linalg.norm(picnn_A - picnn_A.T)
+            / max(1.0, np.linalg.norm(picnn_A))
+        ),
+        "tangent_major_symmetry_error_direct_rve": float(
+            np.linalg.norm(direct_A - direct_A.T)
+            / max(1.0, np.linalg.norm(direct_A))
+        ),
+        "minimum_symmetric_tangent_eigenvalue_pICNN": float(
+            np.linalg.eigvalsh(symmetric_picnn).min()
+        ),
+        "minimum_symmetric_tangent_eigenvalue_direct_rve": float(
+            np.linalg.eigvalsh(symmetric_direct).min()
+        ),
+        "minimum_microscopic_jacobian": float(minimum_j),
+        "maximum_microscopic_jacobian": float(maximum_j),
+        "mixed_residual": float(free_state.newton_history[-1]),
+        "mixed_newton_iterations": int(len(free_state.newton_history) - 1),
+        "rotation_residual": float(free_state.rotational_residuals[-1]),
+        "rotation_iterations": int(len(free_state.rotational_residuals)),
+        "condensed_tangent_residual": float(max(direct_tangent.linear_residuals)),
+        "runtime_seconds": float(time.perf_counter() - state_start),
+    }
+    print(
+        f"[TANGENT VALIDATION] {name}: stress={result['stress_relative_error']:.3e} "
+        f"tangent={result['tangent_relative_frobenius_error']:.3e}",
+        flush=True,
+    )
+    return result
+
+
+def run_validation(args):
+    torch.set_default_dtype(torch.float64)
+    torch.set_num_threads(args.torch_threads)
+    torch.set_num_interop_threads(1)
+    model, checkpoint, checkpoint_sha256 = _load_checkpoint(args.checkpoint)
+    if (
+        args.expected_checkpoint_sha256
+        and checkpoint_sha256 != args.expected_checkpoint_sha256
+    ):
+        raise ValueError("checkpoint SHA-256 does not match expected frozen hash")
+    for parameter in model.parameters():
+        parameter.requires_grad_(False)
+
+    volume_fraction = float(args.volume_fraction)
+    mesh = make_periodic_particle_cell_mesh(
+        radius=particle_radius(volume_fraction), maxh=args.maxh
+    )
+    results = []
+    for name, gradient in _load_states().items():
+        results.append(_run_state(
+            name, gradient, volume_fraction, mesh, model, args
+        ))
+    report = {
+        "schema_version": 1,
+        "status": "complete",
+        "scope": (
+            "Frozen pICNN energy, stress, and 9x9 material tangent compared with "
+            "direct-RVE condensed free-rotation results at representative macro-FE "
+            "stretch states and the 5% simple-shear state. This does not change the "
+            "checkpoint."
+        ),
+        "checkpoint_path": str(args.checkpoint.resolve()),
+        "checkpoint_sha256": checkpoint_sha256,
+        "training_dataset_sha256": checkpoint.get("dataset_sha256"),
+        "volume_fraction": volume_fraction,
+        "rve_configuration": {
+            "maxh": args.maxh,
+            "mu": args.mu,
+            "bulk_modulus": args.bulk_modulus,
+            "displacement_order": args.displacement_order,
+            "integration_order": args.integration_order,
+            "microscopic_jacobian_floor": args.microscopic_jacobian_floor,
+            "equilibrium_tolerance": args.equilibrium_tolerance,
+        },
+        "error_floors": {
+            "response": args.response_error_floor,
+            "tangent": args.tangent_error_floor,
+        },
+        "results": results,
+    }
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(
+        json.dumps(report, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    csv_path = args.csv
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    columns = [
+        "state", "volume_fraction", "energy_relative_error",
+        "stress_relative_error", "P00_relative_error", "P01_relative_error",
+        "tangent_relative_frobenius_error",
+        "tangent_major_symmetry_error_pICNN",
+        "tangent_major_symmetry_error_direct_rve",
+        "minimum_symmetric_tangent_eigenvalue_pICNN",
+        "minimum_symmetric_tangent_eigenvalue_direct_rve",
+        "mixed_newton_iterations", "rotation_iterations",
+        "condensed_tangent_residual", "runtime_seconds",
+    ]
+    with csv_path.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows({key: row[key] for key in columns} for row in results)
+    print(json.dumps({
+        "status": report["status"],
+        "states": len(results),
+        "maximum_tangent_relative_error": max(
+            row["tangent_relative_frobenius_error"] for row in results
+        ),
+        "report": str(args.output.resolve()),
+        "csv": str(csv_path.resolve()),
+    }, indent=2))
+
+
+def _load_checkpoint(path):
+    path = Path(path)
+    if not path.is_file():
+        raise FileNotFoundError(f"checkpoint not found: {path}")
+    payload = torch.load(path, map_location="cpu", weights_only=True)
+    if not isinstance(payload, dict) or "state_dict" not in payload:
+        raise ValueError("checkpoint must contain a state_dict")
+    model = HyperelasticNN(n_ctx=1).to(dtype=torch.float64, device="cpu")
+    model.load_state_dict(payload["state_dict"])
+    model.eval()
+    return model, payload, _sha256_file(path)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--checkpoint", type=Path, required=True)
+    parser.add_argument("--expected-checkpoint-sha256")
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--csv", type=Path, required=True)
+    parser.add_argument("--volume-fraction", type=float, default=0.05)
+    parser.add_argument("--maxh", type=float, default=0.22)
+    parser.add_argument("--mu", type=float, default=1.0)
+    parser.add_argument("--bulk-modulus", type=float, default=1.0e4)
+    parser.add_argument("--displacement-order", type=int, default=2)
+    parser.add_argument("--integration-order", type=int, default=10)
+    parser.add_argument("--microscopic-jacobian-floor", type=float, default=1.0e-8)
+    parser.add_argument("--equilibrium-tolerance", type=float, default=1.0e-8)
+    parser.add_argument("--response-error-floor", type=float, default=1.0e-8)
+    parser.add_argument("--tangent-error-floor", type=float, default=1.0e-8)
+    parser.add_argument("--torch-threads", type=int, default=1)
+    args = parser.parse_args()
+    if not (0.0 < args.volume_fraction < np.pi / 6.0):
+        parser.error("volume fraction must satisfy 0 < vf < pi/6")
+    if args.maxh <= 0.0 or args.integration_order < 1:
+        parser.error("maxh and integration order must be positive")
+    run_validation(args)
+
+
+if __name__ == "__main__":
+    main()

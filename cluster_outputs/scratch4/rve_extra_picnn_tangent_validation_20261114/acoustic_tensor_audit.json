@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "scope": "Sampled-direction acoustic-tensor screening of stored frozen-pICNN and direct-RVE tangents. Positive sampled minima do not prove strong ellipticity over all reference directions. No model or RVE solves are run by this postprocessor.",
+  "source_tangent_report": "/scratch4/vr80beqo/rve_extra_picnn_tangent_validation_20261114/rve_picnn_tangent_validation.json",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "volume_fraction": 0.05,
+  "fibonacci_direction_count": 642,
+  "total_direction_count": 655,
+  "results": [
+    {
+      "state": "uniaxial_stretch_0p5pct",
+      "tangent_source": "pICNN",
+      "minimum_eigenvalue": 1.7556500489242746,
+      "reference_direction": [
+        0.0,
+        0.7071067811865475,
+        -0.7071067811865475
+      ],
+      "polarization": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "maximum_acoustic_tensor_symmetry_error": 1.5144455790689447e-16,
+      "sampled_direction_count": 655,
+      "sampled_sign": "positive"
+    },
+    {
+      "state": "uniaxial_stretch_0p5pct",
+      "tangent_source": "direct_rve",
+      "minimum_eigenvalue": 1.1100023087617577,
+      "reference_direction": [
+        0.007807693309708397,
+        0.48616567927048593,
+        -0.8738317757009346
+      ],
+      "polarization": [
+        -0.9995332099429639,
+        -0.022045034980075696,
+        -0.021151327472337465
+      ],
+      "maximum_acoustic_tensor_symmetry_error": 9.80177920525246e-16,
+      "sampled_direction_count": 655,
+      "sampled_sign": "positive"
+    },
+    {
+      "state": "uniaxial_stretch_1pct",
+      "tangent_source": "pICNN",
+      "minimum_eigenvalue": 1.7805709702955754,
+      "reference_direction": [
+        0.0,
+        0.7071067811865475,
+        -0.7071067811865475
+      ],
+      "polarization": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "maximum_acoustic_tensor_symmetry_error": 2.4817027289830834e-16,
+      "sampled_direction_count": 655,
+      "sampled_sign": "positive"
+    },
+    {
+      "state": "uniaxial_stretch_1pct",
+      "tangent_source": "direct_rve",
+      "minimum_eigenvalue": 1.1060197828039424,
+      "reference_direction": [
+        0.007807693309708397,
+        0.48616567927048593,
+        -0.8738317757009346
+      ],
+      "polarization": [
+        -0.9995303326348605,
+        -0.02215743737045317,
+        -0.021169839678652998
+      ],
+      "maximum_acoustic_tensor_symmetry_error": 8.443305350629768e-16,
+      "sampled_direction_count": 655,
+      "sampled_sign": "positive"
+    },
+    {
+      "state": "simple_shear_5pct",
+      "tangent_source": "pICNN",
+      "minimum_eigenvalue": 1.6516705034028902,
+      "reference_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "polarization": [
+        -0.7158883261934795,
+        -0.6982147981960125,
+        -0.0
+      ],
+      "maximum_acoustic_tensor_symmetry_error": 6.461286431409359e-16,
+      "sampled_direction_count": 655,
+      "sampled_sign": "positive"
+    },
+    {
+      "state": "simple_shear_5pct",
+      "tangent_source": "direct_rve",
+      "minimum_eigenvalue": 1.1140308817222593,
+      "reference_direction": [
+        0.004723652541742007,
+        -0.22855198853431347,
+        0.9735202492211839
+      ],
+      "polarization": [
+        0.9996571299387615,
+        0.026152363274951584,
+        0.0012947809596412752
+      ],
+      "maximum_acoustic_tensor_symmetry_error": 8.629271251329667e-16,
+      "sampled_direction_count": 655,
+      "sampled_sign": "positive"
+    }
+  ]
+}

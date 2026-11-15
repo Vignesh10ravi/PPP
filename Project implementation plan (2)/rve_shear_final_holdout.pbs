@@ -1,0 +1,69 @@
+#!/bin/bash
+#PBS -N shear_final_holdout
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=32GB
+#PBS -l walltime=12:00:00
+#PBS -o /scratch/vr80beqo/rve_shear_final_holdout_20261116.pbs.out
+#PBS -e /scratch/vr80beqo/rve_shear_final_holdout_20261116.pbs.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export NGS_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+OUT_ROOT=/scratch4/vr80beqo/rve_shear_final_holdout_20261116
+ADAPTATION_ROOT=/scratch4/vr80beqo/rve_shear_adaptation_20261115/data
+FROZEN_CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+CANDIDATE_CHECKPOINT=/scratch/vr80beqo/rve_shear_adaptation_finetune_20261115/partial_icnn_phase7_shear_adapted.pt
+TRAIN_PY="$SCRATCH/venvs/ppp-rve-train-cpu/bin/python"
+mkdir -p "$OUT_ROOT/data" "$OUT_ROOT/evaluation"
+
+test -f "$ADAPTATION_ROOT/rve_shear_adaptation.npz"
+test -f "$ADAPTATION_ROOT/rve_shear_adaptation.manifest.json"
+test -f "$FROZEN_CHECKPOINT"
+test -f "$CANDIDATE_CHECKPOINT"
+
+python -u -m src.generate_rve_shear_context_holdout \
+  --output "$OUT_ROOT/data/rve_shear_final_holdout.npz" \
+  --work-directory "$OUT_ROOT/data/rve_shear_final_holdout_work" \
+  --seed 20261116 \
+  --adaptation-seed 20261115 \
+  --amplitudes 0.015 0.0325 0.0725 0.0975 \
+  --exclude-amplitudes 0.035 0.065 0.085 0.10 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --workers 12 \
+  2>&1 | tee "$OUT_ROOT/data/generation.log"
+
+python -u -m src.audit_rve_dataset \
+  --dataset "$OUT_ROOT/data/rve_shear_final_holdout.npz" \
+  --manifest "$OUT_ROOT/data/rve_shear_final_holdout.manifest.json" \
+  2>&1 | tee "$OUT_ROOT/data/audit.log"
+
+"$TRAIN_PY" -u -m src.evaluate_rve_shear_context_holdout \
+  --dataset "$OUT_ROOT/data/rve_shear_final_holdout.npz" \
+  --manifest "$OUT_ROOT/data/rve_shear_final_holdout.manifest.json" \
+  --adaptation-dataset "$ADAPTATION_ROOT/rve_shear_adaptation.npz" \
+  --adaptation-manifest "$ADAPTATION_ROOT/rve_shear_adaptation.manifest.json" \
+  --frozen-checkpoint "$FROZEN_CHECKPOINT" \
+  --expected-frozen-sha256 32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70 \
+  --candidate-checkpoint "$CANDIDATE_CHECKPOINT" \
+  --expected-candidate-sha256 5c1c606057eb39e2ce779ead2872d6c06a4d29c5a6e423d27dd415a681566a1e \
+  --candidate-label selected_full_finetune \
+  --expected-amplitudes 0.015 0.0325 0.0725 0.0975 \
+  --excluded-amplitudes 0.035 0.065 0.085 0.10 \
+  --allow-different-microstructure-seed \
+  --output "$OUT_ROOT/evaluation/shear_final_holdout_report.json" \
+  --torch-threads 1 \
+  2>&1 | tee "$OUT_ROOT/evaluation/evaluation.log"

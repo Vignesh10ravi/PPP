@@ -186,9 +186,14 @@ def generate_parallel_dataset(
     work_directory: Path | None = None,
     workers: int = 2,
     resume: bool = True,
+    deformation_states: np.ndarray | None = None,
+    split_assignments: np.ndarray | None = None,
+    deformation_design: dict[str, Any] | None = None,
+    allow_empty_splits: bool = False,
 ) -> Path:
     if workers < 1:
         raise ValueError("--workers must be at least 1")
+    config.validate()
 
     output = output.resolve()
     work_directory = (work_directory or output.with_name(output.stem + "_work")).resolve()
@@ -196,8 +201,53 @@ def generate_parallel_dataset(
     samples_dir.mkdir(parents=True, exist_ok=True)
     output.parent.mkdir(parents=True, exist_ok=True)
 
-    gradients = generate_deformation_states(config)
-    splits = assign_deformation_splits(len(gradients), config.seed, config.split_fractions)
+    if deformation_states is None:
+        if split_assignments is not None or deformation_design is not None:
+            raise ValueError(
+                "custom split assignments and design metadata require explicit "
+                "deformation_states"
+            )
+        gradients = generate_deformation_states(config)
+        splits = assign_deformation_splits(
+            len(gradients), config.seed, config.split_fractions
+        )
+    else:
+        gradients = np.asarray(deformation_states, dtype=float)
+        if gradients.shape != (config.n_deformations, 3, 3):
+            raise ValueError(
+                "explicit deformation_states must have shape "
+                f"({config.n_deformations}, 3, 3)"
+            )
+        if not np.isfinite(gradients).all():
+            raise ValueError("explicit deformation_states contain nonfinite values")
+        determinants = np.linalg.det(gradients)
+        conditions = np.linalg.cond(gradients)
+        if np.any(determinants <= config.determinant_floor):
+            raise ValueError("an explicit state is below the determinant floor")
+        if np.any(conditions > config.max_condition_number):
+            raise ValueError("an explicit state exceeds the condition-number limit")
+        unique_states = np.unique(
+            np.round(gradients.reshape(len(gradients), -1), decimals=12), axis=0
+        )
+        if len(unique_states) != len(gradients):
+            raise ValueError("explicit deformation_states must be unique")
+        if split_assignments is None:
+            splits = assign_deformation_splits(
+                len(gradients), config.seed, config.split_fractions
+            )
+        else:
+            splits = np.asarray(split_assignments).astype(str)
+            if splits.shape != (len(gradients),):
+                raise ValueError("split_assignments must have one label per state")
+            if not set(np.unique(splits)).issubset(SPLIT_NAMES):
+                raise ValueError("explicit split labels must be train/validation/test")
+            missing_splits = set(SPLIT_NAMES).difference(np.unique(splits))
+            if missing_splits and not allow_empty_splits:
+                raise ValueError(
+                    "explicit deformation states must populate all splits: "
+                    f"{sorted(missing_splits)}"
+                )
+
     gradient_hash = hashlib.sha256(np.ascontiguousarray(gradients).tobytes()).hexdigest()
     run_payload = {
         "schema_version": SCHEMA_VERSION,
@@ -206,6 +256,14 @@ def generate_parallel_dataset(
         "source_revision_sha256": _source_revision_sha256(),
         "deformation_sha256": gradient_hash,
     }
+    if deformation_states is not None:
+        run_payload["split_assignments_sha256"] = hashlib.sha256(
+            np.ascontiguousarray(splits.astype("<U10")).tobytes()
+        ).hexdigest()
+        if allow_empty_splits:
+            run_payload["allow_empty_splits"] = True
+        if deformation_design is not None:
+            run_payload["deformation_design"] = deformation_design
     run_path = work_directory / "run.json"
     if run_path.exists():
         existing = json.loads(run_path.read_text(encoding="utf-8"))

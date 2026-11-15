@@ -1,0 +1,420 @@
+"""Free rigid-particle rotation for general periodic RVE loading.
+
+At each outer iteration, the mixed RVE is equilibrated for the current proper
+rotation R. Three global left-multiplicative rotation increments are then added
+to the exact discrete energy. Their first and second derivatives at zero are
+obtained from
+
+    exp([dq]x) = I + [dq]x + 1/2 [dq]x^2 + O(|dq|^3).
+
+The free fluctuation and pressure DOFs are eliminated by a Schur complement,
+giving an exact rotational Newton system including geometric terms. The update
+R <- exp([dq]x) R uses the full Rodrigues formula.
+"""
+from dataclasses import dataclass
+
+import numpy as np
+from ngsolve import (
+    BilinearForm,
+    CF,
+    Det,
+    ET,
+    FESpace,
+    Grad,
+    GridFunction,
+    Id,
+    IntegrationRule,
+    InnerProduct,
+    Norm,
+    NumberSpace,
+    Projector,
+    Variation,
+    dx,
+    x,
+    y,
+    z,
+)
+
+from .rve import PARTICLE_BOUNDARY, rotation_matrix
+from .rve_solver import solve_periodic_rigid_particle
+
+
+@dataclass(frozen=True)
+class FreeRotationResult:
+    solution: object
+    rotation: np.ndarray
+    stress: object
+    deformation_gradient: object
+    newton_history: tuple
+    rotational_residuals: np.ndarray
+    condensed_hessian: np.ndarray
+    condensed_linear_residuals: np.ndarray
+
+
+def _matrix_cf(matrix):
+    return CF(tuple(np.asarray(matrix, dtype=float).ravel()), dims=(3, 3))
+
+
+def _particle_displacement(macro_gradient, rotation, center):
+    reference_arm = CF((x - center[0], y - center[1], z - center[2]))
+    translation = (macro_gradient - np.eye(3)) @ center
+    return CF(tuple(translation)) + (_matrix_cf(rotation) - Id(3)) * reference_arm
+
+
+def _interpolate_rotation(target_rotation, fraction):
+    """Interpolate from identity to a proper rotation through SO(3)."""
+    candidate = (1.0 - fraction) * np.eye(3) + fraction * target_rotation
+    left, _, right_transpose = np.linalg.svd(candidate)
+    rotation = left @ right_transpose
+    if np.linalg.det(rotation) < 0:
+        left[:, -1] *= -1.0
+        rotation = left @ right_transpose
+    return rotation
+
+
+def _interpolate_deformation_gradient(target_gradient, fraction):
+    """Interpolate a positive-determinant gradient through polar stretch."""
+    left, singular_values, right_transpose = np.linalg.svd(target_gradient)
+    macro_rotation = left @ right_transpose
+    if np.linalg.det(macro_rotation) < 0.0:
+        raise ValueError("target_gradient must have positive determinant")
+    if np.any(singular_values <= 0.0):
+        raise ValueError("target_gradient must have positive determinant")
+
+    interpolated_rotation = _interpolate_rotation(macro_rotation, fraction)
+    right = right_transpose.T
+    interpolated_stretch = (
+        right
+        @ np.diag(singular_values ** fraction)
+        @ right_transpose
+    )
+    return interpolated_rotation @ interpolated_stretch
+
+
+def _solve_periodic_with_load_continuation(
+    mesh,
+    macro_gradient,
+    target_rotation,
+    center,
+    mu,
+    bulk_modulus,
+    displacement_order,
+    integration_order,
+):
+    """Reach a difficult load from the identity using adaptive load steps."""
+    previous_solution = None
+    older_solution = None
+    older_fraction = None
+    fraction = 0.0
+    step = 0.125
+    # The local Jacobian can approach zero near the target, so permit much
+    # finer continuation steps before deciding that no admissible path exists.
+    minimum_step = 1.0 / 1048576.0
+    final_result = None
+
+    while fraction < 1.0 - 1.0e-12:
+        next_fraction = min(1.0, fraction + step)
+        step_gradient = _interpolate_deformation_gradient(
+            macro_gradient,
+            next_fraction,
+        )
+        step_rotation = _interpolate_rotation(
+            target_rotation,
+            next_fraction,
+        )
+        particle_displacement = _particle_displacement(
+            step_gradient,
+            step_rotation,
+            center,
+        )
+
+        # Extrapolate the equilibrated fields along the load path. Near the
+        # admissibility limit, copying only the previous solution can leave
+        # the updated particle boundary values inconsistent with the interior
+        # field and produce a nonpositive local Jacobian before Newton starts.
+        initial_solution = None
+        if previous_solution is not None:
+            initial_solution = GridFunction(previous_solution.space)
+            initial_solution.vec.data = previous_solution.vec
+            if older_solution is not None and older_fraction is not None:
+                previous_increment = fraction - older_fraction
+                if previous_increment > 0.0:
+                    extrapolation_ratio = (next_fraction - fraction) / previous_increment
+                    initial_solution.vec.data += extrapolation_ratio * (
+                        previous_solution.vec - older_solution.vec
+                    )
+
+        try:
+            result = solve_periodic_rigid_particle(
+                mesh,
+                _matrix_cf(step_gradient),
+                particle_displacement=particle_displacement,
+                mu=mu,
+                bulk_modulus=bulk_modulus,
+                displacement_order=displacement_order,
+                tol=1.0e-8,
+                maxit=200,
+                integration_order=integration_order,
+                verbose=False,
+                initial_solution=initial_solution,
+            )
+        except (FloatingPointError, RuntimeError) as exc:
+            step *= 0.5
+            print(
+                "[LOAD CONTINUATION] "
+                f"fraction={fraction:.6f}, retry_step={step:.6e}, "
+                f"error={type(exc).__name__}: {exc}",
+                flush=True,
+            )
+            if step < minimum_step:
+                raise RuntimeError(
+                    "Load continuation could not find an admissible, "
+                    "converged path to the requested deformation"
+                ) from exc
+            continue
+
+        older_solution = previous_solution
+        older_fraction = fraction
+        previous_solution = result[0]
+        final_result = result
+        fraction = next_fraction
+        step = min(0.125, 2.0 * step)
+        print(
+            "[LOAD CONTINUATION] "
+            f"accepted_fraction={fraction:.6f}, next_step={step:.6e}",
+            flush=True,
+        )
+
+    return final_result
+
+
+def _rotational_newton_system(
+    mesh,
+    solution,
+    macro_gradient,
+    rotation,
+    center,
+    mu,
+    bulk_modulus,
+    integration_order,
+    equilibrium_tol,
+):
+    fluctuation, pressure = solution.components
+    displacement_space, pressure_space = solution.space.components
+    particle_boundary = mesh.Boundaries(PARTICLE_BOUNDARY)
+    reference_arm = CF((x - center[0], y - center[1], z - center[2]))
+    rotated_arm = _matrix_cf(rotation) * reference_arm
+
+    # Nine fixed FE lifts span M R (X-Xc). Nonlinear coefficients below supply
+    # M = [dq]x + 1/2[dq]x^2 and therefore exact first/second derivatives.
+    lifts = []
+    for row in range(3):
+        for column in range(3):
+            lift = GridFunction(displacement_space)
+            lift.Set(
+                CF(tuple(
+                    rotated_arm[column] if component == row else 0.0
+                    for component in range(3)
+                )),
+                definedon=particle_boundary,
+            )
+            lifts.append(lift)
+
+    augmented_space = FESpace(
+        [displacement_space, pressure_space]
+        + [NumberSpace(mesh) for _ in range(3)]
+    )
+    delta_fluctuation, delta_pressure, qx, qy, qz = (
+        augmented_space.TrialFunction()
+    )
+    skew_increment = CF((
+        0.0, -qz, qy,
+        qz, 0.0, -qx,
+        -qy, qx, 0.0,
+    ), dims=(3, 3))
+    rotation_increment = skew_increment + 0.5 * skew_increment * skew_increment
+
+    deformation_gradient = (
+        _matrix_cf(macro_gradient)
+        + Grad(fluctuation)
+        + Grad(delta_fluctuation)
+    )
+    for index, lift in enumerate(lifts):
+        row, column = divmod(index, 3)
+        deformation_gradient += rotation_increment[row, column] * Grad(lift)
+    total_pressure = pressure + delta_pressure
+    jacobian = Det(deformation_gradient)
+    first_invariant = InnerProduct(deformation_gradient, deformation_gradient)
+    density = (
+        0.5 * mu * (jacobian ** (-2.0 / 3.0) * first_invariant - 3.0)
+        + total_pressure * (jacobian - 1.0)
+        - total_pressure ** 2 / (2.0 * bulk_modulus)
+    )
+    measure = dx(intrules={
+        ET.TET: IntegrationRule(ET.TET, order=integration_order),
+    })
+    energy = BilinearForm(augmented_space)
+    energy += Variation(density.Compile() * measure)
+    zero_increment = GridFunction(augmented_space)
+    gradient = zero_increment.vec.CreateVector()
+    energy.Apply(zero_increment.vec, gradient)
+    energy.AssembleLinearization(zero_increment.vec)
+
+    rotation_offset = displacement_space.ndof + pressure_space.ndof
+    rotation_dofs = np.arange(rotation_offset, rotation_offset + 3)
+    internal_free = augmented_space.FreeDofs()
+    for dof in rotation_dofs:
+        internal_free[int(dof)] = False
+    internal_projector = Projector(internal_free, True)
+    equilibrium_residual = Norm(internal_projector * gradient)
+    if equilibrium_residual > equilibrium_tol:
+        raise ValueError(
+            f"RVE is not equilibrated: free residual {equilibrium_residual:.3e}"
+        )
+
+    rotational_gradient = gradient.FV().NumPy()[rotation_dofs].copy()
+    inverse = energy.mat.Inverse(internal_free, inverse="umfpack")
+    condensed_hessian = np.zeros((3, 3))
+    linear_residuals = np.zeros(3)
+    for column, rotation_dof in enumerate(rotation_dofs):
+        coordinate_increment = zero_increment.vec.CreateVector()
+        coordinate_increment[:] = 0.0
+        coordinate_increment.FV().NumPy()[rotation_dof] = 1.0
+        forcing = zero_increment.vec.CreateVector()
+        forcing.data = energy.mat * coordinate_increment
+        relaxation = zero_increment.vec.CreateVector()
+        relaxation.data = -(inverse * forcing)
+        total_increment = zero_increment.vec.CreateVector()
+        total_increment.data = coordinate_increment + relaxation
+        response = zero_increment.vec.CreateVector()
+        response.data = energy.mat * total_increment
+        condensed_hessian[:, column] = response.FV().NumPy()[rotation_dofs]
+        linear_residuals[column] = Norm(internal_projector * response) / max(
+            1.0, Norm(internal_projector * forcing)
+        )
+    return rotational_gradient, condensed_hessian, linear_residuals
+
+
+def solve_free_rotating_particle(
+    mesh,
+    macro_gradient,
+    center=(0.5, 0.5, 0.5),
+    initial_rotation=None,
+    mu=1.0,
+    bulk_modulus=1.0e4,
+    displacement_order=2,
+    rotation_tol=1.0e-9,
+    max_rotation_iterations=8,
+    integration_order=10,
+    verbose=True,
+):
+    """Equilibrate a spherical particle's three finite rotation coordinates."""
+    macro_gradient = np.asarray(macro_gradient, dtype=float)
+    center = np.asarray(center, dtype=float)
+    if macro_gradient.shape != (3, 3):
+        raise ValueError("macro_gradient must have shape (3, 3)")
+    if np.linalg.det(macro_gradient) <= 0:
+        raise ValueError("macro_gradient must preserve orientation")
+    if center.shape != (3,):
+        raise ValueError("center must contain three coordinates")
+    rotation = (
+        np.eye(3)
+        if initial_rotation is None
+        else np.asarray(initial_rotation, dtype=float).copy()
+    )
+    if rotation.shape != (3, 3):
+        raise ValueError("initial_rotation must have shape (3, 3)")
+
+    history = []
+    final_state = None
+    previous_solution = None
+    for iteration in range(max_rotation_iterations):
+        particle_displacement = _particle_displacement(
+            macro_gradient, rotation, center,
+        )
+        try:
+            result = solve_periodic_rigid_particle(
+                mesh,
+                _matrix_cf(macro_gradient),
+                particle_displacement=particle_displacement,
+                mu=mu,
+                bulk_modulus=bulk_modulus,
+                displacement_order=displacement_order,
+                integration_order=integration_order,
+                verbose=False,
+                initial_solution=previous_solution,
+            )
+        except FloatingPointError as exc:
+            if "Non-finite Newton residual at iteration 0" not in str(exc):
+                raise
+            print(
+                "[LOAD CONTINUATION] Direct initial state was inadmissible; "
+                "retrying from the identity load.",
+                flush=True,
+            )
+            result = _solve_periodic_with_load_continuation(
+                mesh,
+                macro_gradient,
+                rotation,
+                center,
+                mu,
+                bulk_modulus,
+                displacement_order,
+                integration_order,
+            )
+
+        solution, newton_history, deformation_gradient, stress = result
+        previous_solution = solution
+        gradient, hessian, linear_residuals = _rotational_newton_system(
+            mesh,
+            solution,
+            macro_gradient,
+            rotation,
+            center,
+            mu,
+            bulk_modulus,
+            integration_order,
+            equilibrium_tol=1.0e-8,
+        )
+        residual = np.linalg.norm(gradient)
+        history.append(residual)
+        final_state = (
+            solution,
+            newton_history,
+            deformation_gradient,
+            stress,
+            gradient,
+            hessian,
+            linear_residuals,
+        )
+        if verbose:
+            print(
+                f"Rotation Newton {iteration:2d}: "
+                f"|moment| = {residual:.3e}"
+            )
+        if residual < rotation_tol:
+            break
+        increment = np.linalg.solve(hessian, -gradient)
+        rotation = rotation_matrix(increment) @ rotation
+
+    if final_state is None:
+        raise RuntimeError("rotation solve did not execute")
+    (
+        solution,
+        newton_history,
+        deformation_gradient,
+        stress,
+        gradient,
+        hessian,
+        linear_residuals,
+    ) = final_state
+    return FreeRotationResult(
+        solution=solution,
+        rotation=rotation,
+        stress=stress,
+        deformation_gradient=deformation_gradient,
+        newton_history=tuple(newton_history),
+        rotational_residuals=np.asarray(history),
+        condensed_hessian=hessian,
+        condensed_linear_residuals=linear_residuals,
+    )

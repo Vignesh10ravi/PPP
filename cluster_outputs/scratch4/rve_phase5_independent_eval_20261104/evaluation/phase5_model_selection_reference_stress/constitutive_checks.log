@@ -1,0 +1,5 @@
+/scratch/vr80beqo/venvs/ppp-rve-train-cpu/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Constitutive audit pass: 36 records across 12 independent deformation states
+Maximum errors: {"energy_gradient_relative_error": 7.147705761795201e-07, "objectivity_energy_relative_error": 3.441691376337985e-14, "objectivity_stress_relative_error": 4.7973978263917833e-14, "objectivity_tangent_relative_error": 4.7035944302557205e-14, "tangent_directional_relative_error": 6.346033182830999e-07, "tangent_symmetry_error": 4.754858510962271e-16}
+Report: /scratch/vr80beqo/rve_phase5_independent_eval_20261104/evaluation/phase5_model_selection_reference_stress/constitutive_checks.json

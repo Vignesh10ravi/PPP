@@ -1,0 +1,253 @@
+"""Compare a trained energy-surrogate tangent with stored RVE tangents.
+
+The model tangent is the Hessian of its energy with respect to row-major F.
+Only the held-out test split is evaluated; the results are diagnostic and are
+not used to select or update model parameters.
+"""
+
+import argparse
+import csv
+import hashlib
+import json
+import os
+from pathlib import Path
+
+import numpy as np
+import torch
+from torch.func import hessian, vmap
+
+from src.picnn import HyperelasticNN
+
+
+def _sha256_file(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _atomic_json(path, payload):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_text(
+        json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    os.replace(temporary, path)
+
+
+def _tangent_metrics(predicted, reference, sample_ids, scale):
+    error = predicted - reference
+    pred_norm = np.linalg.norm(predicted, axis=(1, 2))
+    ref_norm = np.linalg.norm(reference, axis=(1, 2))
+    relative = np.linalg.norm(error, axis=(1, 2)) / np.maximum(
+        1.0, np.maximum(pred_norm, ref_norm)
+    )
+    worst = int(np.argmax(relative))
+    return {
+        "n_samples": int(len(sample_ids)),
+        "tangent_component_rmse": float(np.sqrt(np.mean(error**2))),
+        "tangent_component_nrmse_train_scale": float(
+            np.sqrt(np.mean((error / scale) ** 2))
+        ),
+        "relative_frobenius_mean": float(np.mean(relative)),
+        "relative_frobenius_median": float(np.median(relative)),
+        "relative_frobenius_p90": float(np.quantile(relative, 0.90)),
+        "relative_frobenius_max": float(np.max(relative)),
+        "worst_sample_id": str(sample_ids[worst]),
+        "predicted_symmetry_error_mean": float(
+            np.mean(
+                np.linalg.norm(predicted - predicted.transpose(0, 2, 1), axis=(1, 2))
+                / np.maximum(1.0, pred_norm)
+            )
+        ),
+    }
+
+
+def evaluate_tangent(
+    dataset_path,
+    manifest_path,
+    checkpoint_path,
+    report_path,
+    csv_path,
+    device="cpu",
+    torch_threads=1,
+):
+    dataset_path = Path(dataset_path)
+    manifest_path = Path(manifest_path)
+    checkpoint_path = Path(checkpoint_path)
+    report_path = Path(report_path)
+    csv_path = Path(csv_path)
+
+    dataset_sha256 = _sha256_file(dataset_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=True)
+    if manifest.get("dataset_sha256") != dataset_sha256:
+        raise ValueError("dataset hash does not match its manifest")
+    if checkpoint.get("dataset_sha256") != dataset_sha256:
+        raise ValueError("checkpoint was trained on a different dataset")
+    if manifest.get("tangent_flattening") != "row-major: (i,J) -> 3*i + J":
+        raise ValueError("unexpected or missing tangent flattening convention")
+
+    required = {
+        "sample_id",
+        "split",
+        "volume_fraction",
+        "deformation_gradient",
+        "tangent",
+    }
+    with np.load(dataset_path, allow_pickle=False) as archive:
+        missing = required.difference(archive.files)
+        if missing:
+            raise ValueError(f"dataset is missing fields: {sorted(missing)}")
+        data = {name: np.array(archive[name]) for name in required}
+
+    sample_ids = data["sample_id"].astype(str)
+    splits = data["split"].astype(str)
+    test_indices = np.flatnonzero(splits == "test")
+    train_indices = np.flatnonzero(splits == "train")
+    if not len(test_indices) or not len(train_indices):
+        raise ValueError("train and held-out test splits must both be nonempty")
+
+    gradients = np.asarray(data["deformation_gradient"], dtype=float)
+    volume_fractions = np.asarray(data["volume_fraction"], dtype=float)
+    reference_all = np.asarray(data["tangent"], dtype=float)
+    if gradients.shape != (len(sample_ids), 3, 3):
+        raise ValueError("deformation_gradient must have shape (N, 3, 3)")
+    if reference_all.shape != (len(sample_ids), 9, 9):
+        raise ValueError("tangent must have shape (N, 9, 9)")
+    if not all(
+        np.all(np.isfinite(array))
+        for array in (gradients, volume_fractions, reference_all)
+    ):
+        raise ValueError("dataset contains nonfinite values")
+
+    torch.set_num_threads(int(torch_threads))
+    torch.set_num_interop_threads(1)
+    device = torch.device(device)
+    dtype = torch.float64
+    model = HyperelasticNN(n_ctx=1).to(device=device, dtype=dtype)
+    model.load_state_dict(checkpoint["state_dict"])
+    model.eval()
+
+    test_ids = sample_ids[test_indices]
+    test_vf = volume_fractions[test_indices]
+    F_test = torch.as_tensor(gradients[test_indices], dtype=dtype, device=device)
+    vf_test = torch.as_tensor(
+        test_vf.reshape(-1, 1), dtype=dtype, device=device
+    )
+    predicted = torch.empty((len(test_indices), 9, 9), dtype=dtype, device=device)
+
+    with torch.enable_grad():
+        for vf_value in torch.unique(vf_test[:, 0]):
+            local_indices = torch.nonzero(
+                vf_test[:, 0] == vf_value, as_tuple=False
+            ).flatten()
+            local_F = F_test.index_select(0, local_indices)
+            local_context = vf_test.index_select(0, local_indices)
+            reference_context = local_context[:1]
+            reference_energy = model.reference(dtype, device, reference_context)
+
+            def energy_flat(flat_gradient):
+                gradient = flat_gradient.reshape(3, 3)
+                return model.energy(
+                    gradient.unsqueeze(0),
+                    reference_context,
+                    ref=reference_energy,
+                ).squeeze()
+
+            local_hessian = vmap(hessian(energy_flat))(local_F.reshape(-1, 9))
+            predicted = predicted.index_copy(0, local_indices, local_hessian)
+
+    predicted_np = predicted.detach().cpu().numpy()
+    reference_test = reference_all[test_indices]
+    if not np.all(np.isfinite(predicted_np)):
+        raise FloatingPointError("model produced nonfinite tangent predictions")
+
+    tangent_scale = max(
+        float(np.sqrt(np.mean(reference_all[train_indices] ** 2))), 1.0e-12
+    )
+    overall = _tangent_metrics(predicted_np, reference_test, test_ids, tangent_scale)
+    by_volume_fraction = {}
+    for vf_value in np.unique(test_vf):
+        local = np.flatnonzero(test_vf == vf_value)
+        key = f"{vf_value:.12g}"
+        by_volume_fraction[key] = _tangent_metrics(
+            predicted_np[local], reference_test[local], test_ids[local], tangent_scale
+        )
+
+    report = {
+        "status": "complete",
+        "evaluated_split": "test",
+        "test_split_note": (
+            "This split was inspected in earlier training iterations; use a new "
+            "grouped split for a final independent performance claim."
+        ),
+        "dataset_sha256": dataset_sha256,
+        "checkpoint_sha256": _sha256_file(checkpoint_path),
+        "checkpoint_best_epoch": int(checkpoint["best_epoch"]),
+        "tangent_flattening": manifest["tangent_flattening"],
+        "training_tangent_rms_scale": tangent_scale,
+        "overall": overall,
+        "by_volume_fraction": by_volume_fraction,
+    }
+    _atomic_json(report_path, report)
+
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    relative = np.linalg.norm(predicted_np - reference_test, axis=(1, 2)) / np.maximum(
+        1.0,
+        np.maximum(
+            np.linalg.norm(predicted_np, axis=(1, 2)),
+            np.linalg.norm(reference_test, axis=(1, 2)),
+        ),
+    )
+    with csv_path.open("w", newline="", encoding="utf-8") as output:
+        writer = csv.writer(output)
+        writer.writerow(
+            ["sample_id", "state_index", "volume_fraction", "relative_tangent_frobenius_error"]
+        )
+        for i, dataset_index in enumerate(test_indices):
+            writer.writerow(
+                [
+                    test_ids[i],
+                    int(sample_ids[dataset_index].rsplit("f", 1)[1]),
+                    float(test_vf[i]),
+                    float(relative[i]),
+                ]
+            )
+
+    print(f"Evaluated tangents for {len(test_indices)} held-out samples")
+    print(f"Overall tangent metrics: {json.dumps(overall, sort_keys=True)}")
+    print(
+        "Tangent metrics by volume fraction: "
+        f"{json.dumps(by_volume_fraction, sort_keys=True)}"
+    )
+    print(f"Report: {report_path}")
+    print(f"Per-sample CSV: {csv_path}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--dataset", type=Path, required=True)
+    parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--checkpoint", type=Path, required=True)
+    parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--csv", type=Path, required=True)
+    parser.add_argument("--device", default="cpu")
+    parser.add_argument("--torch-threads", type=int, default=1)
+    args = parser.parse_args()
+    evaluate_tangent(
+        dataset_path=args.dataset,
+        manifest_path=args.manifest,
+        checkpoint_path=args.checkpoint,
+        report_path=args.report,
+        csv_path=args.csv,
+        device=args.device,
+        torch_threads=args.torch_threads,
+    )
+
+
+if __name__ == "__main__":
+    main()

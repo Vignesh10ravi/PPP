@@ -1,0 +1,23 @@
+[LOAD PATH] mode=uniaxial_tension vf=0.020000
+[LOAD PATH] mode=uniaxial_compression vf=0.020000
+[LOAD PATH] mode=simple_shear vf=0.020000
+[LOAD PATH] mode=equibiaxial_tension vf=0.020000
+[LOAD PATH] mode=volumetric_expansion vf=0.020000
+[LOAD PATH] mode=uniaxial_tension vf=0.050000
+[LOAD PATH] mode=uniaxial_compression vf=0.050000
+[LOAD PATH] mode=simple_shear vf=0.050000
+[LOAD PATH] mode=equibiaxial_tension vf=0.050000
+[LOAD PATH] mode=volumetric_expansion vf=0.050000
+[LOAD PATH] mode=uniaxial_tension vf=0.100000
+[LOAD PATH] mode=uniaxial_compression vf=0.100000
+[LOAD PATH] mode=simple_shear vf=0.100000
+[LOAD PATH] mode=equibiaxial_tension vf=0.100000
+[LOAD PATH] mode=volumetric_expansion vf=0.100000
+{
+  "status": "pass",
+  "path_points": 165,
+  "maximum_work_conjugacy_scaled_error": 4.598661297983142e-06,
+  "maximum_tangent_major_symmetry_error": 1.5176442384198855e-15,
+  "report": "/scratch4/vr80beqo/rve_loading_path_sweep_20261114/rve_loading_path_sweep.json",
+  "csv": "/scratch4/vr80beqo/rve_loading_path_sweep_20261114/rve_loading_path_sweep.csv"
+}

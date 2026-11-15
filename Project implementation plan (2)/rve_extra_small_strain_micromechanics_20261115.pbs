@@ -1,0 +1,45 @@
+#!/bin/bash
+#PBS -N rve_smallstrain_mt
+#PBS -q teachingq
+#PBS -l select=1:ncpus=2:mem=16GB
+#PBS -l walltime=02:00:00
+#PBS -o /scratch/vr80beqo/rve_extra_small_strain_micromechanics_20261115.out
+#PBS -e /scratch/vr80beqo/rve_extra_small_strain_micromechanics_20261115.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export TORCH_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+DATA_DIR=/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data
+DATASET="$DATA_DIR/rve_phase6_phase7_training.npz"
+MANIFEST="$DATA_DIR/rve_phase6_phase7_training.manifest.json"
+CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+OUT_DIR=/scratch/vr80beqo/rve_extra_small_strain_micromechanics_20261115
+mkdir -p "$OUT_DIR"
+test -f "$DATASET"
+test -f "$MANIFEST"
+test -f "$CHECKPOINT"
+
+python -u -m benchmarks.rve_small_strain_micromechanics \
+  --dataset "$DATASET" \
+  --manifest "$MANIFEST" \
+  --checkpoint "$CHECKPOINT" \
+  --expected-dataset-sha256 8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336 \
+  --expected-checkpoint-sha256 32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70 \
+  --volume-fractions 0.02 0.05 0.10 \
+  --matrix-shear-modulus 1.0 \
+  --matrix-bulk-modulus 10000 \
+  --torch-threads 1 \
+  --output-json "$OUT_DIR/rve_small_strain_micromechanics.json" \
+  --output-csv "$OUT_DIR/rve_small_strain_micromechanics.csv" \
+  --output-figure "$OUT_DIR/rve_small_strain_micromechanics.png" \
+  2>&1 | tee "$OUT_DIR/run.log"

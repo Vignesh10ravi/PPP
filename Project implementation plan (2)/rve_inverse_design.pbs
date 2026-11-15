@@ -1,0 +1,74 @@
+#!/bin/bash
+#PBS -N rve_inv_design
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=64GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_inverse_design_uniaxial.out
+#PBS -e /scratch/vr80beqo/rve_inverse_design_uniaxial.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=12
+export TORCH_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+TRAINING_DIR=/scratch/vr80beqo/rve_phase7_augmented_training_20261109/data
+TRAINING_DATA="$TRAINING_DIR/rve_phase6_phase7_training.npz"
+TRAINING_MANIFEST="$TRAINING_DIR/rve_phase6_phase7_training.manifest.json"
+EXPECTED_CHECKPOINT_SHA256=32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70
+EXPECTED_DATASET_SHA256=8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336
+OUT_DIR=/scratch/vr80beqo/rve_inverse_design_uniaxial
+mkdir -p "$OUT_DIR"
+
+test -f "$CHECKPOINT"
+test -f "$TRAINING_DATA"
+test -f "$TRAINING_MANIFEST"
+
+python - "$CHECKPOINT" "$TRAINING_DATA" "$TRAINING_MANIFEST" \
+  "$EXPECTED_CHECKPOINT_SHA256" "$EXPECTED_DATASET_SHA256" <<'PY'
+import hashlib
+import json
+import sys
+import torch
+
+checkpoint_path, dataset_path, manifest_path, expected_checkpoint, expected_dataset = sys.argv[1:]
+with open(checkpoint_path, "rb") as stream:
+    checkpoint_hash = hashlib.sha256(stream.read()).hexdigest()
+with open(dataset_path, "rb") as stream:
+    dataset_hash = hashlib.sha256(stream.read()).hexdigest()
+with open(manifest_path, encoding="utf-8") as stream:
+    manifest = json.load(stream)
+checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+expected_hash = checkpoint.get("dataset_sha256")
+if expected_hash != dataset_hash or expected_hash != manifest.get("dataset_sha256"):
+    raise SystemExit("checkpoint, training dataset, and manifest hashes do not match")
+if checkpoint_hash != expected_checkpoint or dataset_hash != expected_dataset:
+    raise SystemExit("artifacts do not match the expected final Phase 6/7 run")
+print("Checkpoint SHA-256:", checkpoint_hash)
+print("Training dataset SHA-256:", dataset_hash)
+print("Best epoch:", checkpoint.get("best_epoch"))
+PY
+
+python -u -m benchmarks.rve_inverse_design \
+  --checkpoint "$CHECKPOINT" \
+  --output "$OUT_DIR/rve_inverse_design_uniaxial.json" \
+  --response stress \
+  --i 0 --j 0 \
+  --deformation-gradient 1.05 0 0 0 1 0 0 0 1 \
+  --volume-fraction-bounds 0.02 0.10 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --target-error-limit 0.05 \
+  2>&1 | tee "$OUT_DIR/run.log"

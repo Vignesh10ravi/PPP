@@ -1,0 +1,680 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "scope": "Direct-RVE validation along simple shear at gamma=0.025, 0.05, and 0.075 for volume fractions 0.02, 0.05, and 0.10. The 5% points are reused from the completed volume-fraction map. This is validation of a frozen checkpoint and does not modify training data.",
+  "checkpoint_path": "/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "training_dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "baseline_map_path": "/scratch4/vr80beqo/rve_volume_fraction_map_20261114/rve_volume_fraction_map.json",
+  "baseline_map_checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "new_direct_rve_solves": 6,
+  "reused_baseline_points": 3,
+  "volume_fractions": [
+    0.02,
+    0.05,
+    0.1
+  ],
+  "shear_amplitudes": [
+    0.025,
+    0.05,
+    0.075
+  ],
+  "error_floor": 1e-08,
+  "rve_configuration": {
+    "maxh": 0.22,
+    "mu": 1.0,
+    "bulk_modulus": 10000.0,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "microscopic_jacobian_floor": 1e-08
+  },
+  "summary": {
+    "n_points": 9,
+    "n_direct_rve_points": 9,
+    "maximum_P01_absolute_error": 0.0691431644614846,
+    "maximum_P01_relative_error": 0.753380537768396,
+    "maximum_stress_component_rmse": 0.0351708154416017,
+    "maximum_stress_frobenius_relative_error": 0.8104897543668871
+  },
+  "points": [
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.025,
+      "volume_fraction": 0.02,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.025,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.00047700316690679756,
+      "energy_direct_rve": 0.000327033003786425,
+      "energy_absolute_error": 0.00014997016312037254,
+      "energy_relative_error": 0.45857806821941843,
+      "stress_pICNN": [
+        [
+          0.0012661586533795344,
+          0.038160268707443566,
+          0.0
+        ],
+        [
+          0.03812861474111173,
+          0.0012661586533795344,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.002160738476959523
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.000225481344190752,
+          0.02616278369572003,
+          -6.339774974227728e-07
+        ],
+        [
+          0.02616820174312038,
+          -0.00021672188276062023,
+          -3.2128134205250867e-06
+        ],
+        [
+          -5.536575017643017e-07,
+          -3.212813833614258e-06,
+          -0.00022783575944440514
+        ]
+      ],
+      "stress_component_rmse": 0.00574572651330714,
+      "stress_frobenius_absolute_error": 0.017237179539921422,
+      "stress_frobenius_relative_error": 0.46579898962951904,
+      "P01_pICNN": 0.038160268707443566,
+      "P01_direct_rve": 0.02616278369572003,
+      "P01_absolute_error": 0.011997485011723538,
+      "P01_relative_error": 0.45857066095326116,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 2.745909206504515e-17,
+      "direct_rve_rotation_residual": 6.34866752235229e-13,
+      "direct_rve_minimum_microscopic_jacobian": 0.9807065030433972
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.025,
+      "volume_fraction": 0.05,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.025,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.0005410000617303012,
+      "energy_direct_rve": 0.0003483327282834287,
+      "energy_absolute_error": 0.00019266733344687253,
+      "energy_relative_error": 0.5531129227974939,
+      "stress_pICNN": [
+        [
+          0.001515579953775159,
+          0.043280026405487,
+          0.0
+        ],
+        [
+          0.043242136906656015,
+          0.001515579953775159,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.002534938663302455
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.00022892285317488944,
+          0.027866658442232076,
+          7.488168576887288e-06
+        ],
+        [
+          0.027873552147143134,
+          -0.00027574824602163154,
+          1.4217760649355675e-06
+        ],
+        [
+          7.4526232725886084e-06,
+          1.4217761526194377e-06,
+          -0.00025507869513105466
+        ]
+      ],
+      "stress_component_rmse": 0.007362078275123327,
+      "stress_frobenius_absolute_error": 0.02208623482536998,
+      "stress_frobenius_relative_error": 0.5603263053720832,
+      "P01_pICNN": 0.043280026405487,
+      "P01_direct_rve": 0.027866658442232076,
+      "P01_absolute_error": 0.015413367963254921,
+      "P01_relative_error": 0.5531114537900919,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 3.5362130976874757e-16,
+      "direct_rve_rotation_residual": 1.5345500534437423e-12,
+      "direct_rve_minimum_microscopic_jacobian": 0.9829027152341792
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.025,
+      "volume_fraction": 0.1,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.025,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.0006710606212436687,
+      "energy_direct_rve": 0.00038271050591108627,
+      "energy_absolute_error": 0.00028835011533258245,
+      "energy_relative_error": 0.7534418597841518,
+      "stress_pICNN": [
+        [
+          0.0019194511378373136,
+          0.05368488720496106,
+          0.0
+        ],
+        [
+          0.05363690092650586,
+          0.0019194511378373136,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.003195848307768756
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.0003047309541489747,
+          0.030617932644152742,
+          1.0884056074196752e-05
+        ],
+        [
+          0.030624700009047327,
+          -0.0002706945853988724,
+          -2.2988971811662556e-06
+        ],
+        [
+          1.0941530053151493e-05,
+          -2.2988971756092566e-06,
+          -0.0002921588003664623
+        ]
+      ],
+      "stress_component_rmse": 0.010972470350731883,
+      "stress_frobenius_absolute_error": 0.03291741105219565,
+      "stress_frobenius_relative_error": 0.7600771325995945,
+      "P01_pICNN": 0.05368488720496106,
+      "P01_direct_rve": 0.030617932644152742,
+      "P01_absolute_error": 0.02306695456080832,
+      "P01_relative_error": 0.753380537768396,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 5.3486323801985745e-16,
+      "direct_rve_rotation_residual": 1.5711724555031602e-12,
+      "direct_rve_minimum_microscopic_jacobian": 0.9804001022741398
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.05,
+      "volume_fraction": 0.02,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.05,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.0019080149722867645,
+      "energy_direct_rve": 0.0013081506230434646,
+      "energy_absolute_error": 0.0005998643492432999,
+      "energy_relative_error": 0.4585590823231744,
+      "stress_pICNN": [
+        [
+          0.005064646271421225,
+          0.07632072177308241,
+          0.0
+        ],
+        [
+          0.07606748945948993,
+          0.005064646271421225,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.008642974607937504
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.0009003931034493382,
+          0.05232693926013744,
+          -1.4026629783929376e-06
+        ],
+        [
+          0.052370806895859635,
+          -0.0008773526834035922,
+          -6.3028175806067075e-06
+        ],
+        [
+          -1.0875234530602755e-06,
+          -6.302819222976037e-06,
+          -0.0009058357740941863
+        ]
+      ],
+      "stress_component_rmse": 0.012015283195608583,
+      "stress_frobenius_absolute_error": 0.03604584958682575,
+      "stress_frobenius_relative_error": 0.48678566939328854,
+      "P01_pICNN": 0.07632072177308241,
+      "P01_direct_rve": 0.05232693926013744,
+      "P01_absolute_error": 0.02399378251294497,
+      "P01_relative_error": 0.45853594443318385,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 6.116965647533722e-15,
+      "direct_rve_rotation_residual": 2.6772767431968614e-12,
+      "direct_rve_minimum_microscopic_jacobian": 0.9612468002625785
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.05,
+      "volume_fraction": 0.05,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.05,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.002164003466077702,
+      "energy_direct_rve": 0.0013933544926890687,
+      "energy_absolute_error": 0.0007706489733886332,
+      "energy_relative_error": 0.5530889500354924,
+      "stress_pICNN": [
+        [
+          0.006062337286493857,
+          0.0865603103564358,
+          0.0
+        ],
+        [
+          0.08625719349208794,
+          0.006062337286493857,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.010139784653802053
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.0009613784177331593,
+          0.05573590147024154,
+          1.5385628967206703e-05
+        ],
+        [
+          0.05578721358898097,
+          -0.0010262424806573667,
+          2.8733507126751664e-06
+        ],
+        [
+          1.5241957533844853e-05,
+          2.8733509018752793e-06,
+          -0.0010116745368215216
+        ]
+      ],
+      "stress_component_rmse": 0.015284341775219158,
+      "stress_frobenius_absolute_error": 0.04585302532565747,
+      "stress_frobenius_relative_error": 0.5813173389141715,
+      "P01_pICNN": 0.0865603103564358,
+      "P01_direct_rve": 0.05573590147024154,
+      "P01_absolute_error": 0.03082440888619426,
+      "P01_relative_error": 0.5530440537083984,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 1.1422994207458684e-13,
+      "direct_rve_rotation_residual": 6.570586852926744e-12,
+      "direct_rve_minimum_microscopic_jacobian": 0.9656952455623525
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.05,
+      "volume_fraction": 0.1,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.05,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.0026842481165658683,
+      "energy_direct_rve": 0.0015310183991065216,
+      "energy_absolute_error": 0.0011532297174593467,
+      "energy_relative_error": 0.7532435391582188,
+      "stress_pICNN": [
+        [
+          0.007677827467887255,
+          0.10737022515029622,
+          0.0
+        ],
+        [
+          0.10698633377688793,
+          0.007677827467887255,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.01278343827380013
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.001230383086540623,
+          0.06125046192585304,
+          2.22574213664153e-05
+        ],
+        [
+          0.061302117768253526,
+          -0.0010331168396290223,
+          -4.504911256302919e-06
+        ],
+        [
+          2.248267409179023e-05,
+          -4.504911421152183e-06,
+          -0.0011774330554531298
+        ]
+      ],
+      "stress_component_rmse": 0.022519680005464844,
+      "stress_frobenius_absolute_error": 0.06755904001639454,
+      "stress_frobenius_relative_error": 0.7794015168497703,
+      "P01_pICNN": 0.10737022515029622,
+      "P01_direct_rve": 0.06125046192585304,
+      "P01_absolute_error": 0.04611976322444318,
+      "P01_relative_error": 0.7529700474793745,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 1.3534078338493903e-13,
+      "direct_rve_rotation_residual": 7.1682633624601684e-12,
+      "direct_rve_minimum_microscopic_jacobian": 0.9610501210537413
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.075,
+      "volume_fraction": 0.02,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.075,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.004293042328299634,
+      "energy_direct_rve": 0.0029433997901868784,
+      "energy_absolute_error": 0.001349642538112756,
+      "energy_relative_error": 0.45853184559310795,
+      "stress_pICNN": [
+        [
+          0.011395497786907072,
+          0.11448154356274902,
+          0.0
+        ],
+        [
+          0.11362688122881082,
+          0.011395497786907072,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.019446770435934013
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.0020247134439997753,
+          0.07849347222344971,
+          -2.2949228737861644e-06
+        ],
+        [
+          0.07864213384039405,
+          -0.001982154841169604,
+          -9.270815421980309e-06
+        ],
+        [
+          -1.5996146884880958e-06,
+          -9.270819019872856e-06,
+          -0.0020340485820764614
+        ]
+      ],
+      "stress_component_rmse": 0.01926298480759735,
+      "stress_frobenius_absolute_error": 0.057788954422792055,
+      "stress_frobenius_relative_error": 0.5198417514999093,
+      "P01_pICNN": 0.11448154356274902,
+      "P01_direct_rve": 0.07849347222344971,
+      "P01_absolute_error": 0.03598807133929931,
+      "P01_relative_error": 0.458484894601821,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 1.5966104988500448e-13,
+      "direct_rve_rotation_residual": 6.1906457779588594e-12,
+      "direct_rve_minimum_microscopic_jacobian": 0.9416534285045887
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.075,
+      "volume_fraction": 0.05,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.075,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.004869019871875935,
+      "energy_direct_rve": 0.003135187664091747,
+      "energy_absolute_error": 0.0017338322077841877,
+      "energy_relative_error": 0.5530234210992511,
+      "stress_pICNN": [
+        [
+          0.01364032442415919,
+          0.12984110941285668,
+          0.0
+        ],
+        [
+          0.12881808508109316,
+          0.01364032442415919,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.022814628006926796
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.002197032995022491,
+          0.08361232013056319,
+          2.3746220103548295e-05
+        ],
+        [
+          0.0837812732143644,
+          -0.002252707941992824,
+          4.361838078901429e-06
+        ],
+        [
+          2.3419073056512033e-05,
+          4.361837958820098e-06,
+          -0.0022698889340254397
+        ]
+      ],
+      "stress_component_rmse": 0.024262590980969518,
+      "stress_frobenius_absolute_error": 0.07278777294290856,
+      "stress_frobenius_relative_error": 0.6146121756938002,
+      "P01_pICNN": 0.12984110941285668,
+      "P01_direct_rve": 0.08361232013056319,
+      "P01_absolute_error": 0.046228789282293486,
+      "P01_relative_error": 0.5528944683045013,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 3.6802799920587056e-12,
+      "direct_rve_rotation_residual": 1.499167037578162e-11,
+      "direct_rve_minimum_microscopic_jacobian": 0.9483612484898408
+    },
+    {
+      "loading_mode": "simple_shear",
+      "shear_amplitude": 0.075,
+      "volume_fraction": 0.1,
+      "deformation_gradient": [
+        [
+          1.0,
+          0.075,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "energy_pICNN": 0.0060395793907446205,
+      "energy_direct_rve": 0.00344548642849786,
+      "energy_absolute_error": 0.0025940929622467607,
+      "energy_relative_error": 0.7528960035340252,
+      "stress_pICNN": [
+        [
+          0.01727519774249231,
+          0.1610564646031745,
+          0.0
+        ],
+        [
+          0.1597608247724338,
+          0.01727519774249231,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.028762905018083984
+        ]
+      ],
+      "stress_direct_rve": [
+        [
+          -0.0027757537355018853,
+          0.0919133001416899,
+          3.416274202739689e-05
+        ],
+        [
+          0.09208521655116764,
+          -0.0022922187970339553,
+          -6.697924770475617e-06
+        ],
+        [
+          3.4665105806406335e-05,
+          -6.697925877497177e-06,
+          -0.002656583932049273
+        ]
+      ],
+      "stress_component_rmse": 0.0351708154416017,
+      "stress_frobenius_absolute_error": 0.1055124463248051,
+      "stress_frobenius_relative_error": 0.8104897543668871,
+      "P01_pICNN": 0.1610564646031745,
+      "P01_direct_rve": 0.0919133001416899,
+      "P01_absolute_error": 0.0691431644614846,
+      "P01_relative_error": 0.7522650623456696,
+      "direct_rve_solver_status": "converged",
+      "direct_rve_mixed_residual": 3.641131028801566e-12,
+      "direct_rve_rotation_residual": 1.93636977174686e-11,
+      "direct_rve_minimum_microscopic_jacobian": 0.9419838340671124
+    }
+  ]
+}

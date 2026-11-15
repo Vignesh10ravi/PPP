@@ -1,0 +1,6 @@
+CPU threads: NGSolve=40, PyTorch=40
+Macro-FE pICNN run: vf=0.05, axial stretch=0.05, load steps=100, maxh=0.2, order=1, integration order=10, merit=energy, predictor=secant
+[load continuation] attempt=1, accepted_step=1, increment=5.00000000e-04, axial_stretch=5.00000000e-04
+[load predictor] type=affine_boundary_field
+[solve] ndof=642, free=396, constrained=246
+[solve] initial_guess=coefficient_function_interpolation, displacement_norm=3.240370e-03

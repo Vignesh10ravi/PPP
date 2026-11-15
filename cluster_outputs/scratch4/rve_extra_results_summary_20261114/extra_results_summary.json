@@ -1,0 +1,52 @@
+{
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "scope_note": "Reported values retain the units and normalization of the underlying frozen checkpoint and RVE configuration.",
+  "source_reports": {
+    "inverse_design": "/scratch4/vr80beqo/rve_inverse_design_uniaxial/rve_inverse_design_uniaxial.json",
+    "loading_path_sweep": "/scratch4/vr80beqo/rve_loading_path_sweep_20261114/rve_loading_path_sweep.json",
+    "surrogate_rve_benchmark": "/scratch4/vr80beqo/rve_extra_surrogate_benchmark_retry_20261114/rve_surrogate_rve_benchmark.json",
+    "volume_fraction_map": "/scratch4/vr80beqo/rve_volume_fraction_map_20261114/rve_volume_fraction_map.json"
+  },
+  "summaries": {
+    "inverse_design": {
+      "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+      "predicted_response": 529.3978264345969,
+      "status": "pass",
+      "target_error_limit": 0.05,
+      "target_response": 529.3978264393527,
+      "verified_relative_target_error": 0.002366902702904468,
+      "verified_response": 528.1447932930416,
+      "volume_fraction": 0.05865149996188015
+    },
+    "loading_path_sweep": {
+      "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+      "load_modes": 5,
+      "maximum_tangent_major_symmetry_error": 1.5176442384198855e-15,
+      "maximum_work_conjugacy_scaled_error": 4.598661297983142e-06,
+      "path_points": 165,
+      "scope": "surrogate_only; direct-RVE labels are not used",
+      "status": "pass",
+      "volume_fractions": 3
+    },
+    "surrogate_rve_benchmark": {
+      "cases": 30,
+      "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+      "energy_nrmse_training_scale": 0.00043046852861945456,
+      "holdout_dataset_sha256": "f2518241c56c36de79813ce2731049643e32ac7ea9a3bfbefc23ca58fe6c8d38",
+      "median_paired_amortized_speedup": 2725.0759448200997,
+      "median_paired_solver_speedup": 57844.69915949426,
+      "status": "complete",
+      "stress_nrmse_training_scale": 0.0008789509456149168
+    },
+    "volume_fraction_map": {
+      "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+      "derivative_tolerance": 1e-05,
+      "direct_rve_cases": 9,
+      "energy_rmse_vs_direct_rve": 0.06411438193946216,
+      "maximum_scaled_derivative_error": 7.372381969323824e-07,
+      "n_points": 9,
+      "status": "pass",
+      "stress_component_rmse_vs_direct_rve": 1.0175436660788897
+    }
+  }
+}

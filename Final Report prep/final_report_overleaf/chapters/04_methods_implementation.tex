@@ -1,0 +1,232 @@
+\chapter{Numerical Methods and Implementation Details}
+\label{ch:implementation}
+
+\section{Phase 1: constitutive bridge}
+
+The network energy is evaluated in double precision on the CPU. PyTorch AD
+computes \(\Pstress\) and \(\Aten\) from the scalar energy. NGSolve's
+\texttt{IntegrationRuleSpace} stores deformation gradients and material
+responses at matching quadrature points. Each Newton iteration:
+\begin{enumerate}
+  \item samples \(\F=\Iten+\nabla\bm u\) at material points;
+  \item evaluates energy derivatives in PyTorch;
+  \item writes \(\Pstress\) and the row-major \(9\times9\) tangent into
+        integration-point grid functions;
+  \item assembles the residual and stiffness; and
+  \item solves the constrained Newton update.
+\end{enumerate}
+The quadrature rule attached to the integration-point space is reused in all
+forms; otherwise the transferred material data would be evaluated at
+different locations.
+
+The deformation-gradient components are gathered from the integration-point
+grid function into a point-major array of shape \((n_q,3,3)\). Before model
+evaluation, the code checks finiteness and rejects any sampled \(J\leq10^{-8}\).
+The constitutive interface then returns a first-Piola tensor and a material
+tangent whose row and column indices both follow the \(3i+J\) flattening in
+\cref{eq:flattening}. These values are written to nine- and 81-component
+integration-rule grid functions, respectively. Keeping this mapping
+explicit is essential: a transpose or a Voigt-style six-component shortcut
+would assemble a different linearization.
+
+At a current displacement \(u\), the assembled internal residual and tangent
+are
+\begin{equation}
+  R_a(u)=\int_{\Omega_0} P_{iJ}\,N_{a,i,J}\,\dd V,
+  \qquad
+  K_{ab}(u)=\int_{\Omega_0}
+  N_{a,i,J}A_{iJkL}N_{b,k,L}\,\dd V,
+  \label{eq:bridge-residual-tangent}
+\end{equation}
+where \(N_{a,i,J}\) denotes the reference gradient associated with a vector
+shape-function coefficient. The production solver constrains prescribed
+boundary degrees of freedom and monitors the free residual. A backtracking
+line search can use either residual reduction or the discrete energy;
+orientation loss and non-finite constitutive values are rejected rather than
+passed to the sparse solve. This separates invalid kinematics,
+material-evaluation failure, and poor Newton globalization.
+
+The Phase~1 training target is the compressible neo-Hookean energy in
+\cref{eq:neo-hooke}. It can be evaluated for many deformation gradients
+without generating a reference finite-element mesh or solving an RVE. The
+network therefore isolates the PyTorch-to-NGSolve interface from
+microstructure and homogenization error. The analytical material remains
+available as a matched FE comparator after the bridge is operating.
+
+\section{Periodic RVE and mixed matrix}
+
+Opposing faces of a unit cube are identified geometrically in Netgen and
+wrapped with NGSolve \texttt{Periodic} spaces, following the documented
+periodic-mesh and periodic-space construction \cite{ngsolve_periodic}. A spherical particle is
+represented by a cavity in the deformable matrix rather than by an
+artificially stiff material. The fluctuation field uses \(P_2\) vector
+elements and pressure uses \(P_1\) elements. This mixed approximation reduces
+the locking risk for the nearly incompressible matrix; it does not make
+locking independent of mesh, quadrature, or element choice. The nonlinear
+residual is obtained from \cref{eq:mixed-energy}, and NGSolve supplies its
+exact symbolic linearization.
+
+The cell is the unit cube \([0,1]^3\), with a centered spherical cavity. Its
+radius follows \(r=(3v_{\mathrm f}/4\pi)^{1/3}\); for one sphere in a
+unit-volume cell this sets the particle-to-cell volume ratio. Netgen
+identifies each pair of opposite faces before meshing, and NGSolve's
+periodic spaces share the corresponding degrees of freedom. The macroscopic
+deformation is prescribed as \(\Fbar\); the unknown field is the periodic
+fluctuation \(w\), giving \(\F=\Fbar+\nabla w\). Periodicity therefore
+applies to the fluctuation, not to the affine part of the total displacement.
+
+The rigid particle is enforced through its cavity-boundary trace. The
+prescribed trace is the exact finite rigid-body displacement
+\(\bm t+(\Rten-\Iten)(\bm X-\bm X_c)\), with the particle center following
+the macroscopic map. A free-particle solve determines the three rotational
+coordinates by requiring zero resultant moment; translation is not solved
+independently because a constant shift is the periodic gauge. Each rotation
+update is multiplicative and uses the expansion
+\(\exp([\delta q]_\times)=\Iten+[\delta q]_\times+
+\frac12[\delta q]_\times^2+O(\|\delta q\|^3)\). If a direct initial load is
+inadmissible, the solver can start at the identity state and proceed through
+adaptive continuation, with alternative isochoric/volumetric paths and
+previous-state or extrapolated predictors.
+
+The mixed displacement-pressure equations are assembled from the energy
+density using the same element integration order for the residual and its
+symbolic linearization. In the standard dataset configuration, the matrix
+shear scale is \(\mu=1\), bulk modulus \(\kappa=10^4\), displacement order is
+two, and tetrahedral integration order is ten. These are dimensionless
+constitutive scales for the numerical study; they do not represent an
+experimentally calibrated PDMS parameter set.
+
+\section{Rigid-particle equilibrium}
+
+The particle trace is restricted to \cref{eq:rigid-motion}. Rotations are
+updated multiplicatively using Rodrigues' formula. At each outer iteration,
+the mixed RVE is equilibrated for the current rotation, the resultant moment
+is assembled, and an exact condensed rotational Hessian supplies the Newton
+step. Translation is not inverted as a rigid coordinate because it is the
+periodic displacement gauge; the particle center is mapped by the
+macroscopic deformation.
+
+\section{Homogenized response}
+
+The homogenized energy is the equilibrated mixed matrix potential per total
+cell volume. Work-conjugate stress combines the matrix-volume contribution
+with the full assembled particle reaction. The tangent augments the discrete
+energy with nine global macroscopic coordinates and three incremental
+rotation coordinates, then eliminates free displacement, pressure, and
+rotation variables through \cref{eq:schur}. This calculation uses one sparse
+factorization and multiple sensitivity solves; no dense inverse or numerical
+stress perturbation is formed.
+
+In practice, nine scalar global coordinates are added to the mixed FE space
+to represent independent components of \(\Fbar\); three more represent
+infinitesimal particle rotation when that degree of freedom is free. These
+are global \texttt{NumberSpace} variables rather than nine additional
+mesh-wide fields. After the equilibrium Hessian is assembled, the
+macroscopic coordinates are held fixed and the free displacement, pressure,
+and rotation block is factorized once. Each macroscopic unit perturbation is
+then relaxed by solving the corresponding linear sensitivity problem. The
+reaction recovered in the macroscopic coordinates supplies the tangent
+column. The resulting tangent is checked for major symmetry and its action
+is checked by Taylor remainders; finite perturbations are verification
+tools, not the production definition of the tangent.
+
+\section{Dataset generation and surrogate workflow}
+
+Each macroscopic deformation state is assigned to exactly one split and is
+evaluated at every requested volume fraction. This prevents deformation-state
+leakage between training, validation, and test data. Individual RVE results
+are checkpointed atomically before final NPZ assembly. The manifest records
+configuration, field schema, software versions, shapes, and split counts.
+
+The generated record contains
+\begin{equation}
+  \left(\vfrac,\Fbar,\overline\Psi,\Pbar,\Abar,\Rten,
+  \text{diagnostics}\right).
+\end{equation}
+The energy, stress, and tangent supervision follows the Sobolev-training idea
+of matching a function and its derivatives \cite{czarnecki2017}. The
+context-conditioned model is
+\texttt{HyperelasticNN(n\_ctx=1)}, an invariant-feature pICNN that is
+isotropic in \(\Fbar\) and conditioned on volume fraction. The final
+fine-tuning run used the Phase~6 normalization, energy and stress losses, and
+a per-sample relative-Frobenius tangent loss with weights \(1\) and \(0.1\)
+for stress and tangent, respectively. It used batches of 64, tangent
+sub-batches of 8, learning rate \(10^{-4}\), seed 4103, and 3000 configured
+epochs; the selected checkpoint was from epoch 2750. The frozen checkpoint
+SHA-256 is
+\texttt{32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70}.
+Its grouped holdout energy and stress RMSEs are 0.519 and 2.466. This holdout
+is not called a new independent evaluation because its Phase~7 deformation
+states had already been used to evaluate the preceding checkpoint.
+
+To improve simple-shear response, a separate 33-record direct-RVE dataset was
+generated across \(\vfrac=0.02,0.05,0.10\), with 18 training, 6 validation,
+and 9 test records grouped by deformation state. A full shear fine-tune
+replayed the original Phase~6/7 data; a context-only adapter was also explored
+as a development comparator. The selected full fine-tune was frozen before
+the final holdout was generated. The final holdout uses a new microstructure
+seed and four simple-shear amplitudes, with identity records retained only for
+auditing. This final set was used only for evaluation, not model selection.
+
+Standard deformation states are generated deterministically from a seeded
+uniform perturbation of the identity and filtered to retain positive
+determinant and a bounded condition number. Targeted compression and
+expansion states can instead be stratified over specified determinant
+intervals. A deformation group, rather than an individual volume-fraction
+record, is assigned to train, validation, or test; all volume-fraction
+variants of a state remain together. This avoids leakage of identical
+loading states across splits. A solved sample is accepted only if the mixed,
+rotational, and condensed residuals are below \(10^{-8}\), the sampled
+microscopic Jacobian exceeds its configured floor, particle clearance is
+positive, and all stored arrays are finite.
+
+The schema-2 record stores the loading gradient and determinant, volume
+fraction, homogenized energy, \(3\times3\) stress, row-major \(9\times9\)
+tangent, optimized particle rotation, solver iteration counts, equilibrium
+residuals, tangent-symmetry error, and minimum/maximum sampled microscopic
+Jacobian. A JSON manifest accompanies the compressed array file and records
+the configuration, field shapes and dtypes, software version, split counts,
+and hashes. Per-sample temporary files are atomically renamed after a
+successful solve, allowing a restarted generation job to keep completed
+samples without treating a partially written result as valid.
+
+Training is performed in float64. Feature, context, energy, stress, and
+tangent scales are fitted from the training split only, or inherited from
+the parent checkpoint during fine-tuning. The loss combines normalized
+energy and stress errors; selected states also contribute a per-sample
+relative-Frobenius tangent term. Tangent examples are sub-batched because
+second derivatives are more memory intensive than energy evaluation.
+Validation is grouped by deformation state, and the selected epoch is
+determined from validation loss rather than the test set. Checkpoints retain
+the model state, normalization, training configuration, and provenance
+needed to recreate inference.
+
+\section{Macroscopic finite-element solution}
+
+The reported component-scale problem has a displacement field only. NGSolve
+applies the macroscopic boundary conditions and solves for displacement;
+PyTorch evaluates the homogenized energy, stress, and tangent at its
+integration points. The pressure field belongs to the microscale mixed RVE
+problem and is not an additional macroscopic unknown. The workflow is offline
+homogenization followed by a surrogate macro solve, not concurrent FE\(^2\).
+
+The trained surrogate is evaluated at macroscopic integration points and
+returns energy, first-Piola stress, and the exact AD tangent. With first-order
+displacements, fourth-order integration, an energy merit function, a secant
+load predictor, and 100 load steps, the Phase~6/7 checkpoint reached the
+target 5\% stretch at \(h=0.25,0.20,0.16\). Their final free-residual norms were
+\(1.63\times10^{-10}\), \(3.79\times10^{-12}\), and
+\(1.04\times10^{-12}\), respectively. Second-order runs did not reach the
+target load. Consequently, load-path completion is demonstrated for the
+first-order setting, while high-order stability, response convergence, and
+component-level accuracy remain open.
+
+At component scale, NGSolve imposes the external displacement boundary
+conditions and assembles the macroscopic residual and stiffness. At each
+quadrature point, the material bridge sends the current deformation gradient
+and fixed volume-fraction context to the PyTorch pICNN, which supplies
+energy, stress, and tangent. Newton updates are globalized with the discrete
+energy merit function; a secant predictor initializes each prescribed load
+increment from the two preceding converged states. The tested paths use
+100 load steps to reach five-percent stretch. Pressure remains internal to
+the RVE calculations and is not introduced as a second macroscopic field.

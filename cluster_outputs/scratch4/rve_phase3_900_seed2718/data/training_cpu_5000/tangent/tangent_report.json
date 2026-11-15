@@ -1,0 +1,56 @@
+{
+  "by_volume_fraction": {
+    "0.02": {
+      "n_samples": 45,
+      "predicted_symmetry_error_mean": 2.2621082107474645e-16,
+      "relative_frobenius_max": 0.170846717882494,
+      "relative_frobenius_mean": 0.011802489132857629,
+      "relative_frobenius_median": 0.007285131788564976,
+      "relative_frobenius_p90": 0.015127214108617299,
+      "tangent_component_nrmse_train_scale": 0.013396982381390532,
+      "tangent_component_rmse": 52.38483777179996,
+      "worst_sample_id": "v000_f000129"
+    },
+    "0.05": {
+      "n_samples": 45,
+      "predicted_symmetry_error_mean": 2.239802553730497e-16,
+      "relative_frobenius_max": 0.24805933559498536,
+      "relative_frobenius_mean": 0.013470468931329622,
+      "relative_frobenius_median": 0.007525129877257379,
+      "relative_frobenius_p90": 0.015992133221624245,
+      "tangent_component_nrmse_train_scale": 0.019095352494046106,
+      "tangent_component_rmse": 74.666586408701,
+      "worst_sample_id": "v001_f000129"
+    },
+    "0.1": {
+      "n_samples": 45,
+      "predicted_symmetry_error_mean": 2.254008635568039e-16,
+      "relative_frobenius_max": 0.06433281441026203,
+      "relative_frobenius_mean": 0.00938271312567622,
+      "relative_frobenius_median": 0.00793535590137353,
+      "relative_frobenius_p90": 0.016336036934544745,
+      "tangent_component_nrmse_train_scale": 0.009867796198096758,
+      "tangent_component_rmse": 38.585025215867255,
+      "worst_sample_id": "v002_f000129"
+    }
+  },
+  "checkpoint_best_epoch": 4990,
+  "checkpoint_sha256": "dfe71a3a4872796fedcc3925efb4a8098ef240a4aed5faa5003d9ed7b4f91da5",
+  "dataset_sha256": "5bcd1e393fe99c868e01f0885ce6d1f53a7753f8d1f8acc91abc4ec27a48c989",
+  "evaluated_split": "test",
+  "overall": {
+    "n_samples": 135,
+    "predicted_symmetry_error_mean": 2.251973133348667e-16,
+    "relative_frobenius_max": 0.24805933559498536,
+    "relative_frobenius_mean": 0.011551890396621156,
+    "relative_frobenius_median": 0.007507184955668038,
+    "relative_frobenius_p90": 0.015901929730032502,
+    "tangent_component_nrmse_train_scale": 0.014622870507146602,
+    "tangent_component_rmse": 57.17830161059037,
+    "worst_sample_id": "v001_f000129"
+  },
+  "status": "complete",
+  "tangent_flattening": "row-major: (i,J) -> 3*i + J",
+  "test_split_note": "This split was inspected in earlier training iterations; use a new grouped split for a final independent performance claim.",
+  "training_tangent_rms_scale": 3910.196810034373
+}

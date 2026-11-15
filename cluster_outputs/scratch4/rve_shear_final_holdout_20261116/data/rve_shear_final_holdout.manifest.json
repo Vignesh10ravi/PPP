@@ -1,0 +1,228 @@
+{
+  "allow_empty_splits": true,
+  "config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.52,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "expansion_determinant_range": [
+      1.5,
+      1.8
+    ],
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.1,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 0,
+    "n_deformations": 5,
+    "n_expansion_deformations": 0,
+    "seed": 20261116,
+    "split_fractions": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "configuration_sha256": "704e8c941aae9aeb1218480b39416d4d0e7e57c26d766cf8eb53245917165f81",
+  "dataset_sha256": "5ae077d092c02c82e3dc0ab09e1fb2906695828faf29dfaa1ff1d4de35ab3968",
+  "deformation_design": {
+    "evaluation_only": true,
+    "excluded_previous_amplitudes": [
+      0.01,
+      0.02,
+      0.025,
+      0.03,
+      0.035,
+      0.04,
+      0.045,
+      0.05,
+      0.055,
+      0.06,
+      0.065,
+      0.07,
+      0.075,
+      0.08,
+      0.085,
+      0.09,
+      0.095,
+      0.1
+    ],
+    "holdout_amplitudes": [
+      0.015,
+      0.0325,
+      0.0725,
+      0.0975
+    ],
+    "includes_identity_reference": true,
+    "load_mode": "positive simple shear, F[0,1]=gamma",
+    "matches_adaptation_dataset_microstructure_seed": false,
+    "microstructure_seed": 20261116,
+    "purpose": "new independent final direct-RVE evaluation of a shear surrogate; all states are held out from fitting and model selection",
+    "split_unit": "deformation state; all states assigned to test"
+  },
+  "deformation_sha256": "b1136489dfb8e54fa84904f83203a9f28784c4e5e0760858262488809b79d90f",
+  "fields": {
+    "condensed_residual": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "condition_number": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "deformation_gradient": {
+      "dtype": "float64",
+      "shape": [
+        15,
+        3,
+        3
+      ]
+    },
+    "determinant": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "energy": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "maximum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "minimum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "minimum_particle_clearance": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "mixed_iterations": {
+      "dtype": "int64",
+      "shape": [
+        15
+      ]
+    },
+    "mixed_residual": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "rotation": {
+      "dtype": "float64",
+      "shape": [
+        15,
+        3,
+        3
+      ]
+    },
+    "rotation_iterations": {
+      "dtype": "int64",
+      "shape": [
+        15
+      ]
+    },
+    "rotation_residual": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "sample_id": {
+      "dtype": "<U12",
+      "shape": [
+        15
+      ]
+    },
+    "solver_status": {
+      "dtype": "<U9",
+      "shape": [
+        15
+      ]
+    },
+    "split": {
+      "dtype": "<U4",
+      "shape": [
+        15
+      ]
+    },
+    "state_index": {
+      "dtype": "int32",
+      "shape": [
+        15
+      ]
+    },
+    "stress": {
+      "dtype": "float64",
+      "shape": [
+        15,
+        3,
+        3
+      ]
+    },
+    "tangent": {
+      "dtype": "float64",
+      "shape": [
+        15,
+        9,
+        9
+      ]
+    },
+    "tangent_symmetry_error": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "volume_fraction": {
+      "dtype": "float64",
+      "shape": [
+        15
+      ]
+    },
+    "volume_index": {
+      "dtype": "int32",
+      "shape": [
+        15
+      ]
+    }
+  },
+  "n_samples": 15,
+  "ngsolve_version": "6.2.2608",
+  "output": "/scratch4/vr80beqo/rve_shear_final_holdout_20261116/data/rve_shear_final_holdout.npz",
+  "schema_version": 2,
+  "source_revision_sha256": "b907f7946a365305bb067cc8432dcfbdc12b4b65071920479b817f4967807d08",
+  "split_assignments_sha256": "8ecd486b402e4cfce4dee7efe017fbda4e8c415b8caaeb7f8ddfe1bd636b8b01",
+  "split_counts": {
+    "test": 15,
+    "train": 0,
+    "validation": 0
+  },
+  "tangent_flattening": "row-major: (i,J) -> 3*i + J"
+}

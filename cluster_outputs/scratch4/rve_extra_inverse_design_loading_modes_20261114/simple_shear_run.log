@@ -1,0 +1,21 @@
+usage: rve_inverse_design_target_sweep.py [-h] --checkpoint CHECKPOINT
+                                          [--expected-checkpoint-sha256 EXPECTED_CHECKPOINT_SHA256]
+                                          --output OUTPUT --csv CSV
+                                          [--target-fractions TARGET_FRACTIONS [TARGET_FRACTIONS ...]]
+                                          [--response {energy,stress}] [--i I]
+                                          [--j J]
+                                          [--deformation-gradient DEFORMATION_GRADIENT DEFORMATION_GRADIENT DEFORMATION_GRADIENT DEFORMATION_GRADIENT DEFORMATION_GRADIENT DEFORMATION_GRADIENT DEFORMATION_GRADIENT DEFORMATION_GRADIENT DEFORMATION_GRADIENT]
+                                          [--volume-fraction-bounds VOLUME_FRACTION_BOUNDS VOLUME_FRACTION_BOUNDS]
+                                          [--grid-size GRID_SIZE]
+                                          [--target-scale-floor TARGET_SCALE_FLOOR]
+                                          [--gradient-fd-step GRADIENT_FD_STEP]
+                                          [--gradient-tolerance GRADIENT_TOLERANCE]
+                                          [--target-error-limit TARGET_ERROR_LIMIT]
+                                          [--max-condition-number MAX_CONDITION_NUMBER]
+                                          [--torch-threads TORCH_THREADS]
+                                          [--maxh MAXH] [--mu MU]
+                                          [--bulk-modulus BULK_MODULUS]
+                                          [--displacement-order DISPLACEMENT_ORDER]
+                                          [--integration-order INTEGRATION_ORDER]
+                                          [--microscopic-jacobian-floor MICROSCOPIC_JACOBIAN_FLOOR]
+rve_inverse_design_target_sweep.py: error: unrecognized arguments: 1

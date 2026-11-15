@@ -1,0 +1,8 @@
+/home/vr80beqo/venvs/ppp-ngsolve/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Small-strain micromechanics JSON: /scratch/vr80beqo/rve_extra_small_strain_micromechanics_20261115/rve_small_strain_micromechanics.json
+Small-strain micromechanics CSV: /scratch/vr80beqo/rve_extra_small_strain_micromechanics_20261115/rve_small_strain_micromechanics.csv
+Effective moduli by volume fraction:
+vf=0.020 RVE(K,G)=(10185.146,1.0483554) MT(K,G)=(10204.109,1.051017)
+vf=0.050 RVE(K,G)=(10468.726,1.124467) MT(K,G)=(10526.386,1.1315702)
+vf=0.100 RVE(K,G)=(10987.807,1.26715) MT(K,G)=(11111.259,1.2777593)

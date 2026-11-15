@@ -1,0 +1,191 @@
+{
+  "config": {
+    "bulk_modulus": 10000.0,
+    "compression_determinant_range": [
+      0.52,
+      0.7
+    ],
+    "determinant_floor": 0.5,
+    "displacement_order": 2,
+    "expansion_determinant_range": [
+      1.5,
+      1.8
+    ],
+    "integration_order": 10,
+    "max_condition_number": 3.0,
+    "max_strain": 0.2,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "n_compression_deformations": 6,
+    "n_deformations": 30,
+    "n_expansion_deformations": 6,
+    "seed": 14112026,
+    "split_fractions": [
+      0.05,
+      0.05,
+      0.9
+    ],
+    "volume_fractions": [
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "configuration_sha256": "593f1fee54c11fa14c13e6b1ec8e4603f1b7fee7aafdf86be494d7f08358de91",
+  "dataset_sha256": "f2518241c56c36de79813ce2731049643e32ac7ea9a3bfbefc23ca58fe6c8d38",
+  "deformation_sha256": "61375a5b5b6918c45ae95cf7f202556800d97e1a79a2fd9da87008db7e4a4137",
+  "fields": {
+    "condensed_residual": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "condition_number": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "deformation_gradient": {
+      "dtype": "float64",
+      "shape": [
+        90,
+        3,
+        3
+      ]
+    },
+    "determinant": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "energy": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "maximum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "minimum_microscopic_jacobian": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "minimum_particle_clearance": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "mixed_iterations": {
+      "dtype": "int64",
+      "shape": [
+        90
+      ]
+    },
+    "mixed_residual": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "rotation": {
+      "dtype": "float64",
+      "shape": [
+        90,
+        3,
+        3
+      ]
+    },
+    "rotation_iterations": {
+      "dtype": "int64",
+      "shape": [
+        90
+      ]
+    },
+    "rotation_residual": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "sample_id": {
+      "dtype": "<U12",
+      "shape": [
+        90
+      ]
+    },
+    "solver_status": {
+      "dtype": "<U9",
+      "shape": [
+        90
+      ]
+    },
+    "split": {
+      "dtype": "<U10",
+      "shape": [
+        90
+      ]
+    },
+    "state_index": {
+      "dtype": "int32",
+      "shape": [
+        90
+      ]
+    },
+    "stress": {
+      "dtype": "float64",
+      "shape": [
+        90,
+        3,
+        3
+      ]
+    },
+    "tangent": {
+      "dtype": "float64",
+      "shape": [
+        90,
+        9,
+        9
+      ]
+    },
+    "tangent_symmetry_error": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "volume_fraction": {
+      "dtype": "float64",
+      "shape": [
+        90
+      ]
+    },
+    "volume_index": {
+      "dtype": "int32",
+      "shape": [
+        90
+      ]
+    }
+  },
+  "n_samples": 90,
+  "ngsolve_version": "6.2.2608",
+  "output": "/scratch4/vr80beqo/rve_extra_holdout_20261114/data/rve_extra_holdout.npz",
+  "schema_version": 2,
+  "source_revision_sha256": "0ae12e4587cf8899c9c9461e1d0544731af5df7698dd80209aca486b6ea8cdfc",
+  "split_counts": {
+    "test": 75,
+    "train": 9,
+    "validation": 6
+  },
+  "tangent_flattening": "row-major: (i,J) -> 3*i + J"
+}

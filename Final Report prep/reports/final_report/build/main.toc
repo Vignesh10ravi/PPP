@@ -1,0 +1,99 @@
+\contentsline {chapter}{Abstract}{i}{chapter*.1}%
+\contentsline {chapter}{Declaration of Authorship and Tool Usage}{ii}{chapter*.2}%
+\contentsline {chapter}{List of Symbols and Abbreviations}{iii}{chapter*.3}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Objectives and scope}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Report organization}{1}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Theory}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Finite-strain hyperelasticity}{2}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Polyconvex neural energy}{3}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Mixed near-incompressible matrix}{3}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Periodic homogenization and rigid particles}{4}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Condensed macroscopic tangent}{4}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Code Availability and Software Provenance}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Closest available resources}{6}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Original implementation}{6}{section.3.2}%
+\contentsline {section}{\numberline {3.3}External libraries}{7}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Numerical Methods and Implementation Details}{8}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Phase 1: constitutive bridge}{8}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Periodic RVE and mixed matrix}{9}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Rigid-particle equilibrium}{9}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Homogenized response}{9}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Dataset generation and surrogate workflow}{10}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Macroscopic finite-element solution}{11}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Program Architecture and Flow}{12}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Module structure}{12}{section.5.1}%
+\contentsline {section}{\numberline {5.2}End-to-end flow}{12}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Usage of Chatbots and Other Tools}{14}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Results and Discussion}{15}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Compliance with the registered proposal}{15}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Phase 1 constitutive bridge}{15}{section.7.2}%
+\contentsline {section}{\numberline {7.3}RVE equilibrium and homogenization}{16}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Dataset and surrogate}{16}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Shear adaptation and independent evaluation}{17}{subsection.7.4.1}%
+\contentsline {section}{\numberline {7.5}Macroscopic finite-element status}{18}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Testing for Verification and Validation}{19}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Phase 1: PyTorch--NGSolve proof of concept}{19}{section.8.1}%
+\contentsline {paragraph}{Aim.}{19}{section*.17}%
+\contentsline {paragraph}{Setup.}{19}{section*.18}%
+\contentsline {paragraph}{How to run.}{19}{lstlisting.8.-1}%
+\contentsline {paragraph}{Expected result.}{19}{section*.20}%
+\contentsline {paragraph}{Obtained result.}{19}{section*.21}%
+\contentsline {paragraph}{Aim.}{19}{section*.23}%
+\contentsline {paragraph}{Setup.}{20}{section*.24}%
+\contentsline {paragraph}{How to run.}{20}{lstlisting.8.-2}%
+\contentsline {paragraph}{Expected result.}{20}{section*.26}%
+\contentsline {paragraph}{Obtained result.}{20}{section*.27}%
+\contentsline {paragraph}{Aim.}{20}{section*.29}%
+\contentsline {paragraph}{Setup.}{20}{section*.30}%
+\contentsline {paragraph}{How to run.}{20}{lstlisting.8.-3}%
+\contentsline {paragraph}{Expected result.}{20}{section*.32}%
+\contentsline {paragraph}{Obtained result.}{20}{section*.33}%
+\contentsline {paragraph}{Aim.}{20}{section*.35}%
+\contentsline {paragraph}{Setup.}{20}{section*.36}%
+\contentsline {paragraph}{How to run.}{20}{lstlisting.8.-4}%
+\contentsline {paragraph}{Expected result.}{20}{section*.38}%
+\contentsline {paragraph}{Obtained result.}{20}{section*.39}%
+\contentsline {paragraph}{Aim.}{21}{section*.41}%
+\contentsline {paragraph}{Setup.}{21}{section*.42}%
+\contentsline {paragraph}{How to run.}{21}{lstlisting.8.-5}%
+\contentsline {paragraph}{Expected result.}{21}{section*.44}%
+\contentsline {paragraph}{Obtained result.}{21}{section*.45}%
+\contentsline {paragraph}{Aim.}{21}{section*.48}%
+\contentsline {paragraph}{Setup.}{21}{section*.49}%
+\contentsline {paragraph}{How to run.}{22}{lstlisting.8.-6}%
+\contentsline {paragraph}{Expected result.}{22}{section*.51}%
+\contentsline {paragraph}{Obtained result.}{22}{section*.52}%
+\contentsline {paragraph}{Aim.}{22}{section*.54}%
+\contentsline {paragraph}{Setup.}{22}{section*.55}%
+\contentsline {paragraph}{How to run.}{22}{lstlisting.8.-7}%
+\contentsline {paragraph}{Expected result.}{22}{section*.57}%
+\contentsline {paragraph}{Obtained result.}{22}{section*.58}%
+\contentsline {section}{\numberline {8.2}Verification matrix}{23}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Phase 2: homogenization and surrogate tests}{23}{section.8.3}%
+\contentsline {paragraph}{Aim.}{23}{section*.61}%
+\contentsline {paragraph}{Setup.}{24}{section*.62}%
+\contentsline {paragraph}{How to run.}{24}{lstlisting.8.-8}%
+\contentsline {paragraph}{Expected result.}{24}{section*.64}%
+\contentsline {paragraph}{Obtained result.}{24}{section*.65}%
+\contentsline {section}{\numberline {8.4}Independent surrogate constitutive checks}{24}{section.8.4}%
+\contentsline {paragraph}{Aim.}{24}{section*.66}%
+\contentsline {paragraph}{Setup and how to run.}{24}{section*.67}%
+\contentsline {paragraph}{Expected and obtained result.}{24}{section*.68}%
+\contentsline {section}{\numberline {8.5}Validation status}{24}{section.8.5}%
+\contentsline {chapter}{\numberline {9}Computation Time Study}{25}{chapter.9}%
+\contentsline {chapter}{\numberline {10}User Manual}{26}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Environment}{26}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Repository layout and numerical stages}{26}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Phase 1 verification}{26}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Phase 2 verification}{27}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Dataset generation}{27}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Surrogate and macro-FE execution}{27}{section.10.6}%
+\contentsline {section}{\numberline {10.7}Cluster execution and output interpretation}{28}{section.10.7}%
+\contentsline {section}{\numberline {10.8}Expected artifacts}{29}{section.10.8}%
+\contentsline {section}{\numberline {10.9}Regenerating report figures}{29}{section.10.9}%
+\contentsline {chapter}{\numberline {11}Summary and Conclusions}{30}{chapter.11}%
+\contentsline {chapter}{\numberline {A}Reproducibility Record}{31}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Frozen artifacts}{31}{section.A.1}%
+\contentsline {paragraph}{Final-run hash collection.}{32}{section*.70}%
+\contentsline {section}{\numberline {A.2}Git log}{32}{section.A.2}%

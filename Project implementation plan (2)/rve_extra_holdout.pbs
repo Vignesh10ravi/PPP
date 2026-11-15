@@ -1,0 +1,52 @@
+#!/bin/bash
+#PBS -N rve_extra_holdout
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=96GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_extra_holdout_20261114.out
+#PBS -e /scratch/vr80beqo/rve_extra_holdout_20261114.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+RUN_ROOT=/scratch/vr80beqo/rve_extra_holdout_20261114
+DATA_DIR="$RUN_ROOT/data"
+mkdir -p "$DATA_DIR"
+
+python -c 'import numpy, ngsolve; print("NumPy", numpy.__version__, "NGSolve", ngsolve.__version__)'
+python -u -m src.generate_rve_dataset_parallel \
+  --output "$DATA_DIR/rve_extra_holdout.npz" \
+  --work-directory "$DATA_DIR/rve_extra_holdout_work" \
+  --volume-fractions 0.02 0.05 0.10 \
+  --n-deformations 30 \
+  --n-compression-deformations 6 \
+  --compression-determinant-range 0.52 0.70 \
+  --n-expansion-deformations 6 \
+  --expansion-determinant-range 1.50 1.80 \
+  --split-fractions 0.05 0.05 0.90 \
+  --seed 14112026 \
+  --max-strain 0.20 \
+  --determinant-floor 0.50 \
+  --max-condition-number 3.0 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --microscopic-jacobian-floor 1.0e-8 \
+  --workers 12 \
+  2>&1 | tee "$DATA_DIR/generation.log"
+
+python -u -m src.audit_rve_dataset \
+  --dataset "$DATA_DIR/rve_extra_holdout.npz" \
+  --manifest "$DATA_DIR/rve_extra_holdout.manifest.json" \
+  2>&1 | tee "$DATA_DIR/audit.log"

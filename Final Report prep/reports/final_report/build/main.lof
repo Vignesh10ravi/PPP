@@ -1,0 +1,16 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Implemented two-stage workflow. The Phase~1 constitutive bridge was verified before the Phase~2 RVE data-generation and homogenization workflow.}}{13}{figure.caption.10}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Integrity diagnostics for the 300-record Phase~2 pilot dataset. (a) Distribution of \(\det \overline {\bm {F}}\) over its 100 unique macroscopic loading states, counted once rather than repeated for each volume fraction. (b) Maximum stored residual metric per record, defined as the largest of the mixed-equilibrium norm, particle-moment residual, and condensed sensitivity residual. These residual channels have different meanings, but each was required to remain below \(10^{-8}\). This pilot-coverage plot is not the targeted Phase~6 training-set distribution.}}{16}{figure.caption.13}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Archived Phase~1 verification diagnostics. (a) Relative error of a central-difference stress tangent against the PyTorch automatic-differentiation tangent for four perturbation sizes; finite differences are used only as a check. (b) Free-residual history for the NGSolve nonlinear equilibrium problem.}}{21}{figure.caption.46}%
+\contentsline {figure}{\numberline {8.2}{\ignorespaces Relative differences between the matched analytical neo-Hookean and neural-material FE solutions. The dashed line is the 15\% acceptance limit. The reaction-vector error is the closest quantity to that limit.}}{22}{figure.caption.59}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

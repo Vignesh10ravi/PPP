@@ -1,0 +1,1631 @@
+{
+  "best_epoch": 2750,
+  "checkpoint_path": "/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "deformation_condition_number": 1.0526315789473684,
+  "deformation_determinant": 0.95,
+  "deformation_gradient": [
+    [
+      0.95,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "direct_rve_endpoint_response_range": [
+    -549.4868209457987,
+    -509.33197270663607
+  ],
+  "direct_rve_endpoint_results": [
+    {
+      "energy": 12.73325955737233,
+      "maximum_microscopic_jacobian": 0.9943400915952874,
+      "minimum_microscopic_jacobian": 0.9118223020409496,
+      "minimum_particle_clearance": 0.331610969903937,
+      "mixed_residual": 8.213600598846713e-13,
+      "response": -509.33197270663607,
+      "rotation": [
+        [
+          0.9999999972140704,
+          -5.106557465505573e-05,
+          5.444415679846945e-05
+        ],
+        [
+          5.1065220225162935e-05,
+          0.9999999986749728,
+          6.511341390484538e-06
+        ],
+        [
+          -5.444448923172122e-05,
+          -6.508561169471807e-06,
+          0.9999999984967181
+        ]
+      ],
+      "rotation_residual": 3.436345776362696e-13,
+      "solver_status": "converged",
+      "stress": [
+        [
+          -509.33197270663607,
+          1.5901899368990437e-06,
+          -1.8452372005799177e-06
+        ],
+        [
+          1.6738844482684168e-06,
+          -483.7592275523964,
+          2.796154994219558e-06
+        ],
+        [
+          -1.9423549627218704e-06,
+          2.7961548074539704e-06,
+          -483.75922932468603
+        ]
+      ],
+      "volume_fraction": 0.02
+    },
+    {
+      "energy": 13.737102547322959,
+      "maximum_microscopic_jacobian": 1.0031735355139286,
+      "minimum_microscopic_jacobian": 0.8923164929361799,
+      "minimum_particle_clearance": 0.21205880885151385,
+      "mixed_residual": 3.42391579117526e-11,
+      "response": -549.4868209457987,
+      "rotation": [
+        [
+          0.999999988734714,
+          9.768663082577024e-05,
+          -0.00011396444226248398
+        ],
+        [
+          -9.76869212183871e-05,
+          0.9999999952254005,
+          -2.5425347996911877e-06
+        ],
+        [
+          0.00011396419334669116,
+          2.5536676065378492e-06,
+          0.9999999935028206
+        ]
+      ],
+      "rotation_residual": 1.9142944378681292e-11,
+      "solver_status": "converged",
+      "stress": [
+        [
+          -549.4868209457987,
+          -1.6146154152906454e-05,
+          4.973113568412617e-06
+        ],
+        [
+          -1.6995936221229566e-05,
+          -521.8767936706354,
+          -5.168628184257625e-06
+        ],
+        [
+          5.2348689314899235e-06,
+          -5.16863069018587e-06,
+          -521.8767224391682
+        ]
+      ],
+      "volume_fraction": 0.1
+    }
+  ],
+  "response": "stress",
+  "rve_configuration": {
+    "bulk_modulus": 10000.0,
+    "displacement_order": 2,
+    "integration_order": 10,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0
+  },
+  "schema_version": 1,
+  "status": "pass",
+  "stress_component_ij": [
+    0,
+    0
+  ],
+  "summary": {
+    "maximum_direct_target_error": 0.02056072558332834,
+    "maximum_surrogate_to_direct_error": 0.020992343360466306,
+    "n_missed": 0,
+    "n_passed": 3,
+    "n_targets": 3
+  },
+  "target_error_limit": 0.05,
+  "targets": [
+    {
+      "direct_rve_relative_target_error": 0.02056072558332834,
+      "direct_rve_result": {
+        "energy": 13.208865723007861,
+        "maximum_microscopic_jacobian": 0.9911621567828895,
+        "minimum_microscopic_jacobian": 0.8954088272326662,
+        "minimum_particle_clearance": 0.25843159643223934,
+        "mixed_residual": 1.7145267385522566e-12,
+        "response": -528.3566643527574,
+        "rotation": [
+          [
+            0.9999999865467464,
+            -0.00011323913061125902,
+            0.00011867352774615997
+          ],
+          [
+            0.00011324010220832043,
+            0.9999999935548797,
+            -8.180454979690584e-06
+          ],
+          [
+            -0.0001186726006336826,
+            8.193893472081633e-06,
+            0.999999992924837
+          ]
+        ],
+        "rotation_residual": 9.849351911025624e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -528.3566643527574,
+            9.42156642627992e-07,
+            2.0758398379067643e-05
+          ],
+          [
+            9.917363133341885e-07,
+            -501.82015509105463,
+            -6.5097852050289824e-06
+          ],
+          [
+            2.1850952447967625e-05,
+            -6.509783129511219e-06,
+            -501.8201683779442
+          ]
+        ],
+        "volume_fraction": 0.05904851729755557
+      },
+      "optimizer": {
+        "evaluations": 213,
+        "grid_size": 101,
+        "predicted_response": -539.4481088676412,
+        "predicted_response_range": [
+          -568.7892210121172,
+          -503.5324688950168
+        ],
+        "relative_target_error": 3.4047583334233676e-11,
+        "sampled_local_minima": 3,
+        "search_grid": [
+          {
+            "predicted_response": -508.85442827476163,
+            "volume_fraction": 0.02
+          },
+          {
+            "predicted_response": -508.08951183105455,
+            "volume_fraction": 0.0208
+          },
+          {
+            "predicted_response": -507.35975375852377,
+            "volume_fraction": 0.0216
+          },
+          {
+            "predicted_response": -506.67457653618567,
+            "volume_fraction": 0.0224
+          },
+          {
+            "predicted_response": -506.0422921658728,
+            "volume_fraction": 0.023200000000000002
+          },
+          {
+            "predicted_response": -505.4701002518859,
+            "volume_fraction": 0.024
+          },
+          {
+            "predicted_response": -504.9641042805479,
+            "volume_fraction": 0.024800000000000003
+          },
+          {
+            "predicted_response": -504.5293436431821,
+            "volume_fraction": 0.0256
+          },
+          {
+            "predicted_response": -504.169838857847,
+            "volume_fraction": 0.0264
+          },
+          {
+            "predicted_response": -503.88864745089995,
+            "volume_fraction": 0.027200000000000002
+          },
+          {
+            "predicted_response": -503.6879280439689,
+            "volume_fraction": 0.028
+          },
+          {
+            "predicted_response": -503.56901108127204,
+            "volume_fraction": 0.0288
+          },
+          {
+            "predicted_response": -503.5324688950168,
+            "volume_fraction": 0.0296
+          },
+          {
+            "predicted_response": -503.57819875928817,
+            "volume_fraction": 0.030400000000000003
+          },
+          {
+            "predicted_response": -503.70549144840425,
+            "volume_fraction": 0.0312
+          },
+          {
+            "predicted_response": -503.9131096629062,
+            "volume_fraction": 0.032
+          },
+          {
+            "predicted_response": -504.19935976607303,
+            "volume_fraction": 0.0328
+          },
+          {
+            "predicted_response": -504.5621610202297,
+            "volume_fraction": 0.033600000000000005
+          },
+          {
+            "predicted_response": -504.9991108878339,
+            "volume_fraction": 0.0344
+          },
+          {
+            "predicted_response": -505.5075458832207,
+            "volume_fraction": 0.0352
+          },
+          {
+            "predicted_response": -506.0845969315005,
+            "volume_fraction": 0.036000000000000004
+          },
+          {
+            "predicted_response": -506.72724325488343,
+            "volume_fraction": 0.0368
+          },
+          {
+            "predicted_response": -507.4323541665908,
+            "volume_fraction": 0.0376
+          },
+          {
+            "predicted_response": -508.1967329014233,
+            "volume_fraction": 0.038400000000000004
+          },
+          {
+            "predicted_response": -509.01715201748993,
+            "volume_fraction": 0.0392
+          },
+          {
+            "predicted_response": -509.8903847973961,
+            "volume_fraction": 0.04
+          },
+          {
+            "predicted_response": -510.8132321774983,
+            "volume_fraction": 0.0408
+          },
+          {
+            "predicted_response": -511.7825454769163,
+            "volume_fraction": 0.0416
+          },
+          {
+            "predicted_response": -512.7952452199879,
+            "volume_fraction": 0.0424
+          },
+          {
+            "predicted_response": -513.8483363569239,
+            "volume_fraction": 0.0432
+          },
+          {
+            "predicted_response": -514.9389201884323,
+            "volume_fraction": 0.044
+          },
+          {
+            "predicted_response": -516.0642032924397,
+            "volume_fraction": 0.044800000000000006
+          },
+          {
+            "predicted_response": -517.2215037368778,
+            "volume_fraction": 0.0456
+          },
+          {
+            "predicted_response": -518.4082548415481,
+            "volume_fraction": 0.0464
+          },
+          {
+            "predicted_response": -519.6220067278318,
+            "volume_fraction": 0.047200000000000006
+          },
+          {
+            "predicted_response": -520.8604258665209,
+            "volume_fraction": 0.048
+          },
+          {
+            "predicted_response": -522.1212928049954,
+            "volume_fraction": 0.0488
+          },
+          {
+            "predicted_response": -523.4024982254568,
+            "volume_fraction": 0.049600000000000005
+          },
+          {
+            "predicted_response": -524.7020374577487,
+            "volume_fraction": 0.0504
+          },
+          {
+            "predicted_response": -526.0180035457915,
+            "volume_fraction": 0.0512
+          },
+          {
+            "predicted_response": -527.3485789457836,
+            "volume_fraction": 0.052000000000000005
+          },
+          {
+            "predicted_response": -528.6920259193121,
+            "volume_fraction": 0.0528
+          },
+          {
+            "predicted_response": -530.0466756759279,
+            "volume_fraction": 0.05360000000000001
+          },
+          {
+            "predicted_response": -531.4109163175626,
+            "volume_fraction": 0.054400000000000004
+          },
+          {
+            "predicted_response": -532.7831796425289,
+            "volume_fraction": 0.0552
+          },
+          {
+            "predicted_response": -534.1619268787308,
+            "volume_fraction": 0.05600000000000001
+          },
+          {
+            "predicted_response": -535.5456334341388,
+            "volume_fraction": 0.0568
+          },
+          {
+            "predicted_response": -536.9327727761483,
+            "volume_fraction": 0.0576
+          },
+          {
+            "predicted_response": -538.3217995799541,
+            "volume_fraction": 0.05840000000000001
+          },
+          {
+            "predicted_response": -539.7111323172394,
+            "volume_fraction": 0.0592
+          },
+          {
+            "predicted_response": -541.099135489655,
+            "volume_fraction": 0.06
+          },
+          {
+            "predicted_response": -542.4841017451618,
+            "volume_fraction": 0.06080000000000001
+          },
+          {
+            "predicted_response": -543.8642341475306,
+            "volume_fraction": 0.0616
+          },
+          {
+            "predicted_response": -545.2376288993719,
+            "volume_fraction": 0.0624
+          },
+          {
+            "predicted_response": -546.6022588451497,
+            "volume_fraction": 0.0632
+          },
+          {
+            "predicted_response": -547.9559581016811,
+            "volume_fraction": 0.064
+          },
+          {
+            "predicted_response": -549.2964081790169,
+            "volume_fraction": 0.0648
+          },
+          {
+            "predicted_response": -550.621125962326,
+            "volume_fraction": 0.0656
+          },
+          {
+            "predicted_response": -551.9274539259168,
+            "volume_fraction": 0.0664
+          },
+          {
+            "predicted_response": -553.2125529422847,
+            "volume_fraction": 0.0672
+          },
+          {
+            "predicted_response": -554.4733980318542,
+            "volume_fraction": 0.068
+          },
+          {
+            "predicted_response": -555.7067773725821,
+            "volume_fraction": 0.0688
+          },
+          {
+            "predicted_response": -556.9092948528341,
+            "volume_fraction": 0.06960000000000001
+          },
+          {
+            "predicted_response": -558.0773764056685,
+            "volume_fraction": 0.0704
+          },
+          {
+            "predicted_response": -559.2072803084848,
+            "volume_fraction": 0.0712
+          },
+          {
+            "predicted_response": -560.2951115696933,
+            "volume_fraction": 0.07200000000000001
+          },
+          {
+            "predicted_response": -561.3368404537696,
+            "volume_fraction": 0.0728
+          },
+          {
+            "predicted_response": -562.3283251200328,
+            "volume_fraction": 0.0736
+          },
+          {
+            "predicted_response": -563.2653382694252,
+            "volume_fraction": 0.07440000000000001
+          },
+          {
+            "predicted_response": -564.1435976089724,
+            "volume_fraction": 0.0752
+          },
+          {
+            "predicted_response": -564.9587998586621,
+            "volume_fraction": 0.076
+          },
+          {
+            "predicted_response": -565.7066579406483,
+            "volume_fraction": 0.07680000000000001
+          },
+          {
+            "predicted_response": -566.3829409096443,
+            "volume_fraction": 0.0776
+          },
+          {
+            "predicted_response": -566.9835161076508,
+            "volume_fraction": 0.0784
+          },
+          {
+            "predicted_response": -567.5043929582316,
+            "volume_fraction": 0.0792
+          },
+          {
+            "predicted_response": -567.9417677576002,
+            "volume_fraction": 0.08
+          },
+          {
+            "predicted_response": -568.2920687739897,
+            "volume_fraction": 0.0808
+          },
+          {
+            "predicted_response": -568.5520009343554,
+            "volume_fraction": 0.0816
+          },
+          {
+            "predicted_response": -568.7185893600772,
+            "volume_fraction": 0.0824
+          },
+          {
+            "predicted_response": -568.7892210121172,
+            "volume_fraction": 0.08320000000000001
+          },
+          {
+            "predicted_response": -568.7616837208006,
+            "volume_fraction": 0.084
+          },
+          {
+            "predicted_response": -568.6342019069152,
+            "volume_fraction": 0.0848
+          },
+          {
+            "predicted_response": -568.4054683479708,
+            "volume_fraction": 0.08560000000000001
+          },
+          {
+            "predicted_response": -568.0746706618856,
+            "volume_fraction": 0.0864
+          },
+          {
+            "predicted_response": -567.6415164753653,
+            "volume_fraction": 0.08720000000000001
+          },
+          {
+            "predicted_response": -567.10624563285,
+            "volume_fraction": 0.08800000000000001
+          },
+          {
+            "predicted_response": -566.4696441316682,
+            "volume_fraction": 0.0888
+          },
+          {
+            "predicted_response": -565.7330482717671,
+            "volume_fraction": 0.08960000000000001
+          },
+          {
+            "predicted_response": -564.8983434391703,
+            "volume_fraction": 0.09040000000000001
+          },
+          {
+            "predicted_response": -563.9679567649919,
+            "volume_fraction": 0.0912
+          },
+          {
+            "predicted_response": -562.9448437688843,
+            "volume_fraction": 0.09200000000000001
+          },
+          {
+            "predicted_response": -561.8324692019369,
+            "volume_fraction": 0.09280000000000001
+          },
+          {
+            "predicted_response": -560.634782404165,
+            "volume_fraction": 0.0936
+          },
+          {
+            "predicted_response": -559.3561875833029,
+            "volume_fraction": 0.09440000000000001
+          },
+          {
+            "predicted_response": -558.001509502843,
+            "volume_fraction": 0.0952
+          },
+          {
+            "predicted_response": -556.5759551362344,
+            "volume_fraction": 0.096
+          },
+          {
+            "predicted_response": -555.0850718996571,
+            "volume_fraction": 0.09680000000000001
+          },
+          {
+            "predicted_response": -553.5347031166075,
+            "volume_fraction": 0.0976
+          },
+          {
+            "predicted_response": -551.9309413935898,
+            "volume_fraction": 0.0984
+          },
+          {
+            "predicted_response": -550.2800805969146,
+            "volume_fraction": 0.09920000000000001
+          },
+          {
+            "predicted_response": -548.5885671165961,
+            "volume_fraction": 0.1
+          }
+        ],
+        "target_in_predicted_range": true,
+        "target_response": -539.4481088860081,
+        "volume_fraction": 0.05904851729755557
+      },
+      "predicted_relative_target_error": 3.4047583334233676e-11,
+      "predicted_response": -539.4481088676412,
+      "predicted_volume_fraction": 0.05904851729755557,
+      "status": "pass",
+      "surrogate_to_direct_relative_error": 0.020992343360466306,
+      "target_fraction_of_endpoint_span": 0.25,
+      "target_in_predicted_response_range": true,
+      "target_response": -539.4481088860081,
+      "target_source": "fraction_of_direct_rve_endpoint_response_span"
+    },
+    {
+      "direct_rve_relative_target_error": 0.007525834298488485,
+      "direct_rve_result": {
+        "energy": 13.13557984157359,
+        "maximum_microscopic_jacobian": 0.9881516332941586,
+        "minimum_microscopic_jacobian": 0.893532258814951,
+        "minimum_particle_clearance": 0.26665020610598034,
+        "mixed_residual": 3.502071008470489e-12,
+        "response": -525.4251494296406,
+        "rotation": [
+          [
+            0.9999999913597627,
+            -3.1228185807797106e-05,
+            0.00012769211054423224
+          ],
+          [
+            3.1228149330470766e-05,
+            0.99999999951236,
+            2.8766003462483253e-07
+          ],
+          [
+            -0.00012769211946506544,
+            -2.8367244385330265e-07,
+            0.999999991847321
+          ]
+        ],
+        "rotation_residual": 1.537632929720589e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -525.4251494296406,
+            -5.491809879343539e-06,
+            -5.964879535353199e-06
+          ],
+          [
+            -5.780851877034126e-06,
+            -499.0373545715723,
+            -4.396930123005531e-06
+          ],
+          [
+            -6.278822045864291e-06,
+            -4.396930233762056e-06,
+            -499.03734440396306
+          ]
+        ],
+        "volume_fraction": 0.05322441223951188
+      },
+      "optimizer": {
+        "evaluations": 213,
+        "grid_size": 101,
+        "predicted_response": -529.4093967961862,
+        "predicted_response_range": [
+          -568.7892210121172,
+          -503.5324688950168
+        ],
+        "relative_target_error": 5.672580458915972e-11,
+        "sampled_local_minima": 3,
+        "search_grid": [
+          {
+            "predicted_response": -508.85442827476163,
+            "volume_fraction": 0.02
+          },
+          {
+            "predicted_response": -508.08951183105455,
+            "volume_fraction": 0.0208
+          },
+          {
+            "predicted_response": -507.35975375852377,
+            "volume_fraction": 0.0216
+          },
+          {
+            "predicted_response": -506.67457653618567,
+            "volume_fraction": 0.0224
+          },
+          {
+            "predicted_response": -506.0422921658728,
+            "volume_fraction": 0.023200000000000002
+          },
+          {
+            "predicted_response": -505.4701002518859,
+            "volume_fraction": 0.024
+          },
+          {
+            "predicted_response": -504.9641042805479,
+            "volume_fraction": 0.024800000000000003
+          },
+          {
+            "predicted_response": -504.5293436431821,
+            "volume_fraction": 0.0256
+          },
+          {
+            "predicted_response": -504.169838857847,
+            "volume_fraction": 0.0264
+          },
+          {
+            "predicted_response": -503.88864745089995,
+            "volume_fraction": 0.027200000000000002
+          },
+          {
+            "predicted_response": -503.6879280439689,
+            "volume_fraction": 0.028
+          },
+          {
+            "predicted_response": -503.56901108127204,
+            "volume_fraction": 0.0288
+          },
+          {
+            "predicted_response": -503.5324688950168,
+            "volume_fraction": 0.0296
+          },
+          {
+            "predicted_response": -503.57819875928817,
+            "volume_fraction": 0.030400000000000003
+          },
+          {
+            "predicted_response": -503.70549144840425,
+            "volume_fraction": 0.0312
+          },
+          {
+            "predicted_response": -503.9131096629062,
+            "volume_fraction": 0.032
+          },
+          {
+            "predicted_response": -504.19935976607303,
+            "volume_fraction": 0.0328
+          },
+          {
+            "predicted_response": -504.5621610202297,
+            "volume_fraction": 0.033600000000000005
+          },
+          {
+            "predicted_response": -504.9991108878339,
+            "volume_fraction": 0.0344
+          },
+          {
+            "predicted_response": -505.5075458832207,
+            "volume_fraction": 0.0352
+          },
+          {
+            "predicted_response": -506.0845969315005,
+            "volume_fraction": 0.036000000000000004
+          },
+          {
+            "predicted_response": -506.72724325488343,
+            "volume_fraction": 0.0368
+          },
+          {
+            "predicted_response": -507.4323541665908,
+            "volume_fraction": 0.0376
+          },
+          {
+            "predicted_response": -508.1967329014233,
+            "volume_fraction": 0.038400000000000004
+          },
+          {
+            "predicted_response": -509.01715201748993,
+            "volume_fraction": 0.0392
+          },
+          {
+            "predicted_response": -509.8903847973961,
+            "volume_fraction": 0.04
+          },
+          {
+            "predicted_response": -510.8132321774983,
+            "volume_fraction": 0.0408
+          },
+          {
+            "predicted_response": -511.7825454769163,
+            "volume_fraction": 0.0416
+          },
+          {
+            "predicted_response": -512.7952452199879,
+            "volume_fraction": 0.0424
+          },
+          {
+            "predicted_response": -513.8483363569239,
+            "volume_fraction": 0.0432
+          },
+          {
+            "predicted_response": -514.9389201884323,
+            "volume_fraction": 0.044
+          },
+          {
+            "predicted_response": -516.0642032924397,
+            "volume_fraction": 0.044800000000000006
+          },
+          {
+            "predicted_response": -517.2215037368778,
+            "volume_fraction": 0.0456
+          },
+          {
+            "predicted_response": -518.4082548415481,
+            "volume_fraction": 0.0464
+          },
+          {
+            "predicted_response": -519.6220067278318,
+            "volume_fraction": 0.047200000000000006
+          },
+          {
+            "predicted_response": -520.8604258665209,
+            "volume_fraction": 0.048
+          },
+          {
+            "predicted_response": -522.1212928049954,
+            "volume_fraction": 0.0488
+          },
+          {
+            "predicted_response": -523.4024982254568,
+            "volume_fraction": 0.049600000000000005
+          },
+          {
+            "predicted_response": -524.7020374577487,
+            "volume_fraction": 0.0504
+          },
+          {
+            "predicted_response": -526.0180035457915,
+            "volume_fraction": 0.0512
+          },
+          {
+            "predicted_response": -527.3485789457836,
+            "volume_fraction": 0.052000000000000005
+          },
+          {
+            "predicted_response": -528.6920259193121,
+            "volume_fraction": 0.0528
+          },
+          {
+            "predicted_response": -530.0466756759279,
+            "volume_fraction": 0.05360000000000001
+          },
+          {
+            "predicted_response": -531.4109163175626,
+            "volume_fraction": 0.054400000000000004
+          },
+          {
+            "predicted_response": -532.7831796425289,
+            "volume_fraction": 0.0552
+          },
+          {
+            "predicted_response": -534.1619268787308,
+            "volume_fraction": 0.05600000000000001
+          },
+          {
+            "predicted_response": -535.5456334341388,
+            "volume_fraction": 0.0568
+          },
+          {
+            "predicted_response": -536.9327727761483,
+            "volume_fraction": 0.0576
+          },
+          {
+            "predicted_response": -538.3217995799541,
+            "volume_fraction": 0.05840000000000001
+          },
+          {
+            "predicted_response": -539.7111323172394,
+            "volume_fraction": 0.0592
+          },
+          {
+            "predicted_response": -541.099135489655,
+            "volume_fraction": 0.06
+          },
+          {
+            "predicted_response": -542.4841017451618,
+            "volume_fraction": 0.06080000000000001
+          },
+          {
+            "predicted_response": -543.8642341475306,
+            "volume_fraction": 0.0616
+          },
+          {
+            "predicted_response": -545.2376288993719,
+            "volume_fraction": 0.0624
+          },
+          {
+            "predicted_response": -546.6022588451497,
+            "volume_fraction": 0.0632
+          },
+          {
+            "predicted_response": -547.9559581016811,
+            "volume_fraction": 0.064
+          },
+          {
+            "predicted_response": -549.2964081790169,
+            "volume_fraction": 0.0648
+          },
+          {
+            "predicted_response": -550.621125962326,
+            "volume_fraction": 0.0656
+          },
+          {
+            "predicted_response": -551.9274539259168,
+            "volume_fraction": 0.0664
+          },
+          {
+            "predicted_response": -553.2125529422847,
+            "volume_fraction": 0.0672
+          },
+          {
+            "predicted_response": -554.4733980318542,
+            "volume_fraction": 0.068
+          },
+          {
+            "predicted_response": -555.7067773725821,
+            "volume_fraction": 0.0688
+          },
+          {
+            "predicted_response": -556.9092948528341,
+            "volume_fraction": 0.06960000000000001
+          },
+          {
+            "predicted_response": -558.0773764056685,
+            "volume_fraction": 0.0704
+          },
+          {
+            "predicted_response": -559.2072803084848,
+            "volume_fraction": 0.0712
+          },
+          {
+            "predicted_response": -560.2951115696933,
+            "volume_fraction": 0.07200000000000001
+          },
+          {
+            "predicted_response": -561.3368404537696,
+            "volume_fraction": 0.0728
+          },
+          {
+            "predicted_response": -562.3283251200328,
+            "volume_fraction": 0.0736
+          },
+          {
+            "predicted_response": -563.2653382694252,
+            "volume_fraction": 0.07440000000000001
+          },
+          {
+            "predicted_response": -564.1435976089724,
+            "volume_fraction": 0.0752
+          },
+          {
+            "predicted_response": -564.9587998586621,
+            "volume_fraction": 0.076
+          },
+          {
+            "predicted_response": -565.7066579406483,
+            "volume_fraction": 0.07680000000000001
+          },
+          {
+            "predicted_response": -566.3829409096443,
+            "volume_fraction": 0.0776
+          },
+          {
+            "predicted_response": -566.9835161076508,
+            "volume_fraction": 0.0784
+          },
+          {
+            "predicted_response": -567.5043929582316,
+            "volume_fraction": 0.0792
+          },
+          {
+            "predicted_response": -567.9417677576002,
+            "volume_fraction": 0.08
+          },
+          {
+            "predicted_response": -568.2920687739897,
+            "volume_fraction": 0.0808
+          },
+          {
+            "predicted_response": -568.5520009343554,
+            "volume_fraction": 0.0816
+          },
+          {
+            "predicted_response": -568.7185893600772,
+            "volume_fraction": 0.0824
+          },
+          {
+            "predicted_response": -568.7892210121172,
+            "volume_fraction": 0.08320000000000001
+          },
+          {
+            "predicted_response": -568.7616837208006,
+            "volume_fraction": 0.084
+          },
+          {
+            "predicted_response": -568.6342019069152,
+            "volume_fraction": 0.0848
+          },
+          {
+            "predicted_response": -568.4054683479708,
+            "volume_fraction": 0.08560000000000001
+          },
+          {
+            "predicted_response": -568.0746706618856,
+            "volume_fraction": 0.0864
+          },
+          {
+            "predicted_response": -567.6415164753653,
+            "volume_fraction": 0.08720000000000001
+          },
+          {
+            "predicted_response": -567.10624563285,
+            "volume_fraction": 0.08800000000000001
+          },
+          {
+            "predicted_response": -566.4696441316682,
+            "volume_fraction": 0.0888
+          },
+          {
+            "predicted_response": -565.7330482717671,
+            "volume_fraction": 0.08960000000000001
+          },
+          {
+            "predicted_response": -564.8983434391703,
+            "volume_fraction": 0.09040000000000001
+          },
+          {
+            "predicted_response": -563.9679567649919,
+            "volume_fraction": 0.0912
+          },
+          {
+            "predicted_response": -562.9448437688843,
+            "volume_fraction": 0.09200000000000001
+          },
+          {
+            "predicted_response": -561.8324692019369,
+            "volume_fraction": 0.09280000000000001
+          },
+          {
+            "predicted_response": -560.634782404165,
+            "volume_fraction": 0.0936
+          },
+          {
+            "predicted_response": -559.3561875833029,
+            "volume_fraction": 0.09440000000000001
+          },
+          {
+            "predicted_response": -558.001509502843,
+            "volume_fraction": 0.0952
+          },
+          {
+            "predicted_response": -556.5759551362344,
+            "volume_fraction": 0.096
+          },
+          {
+            "predicted_response": -555.0850718996571,
+            "volume_fraction": 0.09680000000000001
+          },
+          {
+            "predicted_response": -553.5347031166075,
+            "volume_fraction": 0.0976
+          },
+          {
+            "predicted_response": -551.9309413935898,
+            "volume_fraction": 0.0984
+          },
+          {
+            "predicted_response": -550.2800805969146,
+            "volume_fraction": 0.09920000000000001
+          },
+          {
+            "predicted_response": -548.5885671165961,
+            "volume_fraction": 0.1
+          }
+        ],
+        "target_in_predicted_range": true,
+        "target_response": -529.4093968262174,
+        "volume_fraction": 0.05322441223951188
+      },
+      "predicted_relative_target_error": 5.672580458915972e-11,
+      "predicted_response": -529.4093967961862,
+      "predicted_volume_fraction": 0.05322441223951188,
+      "status": "pass",
+      "surrogate_to_direct_relative_error": 0.007582901905001414,
+      "target_fraction_of_endpoint_span": 0.5,
+      "target_in_predicted_response_range": true,
+      "target_response": -529.4093968262174,
+      "target_source": "fraction_of_direct_rve_endpoint_response_span"
+    },
+    {
+      "direct_rve_relative_target_error": 0.005482857778302695,
+      "direct_rve_result": {
+        "energy": 13.055411012997407,
+        "maximum_microscopic_jacobian": 0.9926603666547293,
+        "minimum_microscopic_jacobian": 0.8997194659266902,
+        "minimum_particle_clearance": 0.27606958689156025,
+        "mixed_residual": 2.347309813014409e-12,
+        "response": -522.2183203652207,
+        "rotation": [
+          [
+            0.9999999945006097,
+            5.8281421463991806e-05,
+            8.718977218905166e-05
+          ],
+          [
+            -5.828028584204181e-05,
+            0.9999999982168502,
+            -1.302719925212677e-05
+          ],
+          [
+            -8.719053127726698e-05,
+            1.3022117735655259e-05,
+            0.9999999961141178
+          ]
+        ],
+        "rotation_residual": 7.630337101409118e-12,
+        "solver_status": "converged",
+        "stress": [
+          [
+            -522.2183203652207,
+            -1.2431508565682002e-05,
+            2.328886886857756e-05
+          ],
+          [
+            -1.30857949179569e-05,
+            -495.99291346049193,
+            -1.361038956775517e-05
+          ],
+          [
+            2.4514605910094236e-05,
+            -1.3610390695693571e-05,
+            -495.99296371497
+          ]
+        ],
+        "volume_fraction": 0.04703572615027589
+      },
+      "optimizer": {
+        "evaluations": 213,
+        "grid_size": 101,
+        "predicted_response": -519.3706847500225,
+        "predicted_response_range": [
+          -568.7892210121172,
+          -503.5324688950168
+        ],
+        "relative_target_error": 3.1584791665210185e-11,
+        "sampled_local_minima": 3,
+        "search_grid": [
+          {
+            "predicted_response": -508.85442827476163,
+            "volume_fraction": 0.02
+          },
+          {
+            "predicted_response": -508.08951183105455,
+            "volume_fraction": 0.0208
+          },
+          {
+            "predicted_response": -507.35975375852377,
+            "volume_fraction": 0.0216
+          },
+          {
+            "predicted_response": -506.67457653618567,
+            "volume_fraction": 0.0224
+          },
+          {
+            "predicted_response": -506.0422921658728,
+            "volume_fraction": 0.023200000000000002
+          },
+          {
+            "predicted_response": -505.4701002518859,
+            "volume_fraction": 0.024
+          },
+          {
+            "predicted_response": -504.9641042805479,
+            "volume_fraction": 0.024800000000000003
+          },
+          {
+            "predicted_response": -504.5293436431821,
+            "volume_fraction": 0.0256
+          },
+          {
+            "predicted_response": -504.169838857847,
+            "volume_fraction": 0.0264
+          },
+          {
+            "predicted_response": -503.88864745089995,
+            "volume_fraction": 0.027200000000000002
+          },
+          {
+            "predicted_response": -503.6879280439689,
+            "volume_fraction": 0.028
+          },
+          {
+            "predicted_response": -503.56901108127204,
+            "volume_fraction": 0.0288
+          },
+          {
+            "predicted_response": -503.5324688950168,
+            "volume_fraction": 0.0296
+          },
+          {
+            "predicted_response": -503.57819875928817,
+            "volume_fraction": 0.030400000000000003
+          },
+          {
+            "predicted_response": -503.70549144840425,
+            "volume_fraction": 0.0312
+          },
+          {
+            "predicted_response": -503.9131096629062,
+            "volume_fraction": 0.032
+          },
+          {
+            "predicted_response": -504.19935976607303,
+            "volume_fraction": 0.0328
+          },
+          {
+            "predicted_response": -504.5621610202297,
+            "volume_fraction": 0.033600000000000005
+          },
+          {
+            "predicted_response": -504.9991108878339,
+            "volume_fraction": 0.0344
+          },
+          {
+            "predicted_response": -505.5075458832207,
+            "volume_fraction": 0.0352
+          },
+          {
+            "predicted_response": -506.0845969315005,
+            "volume_fraction": 0.036000000000000004
+          },
+          {
+            "predicted_response": -506.72724325488343,
+            "volume_fraction": 0.0368
+          },
+          {
+            "predicted_response": -507.4323541665908,
+            "volume_fraction": 0.0376
+          },
+          {
+            "predicted_response": -508.1967329014233,
+            "volume_fraction": 0.038400000000000004
+          },
+          {
+            "predicted_response": -509.01715201748993,
+            "volume_fraction": 0.0392
+          },
+          {
+            "predicted_response": -509.8903847973961,
+            "volume_fraction": 0.04
+          },
+          {
+            "predicted_response": -510.8132321774983,
+            "volume_fraction": 0.0408
+          },
+          {
+            "predicted_response": -511.7825454769163,
+            "volume_fraction": 0.0416
+          },
+          {
+            "predicted_response": -512.7952452199879,
+            "volume_fraction": 0.0424
+          },
+          {
+            "predicted_response": -513.8483363569239,
+            "volume_fraction": 0.0432
+          },
+          {
+            "predicted_response": -514.9389201884323,
+            "volume_fraction": 0.044
+          },
+          {
+            "predicted_response": -516.0642032924397,
+            "volume_fraction": 0.044800000000000006
+          },
+          {
+            "predicted_response": -517.2215037368778,
+            "volume_fraction": 0.0456
+          },
+          {
+            "predicted_response": -518.4082548415481,
+            "volume_fraction": 0.0464
+          },
+          {
+            "predicted_response": -519.6220067278318,
+            "volume_fraction": 0.047200000000000006
+          },
+          {
+            "predicted_response": -520.8604258665209,
+            "volume_fraction": 0.048
+          },
+          {
+            "predicted_response": -522.1212928049954,
+            "volume_fraction": 0.0488
+          },
+          {
+            "predicted_response": -523.4024982254568,
+            "volume_fraction": 0.049600000000000005
+          },
+          {
+            "predicted_response": -524.7020374577487,
+            "volume_fraction": 0.0504
+          },
+          {
+            "predicted_response": -526.0180035457915,
+            "volume_fraction": 0.0512
+          },
+          {
+            "predicted_response": -527.3485789457836,
+            "volume_fraction": 0.052000000000000005
+          },
+          {
+            "predicted_response": -528.6920259193121,
+            "volume_fraction": 0.0528
+          },
+          {
+            "predicted_response": -530.0466756759279,
+            "volume_fraction": 0.05360000000000001
+          },
+          {
+            "predicted_response": -531.4109163175626,
+            "volume_fraction": 0.054400000000000004
+          },
+          {
+            "predicted_response": -532.7831796425289,
+            "volume_fraction": 0.0552
+          },
+          {
+            "predicted_response": -534.1619268787308,
+            "volume_fraction": 0.05600000000000001
+          },
+          {
+            "predicted_response": -535.5456334341388,
+            "volume_fraction": 0.0568
+          },
+          {
+            "predicted_response": -536.9327727761483,
+            "volume_fraction": 0.0576
+          },
+          {
+            "predicted_response": -538.3217995799541,
+            "volume_fraction": 0.05840000000000001
+          },
+          {
+            "predicted_response": -539.7111323172394,
+            "volume_fraction": 0.0592
+          },
+          {
+            "predicted_response": -541.099135489655,
+            "volume_fraction": 0.06
+          },
+          {
+            "predicted_response": -542.4841017451618,
+            "volume_fraction": 0.06080000000000001
+          },
+          {
+            "predicted_response": -543.8642341475306,
+            "volume_fraction": 0.0616
+          },
+          {
+            "predicted_response": -545.2376288993719,
+            "volume_fraction": 0.0624
+          },
+          {
+            "predicted_response": -546.6022588451497,
+            "volume_fraction": 0.0632
+          },
+          {
+            "predicted_response": -547.9559581016811,
+            "volume_fraction": 0.064
+          },
+          {
+            "predicted_response": -549.2964081790169,
+            "volume_fraction": 0.0648
+          },
+          {
+            "predicted_response": -550.621125962326,
+            "volume_fraction": 0.0656
+          },
+          {
+            "predicted_response": -551.9274539259168,
+            "volume_fraction": 0.0664
+          },
+          {
+            "predicted_response": -553.2125529422847,
+            "volume_fraction": 0.0672
+          },
+          {
+            "predicted_response": -554.4733980318542,
+            "volume_fraction": 0.068
+          },
+          {
+            "predicted_response": -555.7067773725821,
+            "volume_fraction": 0.0688
+          },
+          {
+            "predicted_response": -556.9092948528341,
+            "volume_fraction": 0.06960000000000001
+          },
+          {
+            "predicted_response": -558.0773764056685,
+            "volume_fraction": 0.0704
+          },
+          {
+            "predicted_response": -559.2072803084848,
+            "volume_fraction": 0.0712
+          },
+          {
+            "predicted_response": -560.2951115696933,
+            "volume_fraction": 0.07200000000000001
+          },
+          {
+            "predicted_response": -561.3368404537696,
+            "volume_fraction": 0.0728
+          },
+          {
+            "predicted_response": -562.3283251200328,
+            "volume_fraction": 0.0736
+          },
+          {
+            "predicted_response": -563.2653382694252,
+            "volume_fraction": 0.07440000000000001
+          },
+          {
+            "predicted_response": -564.1435976089724,
+            "volume_fraction": 0.0752
+          },
+          {
+            "predicted_response": -564.9587998586621,
+            "volume_fraction": 0.076
+          },
+          {
+            "predicted_response": -565.7066579406483,
+            "volume_fraction": 0.07680000000000001
+          },
+          {
+            "predicted_response": -566.3829409096443,
+            "volume_fraction": 0.0776
+          },
+          {
+            "predicted_response": -566.9835161076508,
+            "volume_fraction": 0.0784
+          },
+          {
+            "predicted_response": -567.5043929582316,
+            "volume_fraction": 0.0792
+          },
+          {
+            "predicted_response": -567.9417677576002,
+            "volume_fraction": 0.08
+          },
+          {
+            "predicted_response": -568.2920687739897,
+            "volume_fraction": 0.0808
+          },
+          {
+            "predicted_response": -568.5520009343554,
+            "volume_fraction": 0.0816
+          },
+          {
+            "predicted_response": -568.7185893600772,
+            "volume_fraction": 0.0824
+          },
+          {
+            "predicted_response": -568.7892210121172,
+            "volume_fraction": 0.08320000000000001
+          },
+          {
+            "predicted_response": -568.7616837208006,
+            "volume_fraction": 0.084
+          },
+          {
+            "predicted_response": -568.6342019069152,
+            "volume_fraction": 0.0848
+          },
+          {
+            "predicted_response": -568.4054683479708,
+            "volume_fraction": 0.08560000000000001
+          },
+          {
+            "predicted_response": -568.0746706618856,
+            "volume_fraction": 0.0864
+          },
+          {
+            "predicted_response": -567.6415164753653,
+            "volume_fraction": 0.08720000000000001
+          },
+          {
+            "predicted_response": -567.10624563285,
+            "volume_fraction": 0.08800000000000001
+          },
+          {
+            "predicted_response": -566.4696441316682,
+            "volume_fraction": 0.0888
+          },
+          {
+            "predicted_response": -565.7330482717671,
+            "volume_fraction": 0.08960000000000001
+          },
+          {
+            "predicted_response": -564.8983434391703,
+            "volume_fraction": 0.09040000000000001
+          },
+          {
+            "predicted_response": -563.9679567649919,
+            "volume_fraction": 0.0912
+          },
+          {
+            "predicted_response": -562.9448437688843,
+            "volume_fraction": 0.09200000000000001
+          },
+          {
+            "predicted_response": -561.8324692019369,
+            "volume_fraction": 0.09280000000000001
+          },
+          {
+            "predicted_response": -560.634782404165,
+            "volume_fraction": 0.0936
+          },
+          {
+            "predicted_response": -559.3561875833029,
+            "volume_fraction": 0.09440000000000001
+          },
+          {
+            "predicted_response": -558.001509502843,
+            "volume_fraction": 0.0952
+          },
+          {
+            "predicted_response": -556.5759551362344,
+            "volume_fraction": 0.096
+          },
+          {
+            "predicted_response": -555.0850718996571,
+            "volume_fraction": 0.09680000000000001
+          },
+          {
+            "predicted_response": -553.5347031166075,
+            "volume_fraction": 0.0976
+          },
+          {
+            "predicted_response": -551.9309413935898,
+            "volume_fraction": 0.0984
+          },
+          {
+            "predicted_response": -550.2800805969146,
+            "volume_fraction": 0.09920000000000001
+          },
+          {
+            "predicted_response": -548.5885671165961,
+            "volume_fraction": 0.1
+          }
+        ],
+        "target_in_predicted_range": true,
+        "target_response": -519.3706847664267,
+        "volume_fraction": 0.04703572615027589
+      },
+      "predicted_relative_target_error": 3.1584791665210185e-11,
+      "predicted_response": -519.3706847500225,
+      "predicted_volume_fraction": 0.04703572615027589,
+      "status": "pass",
+      "surrogate_to_direct_relative_error": 0.005452960005705431,
+      "target_fraction_of_endpoint_span": 0.75,
+      "target_in_predicted_response_range": true,
+      "target_response": -519.3706847664267,
+      "target_source": "fraction_of_direct_rve_endpoint_response_span"
+    }
+  ],
+  "training_dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "validation_scope": "multiple targets derived from the direct-RVE endpoint span; not external experimental targets",
+  "verification": {
+    "autograd_vs_finite_difference": [
+      {
+        "autograd_derivative": -1123.2121863547254,
+        "finite_difference_derivative": -1123.2120829390624,
+        "response": -509.8903847973961,
+        "scaled_error": 9.207135062305727e-08,
+        "volume_fraction": 0.04
+      },
+      {
+        "autograd_derivative": -1526.691756182543,
+        "finite_difference_derivative": -1526.6916813288842,
+        "response": -519.3706847500225,
+        "scaled_error": 4.902997511650909e-08,
+        "volume_fraction": 0.04703572615027589
+      },
+      {
+        "autograd_derivative": -1693.7913111247435,
+        "finite_difference_derivative": -1693.7912587764001,
+        "response": -529.4093967961862,
+        "scaled_error": 3.090601719601115e-08,
+        "volume_fraction": 0.05322441223951188
+      },
+      {
+        "autograd_derivative": -1736.4584372928693,
+        "finite_difference_derivative": -1736.458383447825,
+        "response": -539.4481088676412,
+        "scaled_error": 3.1008541922284856e-08,
+        "volume_fraction": 0.05904851729755557
+      },
+      {
+        "autograd_derivative": -1733.4701903514897,
+        "finite_difference_derivative": -1733.4701332856637,
+        "response": -541.099135489655,
+        "scaled_error": 3.291999270058835e-08,
+        "volume_fraction": 0.06
+      },
+      {
+        "autograd_derivative": -493.01452161236966,
+        "finite_difference_derivative": -493.01440972158156,
+        "response": -567.9417677576002,
+        "scaled_error": 2.2695231722404044e-07,
+        "volume_fraction": 0.08
+      }
+    ],
+    "maximum_scaled_derivative_error": 2.2695231722404044e-07,
+    "status": "pass",
+    "tolerance": 1e-05
+  },
+  "volume_fraction_bounds": [
+    0.02,
+    0.1
+  ]
+}

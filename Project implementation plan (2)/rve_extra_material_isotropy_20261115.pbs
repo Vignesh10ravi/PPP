@@ -1,0 +1,45 @@
+#!/bin/bash
+#PBS -N rve_material_iso
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=96GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/rve_extra_material_isotropy_20261115.out
+#PBS -e /scratch/vr80beqo/rve_extra_material_isotropy_20261115.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=12
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+DATA_DIR=/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data
+OUT_DIR=/scratch/vr80beqo/rve_extra_material_isotropy_20261115
+DATASET="$DATA_DIR/rve_phase6_phase7_training.npz"
+MANIFEST="$DATA_DIR/rve_phase6_phase7_training.manifest.json"
+mkdir -p "$OUT_DIR"
+test -f "$DATASET"
+test -f "$MANIFEST"
+printf '[DATASET] %s\n' "$DATASET"
+sha256sum "$DATASET"
+python -c 'import json,sys; print("[MANIFEST] dataset_sha256=" + json.load(open(sys.argv[1], encoding="utf-8"))["dataset_sha256"])' "$MANIFEST"
+
+python -u -m benchmarks.rve_material_isotropy_check \
+  --dataset "$DATASET" \
+  --manifest "$MANIFEST" \
+  --expected-dataset-sha256 8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336 \
+  --output "$OUT_DIR/rve_material_isotropy_check.json" \
+  --csv "$OUT_DIR/rve_material_isotropy_check.csv" \
+  --maxh 0.22 \
+  --integration-order 10 \
+  --jacobian-floor 1.0e-8 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  2>&1 | tee "$OUT_DIR/run.log"

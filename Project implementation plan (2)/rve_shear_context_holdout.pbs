@@ -1,0 +1,67 @@
+#!/bin/bash
+#PBS -N shear_ctx_holdout
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=64GB
+#PBS -l walltime=12:00:00
+#PBS -o /scratch/vr80beqo/rve_shear_context_holdout_20261115.pbs.out
+#PBS -e /scratch/vr80beqo/rve_shear_context_holdout_20261115.pbs.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export OMP_NUM_THREADS=1
+export NGS_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+OUT_ROOT=/scratch4/vr80beqo/rve_shear_context_holdout_20261115
+BASE_DATA=/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data
+SHEAR_DATA=/scratch4/vr80beqo/rve_shear_adaptation_20261115/data
+FROZEN_CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+CANDIDATE_CHECKPOINT=/scratch4/vr80beqo/rve_shear_context_adapter_20261115/partial_icnn_phase7_shear_context_adapter.pt
+mkdir -p "$OUT_ROOT/data" "$OUT_ROOT/evaluation"
+
+test -f "$FROZEN_CHECKPOINT"
+test -f "$CANDIDATE_CHECKPOINT"
+test -f "$BASE_DATA/rve_phase6_phase7_training.npz"
+test -f "$BASE_DATA/rve_phase6_phase7_training.manifest.json"
+test -f "$SHEAR_DATA/rve_shear_adaptation.npz"
+test -f "$SHEAR_DATA/rve_shear_adaptation.manifest.json"
+test -f "$HOME/PPP/Project implementation plan (2)/src/train_rve_shear_context_adapter.py"
+
+python -u -m src.generate_rve_shear_context_holdout \
+  --output "$OUT_ROOT/data/rve_shear_context_holdout.npz" \
+  --work-directory "$OUT_ROOT/data/rve_shear_context_holdout_work" \
+  --seed 20261115 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --workers 12 \
+  2>&1 | tee "$OUT_ROOT/data/generation.log"
+
+TRAIN_PY="$SCRATCH/venvs/ppp-rve-train-cpu/bin/python"
+
+python -u -m src.audit_rve_dataset \
+  --dataset "$OUT_ROOT/data/rve_shear_context_holdout.npz" \
+  --manifest "$OUT_ROOT/data/rve_shear_context_holdout.manifest.json" \
+  2>&1 | tee "$OUT_ROOT/data/audit.log"
+
+"$TRAIN_PY" -u -m src.evaluate_rve_shear_context_holdout \
+  --dataset "$OUT_ROOT/data/rve_shear_context_holdout.npz" \
+  --manifest "$OUT_ROOT/data/rve_shear_context_holdout.manifest.json" \
+  --adaptation-dataset "$SHEAR_DATA/rve_shear_adaptation.npz" \
+  --adaptation-manifest "$SHEAR_DATA/rve_shear_adaptation.manifest.json" \
+  --frozen-checkpoint "$FROZEN_CHECKPOINT" \
+  --expected-frozen-sha256 32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70 \
+  --candidate-checkpoint "$CANDIDATE_CHECKPOINT" \
+  --expected-candidate-sha256 da92d68954e164046f522d641c6b1ce427ca1558cc5a2e9736aa68d40b092d9c \
+  --output "$OUT_ROOT/evaluation/shear_context_holdout_report.json" \
+  --torch-threads 1 \
+  2>&1 | tee "$OUT_ROOT/evaluation/evaluation.log"

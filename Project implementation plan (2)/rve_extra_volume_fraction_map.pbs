@@ -1,0 +1,45 @@
+#!/bin/bash
+#PBS -N rve_vf_sensitivity
+#PBS -q teachingq
+#PBS -l select=1:ncpus=12:mem=64GB
+#PBS -l walltime=08:00:00
+#PBS -o /scratch/vr80beqo/rve_extra_volume_fraction_map.out
+#PBS -e /scratch/vr80beqo/rve_extra_volume_fraction_map.err
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=12
+export TORCH_NUM_THREADS=1
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export PYTHONUNBUFFERED=1
+
+CHECKPOINT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+OUT_DIR=/scratch/vr80beqo/rve_volume_fraction_map_20261114
+mkdir -p "$OUT_DIR"
+
+test -f "$CHECKPOINT"
+python -u -m benchmarks.rve_volume_fraction_map \
+  --checkpoint "$CHECKPOINT" \
+  --expected-checkpoint-sha256 32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70 \
+  --volume-fractions 0.02 0.05 0.10 \
+  --volume-fraction-bounds 0.02 0.10 \
+  --gradient-fd-step 1.0e-5 \
+  --gradient-tolerance 1.0e-5 \
+  --repeatability-tolerance 1.0e-12 \
+  --torch-threads 1 \
+  --maxh 0.22 \
+  --mu 1.0 \
+  --bulk-modulus 10000 \
+  --displacement-order 2 \
+  --integration-order 10 \
+  --microscopic-jacobian-floor 1.0e-8 \
+  --output "$OUT_DIR/rve_volume_fraction_map.json" \
+  --csv "$OUT_DIR/rve_volume_fraction_map.csv" \
+  2>&1 | tee "$OUT_DIR/run.log"

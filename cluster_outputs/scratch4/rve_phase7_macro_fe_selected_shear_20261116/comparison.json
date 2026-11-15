@@ -1,0 +1,30 @@
+{
+  "status": "complete",
+  "matched_setup": {
+    "volume_fraction": 0.05,
+    "axial_stretch": 0.05,
+    "mesh_maxh": 0.25,
+    "displacement_order": 1,
+    "integration_order": 4,
+    "merit_function": "energy",
+    "load_predictor": "secant"
+  },
+  "frozen_checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "candidate_checkpoint_sha256": "5c1c606057eb39e2ce779ead2872d6c06a4d29c5a6e423d27dd415a681566a1e",
+  "frozen": {
+    "status": "complete",
+    "final_axial_stretch": 0.05,
+    "final_free_residual": 1.6294581022584224e-10,
+    "minimum_sampled_jacobian": 0.9694386333787062,
+    "final_logged_energy": 0.7158683421
+  },
+  "selected_full_finetune": {
+    "status": "complete",
+    "final_axial_stretch": 0.05,
+    "final_free_residual": 1.0742605398369916e-12,
+    "minimum_sampled_jacobian": 0.9693930316509891,
+    "final_logged_energy": 0.7205473194
+  },
+  "relative_final_energy_difference": 0.006493643337534284,
+  "interpretation": "Matched-mesh macro-FE integration comparison; energy is not claimed to be mesh-converged by this run."
+}

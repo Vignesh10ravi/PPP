@@ -1,0 +1,652 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{longtable}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Phase 1 Verification of a PyTorch pICNN Hyperelastic Material Model Coupled to NGSolve},
+  pdfauthor={Vignesh Ravi}
+}
+
+\sisetup{
+  scientific-notation=true,
+  round-mode=places,
+  round-precision=4
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false
+}
+
+\newcommand{\F}{\mathbf{F}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\Pstress}{\mathbf{P}}
+\newcommand{\Aten}{\mathbb{A}}
+\newcommand{\Iten}{\mathbf{I}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\placeholder}[1]{\textcolor{red!70!black}{\textbf{[#1]}}}
+
+\newcommand{\optionalfigure}[3]{%
+  \begin{figure}[H]
+    \centering
+    \IfFileExists{#1}{%
+      \includegraphics[width=0.82\textwidth]{#1}
+    }{%
+      \fbox{\parbox[c][45mm][c]{0.78\textwidth}{%
+        \centering Optional figure file not found:\\[1mm]
+        \texttt{\detokenize{#1}}}}
+    }
+    \caption{#2}
+    \label{#3}
+  \end{figure}
+}
+
+\title{%
+  \textbf{Phase 1 Verification of a PyTorch pICNN\\
+  Hyperelastic Material Model Coupled to NGSolve}
+}
+\author{%
+  Vignesh Ravi\\
+  Computational Materials Science\\[1mm]
+  Supervisor: Stefan Prüger
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report documents Phase~1 of a proof-of-concept framework for coupling a
+PyTorch-based polyconvex input-convex neural network (pICNN) hyperelastic
+material model to NGSolve. The surrogate was trained against a compressible
+neo-Hookean reference material and evaluated in a total-Lagrange
+finite-element formulation. First-Piola stress and the full material tangent
+were computed using PyTorch automatic differentiation, without finite
+differences in the constitutive update. Material values were transferred to
+NGSolve using \texttt{IntegrationRuleSpace}.
+
+Verification covered the model interface, stress-free reference
+normalization, agreement with the analytical neo-Hookean response, tangent
+consistency, nonlinear element convergence, a multi-element affine patch
+test, and matched analytical-versus-neural finite-element problems. All
+predefined Phase~1 acceptance criteria were satisfied. In the matched
+finite-element benchmark, the free-displacement, deformation-gradient, and
+reaction-vector relative errors were \SI{1.376}{\percent},
+\SI{0.3504}{\percent}, and \SI{13.60}{\percent}, respectively. These results
+validate the PyTorch--NGSolve bridge within the stated Phase~1 scope. They do
+not yet validate the particle RVE formulation planned for Phase~2.
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+\section{Objectives and scope}
+
+\subsection{Phase 1 objectives}
+
+The objectives of Phase~1 were to:
+\begin{enumerate}[label=\arabic*.]
+  \item implement a pICNN strain-energy model with non-negative constrained
+        weights;
+  \item use the feature vector
+        $\left[I_1,I_2,J,-\ln J\right]$ on the admissible domain $J>0$;
+  \item enforce zero energy and zero stress at the undeformed reference state;
+  \item compute first-Piola stress and the full material tangent using
+        automatic differentiation;
+  \item transfer the constitutive response through NGSolve
+        \texttt{IntegrationRuleSpace};
+  \item demonstrate consistent Newton convergence and finite-element
+        equilibrium; and
+  \item compare neural constitutive and finite-element responses with the
+        analytical neo-Hookean reference.
+\end{enumerate}
+
+\subsection{Items outside the Phase 1 scope}
+
+Phase~1 does not validate particle geometry, particle--matrix interfaces,
+periodic RVE constraints, Hill--Mandel homogenization, rigid-particle
+kinematics, a mixed near-incompressible formulation, volume-fraction context
+inputs, or extrapolation outside the Phase~1 training domain. These items are
+reserved for Phase~2 and require separate verification.
+
+\section{Analytical reference material}
+
+The Phase~1 target is the compressible neo-Hookean strain-energy density
+\begin{equation}
+  \Psi_{\mathrm{NH}}(\F)
+  =
+  \frac{\mu}{2}(I_1-3)
+  -\mu\ln J
+  +\frac{\lambda}{2}(\ln J)^2,
+  \label{eq:nh-energy}
+\end{equation}
+where
+\begin{equation}
+  \C=\F^\mathsf{T}\F,\qquad
+  I_1=\operatorname{tr}(\C),\qquad
+  J=\det\F>0.
+\end{equation}
+The analytical first-Piola stress is
+\begin{equation}
+  \Pstress_{\mathrm{NH}}
+  =
+  \mu\left(\F-\F^{-\mathsf{T}}\right)
+  +\lambda\ln(J)\F^{-\mathsf{T}}.
+  \label{eq:nh-stress}
+\end{equation}
+The nondimensional Phase~1 parameters are
+\begin{equation}
+  \mu=1,\qquad \lambda=10.
+\end{equation}
+These values define a well-conditioned proof-of-concept material and are not
+intended as a calibrated PDMS model.
+
+\section{pICNN formulation}
+
+\subsection{Invariant features}
+
+The right Cauchy--Green tensor and its first two principal invariants are
+\begin{align}
+  \C &= \F^\mathsf{T}\F,\\
+  I_1 &= \operatorname{tr}(\C),\\
+  I_2 &=
+  \frac{1}{2}\left[
+    I_1^2-\operatorname{tr}(\C^2)
+  \right].
+\end{align}
+The neural feature vector is
+\begin{equation}
+  \mathbf{y}(\F)
+  =
+  \left[I_1,I_2,J,-\ln J\right].
+  \label{eq:features}
+\end{equation}
+
+The ICNN uses softplus activations and positive effective weights. For a
+stored unconstrained parameter $\theta$, the corresponding effective weight
+is
+\begin{equation}
+  W^+ = \operatorname{softplus}(\theta)>0.
+\end{equation}
+Feature-to-hidden, hidden-to-hidden, and output weights are constrained in
+this manner. The architecture is constructed to preserve convexity and
+monotonicity with respect to the selected polyconvex features, supporting a
+polyconvex energy representation on $J>0$. Polyconvexity is not interpreted
+here as a guarantee that the tangent is positive definite for every arbitrary
+deformation.
+
+\subsection{Stress-free reference normalization}
+
+Let $\Psi_{\mathrm{raw}}(\F)$ denote the raw network output. The normalized
+energy is
+\begin{equation}
+  \widehat{\Psi}(\F)
+  =
+  \Psi_{\mathrm{raw}}(\F)
+  -\Psi_{\mathrm{raw}}(\Iten)
+  -\Pstress_{\mathrm{raw}}(\Iten):(\F-\Iten),
+  \label{eq:normalization}
+\end{equation}
+where
+\begin{equation}
+  \Pstress_{\mathrm{raw}}(\Iten)
+  =
+  \left.
+  \frac{\partial\Psi_{\mathrm{raw}}}{\partial\F}
+  \right|_{\F=\Iten}.
+\end{equation}
+Equation~\eqref{eq:normalization} gives
+\begin{equation}
+  \widehat{\Psi}(\Iten)=0,
+  \qquad
+  \left.
+  \frac{\partial\widehat{\Psi}}{\partial\F}
+  \right|_{\F=\Iten}
+  =\mathbf{0}.
+\end{equation}
+The subtracted term is affine in $\F$ and therefore does not change the
+second derivative of the raw energy.
+
+\section{Automatic differentiation and tangent convention}
+
+The first-Piola stress and material tangent are
+\begin{align}
+  P_{iJ}
+  &=
+  \frac{\partial\widehat{\Psi}}{\partial F_{iJ}},\\
+  A_{iJkL}
+  &=
+  \frac{\partial P_{iJ}}{\partial F_{kL}}
+  =
+  \frac{\partial^2\widehat{\Psi}}
+       {\partial F_{iJ}\partial F_{kL}}.
+  \label{eq:tangent}
+\end{align}
+Because $\F$ is unsymmetric, all nine components are retained. The row-major
+matrix representation used during assembly is
+\begin{equation}
+  A^{9\times9}_{\,3i+J,\;3k+L}=A_{iJkL}.
+  \label{eq:flattening}
+\end{equation}
+A $6\times6$ minor-symmetric Voigt tangent would be appropriate for a
+formulation based directly on symmetric strain and stress measures. It is not
+the correct direct representation for the derivative
+$\partial\Pstress/\partial\F$ used here.
+
+No finite differences are used to calculate stress or tangent during
+training or finite-element assembly. Central differences are used only in
+Verification~V3 as an independent check of the autograd tangent.
+
+\section{PyTorch--NGSolve bridge}
+
+The constitutive bridge performs the following operations during a Newton
+iteration:
+\begin{enumerate}[label=\arabic*.]
+  \item construct $\F=\Iten+\nabla\mathbf{u}$;
+  \item interpolate its nine components into an
+        \texttt{IntegrationRuleSpace};
+  \item read each component separately and stack the values into an
+        $N\times3\times3$ PyTorch tensor;
+  \item evaluate $\Pstress$ and $\Aten$ with automatic differentiation;
+  \item write the nine stress and 81 tangent components back
+        component-by-component; and
+  \item assemble the residual and tangent forms.
+\end{enumerate}
+
+The total-Lagrange residual and tangent have the forms
+\begin{align}
+  R_a &=
+  \int_{\Omega_0}
+  \Pstress:\nabla N_a\,\mathrm{d}V,\\
+  K_{ab} &=
+  \int_{\Omega_0}
+  \nabla N_a:\Aten:\nabla N_b\,\mathrm{d}V.
+\end{align}
+The Newton residual norm is evaluated on free degrees of freedom; constrained
+entries represent reaction forces rather than equilibrium equations.
+
+NGSolve compound \texttt{IntegrationRuleSpace} storage is component-major.
+The production bridge avoids layout ambiguity by reading and writing
+individual components. Directly reshaping a complete compound vector as
+point-major is not valid.
+
+\section{Training procedure}
+
+The model was trained using an energy--stress Sobolev objective,
+\begin{equation}
+  \mathcal{L}
+  =
+  \lambda_\Psi
+  \operatorname{MSE}
+  \left(\widehat{\Psi},\Psi_{\mathrm{NH}}\right)
+  +
+  \lambda_P
+  \operatorname{MSE}
+  \left(\Pstress,\Pstress_{\mathrm{NH}}\right),
+  \label{eq:loss}
+\end{equation}
+with
+\begin{equation}
+  \lambda_\Psi=1,\qquad \lambda_P=10.
+\end{equation}
+Training used CPU PyTorch and float64 constitutive calculations. Adam was
+used with an initial learning rate of $2\times10^{-3}$, followed by checkpoint
+refinement at $1\times10^{-3}$.
+
+\subsection{Initialization diagnosis and correction}
+
+The original unconstrained weight parameters were initialized near zero.
+Since the effective constrained weights are generated by softplus, this gave
+\begin{equation}
+  \operatorname{softplus}(0)\approx0.693,
+\end{equation}
+which is not a small initial weight. Across multiple 32-unit layers, this
+produced an excessively stiff network and a very large initial loss.
+
+\begin{table}[H]
+  \centering
+  \caption{Training behavior before and after correcting positive-weight
+  initialization.}
+  \label{tab:init}
+  \begin{tabular}{lS}
+    \toprule
+    Quantity & {Value}\\
+    \midrule
+    Original initial loss & 1.173628e9\\
+    Original final loss after 1500 epochs & 1.128706e7\\
+    Corrected initial loss & 4.456922e1\\
+    Corrected mean loss over epochs 1400--1499 & 2.772083\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The corrected effective initialization values were approximately 0.05 for
+feature weights, 0.02 for hidden-to-hidden weights, and 0.05 for output
+weights. The failed checkpoint was retained separately and was not used for
+verification.
+
+\optionalfigure
+  {figures/training_loss.pdf}
+  {Training and refinement loss history on a logarithmic scale.}
+  {fig:training-loss}
+
+\section{Verification methodology and results}
+
+\subsection{Acceptance matrix}
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Phase 1 verification matrix.}
+  \label{tab:verification}
+  \begin{tabular}{p{0.08\textwidth}p{0.38\textwidth}p{0.35\textwidth}c}
+    \toprule
+    Test & Purpose & Acceptance criterion & Result\\
+    \midrule
+    V1 & Interface, tensor shapes, dtype and derivative finiteness
+       & Correct shapes and finite float64 outputs & PASS\\
+    V2 & Stress-free reference state
+       & Energy and stress below scale-aware tolerance & PASS\\
+    V2b & Analytical constitutive response
+       & Energy $<10\%$, stress $<10\%$, tangent $<25\%$ & PASS\\
+    V3 & Autograd tangent verification
+       & Best relative central-difference error $<10^{-6}$ & PASS\\
+    V4 & Neural nonlinear element solve
+       & Final free residual $<10^{-8}$ & PASS\\
+    V5 & Multi-element affine patch
+       & Gradient, stress variation and residual $<10^{-10}$ & PASS\\
+    V6 & Matched analytical and neural FE problems
+       & Field and reaction errors $<15\%$ & PASS\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{V1: model interface}
+
+The verified public material interface accepts deformation gradients through
+\texttt{model.energy(F)}. Precomputed invariant features are passed to the
+wrapped ICNN rather than to the normalized constitutive interface. Energy,
+stress and tangent tensors had the expected shapes and finite float64 values.
+The stress-only training path agreed with the stress returned by the full
+stress-and-tangent path.
+
+\subsection{V2: reference state}
+
+\begin{table}[H]
+  \centering
+  \caption{Reference-state verification.}
+  \label{tab:v2}
+  \begin{tabular}{lS}
+    \toprule
+    Metric & {Value}\\
+    \midrule
+    $\left|\widehat{\Psi}(\Iten)\right|$ & 0.0\\
+    $\max\left|P_{iJ}(\Iten)\right|$ & 7.276e-12\\
+    Raw reference stress scale & 4.866e4\\
+    Scale-aware stress tolerance & 1.081e-10\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+The normalized stress residual is approximately float64 cancellation error
+relative to the raw stress scale and does not indicate physical prestress.
+
+\subsection{V2b: analytical constitutive comparison}
+
+The trained checkpoint was evaluated on deterministic deformation gradients
+not used for training. The resulting relative errors were:
+\begin{table}[H]
+  \centering
+  \caption{Neural versus analytical neo-Hookean constitutive response. Replace
+  the red placeholders with the exact values from
+  \texttt{reports/logs/v2b\_neohooke.txt}.}
+  \label{tab:v2b}
+  \begin{tabular}{lcc}
+    \toprule
+    Quantity & Relative error & Acceptance threshold\\
+    \midrule
+    Energy & \placeholder{insert V2b energy error} & 0.10\\
+    First-Piola stress & \placeholder{insert V2b stress error} & 0.10\\
+    Full tangent & \placeholder{insert V2b tangent error} & 0.25\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{V3: tangent verification}
+
+The autograd tangent was compared with a central-difference derivative of
+the first-Piola stress over multiple perturbation sizes. The expected
+V-shaped error curve results from the competition between finite-difference
+truncation error and floating-point roundoff. The best measured relative
+error was \placeholder{insert best V3 relative error}, satisfying the
+$10^{-6}$ criterion.
+
+\optionalfigure
+  {figures/tangent_fd_check.pdf}
+  {Relative central-difference tangent error versus perturbation size.}
+  {fig:tangent-check}
+
+\subsection{V4: nonlinear neural element solve}
+
+The trained neural material was inserted into the NGSolve Newton solver using
+the exact autograd tangent. The final free residual was
+\placeholder{insert V4 final residual}. The residual history was
+\placeholder{insert compact V4 residual sequence}. The solve satisfied the
+$10^{-8}$ convergence criterion.
+
+\optionalfigure
+  {figures/v4_newton_residual.pdf}
+  {V4 neural finite-element Newton residual history.}
+  {fig:v4-newton}
+
+\subsection{V5: multi-element affine patch test}
+
+A mixed stretch/shear affine displacement field was prescribed over a mesh
+with free interior degrees of freedom. A first-order conforming
+discretization should reproduce the constant deformation gradient exactly.
+
+\begin{table}[H]
+  \centering
+  \caption{V5 affine patch-test results.}
+  \label{tab:v5}
+  \begin{tabular}{lS}
+    \toprule
+    Metric & {Value}\\
+    \midrule
+    Mesh elements & 206\\
+    Material points & 2884\\
+    Free degrees of freedom & 30\\
+    $\max|\F-\F_{\mathrm{target}}|$ & 4.441e-16\\
+    Relative stress variation & 4.774e-15\\
+    Free residual norm & 2.083e-16\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+The machine-precision results verify affine completeness, integration-point
+data transfer, tensor ordering, constitutive uniformity, and free-DOF
+equilibrium.
+
+\subsection{V6: matched analytical and neural FE problems}
+
+The analytical and neural materials were solved on the same 206-element mesh
+under identical boundary conditions and loading. Both problems converged in
+five Newton iterations.
+
+\begin{table}[H]
+  \centering
+  \caption{V6 nonlinear convergence.}
+  \label{tab:v6-convergence}
+  \begin{tabular}{lcc}
+    \toprule
+    Quantity & Analytical material & Neural material\\
+    \midrule
+    Newton iterations & 5 & 5\\
+    Final free residual & $3.657\times10^{-14}$ & $1.128\times10^{-14}$\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{V6 neural-versus-analytical FE comparison.}
+  \label{tab:v6-errors}
+  \begin{tabular}{lcc}
+    \toprule
+    Comparison & Relative error & Acceptance threshold\\
+    \midrule
+    Free displacement & 0.01376 & 0.15\\
+    Deformation gradient & 0.003504 & 0.15\\
+    Constrained reaction vector & 0.1360 & 0.15\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The deformation field is reproduced closely. The reaction vector is more
+sensitive to constitutive approximation and gives the largest observed
+discrepancy. It satisfies the predefined Phase~1 threshold but remains an
+important target for future surrogate refinement.
+
+\optionalfigure
+  {figures/v6_newton_comparison.pdf}
+  {Analytical and neural V6 Newton residual histories.}
+  {fig:v6-newton}
+
+\section{Limitations}
+
+\begin{enumerate}[label=\arabic*.]
+  \item The training and validation domain is restricted to moderate
+        deformations around the reference configuration.
+  \item Phase~1 uses a homogeneous synthetic neo-Hookean target rather than
+        experimental or RVE-generated data.
+  \item The reaction-vector discrepancy of \SI{13.60}{\percent} is larger than
+        the displacement and deformation-gradient discrepancies.
+  \item The nondimensional material parameters are not calibrated to PDMS.
+  \item Particles, interfaces, periodicity and volume-fraction dependence have
+        not yet been introduced.
+  \item Near-incompressibility has not yet been treated using a mixed
+        displacement--pressure formulation.
+  \item Central differences are used only as an independent verification
+        method and are not part of the constitutive solver.
+  \item Passing the Phase~1 tests does not establish accuracy under arbitrary
+        extrapolation.
+\end{enumerate}
+
+\section{Conclusion and Phase 2 gate}
+
+Phase~1 demonstrates an end-to-end coupling between a PyTorch pICNN
+hyperelastic model and NGSolve. The implementation provides a stress-free
+normalized energy, first-Piola stress, and a full $9\times9$ total-Lagrange
+tangent through automatic differentiation. Integration-point transfer was
+verified through a multi-element affine patch test, and the consistent
+tangent produced converged Newton iterations in both analytical and neural
+finite-element problems.
+
+The neural model satisfied the predefined constitutive and finite-element
+acceptance criteria. In the matched FE benchmark, the free-displacement and
+deformation-gradient errors were \SI{1.376}{\percent} and
+\SI{0.3504}{\percent}, while the reaction-vector error was
+\SI{13.60}{\percent}. The reaction result is acceptable for the current
+proof-of-concept threshold but identifies a target for further refinement.
+
+On this basis, the PyTorch--NGSolve bridge is considered validated for the
+scope of Phase~1. Phase~2 may proceed to periodic RVE generation for rigid
+particles embedded in a soft matrix, subject to separate verification of
+periodic constraints, rigid-particle kinematics, mixed near-incompressible
+behavior, Hill--Mandel consistency, and the homogenized tangent.
+
+\appendix
+
+\section{Reproducibility information}
+
+\begin{table}[H]
+  \centering
+  \caption{Software environment. Complete this table from
+  \texttt{reports/logs/environment.txt}.}
+  \begin{tabular}{ll}
+    \toprule
+    Item & Version\\
+    \midrule
+    Python & 3.12 (Anaconda environment)\\
+    PyTorch & \placeholder{insert exact version}\\
+    NGSolve & 6.2.2607\\
+    NumPy & \placeholder{insert exact version}\\
+    Execution device & CPU\\
+    Constitutive dtype & float64\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The validated model checkpoint is
+\begin{center}
+  \texttt{checkpoints/phase1\_validated.pt}.
+\end{center}
+Its SHA-256 checksum is
+\begin{center}
+  \placeholder{insert SHA-256 from reports/checkpoint\_sha256.txt}.
+\end{center}
+
+\section{Principal verification commands}
+
+\begin{lstlisting}[language=bash]
+python -m tests.verify_model_interface
+python -m tests.verify_reference
+python -m tests.verify_neohooke_response \
+  --ckpt checkpoints/phase1_validated.pt
+python -m tests.verify_tangent
+
+python - <<'PY'
+from tests.verify_element import main
+main("checkpoints/phase1_validated.pt")
+PY
+
+python -m tests.verify_patch \
+  --ckpt checkpoints/phase1_validated.pt
+python -m tests.verify_fe_comparison \
+  --ckpt checkpoints/phase1_validated.pt
+\end{lstlisting}
+
+\section{Source modules}
+
+\begin{longtable}{p{0.34\textwidth}p{0.58\textwidth}}
+  \toprule
+  Module & Role\\
+  \midrule
+  \endhead
+  \texttt{src/picnn.py}
+    & pICNN architecture, invariant features, positive weights and reference
+      normalization.\\
+  \texttt{src/neohooke.py}
+    & Analytical Phase~1 material and data generation.\\
+  \texttt{src/constitutive.py}
+    & Autograd stress and full material tangent.\\
+  \texttt{src/train.py}
+    & Energy--stress training, checkpointing and refinement.\\
+  \texttt{src/ngsolve\_umat.py}
+    & Integration-point transfer and nonlinear FE solve.\\
+  \texttt{tests/verify\_*.py}
+    & V1--V6 verification programs.\\
+  \bottomrule
+\end{longtable}
+
+\end{document}

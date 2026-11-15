@@ -1,0 +1,43 @@
+#!/bin/bash
+#PBS -N ppp_export_delta
+#PBS -q teachingq
+#PBS -l select=1:ncpus=8:mem=32GB
+#PBS -l walltime=24:00:00
+#PBS -o /scratch/vr80beqo/ppp_cluster_export_delta.pbs.out
+#PBS -e /scratch/vr80beqo/ppp_cluster_export_delta.pbs.err
+
+set -euo pipefail
+
+PROJECT="$HOME/PPP/Project implementation plan (2)"
+USER_SCRATCH="/scratch/${USER}"
+USER_SCRATCH4="/scratch4/${USER}"
+JOB_TAG="${PBS_JOBID%%.*}"
+EXPORT_ROOT="${USER_SCRATCH4}/ppp_cluster_export_delta_${JOB_TAG}"
+ROOT_LIST="${EXPORT_ROOT}/rve_roots.nul"
+ARCHIVE="${EXPORT_ROOT}/ppp_cluster_export_delta_${JOB_TAG}.tar.gz"
+
+mkdir -p "$EXPORT_ROOT"
+test -d "$PROJECT"
+test -d "$USER_SCRATCH"
+test -d "$USER_SCRATCH4"
+
+find "$USER_SCRATCH4" "$USER_SCRATCH" \
+  -mindepth 1 -maxdepth 1 -name 'rve_*' -print0 > "$ROOT_LIST"
+tr -cd '\000' < "$ROOT_LIST" | wc -c | awk '{print "RVE roots found:", $1}'
+du -sch --files0-from="$ROOT_LIST" | tail -n 1
+df -h "$EXPORT_ROOT"
+
+if command -v pigz >/dev/null 2>&1; then
+  tar --null --use-compress-program='pigz -1 -p 8' -cf "$ARCHIVE" \
+    -C "$HOME/PPP" "Project implementation plan (2)" \
+    --files-from="$ROOT_LIST"
+else
+  tar --null -czf "$ARCHIVE" \
+    -C "$HOME/PPP" "Project implementation plan (2)" \
+    --files-from="$ROOT_LIST"
+fi
+
+(cd "$EXPORT_ROOT" && sha256sum "$(basename "$ARCHIVE")" > "$(basename "$ARCHIVE").sha256")
+printf 'Archive: %s\n' "$ARCHIVE"
+du -h "$ARCHIVE"
+tar -tzf "$ARCHIVE" | wc -l | awk '{print "Archive entries:", $1}'

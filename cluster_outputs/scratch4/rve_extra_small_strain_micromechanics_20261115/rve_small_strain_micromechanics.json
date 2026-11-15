@@ -1,0 +1,195 @@
+{
+  "checkpoint_path": "/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "checkpoint_training_dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "dataset_path": "/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.npz",
+  "dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336",
+  "figure_path": "/scratch4/vr80beqo/rve_extra_small_strain_micromechanics_20261115/rve_small_strain_micromechanics.png",
+  "manifest_path": "/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.manifest.json",
+  "matrix_properties": {
+    "bulk_modulus": 10000.0,
+    "shear_modulus": 1.0
+  },
+  "mori_tanaka_reference": {
+    "hashin_shtrikman_relation": "the spherical estimate corresponds to the HS lower reference for a stiffer inclusion phase under quasi-isotropic assumptions",
+    "inclusion": "rigid sphere, infinite bulk and shear stiffness limit",
+    "matrix_based": true,
+    "references": [
+      "Mori and Tanaka, Acta Metallurgica 21 (1973), 571-574, DOI 10.1016/0001-6160(73)90064-3",
+      "Hashin and Shtrikman, J. Mech. Phys. Solids 11 (1963), 127-140, DOI 10.1016/0022-5096(63)90060-7"
+    ]
+  },
+  "purpose": "small_strain_effective_moduli_micromechanics_benchmark",
+  "results": [
+    {
+      "direct_rve": {
+        "bulk_modulus": 10185.146106378705,
+        "deviatoric_anisotropy_relative": 0.0020519645285644803,
+        "deviatoric_mode_eigenvalues": [
+          2.092857824503348,
+          2.0931063759356405,
+          2.093649309154917,
+          2.1018703430839634,
+          2.102070025516379
+        ],
+        "poisson_ratio": 0.4999485368491974,
+        "shear_modulus": 1.048355387819425,
+        "tangent_major_symmetry_relative_error": 4.2928667491957447e-16,
+        "volumetric_deviatoric_coupling_relative": 1.320062606467546e-08,
+        "young_modulus": 3.144958260115439
+      },
+      "frozen_picnn": {
+        "bulk_modulus": 10230.91200648227,
+        "deviatoric_anisotropy_relative": 3.1430908239104244e-14,
+        "deviatoric_mode_eigenvalues": [
+          3.052819038506609,
+          3.052819038506609,
+          3.052819038506609,
+          3.0528190385066694,
+          3.0528190385068568
+        ],
+        "poisson_ratio": 0.49992540578930084,
+        "shear_modulus": 1.5264095192533353,
+        "tangent_major_symmetry_relative_error": 0.0,
+        "volumetric_deviatoric_coupling_relative": 6.0789622051397815e-18,
+        "young_modulus": 4.579000835133422
+      },
+      "mori_tanaka_rigid_sphere_reference": {
+        "bulk_modulus": 10204.108843537415,
+        "direct_rve_bulk_modulus_relative_difference": 0.0018583432859715131,
+        "direct_rve_poisson_ratio_relative_difference": 6.956145247281741e-08,
+        "direct_rve_shear_modulus_relative_difference": 0.002532423019306431,
+        "direct_rve_young_modulus_relative_difference": 0.0025323998924616695,
+        "interpretation": "matrix-based Mori-Tanaka spherical-inclusion estimate in the rigid particle limit; corresponding Hashin-Shtrikman lower reference for a stiffer inclusion phase under isotropic assumptions",
+        "picnn_bulk_modulus_relative_difference": 0.002619821471230698,
+        "picnn_poisson_ratio_relative_difference": 4.6197323633201494e-05,
+        "picnn_shear_modulus_relative_difference": 0.3114449338621939,
+        "picnn_young_modulus_relative_difference": 0.3114343312932695,
+        "poisson_ratio": 0.499948502072051,
+        "shear_modulus": 1.051017007482857,
+        "young_modulus": 3.152942772052322
+      },
+      "picnn_label_scope": "held_out_from_fitting_but_from_the_existing_phase7_test_split; not_a_fresh_independent_test",
+      "sample_id": "phase7_v000_f000000",
+      "split": "test",
+      "state_index": 0,
+      "volume_fraction": 0.02
+    },
+    {
+      "direct_rve": {
+        "bulk_modulus": 10468.726399879211,
+        "deviatoric_anisotropy_relative": 0.010700014776777206,
+        "deviatoric_mode_eigenvalues": [
+          2.227969346998388,
+          2.229513455996792,
+          2.230412656767765,
+          2.2778588314103434,
+          2.2789161736534407
+        ],
+        "poisson_ratio": 0.49994629591296263,
+        "shear_modulus": 1.124467046482673,
+        "tangent_major_symmetry_relative_error": 6.754472121784229e-16,
+        "volumetric_deviatoric_coupling_relative": 5.040673106128637e-08,
+        "young_modulus": 3.3732803624957484
+      },
+      "frozen_picnn": {
+        "bulk_modulus": 10360.903070873968,
+        "deviatoric_anisotropy_relative": 2.0037300499519019e-13,
+        "deviatoric_mode_eigenvalues": [
+          3.4623986785377676,
+          3.4623986785377676,
+          3.4623986785377676,
+          3.4623986785381886,
+          3.4623986785395586
+        ],
+        "poisson_ratio": 0.4999164598437518,
+        "shear_modulus": 1.731199339269105,
+        "tangent_major_symmetry_relative_error": 0.0,
+        "volumetric_deviatoric_coupling_relative": 1.4910419237932114e-17,
+        "young_modulus": 5.193308768480716
+      },
+      "mori_tanaka_rigid_sphere_reference": {
+        "bulk_modulus": 10526.38596491228,
+        "direct_rve_bulk_modulus_relative_difference": 0.0054776221606604985,
+        "direct_rve_poisson_ratio_relative_difference": 8.643355163430661e-08,
+        "direct_rve_shear_modulus_relative_difference": 0.006277233929566104,
+        "direct_rve_young_modulus_relative_difference": 0.006277205301286308,
+        "interpretation": "matrix-based Mori-Tanaka spherical-inclusion estimate in the rigid particle limit; corresponding Hashin-Shtrikman lower reference for a stiffer inclusion phase under isotropic assumptions",
+        "picnn_bulk_modulus_relative_difference": 0.015720770128505472,
+        "picnn_poisson_ratio_relative_difference": 5.9592119984655906e-05,
+        "picnn_shear_modulus_relative_difference": 0.34636633025150687,
+        "picnn_young_modulus_relative_difference": 0.34635334711876264,
+        "poisson_ratio": 0.49994625270082865,
+        "shear_modulus": 1.1315701771926316,
+        "young_modulus": 3.394588893896201
+      },
+      "picnn_label_scope": "held_out_from_fitting_but_from_the_existing_phase7_test_split; not_a_fresh_independent_test",
+      "sample_id": "phase7_v001_f000000",
+      "split": "test",
+      "state_index": 0,
+      "volume_fraction": 0.05
+    },
+    {
+      "direct_rve": {
+        "bulk_modulus": 10987.807369775748,
+        "deviatoric_anisotropy_relative": 0.041211511271315386,
+        "deviatoric_mode_eigenvalues": [
+          2.4476459069719514,
+          2.4495627133896067,
+          2.4498857854225315,
+          2.6602583774599298,
+          2.66414758664088
+        ],
+        "poisson_ratio": 0.49994234057416626,
+        "shear_modulus": 1.26715003698849,
+        "tangent_major_symmetry_relative_error": 6.09620961368744e-16,
+        "volumetric_deviatoric_coupling_relative": 9.11535435347153e-08,
+        "young_modulus": 3.8013039846783143
+      },
+      "frozen_picnn": {
+        "bulk_modulus": 10872.936615170684,
+        "deviatoric_anisotropy_relative": 1.0962768878960677e-13,
+        "deviatoric_mode_eigenvalues": [
+          4.294784966595492,
+          4.294784966595492,
+          4.294784966595492,
+          4.294784966596355,
+          4.294784966596536
+        ],
+        "poisson_ratio": 0.49990125707527694,
+        "shear_modulus": 2.1473924832979363,
+        "tangent_major_symmetry_relative_error": 0.0,
+        "volumetric_deviatoric_coupling_relative": 1.2155100494409397e-17,
+        "young_modulus": 6.441753370265151
+      },
+      "mori_tanaka_rigid_sphere_reference": {
+        "bulk_modulus": 11111.25925925926,
+        "direct_rve_bulk_modulus_relative_difference": 0.01111052191322381,
+        "direct_rve_poisson_ratio_relative_difference": 3.264967553074537e-07,
+        "direct_rve_shear_modulus_relative_difference": 0.008302992810349073,
+        "direct_rve_young_modulus_relative_difference": 0.008303100730692927,
+        "interpretation": "matrix-based Mori-Tanaka spherical-inclusion estimate in the rigid particle limit; corresponding Hashin-Shtrikman lower reference for a stiffer inclusion phase under isotropic assumptions",
+        "picnn_bulk_modulus_relative_difference": 0.021448751984612005,
+        "picnn_poisson_ratio_relative_difference": 8.250294420023487e-05,
+        "picnn_shear_modulus_relative_difference": 0.4049717166747939,
+        "picnn_young_modulus_relative_difference": 0.40495535361760404,
+        "poisson_ratio": 0.4999425038037716,
+        "shear_modulus": 1.2777592629622223,
+        "young_modulus": 3.8331308562920343
+      },
+      "picnn_label_scope": "held_out_from_fitting_but_from_the_existing_phase7_test_split; not_a_fresh_independent_test",
+      "sample_id": "phase7_v002_f000000",
+      "split": "test",
+      "state_index": 0,
+      "volume_fraction": 0.1
+    }
+  ],
+  "scope_note": "Moduli are projected from the full row-major dP/dF tangent at F=I. The direct-RVE values are compared with a matrix-based spherical rigid-inclusion Mori-Tanaka estimate (the corresponding HS lower reference for a stiffer inclusion phase under isotropic assumptions). Each pICNN comparison is labeled by its dataset split. The selected Phase 7 reference states are in the test split and were excluded from fitting, but that test set was inspected in earlier project work, so this is not a fresh independent test.",
+  "status": "complete",
+  "strain_basis": "one normalized volumetric mode and five orthonormal symmetric deviatoric modes; K=C_vol,vol/3 and G=mean(eig(C_dev))/2",
+  "volume_fractions": [
+    0.02,
+    0.05,
+    0.1
+  ]
+}

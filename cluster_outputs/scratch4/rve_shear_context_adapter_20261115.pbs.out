@@ -1,0 +1,100 @@
+NumPy 2.4.6 PyTorch 2.15.0+cpu
+/scratch/vr80beqo/venvs/ppp-rve-train-cpu/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+epoch=5 shear_ratio=9.949622e-01 original_ratio=0.9992 within_original_cap=True
+epoch=10 shear_ratio=9.891317e-01 original_ratio=0.9529 within_original_cap=True
+epoch=15 shear_ratio=9.849359e-01 original_ratio=0.9543 within_original_cap=True
+epoch=20 shear_ratio=9.797024e-01 original_ratio=0.9470 within_original_cap=True
+epoch=25 shear_ratio=9.753577e-01 original_ratio=0.9505 within_original_cap=True
+epoch=30 shear_ratio=9.697663e-01 original_ratio=0.9351 within_original_cap=True
+epoch=35 shear_ratio=9.654273e-01 original_ratio=0.9354 within_original_cap=True
+epoch=40 shear_ratio=9.605426e-01 original_ratio=0.9320 within_original_cap=True
+epoch=45 shear_ratio=9.558600e-01 original_ratio=0.9350 within_original_cap=True
+epoch=50 shear_ratio=9.517755e-01 original_ratio=0.9193 within_original_cap=True
+epoch=55 shear_ratio=9.468730e-01 original_ratio=0.9170 within_original_cap=True
+epoch=60 shear_ratio=9.416223e-01 original_ratio=0.9025 within_original_cap=True
+epoch=65 shear_ratio=9.371291e-01 original_ratio=0.9007 within_original_cap=True
+epoch=70 shear_ratio=9.333948e-01 original_ratio=0.9005 within_original_cap=True
+epoch=75 shear_ratio=9.288383e-01 original_ratio=0.8898 within_original_cap=True
+epoch=80 shear_ratio=9.241554e-01 original_ratio=0.8839 within_original_cap=True
+epoch=85 shear_ratio=9.193450e-01 original_ratio=0.8869 within_original_cap=True
+epoch=90 shear_ratio=9.148203e-01 original_ratio=0.8722 within_original_cap=True
+epoch=95 shear_ratio=9.103538e-01 original_ratio=0.8834 within_original_cap=True
+epoch=100 shear_ratio=9.053477e-01 original_ratio=0.8682 within_original_cap=True
+epoch=105 shear_ratio=8.998093e-01 original_ratio=0.8531 within_original_cap=True
+epoch=110 shear_ratio=8.954407e-01 original_ratio=0.8387 within_original_cap=True
+epoch=115 shear_ratio=8.909274e-01 original_ratio=0.8454 within_original_cap=True
+epoch=120 shear_ratio=8.869198e-01 original_ratio=0.8321 within_original_cap=True
+epoch=125 shear_ratio=8.816486e-01 original_ratio=0.8452 within_original_cap=True
+epoch=130 shear_ratio=8.781755e-01 original_ratio=0.8332 within_original_cap=True
+epoch=135 shear_ratio=8.738065e-01 original_ratio=0.8578 within_original_cap=True
+epoch=140 shear_ratio=8.694547e-01 original_ratio=0.8266 within_original_cap=True
+epoch=145 shear_ratio=8.653810e-01 original_ratio=0.8202 within_original_cap=True
+epoch=150 shear_ratio=8.607487e-01 original_ratio=0.8196 within_original_cap=True
+epoch=155 shear_ratio=8.567418e-01 original_ratio=0.8106 within_original_cap=True
+epoch=160 shear_ratio=8.527505e-01 original_ratio=0.8106 within_original_cap=True
+epoch=165 shear_ratio=8.489107e-01 original_ratio=0.8138 within_original_cap=True
+epoch=170 shear_ratio=8.447545e-01 original_ratio=0.8123 within_original_cap=True
+epoch=175 shear_ratio=8.411256e-01 original_ratio=0.8194 within_original_cap=True
+epoch=180 shear_ratio=8.383182e-01 original_ratio=0.8522 within_original_cap=True
+epoch=185 shear_ratio=8.341290e-01 original_ratio=0.8235 within_original_cap=True
+epoch=190 shear_ratio=8.298394e-01 original_ratio=0.8328 within_original_cap=True
+epoch=195 shear_ratio=8.256119e-01 original_ratio=0.8465 within_original_cap=True
+epoch=200 shear_ratio=8.210595e-01 original_ratio=0.8325 within_original_cap=True
+epoch=205 shear_ratio=8.178319e-01 original_ratio=0.8484 within_original_cap=True
+epoch=210 shear_ratio=8.131410e-01 original_ratio=0.8582 within_original_cap=True
+epoch=215 shear_ratio=8.095412e-01 original_ratio=0.8724 within_original_cap=True
+epoch=220 shear_ratio=8.054714e-01 original_ratio=0.8857 within_original_cap=True
+epoch=225 shear_ratio=8.013409e-01 original_ratio=0.9016 within_original_cap=True
+epoch=230 shear_ratio=7.964249e-01 original_ratio=0.8952 within_original_cap=True
+epoch=235 shear_ratio=7.935587e-01 original_ratio=0.9308 within_original_cap=True
+epoch=240 shear_ratio=7.898085e-01 original_ratio=0.9597 within_original_cap=True
+epoch=245 shear_ratio=7.861695e-01 original_ratio=0.9466 within_original_cap=True
+epoch=250 shear_ratio=7.821387e-01 original_ratio=0.9608 within_original_cap=True
+epoch=255 shear_ratio=7.780454e-01 original_ratio=0.9903 within_original_cap=True
+epoch=260 shear_ratio=7.746113e-01 original_ratio=0.9985 within_original_cap=True
+epoch=265 shear_ratio=7.705898e-01 original_ratio=1.0179 within_original_cap=True
+epoch=270 shear_ratio=7.673112e-01 original_ratio=1.0425 within_original_cap=False
+epoch=275 shear_ratio=7.631696e-01 original_ratio=1.0561 within_original_cap=False
+epoch=280 shear_ratio=7.595160e-01 original_ratio=1.0779 within_original_cap=False
+epoch=285 shear_ratio=7.554120e-01 original_ratio=1.1005 within_original_cap=False
+epoch=290 shear_ratio=7.518232e-01 original_ratio=1.1253 within_original_cap=False
+epoch=295 shear_ratio=7.477939e-01 original_ratio=1.1580 within_original_cap=False
+epoch=300 shear_ratio=7.438828e-01 original_ratio=1.1863 within_original_cap=False
+epoch=305 shear_ratio=7.397898e-01 original_ratio=1.2426 within_original_cap=False
+epoch=310 shear_ratio=7.365460e-01 original_ratio=1.2553 within_original_cap=False
+epoch=315 shear_ratio=7.321214e-01 original_ratio=1.2937 within_original_cap=False
+epoch=320 shear_ratio=7.289929e-01 original_ratio=1.3179 within_original_cap=False
+epoch=325 shear_ratio=7.247362e-01 original_ratio=1.3704 within_original_cap=False
+epoch=330 shear_ratio=7.218933e-01 original_ratio=1.4009 within_original_cap=False
+epoch=335 shear_ratio=7.186433e-01 original_ratio=1.4681 within_original_cap=False
+epoch=340 shear_ratio=7.150720e-01 original_ratio=1.4853 within_original_cap=False
+epoch=345 shear_ratio=7.120945e-01 original_ratio=1.5100 within_original_cap=False
+epoch=350 shear_ratio=7.087003e-01 original_ratio=1.5512 within_original_cap=False
+epoch=355 shear_ratio=7.055701e-01 original_ratio=1.5779 within_original_cap=False
+epoch=360 shear_ratio=7.022927e-01 original_ratio=1.6236 within_original_cap=False
+epoch=365 shear_ratio=6.987156e-01 original_ratio=1.6753 within_original_cap=False
+epoch=370 shear_ratio=6.945478e-01 original_ratio=1.7460 within_original_cap=False
+epoch=375 shear_ratio=6.916414e-01 original_ratio=1.7566 within_original_cap=False
+epoch=380 shear_ratio=6.881517e-01 original_ratio=1.7941 within_original_cap=False
+epoch=385 shear_ratio=6.850232e-01 original_ratio=1.8627 within_original_cap=False
+epoch=390 shear_ratio=6.808499e-01 original_ratio=1.9332 within_original_cap=False
+epoch=395 shear_ratio=6.776185e-01 original_ratio=1.9677 within_original_cap=False
+epoch=400 shear_ratio=6.740992e-01 original_ratio=2.0253 within_original_cap=False
+epoch=405 shear_ratio=6.707720e-01 original_ratio=2.0737 within_original_cap=False
+epoch=410 shear_ratio=6.677908e-01 original_ratio=2.1140 within_original_cap=False
+epoch=415 shear_ratio=6.639530e-01 original_ratio=2.1923 within_original_cap=False
+early stopping at epoch 415
+{
+  "status": "complete",
+  "best_epoch": 265,
+  "candidate_improved_validation": true,
+  "best_shear_validation_ratio_within_original_cap": 0.7705897678199407,
+  "original_test_frozen_stress_rmse": 2.479871493189397,
+  "original_test_candidate_stress_rmse": 2.3566497540890126,
+  "shear_test_frozen_mean_P01_error": 0.587970317615952,
+  "shear_test_candidate_mean_P01_error": 0.5145583656541989,
+  "candidate_checkpoint": "/scratch4/vr80beqo/rve_shear_context_adapter_20261115/partial_icnn_phase7_shear_context_adapter.pt",
+  "report": "/scratch4/vr80beqo/rve_shear_context_adapter_20261115/shear_context_adapter_report.json",
+  "csv": "/scratch4/vr80beqo/rve_shear_context_adapter_20261115/previously_inspected_shear_development_comparison.csv"
+}

@@ -1,0 +1,26 @@
+/scratch/vr80beqo/venvs/ppp-rve-train-cpu/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+{
+  "status": "complete",
+  "independent_evaluation": true,
+  "n_samples": 12,
+  "frozen": {
+    "n_samples": 12,
+    "mean_energy_relative_error": 0.588145822303927,
+    "mean_P01_relative_error": 0.5878748011579039,
+    "maximum_P01_relative_error": 0.7532523357984419,
+    "mean_dP01_dF01_relative_error": 0.5867766528640926,
+    "maximum_dP01_dF01_relative_error": 0.7527193555414949,
+    "stress_frobenius_relative_rmse": 0.6599021599408236
+  },
+  "candidate": {
+    "n_samples": 12,
+    "mean_energy_relative_error": 0.5147255185823112,
+    "mean_P01_relative_error": 0.5144673935904736,
+    "maximum_P01_relative_error": 0.6679910114965583,
+    "mean_dP01_dF01_relative_error": 0.5134214865344274,
+    "maximum_dP01_dF01_relative_error": 0.667483977367339,
+    "stress_frobenius_relative_rmse": 0.5901986281242375
+  },
+  "report": "/scratch4/vr80beqo/rve_shear_context_holdout_20261115/evaluation/shear_context_holdout_report.json"
+}

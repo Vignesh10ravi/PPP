@@ -1,0 +1,889 @@
+Retrying v001_f000292: vf=0.0500, detF=0.90236846, condF=1.964045
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.136121e-01, max=1.347326e-01
+[RESIDUAL BEFORE PROJECTION] finite=False, nan_count=34, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=False, nan_count=31, inf_count=0
+[TARGETED RETRY] Non-finite initial residual; using load continuation.
+[INITIAL STATE] solution_size=5043, finite=True, min=0.000000e+00, max=0.000000e+00
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION BASE] identity equilibrium ready
+[LOAD CONTINUATION PATH START] path=isochoric_then_volume
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.791644e-02, max=1.755657e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.018714e+00, max_abs=7.539148e-01
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=4.039014e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=4.445494e-01, max_abs=2.225103e-01
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.934903e-05, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.860360e-03, max_abs=2.174958e-03
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=1.961993e-09, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.000000, next_fraction=0.125000, predictor=identity
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.125000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-5.307526e-01, max=4.217362e-01
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.692367e+00, max_abs=1.868665e+00
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.536034e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.329997e+00, max_abs=1.346533e+00
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.018111e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=8.224962e-02, max_abs=6.926392e-02
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=3.240892e-06, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=8.356570e-05, max_abs=3.333425e-05
+[NEWTON LINE SEARCH] iteration=3, step_length=1.000000e+00, residual_norm=1.278793e-10, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.125000, next_fraction=0.250000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.250000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.035644e+00, max=8.889867e-01
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.205517e+01, max_abs=8.517157e+00
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.320306e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=9.949395e+00, max_abs=6.885294e+00
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.549250e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.275788e+00, max_abs=1.185345e+00
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.244469e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.689901e-02, max_abs=7.703356e-03
+[NEWTON LINE SEARCH] iteration=3, step_length=1.000000e+00, residual_norm=6.855950e-06, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=2.336620e-04, max_abs=1.586983e-04
+[NEWTON LINE SEARCH] iteration=4, step_length=1.000000e+00, residual_norm=1.541186e-09, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.250000, next_fraction=0.375000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.375000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.536167e+00, max=1.423483e+00
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.184415e+02, max_abs=1.089881e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=5.993686e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=1.179617e+01, max_abs=8.352235e+00
+[NEWTON LINE SEARCH] iteration=1, step_length=5.000000e-01, residual_norm=4.360679e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.565896e+01, max_abs=1.327513e+01
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=9.525461e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=2.813092e+00, max_abs=1.255302e+00
+[NEWTON LINE SEARCH] iteration=3, step_length=1.000000e+00, residual_norm=1.859139e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=8.689679e-01, max_abs=5.749241e-01
+[NEWTON LINE SEARCH] iteration=4, step_length=1.000000e+00, residual_norm=2.344783e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=6.439438e-02, max_abs=3.762776e-02
+[NEWTON LINE SEARCH] iteration=5, step_length=1.000000e+00, residual_norm=1.077518e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=4.539746e-03, max_abs=3.693577e-03
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=5.354838e-07, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=2.324789e-05, max_abs=1.939104e-05
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=1.406985e-11, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.375000, next_fraction=0.500000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.500000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-2.051579e+00, max=2.051943e+00
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.606836e+03, max_abs=1.141665e+03
+[NEWTON LINE SEARCH] iteration=0, step_length=1.953125e-03, residual_norm=8.503247e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=9
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.408536e+03, max_abs=3.853519e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=7.994680e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.541942e+03, max_abs=1.999321e+02
+[NEWTON LINE SEARCH] iteration=2, step_length=2.500000e-01, residual_norm=5.836911e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.906551e+03, max_abs=1.555186e+02
+[NEWTON LINE SEARCH] iteration=3, step_length=1.250000e-01, residual_norm=4.972316e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=1.667866e+03, max_abs=1.318231e+02
+[NEWTON LINE SEARCH] iteration=4, step_length=1.000000e+00, residual_norm=1.274699e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=3.166095e+00, max_abs=1.458269e+00
+[NEWTON LINE SEARCH] iteration=5, step_length=1.000000e+00, residual_norm=2.612349e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=1.332843e+00, max_abs=7.733220e-01
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=3.356659e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=2.387283e-01, max_abs=1.654849e-01
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=1.084711e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=4.814691e-03, max_abs=4.037850e-03
+[NEWTON LINE SEARCH] iteration=8, step_length=1.000000e+00, residual_norm=8.292213e-08, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=2.691070e-06, max_abs=1.633769e-06
+[NEWTON LINE SEARCH] iteration=9, step_length=1.000000e+00, residual_norm=1.036905e-13, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.500000, next_fraction=0.625000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.625000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-2.675365e+02, max=6.957515e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.332886e+03, max_abs=4.266498e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=1.143450e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.903198e+03, max_abs=2.475600e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=9.658998e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=3.866096e+03, max_abs=2.923661e+03
+[NEWTON LINE SEARCH] iteration=2, step_length=2.441406e-04, residual_norm=9.653916e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=12
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=2.171252e+03, max_abs=1.715244e+02
+[NEWTON LINE SEARCH] iteration=3, step_length=5.000000e-01, residual_norm=5.438217e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=1.086449e+03, max_abs=9.554300e+01
+[NEWTON LINE SEARCH] iteration=4, step_length=1.250000e-01, residual_norm=4.324650e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=9.497292e+02, max_abs=7.676966e+01
+[NEWTON LINE SEARCH] iteration=5, step_length=5.000000e-01, residual_norm=2.451992e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=4.747175e+02, max_abs=3.819092e+01
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=5.750984e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=2.352745e+00, max_abs=1.642273e+00
+[NEWTON LINE SEARCH] iteration=7, step_length=5.000000e-01, residual_norm=2.939708e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=9.709244e-01, max_abs=5.340152e-01
+[NEWTON LINE SEARCH] iteration=8, step_length=1.000000e+00, residual_norm=4.152832e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=1.837059e-01, max_abs=1.668332e-01
+[NEWTON LINE SEARCH] iteration=9, step_length=1.000000e+00, residual_norm=1.354053e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=3.885382e-03, max_abs=2.716890e-03
+[NEWTON LINE SEARCH] iteration=10, step_length=1.000000e+00, residual_norm=1.925658e-07, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=1.154568e-05, max_abs=8.640764e-06
+[NEWTON LINE SEARCH] iteration=11, step_length=1.000000e+00, residual_norm=9.778353e-13, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.625000, next_fraction=0.750000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.750000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-5.262914e+02, max=6.771179e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.274058e+03, max_abs=5.056982e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.562500e-02, residual_norm=2.501848e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=6
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.201686e+03, max_abs=4.342868e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=2.238572e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.381663e+03, max_abs=1.892466e+02
+[NEWTON LINE SEARCH] iteration=2, step_length=5.000000e-01, residual_norm=1.485773e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.190117e+03, max_abs=9.413352e+01
+[NEWTON LINE SEARCH] iteration=3, step_length=5.000000e-01, residual_norm=1.041270e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=5.940328e+02, max_abs=5.229868e+01
+[NEWTON LINE SEARCH] iteration=4, step_length=6.250000e-02, residual_norm=8.505565e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=4
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=5.576867e+02, max_abs=4.661617e+01
+[NEWTON LINE SEARCH] iteration=5, step_length=1.250000e-01, residual_norm=7.337068e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=4.872772e+02, max_abs=4.061247e+01
+[NEWTON LINE SEARCH] iteration=6, step_length=1.250000e-01, residual_norm=6.058195e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=4.264533e+02, max_abs=3.441600e+01
+[NEWTON LINE SEARCH] iteration=7, step_length=2.500000e-01, residual_norm=4.578841e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=3.198444e+02, max_abs=2.634387e+01
+[NEWTON LINE SEARCH] iteration=8, step_length=1.000000e+00, residual_norm=1.289630e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=6.561879e+00, max_abs=4.616421e+00
+[NEWTON LINE SEARCH] iteration=9, step_length=5.000000e-01, residual_norm=7.234320e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=2.545884e+00, max_abs=1.368307e+00
+[NEWTON LINE SEARCH] iteration=10, step_length=1.000000e+00, residual_norm=1.776616e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=1.126324e+00, max_abs=8.266530e-01
+[NEWTON LINE SEARCH] iteration=11, step_length=1.000000e+00, residual_norm=3.093394e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=12, finite=True, norm=1.520575e-01, max_abs=8.979341e-02
+[NEWTON LINE SEARCH] iteration=12, step_length=1.000000e+00, residual_norm=1.578375e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=13, finite=True, norm=5.677907e-03, max_abs=2.902918e-03
+[NEWTON LINE SEARCH] iteration=13, step_length=1.000000e+00, residual_norm=9.035730e-07, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=14, finite=True, norm=2.519190e-05, max_abs=1.271355e-05
+[NEWTON LINE SEARCH] iteration=14, step_length=1.000000e+00, residual_norm=3.892190e-11, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.750000, next_fraction=0.875000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.875000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-7.784869e+02, max=6.593976e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.177254e+03, max_abs=4.526837e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=2.500000e-01, residual_norm=3.470917e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.358616e+03, max_abs=1.883715e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=2.767007e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.768838e+03, max_abs=1.449568e+02
+[NEWTON LINE SEARCH] iteration=2, step_length=2.500000e-01, residual_norm=2.201726e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.324581e+03, max_abs=1.251244e+02
+[NEWTON LINE SEARCH] iteration=3, step_length=7.812500e-03, residual_norm=2.185095e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=7
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=1.314774e+03, max_abs=1.051669e+02
+[NEWTON LINE SEARCH] iteration=4, step_length=1.250000e-01, residual_norm=1.940076e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=1.150499e+03, max_abs=9.054216e+01
+[NEWTON LINE SEARCH] iteration=5, step_length=5.000000e-01, residual_norm=1.251990e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=5.752088e+02, max_abs=4.550557e+01
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=5.775821e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=1.224211e+00, max_abs=9.807403e-01
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=2.678253e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=3.280707e+00, max_abs=2.824998e+00
+[NEWTON LINE SEARCH] iteration=8, step_length=1.000000e+00, residual_norm=2.245567e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=1.237000e+01, max_abs=1.180003e+01
+[NEWTON LINE SEARCH] iteration=9, step_length=5.000000e-01, residual_norm=1.568364e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=1.620426e+01, max_abs=1.580709e+01
+[NEWTON LINE SEARCH] iteration=10, step_length=1.250000e-01, residual_norm=1.392662e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=1.175378e+01, max_abs=1.133022e+01
+[NEWTON LINE SEARCH] iteration=11, step_length=1.000000e+00, residual_norm=8.947865e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=12, finite=True, norm=6.907439e+00, max_abs=6.750929e+00
+[NEWTON LINE SEARCH] iteration=12, step_length=1.000000e+00, residual_norm=4.251158e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=13, finite=True, norm=4.360273e+00, max_abs=4.228096e+00
+[NEWTON LINE SEARCH] iteration=13, step_length=1.000000e+00, residual_norm=1.746794e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=14, finite=True, norm=5.807543e-01, max_abs=5.469930e-01
+[NEWTON LINE SEARCH] iteration=14, step_length=1.000000e+00, residual_norm=8.129462e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=15, finite=True, norm=3.066046e+00, max_abs=1.808719e+00
+[NEWTON LINE SEARCH] iteration=15, step_length=2.500000e-01, residual_norm=5.418304e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=16, finite=True, norm=7.317217e-01, max_abs=4.354683e-01
+[NEWTON LINE SEARCH] iteration=16, step_length=1.000000e+00, residual_norm=2.845160e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=17, finite=True, norm=6.380272e+00, max_abs=3.146486e+00
+[NEWTON LINE SEARCH] iteration=17, step_length=6.250000e-02, residual_norm=1.897178e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=4
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=18, finite=True, norm=1.304192e+00, max_abs=1.002566e+00
+[NEWTON LINE SEARCH] iteration=18, step_length=1.000000e+00, residual_norm=1.367541e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=19, finite=True, norm=6.829803e-01, max_abs=4.457662e-01
+[NEWTON LINE SEARCH] iteration=19, step_length=1.000000e+00, residual_norm=9.340889e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=20, finite=True, norm=6.618219e-02, max_abs=5.235421e-02
+[NEWTON LINE SEARCH] iteration=20, step_length=1.000000e+00, residual_norm=5.912567e-06, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=21, finite=True, norm=2.383424e-04, max_abs=1.703626e-04
+[NEWTON LINE SEARCH] iteration=21, step_length=1.000000e+00, residual_norm=4.184164e-10, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.875000, next_fraction=1.000000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=1.000000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.024289e+03, max=6.505945e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.274366e+02, max_abs=2.174791e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=2.880980e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=6.340388e+01, max_abs=6.072112e+01
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=2.318378e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.479321e+01, max_abs=1.121268e+01
+[NEWTON LINE SEARCH] iteration=2, step_length=5.000000e-01, residual_norm=1.531938e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.258267e+02, max_abs=7.384617e+01
+[NEWTON LINE SEARCH] iteration=3, step_length=7.812500e-03, residual_norm=1.520817e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=7
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=1.808132e+01, max_abs=1.388243e+01
+[NEWTON LINE SEARCH] iteration=4, step_length=1.250000e-01, residual_norm=1.345358e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=1.305686e+01, max_abs=8.762453e+00
+[NEWTON LINE SEARCH] iteration=5, step_length=5.000000e-01, residual_norm=8.704314e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=7.251278e+00, max_abs=5.484940e+00
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=4.029030e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=1.154891e+00, max_abs=8.656788e-01
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=1.874826e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=3.722476e+01, max_abs=3.499811e+01
+[NEWTON LINE SEARCH] iteration=8, step_length=1.250000e-01, residual_norm=1.453264e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=2.323222e+00, max_abs=1.587510e+00
+[NEWTON LINE SEARCH] iteration=9, step_length=5.000000e-01, residual_norm=1.142813e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=2.884117e+01, max_abs=2.597369e+01
+[NEWTON LINE SEARCH] iteration=10, step_length=1.562500e-02, residual_norm=1.133448e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=6
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=2.338509e+01, max_abs=2.064195e+01
+[NEWTON LINE SEARCH] iteration=11, step_length=6.250000e-02, residual_norm=1.113295e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=4
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=12, finite=True, norm=2.846438e+03, max_abs=2.447443e+03
+[NEWTON LINE SEARCH] iteration=12, step_length=4.882812e-04, residual_norm=8.716891e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=11
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=13, finite=True, norm=1.597147e+02, max_abs=1.359260e+02
+[NEWTON LINE SEARCH] iteration=13, step_length=1.953125e-03, residual_norm=8.711394e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=9
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=14, finite=True, norm=4.365838e+01, max_abs=3.638137e+01
+[NEWTON LINE SEARCH] iteration=14, step_length=1.562500e-02, residual_norm=8.657194e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=6
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=15, finite=True, norm=4.696038e+01, max_abs=3.884975e+01
+[NEWTON LINE SEARCH] iteration=15, step_length=7.812500e-03, residual_norm=8.619346e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=7
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=16, finite=True, norm=3.169437e+03, max_abs=2.612484e+03
+[NEWTON LINE SEARCH] iteration=16, step_length=1.907349e-06, residual_norm=8.619340e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=19
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=17, finite=True, norm=1.277995e+04, max_abs=1.053465e+04
+[NEWTON LINE SEARCH] iteration=17, step_length=1.192093e-07, residual_norm=8.619339e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=23
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=18, finite=True, norm=4.728335e+04, max_abs=3.897571e+04
+[TARGETED RETRY] Direct Newton solve failed; retrying this rotation with load continuation: RuntimeError: Newton line search could not find a finite, orientation-preserving residual-decreasing step at iteration 18
+[INITIAL STATE] solution_size=5043, finite=True, min=0.000000e+00, max=0.000000e+00
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION BASE] identity equilibrium ready
+[LOAD CONTINUATION PATH START] path=isochoric_then_volume
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.781388e-02, max=1.744610e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.018385e+00, max_abs=7.534381e-01
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=4.037956e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=4.443681e-01, max_abs=2.221251e-01
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.932532e-05, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.859957e-03, max_abs=2.175549e-03
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=1.943535e-09, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.000000, next_fraction=0.125000, predictor=identity
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.125000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-5.306602e-01, max=4.218868e-01
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.689890e+00, max_abs=1.868914e+00
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.534593e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.327837e+00, max_abs=1.346878e+00
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.016334e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=8.218345e-02, max_abs=6.923498e-02
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=3.211665e-06, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=8.294204e-05, max_abs=3.374661e-05
+[NEWTON LINE SEARCH] iteration=3, step_length=1.000000e+00, residual_norm=1.251393e-10, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.125000, next_fraction=0.250000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.250000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.035396e+00, max=8.893541e-01
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.203344e+01, max_abs=8.512557e+00
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.318662e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=9.929081e+00, max_abs=6.882567e+00
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=1.545468e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.273751e+00, max_abs=1.183757e+00
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=7.175512e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.668606e-02, max_abs=7.812478e-03
+[NEWTON LINE SEARCH] iteration=3, step_length=1.000000e+00, residual_norm=6.773300e-06, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=2.308324e-04, max_abs=1.584444e-04
+[NEWTON LINE SEARCH] iteration=4, step_length=1.000000e+00, residual_norm=1.513659e-09, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.250000, next_fraction=0.375000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.375000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.535620e+00, max=1.424171e+00
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.185506e+02, max_abs=1.087908e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=5.964966e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=1.158259e+01, max_abs=8.006628e+00
+[NEWTON LINE SEARCH] iteration=1, step_length=5.000000e-01, residual_norm=4.342516e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.561679e+01, max_abs=1.324630e+01
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=9.510984e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=2.774314e+00, max_abs=1.302161e+00
+[NEWTON LINE SEARCH] iteration=3, step_length=1.000000e+00, residual_norm=1.802037e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=7.203866e-01, max_abs=5.097834e-01
+[NEWTON LINE SEARCH] iteration=4, step_length=1.000000e+00, residual_norm=1.933721e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=4.487682e-02, max_abs=2.420615e-02
+[NEWTON LINE SEARCH] iteration=5, step_length=1.000000e+00, residual_norm=6.896864e-05, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=2.789120e-03, max_abs=2.326892e-03
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=2.096047e-07, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=8.812124e-06, max_abs=7.414270e-06
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=2.134214e-12, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.375000, next_fraction=0.500000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.500000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-2.050446e+00, max=2.053101e+00
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.415331e+03, max_abs=4.029546e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=7.903416e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.978067e+03, max_abs=2.530433e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=6.734668e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.229322e+03, max_abs=1.747343e+02
+[NEWTON LINE SEARCH] iteration=2, step_length=5.000000e-01, residual_norm=4.314175e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.113951e+03, max_abs=8.765176e+01
+[NEWTON LINE SEARCH] iteration=3, step_length=1.000000e+00, residual_norm=1.245004e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=3.162348e+00, max_abs=2.333560e+00
+[NEWTON LINE SEARCH] iteration=4, step_length=1.000000e+00, residual_norm=2.953594e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=1.306840e+00, max_abs=9.674385e-01
+[NEWTON LINE SEARCH] iteration=5, step_length=1.000000e+00, residual_norm=1.021094e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=5.012671e-01, max_abs=3.047300e-01
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=9.768841e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=8.108823e-02, max_abs=6.745224e-02
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=2.851267e-05, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=7.422383e-04, max_abs=3.320069e-04
+[NEWTON LINE SEARCH] iteration=8, step_length=1.000000e+00, residual_norm=3.400347e-08, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=9.498685e-07, max_abs=5.624244e-07
+[NEWTON LINE SEARCH] iteration=9, step_length=1.000000e+00, residual_norm=8.025087e-14, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.500000, next_fraction=0.625000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.625000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-2.675350e+02, max=6.909968e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.332849e+03, max_abs=4.245433e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=1.129435e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.903068e+03, max_abs=2.459832e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=5.000000e-01, residual_norm=9.135772e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.446988e+03, max_abs=1.309713e+02
+[NEWTON LINE SEARCH] iteration=2, step_length=3.125000e-02, residual_norm=8.946121e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=5
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.400516e+03, max_abs=1.158200e+02
+[NEWTON LINE SEARCH] iteration=3, step_length=1.250000e-01, residual_norm=7.250176e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=1.226024e+03, max_abs=9.958410e+01
+[NEWTON LINE SEARCH] iteration=4, step_length=5.000000e-01, residual_norm=4.153459e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=6.130932e+02, max_abs=6.851538e+01
+[NEWTON LINE SEARCH] iteration=5, step_length=1.562500e-02, residual_norm=4.035372e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=6
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=6.035002e+02, max_abs=5.161603e+01
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=1.760215e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=5.769504e+00, max_abs=3.820887e+00
+[NEWTON LINE SEARCH] iteration=7, step_length=2.500000e-01, residual_norm=1.342714e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=5.338936e+00, max_abs=4.488505e+00
+[NEWTON LINE SEARCH] iteration=8, step_length=5.000000e-01, residual_norm=6.833398e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=2.831272e+00, max_abs=1.867586e+00
+[NEWTON LINE SEARCH] iteration=9, step_length=1.000000e+00, residual_norm=2.025652e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=7.392823e-01, max_abs=3.250756e-01
+[NEWTON LINE SEARCH] iteration=10, step_length=1.000000e+00, residual_norm=4.268869e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=1.781642e-01, max_abs=1.233434e-01
+[NEWTON LINE SEARCH] iteration=11, step_length=1.000000e+00, residual_norm=2.154809e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=12, finite=True, norm=7.206955e-03, max_abs=5.316713e-03
+[NEWTON LINE SEARCH] iteration=12, step_length=1.000000e+00, residual_norm=2.821980e-07, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=13, finite=True, norm=1.181863e-05, max_abs=6.615232e-06
+[NEWTON LINE SEARCH] iteration=13, step_length=1.000000e+00, residual_norm=9.182942e-13, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.625000, next_fraction=0.750000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.750000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-5.262895e+02, max=6.698091e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.253557e+03, max_abs=4.537222e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=2.218196e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.831007e+03, max_abs=2.550597e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=1.865946e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.118480e+03, max_abs=1.739152e+02
+[NEWTON LINE SEARCH] iteration=2, step_length=5.000000e-01, residual_norm=1.238933e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.058310e+03, max_abs=8.460159e+01
+[NEWTON LINE SEARCH] iteration=3, step_length=2.500000e-01, residual_norm=1.129596e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=7.922386e+02, max_abs=6.374346e+01
+[NEWTON LINE SEARCH] iteration=4, step_length=5.000000e-01, residual_norm=6.420222e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=3.961954e+02, max_abs=3.186415e+01
+[NEWTON LINE SEARCH] iteration=5, step_length=5.000000e-01, residual_norm=4.090798e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=1.981651e+02, max_abs=1.618532e+01
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=1.441071e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=2.985965e+00, max_abs=2.834369e+00
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=4.049969e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=3.164729e+00, max_abs=1.911402e+00
+[NEWTON LINE SEARCH] iteration=8, step_length=2.500000e-01, residual_norm=2.880118e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=1.157024e+00, max_abs=5.235480e-01
+[NEWTON LINE SEARCH] iteration=9, step_length=1.000000e+00, residual_norm=1.284453e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=7.136305e-01, max_abs=4.027631e-01
+[NEWTON LINE SEARCH] iteration=10, step_length=1.000000e+00, residual_norm=2.415983e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=1.967474e-01, max_abs=1.408082e-01
+[NEWTON LINE SEARCH] iteration=11, step_length=1.000000e+00, residual_norm=3.300698e-04, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=12, finite=True, norm=2.180689e-02, max_abs=1.431889e-02
+[NEWTON LINE SEARCH] iteration=12, step_length=1.000000e+00, residual_norm=5.085915e-06, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=13, finite=True, norm=2.841552e-04, max_abs=1.574184e-04
+[NEWTON LINE SEARCH] iteration=13, step_length=1.000000e+00, residual_norm=9.429458e-10, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.750000, next_fraction=0.875000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=0.875000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-7.784847e+02, max=6.505945e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=3.179314e+03, max_abs=4.638188e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=2.880996e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=2.760408e+03, max_abs=2.758300e+02
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=2.318426e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=2.064707e+03, max_abs=1.678067e+02
+[NEWTON LINE SEARCH] iteration=2, step_length=5.000000e-01, residual_norm=1.532014e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.031305e+03, max_abs=9.356670e+01
+[NEWTON LINE SEARCH] iteration=3, step_length=6.250000e-02, residual_norm=1.443491e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=4
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=9.661835e+02, max_abs=7.670927e+01
+[NEWTON LINE SEARCH] iteration=4, step_length=2.500000e-01, residual_norm=1.142309e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=7.247325e+02, max_abs=5.728903e+01
+[NEWTON LINE SEARCH] iteration=5, step_length=1.000000e+00, residual_norm=5.202182e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=1.951357e+00, max_abs=1.367120e+00
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=2.411213e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=4.129650e+00, max_abs=3.577392e+00
+[NEWTON LINE SEARCH] iteration=7, step_length=5.000000e-01, residual_norm=1.754617e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=1.260039e+01, max_abs=1.137702e+01
+[NEWTON LINE SEARCH] iteration=8, step_length=2.500000e-01, residual_norm=1.408110e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=1.272100e+01, max_abs=1.201605e+01
+[NEWTON LINE SEARCH] iteration=9, step_length=5.000000e-01, residual_norm=9.705725e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=3.341220e+01, max_abs=2.484850e+01
+[NEWTON LINE SEARCH] iteration=10, step_length=6.250000e-02, residual_norm=6.904802e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=4
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=9.103333e+00, max_abs=8.623397e+00
+[NEWTON LINE SEARCH] iteration=11, step_length=1.000000e+00, residual_norm=2.915823e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=12, finite=True, norm=8.330131e+00, max_abs=7.434350e+00
+[NEWTON LINE SEARCH] iteration=12, step_length=1.000000e+00, residual_norm=8.506227e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=13, finite=True, norm=4.190437e+00, max_abs=3.266362e+00
+[NEWTON LINE SEARCH] iteration=13, step_length=1.000000e+00, residual_norm=5.836254e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=14, finite=True, norm=2.353726e+00, max_abs=1.772854e+00
+[NEWTON LINE SEARCH] iteration=14, step_length=1.000000e+00, residual_norm=1.743865e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=15, finite=True, norm=7.227379e-01, max_abs=4.536370e-01
+[NEWTON LINE SEARCH] iteration=15, step_length=1.000000e+00, residual_norm=2.336750e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=16, finite=True, norm=5.832566e-02, max_abs=3.049572e-02
+[NEWTON LINE SEARCH] iteration=16, step_length=1.000000e+00, residual_norm=4.769996e-05, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=17, finite=True, norm=1.604646e-03, max_abs=9.497151e-04
+[NEWTON LINE SEARCH] iteration=17, step_length=1.000000e+00, residual_norm=3.550790e-08, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=18, finite=True, norm=7.949568e-07, max_abs=3.751935e-07
+[NEWTON LINE SEARCH] iteration=18, step_length=1.000000e+00, residual_norm=1.492722e-13, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[LOAD CONTINUATION PREDICTOR ACCEPTED] path=isochoric_then_volume, fraction=0.875000, next_fraction=1.000000, predictor=previous
+[LOAD CONTINUATION] path=isochoric_then_volume, accepted_fraction=1.000000, next_step=1.250000e-01
+[INITIAL STATE] solution_size=5043, finite=True, min=-1.024287e+03, max=6.505943e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.274463e+02, max_abs=2.174895e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.250000e-01, residual_norm=2.881041e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=6.340612e+01, max_abs=6.072303e+01
+[NEWTON LINE SEARCH] iteration=1, step_length=2.500000e-01, residual_norm=2.318427e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=1.479705e+01, max_abs=1.121190e+01
+[NEWTON LINE SEARCH] iteration=2, step_length=5.000000e-01, residual_norm=1.531972e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=3, finite=True, norm=1.238672e+02, max_abs=7.286741e+01
+[NEWTON LINE SEARCH] iteration=3, step_length=7.812500e-03, residual_norm=1.520806e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=7
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=4, finite=True, norm=1.764676e+01, max_abs=1.392124e+01
+[NEWTON LINE SEARCH] iteration=4, step_length=1.250000e-01, residual_norm=1.345501e+01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=5, finite=True, norm=1.291870e+01, max_abs=8.562084e+00
+[NEWTON LINE SEARCH] iteration=5, step_length=5.000000e-01, residual_norm=8.702787e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=6, finite=True, norm=7.269775e+00, max_abs=5.513384e+00
+[NEWTON LINE SEARCH] iteration=6, step_length=1.000000e+00, residual_norm=4.026665e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=7, finite=True, norm=1.165510e+00, max_abs=8.783474e-01
+[NEWTON LINE SEARCH] iteration=7, step_length=1.000000e+00, residual_norm=1.873791e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=8, finite=True, norm=3.656289e+01, max_abs=3.438215e+01
+[NEWTON LINE SEARCH] iteration=8, step_length=1.250000e-01, residual_norm=1.464158e+00, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=9, finite=True, norm=2.364731e+00, max_abs=1.741354e+00
+[NEWTON LINE SEARCH] iteration=9, step_length=5.000000e-01, residual_norm=9.619384e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=10, finite=True, norm=1.053041e+01, max_abs=9.072791e+00
+[NEWTON LINE SEARCH] iteration=10, step_length=1.250000e-01, residual_norm=8.733051e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=3
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=11, finite=True, norm=1.532537e+01, max_abs=1.457227e+01
+[NEWTON LINE SEARCH] iteration=11, step_length=5.000000e-01, residual_norm=6.284767e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=12, finite=True, norm=1.233770e+01, max_abs=1.112596e+01
+[NEWTON LINE SEARCH] iteration=12, step_length=2.500000e-01, residual_norm=5.058822e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=2
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=13, finite=True, norm=3.626588e+00, max_abs=2.153812e+00
+[NEWTON LINE SEARCH] iteration=13, step_length=5.000000e-01, residual_norm=2.845917e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=14, finite=True, norm=8.314269e+00, max_abs=7.506388e+00
+[NEWTON LINE SEARCH] iteration=14, step_length=5.000000e-01, residual_norm=1.674485e-01, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=15, finite=True, norm=7.618129e+00, max_abs=6.619418e+00
+[NEWTON LINE SEARCH] iteration=15, step_length=5.000000e-01, residual_norm=9.447369e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=1
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=16, finite=True, norm=3.265528e+00, max_abs=2.843591e+00
+[NEWTON LINE SEARCH] iteration=16, step_length=1.000000e+00, residual_norm=2.714947e-02, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=17, finite=True, norm=1.029674e+00, max_abs=8.725026e-01
+[NEWTON LINE SEARCH] iteration=17, step_length=1.000000e+00, residual_norm=6.908585e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=18, finite=True, norm=5.922968e-01, max_abs=5.164865e-01
+[NEWTON LINE SEARCH] iteration=18, step_length=1.000000e+00, residual_norm=2.567161e-03, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=19, finite=True, norm=1.679719e-01, max_abs=1.357731e-01
+[NEWTON LINE SEARCH] iteration=19, step_length=1.000000e+00, residual_norm=7.068011e-05, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=20, finite=True, norm=2.225590e-03, max_abs=1.610526e-03
+[NEWTON LINE SEARCH] iteration=20, step_length=1.000000e+00, residual_norm=4.459790e-08, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=21, finite=True, norm=1.340248e-06, max_abs=8.611977e-07
+[NEWTON LINE SEARCH] iteration=21, step_length=1.000000e+00, residual_norm=1.452552e-13, positive_measure=9.552319e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Checkpoint saved: /scratch4/vr80beqo/rve_phase4_compression_20261103/data/rve_phase4_compression_work/samples/v001_f000292.npz
+Retry provenance saved: /scratch4/vr80beqo/rve_phase4_compression_20261103/data/v001_f000292.retry_provenance.json
