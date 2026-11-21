@@ -108,13 +108,25 @@ def train(
 
 
 def load_model(ckpt, device="cpu"):
-    model = HyperelasticNN().to(device).double()
     checkpoint = torch.load(
         ckpt,
         map_location=device,
         weights_only=True,
     )
-    model.load_state_dict(checkpoint["state_dict"])
+    state = dict(checkpoint["state_dict"])
+    legacy = "feature_mean" not in state
+    model = HyperelasticNN(
+        reference_correction="affine" if legacy else "pressure"
+    ).to(device).double()
+    # Phase 1 checkpoints predate the input-normalization buffers added for
+    # Phase 2 and the later objective reference correction. They were trained
+    # on raw invariant features (identity normalization) with the affine
+    # reference correction, so both are restored for legacy checkpoints.
+    for name, buffer in model.state_dict().items():
+        if name.endswith(("_mean", "_scale")) and name not in state:
+            state[name] = (torch.zeros_like(buffer) if name.endswith("_mean")
+                           else torch.ones_like(buffer))
+    model.load_state_dict(state)
     model.eval()
     return model
 

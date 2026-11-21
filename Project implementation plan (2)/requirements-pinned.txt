@@ -1,0 +1,5 @@
+# Exact versions of the cluster production environment (Phase 7 runs).
+# PyTorch is installed separately; CPU wheel: pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+ngsolve==6.2.2608
+numpy==2.4.6
+matplotlib==3.11.0

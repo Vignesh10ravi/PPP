@@ -1,0 +1,79 @@
+#!/bin/bash
+#PBS -N ppp_tests
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=16GB
+#PBS -l walltime=03:00:00
+#PBS -o /scratch/vr80beqo/ppp_tests.out
+#PBS -e /scratch/vr80beqo/ppp_tests.err
+#
+# Verification suite on the TU Freiberg cluster.
+# Submit one batch at a time, for example: qsub -v MODE=fe run_tests.pbs
+# MODE = fe | rve | surrogate | extended | p2-v9, or combined quick | full | audit
+# Adjust the artifact paths below if your scratch layout differs.
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+# The NGSolve environment historically did not include PyTorch. Reuse the
+# separate CPU-training environment for torch and its Python dependencies
+# without replacing the NGSolve installation.
+TORCH_SITE="${SCRATCH:-/scratch/$USER}/venvs/ppp-rve-train-cpu/lib/python3.11/site-packages"
+if ! python -c 'import torch' >/dev/null 2>&1; then
+  if [[ -d "$TORCH_SITE" ]]; then
+    export PYTHONPATH="$TORCH_SITE${PYTHONPATH:+:$PYTHONPATH}"
+  else
+    echo "PyTorch is missing from ppp-ngsolve and was not found at $TORCH_SITE" >&2
+    exit 2
+  fi
+fi
+
+python - <<'PY'
+import numpy, ngsolve, torch
+print("Python environment check:", "NGSolve", ngsolve.__version__,
+      "PyTorch", torch.__version__, "NumPy", numpy.__version__)
+PY
+
+export NGS_NUM_THREADS=4
+export TORCH_NUM_THREADS=4
+
+export PPP_PHASE1_CKPT="$PWD/checkpoints/phase1_validated.pt"
+export PPP_RVE_CKPT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+export PPP_PHASE7_NPZ=/scratch4/vr80beqo/rve_phase7_independent_20261107/data/rve_phase7_independent.npz
+export PPP_PHASE7_MANIFEST=/scratch4/vr80beqo/rve_phase7_independent_20261107/data/rve_phase7_independent.manifest.json
+export PPP_TRAIN_NPZ=/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.npz
+MODE="${MODE:-full}"
+export PPP_LOG_DIR="${SCRATCH:-/scratch/$USER}/ppp_tests_${MODE}_$(date +%Y%m%d_%H%M%S)"
+
+# Check only the artifacts needed by this batch.
+case "$MODE" in
+  quick|full)
+    required=("$PPP_PHASE1_CKPT" "$PPP_RVE_CKPT" "$PPP_PHASE7_NPZ" \
+              "$PPP_PHASE7_MANIFEST" "$PPP_TRAIN_NPZ") ;;
+  audit)
+    export PPP_PILOT_NPZ=/scratch4/vr80beqo/rve_phase2_solver_revision_oR3pd5/data/rve_phase2.npz
+    required=("$PPP_PHASE1_CKPT" "$PPP_RVE_CKPT" "$PPP_PHASE7_NPZ" \
+              "$PPP_PHASE7_MANIFEST" "$PPP_TRAIN_NPZ" "$PPP_PILOT_NPZ") ;;
+  fe) required=("$PPP_PHASE1_CKPT" "$PPP_RVE_CKPT") ;;
+  rve) required=("") ;;
+  surrogate) required=("$PPP_RVE_CKPT" "$PPP_PHASE7_NPZ" \
+                      "$PPP_PHASE7_MANIFEST" "$PPP_TRAIN_NPZ") ;;
+  extended) required=("$PPP_RVE_CKPT") ;;
+  p2-v9)
+    export PPP_PILOT_NPZ=/scratch4/vr80beqo/rve_phase2_solver_revision_oR3pd5/data/rve_phase2.npz
+    required=("$PPP_PILOT_NPZ") ;;
+  *) echo "Unknown MODE=$MODE" >&2; exit 2 ;;
+esac
+
+for required_file in "${required[@]}"; do
+  [[ -z "$required_file" ]] && continue
+  if [[ ! -s "$required_file" ]]; then
+    echo "Required test input is missing or empty: $required_file" >&2
+    exit 2
+  fi
+done
+
+bash ./run_tests.sh "$MODE"

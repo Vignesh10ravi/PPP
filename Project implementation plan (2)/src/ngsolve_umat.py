@@ -7,6 +7,8 @@ Provides:
     → (gfu, residual_history)
 """
 import os
+import time
+from collections import defaultdict
 
 import numpy as np
 import torch
@@ -17,6 +19,37 @@ from ngsolve import (
     Mesh, CF, specialcf, dx, BND, InnerProduct, Integrate
 )
 from ngsolve.comp import IntegrationRuleSpace
+
+# ── built-in timing of the bridge (computation-time study) ─────────────────
+TIMINGS = defaultdict(float)
+CALLS = defaultdict(int)
+
+
+def reset_timings():
+    """Clear the accumulated wall-clock timings of the bridge."""
+    TIMINGS.clear()
+    CALLS.clear()
+
+
+def get_timings():
+    """Return {stage: (total seconds, number of calls)} accumulated so far."""
+    return {k: (TIMINGS[k], CALLS[k]) for k in TIMINGS}
+
+
+class _timed:
+    """Context manager adding the elapsed wall time to TIMINGS[name]."""
+
+    def __init__(self, name):
+        self.name = name
+
+    def __enter__(self):
+        self.t0 = time.perf_counter()
+
+    def __exit__(self, *exc):
+        TIMINGS[self.name] += time.perf_counter() - self.t0
+        CALLS[self.name] += 1
+        return False
+
 
 # ── autograd stress + tangent ──────────────────────────────────────────────────
 
@@ -120,6 +153,161 @@ def stress_and_tangent(
     return P_flat.detach(), A.detach()
 
 
+def assemble_system(mesh, fes, gfu_current, model, int_order,
+                    context=None, merit_function="residual"):
+    """Assemble the total-Lagrange residual R and consistent stiffness K.
+
+    This is the production assembly used by :func:`solve` at every Newton
+    iteration. It is exposed at module level so that element-level
+    verification tests (e.g. rigid-body zero eigenvalues of an
+    unconstrained element) exercise exactly the same code path.
+
+    Returns (R_full, K, minimum_jacobian, total_energy).
+    """
+    """Assemble global residual R and stiffness K on free DOFs."""
+
+    # ------------------------------------------------------------
+    # One scalar integration-rule space.
+    # All F/P/A data use exactly these same integration points.
+    # ------------------------------------------------------------
+    irs = IntegrationRuleSpace(mesh, order=int_order)
+    irs_dx = dx(intrules=irs.GetIntegrationRules())
+
+    # ------------------------------------------------------------
+    # Deformation gradient
+    # ------------------------------------------------------------
+    gradu = ngs.Grad(gfu_current)
+    F_cf = ngs.Id(3) + gradu
+
+    # 9 scalar values at every integration point
+    fes_F = irs ** 9
+    gf_F = GridFunction(fes_F)
+
+    with _timed("1 F interpolation + gather"):
+        gf_F.Interpolate(F_cf.Reshape((9,)))
+
+    # NGSolve vector spaces are safest to read component-wise.
+    F_components = [
+        gf_F.components[i].vec.FV().NumPy().copy()
+        for i in range(9)
+    ]
+
+    # Convert component-major -> point-major
+    F_np = np.stack(F_components, axis=1)
+    F_np = F_np.reshape(-1, 3, 3)
+
+    if not np.isfinite(F_np).all():
+        raise FloatingPointError("non-finite deformation gradient at quadrature points")
+    jacobian_values = np.linalg.det(F_np)
+    if not np.isfinite(jacobian_values).all():
+        raise FloatingPointError("non-finite Jacobian at quadrature points")
+    minimum_jacobian = float(np.min(jacobian_values))
+    if minimum_jacobian <= 1.0e-8:
+        raise FloatingPointError(
+            "inadmissible quadrature Jacobian: "
+            f"minimum J={minimum_jacobian:.6e}"
+        )
+
+    # ------------------------------------------------------------
+    # PyTorch material evaluation
+    # ------------------------------------------------------------
+    F_t = torch.from_numpy(F_np).to(
+        dtype=torch.float64,
+        device="cpu"
+    )
+
+
+    # Do NOT use no_grad here: tangent needs autograd
+    with _timed("2 pICNN energy, stress, tangent (AD)"):
+        P_t, A_t, W_t = stress_and_tangent(
+            model,
+            F_t,
+            context=context,
+            return_energy=True,
+        )
+    if not torch.isfinite(P_t).all() or not torch.isfinite(A_t).all():
+        raise FloatingPointError("non-finite constitutive stress or tangent")
+
+    P_np = P_t.detach().cpu().numpy()
+    A_np = A_t.detach().cpu().numpy()
+    total_energy = None
+    if merit_function == "energy":
+        gf_W = GridFunction(irs)
+        gf_W.vec.FV().NumPy()[:] = (
+            W_t.detach().cpu().numpy().reshape(-1)
+        )
+        total_energy = float(Integrate(gf_W * irs_dx, mesh))
+
+    # ------------------------------------------------------------
+    # Put P back into an IR GridFunction
+    # ------------------------------------------------------------
+    fes_P = irs ** 9
+    gf_P = GridFunction(fes_P)
+
+    P_flat = P_np.reshape(-1, 9)
+
+    for i in range(9):
+        gf_P.components[i].vec.FV().NumPy()[:] = P_flat[:, i]
+
+    # ------------------------------------------------------------
+    # Put A back into an IR GridFunction
+    # ------------------------------------------------------------
+    with _timed("3 write tangent A to quadrature points"):
+        fes_A = irs ** 81
+        gf_A = GridFunction(fes_A)
+
+        A_flat = A_np.reshape(-1, 81)
+
+        for i in range(81):
+            gf_A.components[i].vec.FV().NumPy()[:] = A_flat[:, i]
+
+    # ------------------------------------------------------------
+    # Global FE trial/test functions
+    # ------------------------------------------------------------
+    u = fes.TrialFunction()
+    v = fes.TestFunction()
+
+    # ------------------------------------------------------------
+    # Residual
+    # ------------------------------------------------------------
+    P_cf = gf_P.Reshape((3, 3))
+
+    lf = LinearForm(fes)
+    lf += InnerProduct(
+        P_cf,
+        ngs.Grad(v)
+    ) * irs_dx
+
+    # Assemble NGSolve forms in a shared-memory task region. The thread
+    # count is controlled by NGS_NUM_THREADS and should match the PBS
+    # ncpus allocation for this job.
+    with ngs.TaskManager(), _timed("4 residual assembly"):
+        lf.Assemble()
+
+    R_full = lf.vec.CreateVector()
+    R_full.data = lf.vec
+
+    # ------------------------------------------------------------
+    # Consistent tangent / stiffness
+    # ------------------------------------------------------------
+    A_cf = gf_A.Reshape((9, 9))
+
+    bf = BilinearForm(fes)
+
+    gradu_trial = ngs.Grad(u).Reshape((9,))
+    gradv_test = ngs.Grad(v).Reshape((9,))
+
+    bf += InnerProduct(
+        gradv_test,
+        A_cf * gradu_trial
+    ) * irs_dx
+
+    with ngs.TaskManager(), _timed("5 stiffness assembly"):
+        bf.Assemble()
+
+    return R_full, bf.mat, minimum_jacobian, total_energy
+
+
 # ── Newton-Raphson solve ───────────────────────────────────────────────────────
 
 def solve(mesh: Mesh, model, bc_cf: CF,
@@ -133,7 +321,10 @@ def solve(mesh: Mesh, model, bc_cf: CF,
           diagnose_tangent_only: bool = False,
           diagnose_tangent_iteration: int = 0,
           integration_order: int | None = None,
-          merit_function: str = "residual"):
+          merit_function: str = "residual",
+          dirichlet_components: dict | None = None,
+          traction_cf: CF | None = None,
+          neumann: str | None = None):
     """
     Total-Lagrange Newton solver for a hyperelastic body.
 
@@ -153,14 +344,35 @@ def solve(mesh: Mesh, model, bc_cf: CF,
     `initial_cf`, when supplied, initializes the displacement throughout the
     mesh before the prescribed boundary values are applied. An affine loading
     field is a useful initial guess for finite-strain Newton solves.
+
+    `dirichlet_components`, e.g. ``{"x": "left", "y": "bottom", "z": "back"}``,
+    constrains individual displacement components (symmetry / minimal support
+    conditions for stress-controlled tests). It replaces `dirichlet`; the
+    prescribed values are taken from `bc_cf` on the constrained components only.
+
+    `traction_cf` with `neumann` adds a dead-load nominal traction
+    ``-int_{neumann} t . v dA`` (reference configuration) to the residual and
+    ``-int t . u dA`` to the potential used by the energy merit function.
     """
     # ── FE space ──────────────────────────────────────────────────────────────
-    fes = VectorH1(mesh, order=order, dirichlet=dirichlet)
+    if dirichlet_components:
+        unknown = set(dirichlet_components) - {"x", "y", "z"}
+        if unknown:
+            raise ValueError(f"dirichlet_components keys must be x, y, z; got {unknown}")
+        fes = VectorH1(
+            mesh, order=order,
+            **{f"dirichlet{k}": v for k, v in dirichlet_components.items()},
+        )
+        dirichlet = "|".join(sorted(set(dirichlet_components.values())))
+    else:
+        fes = VectorH1(mesh, order=order, dirichlet=dirichlet)
     ndof = fes.ndof
 
     # Diagnostic: confirm boundary names exist
     bnd_names = set(mesh.GetBoundaries())
     requested = set(dirichlet.replace("|", " ").split())
+    if neumann is not None:
+        requested |= set(neumann.replace("|", " ").split())
     missing = requested - bnd_names
     if missing:
         raise ValueError(
@@ -214,7 +426,24 @@ def solve(mesh: Mesh, model, bc_cf: CF,
             gfu.Set(initial_cf)
             initial_guess_source = "coefficient_function_interpolation"
     # Apply Dirichlet BC: project bc_cf onto constrained DOFs
-    gfu.Set(bc_cf, definedon=mesh.Boundaries(dirichlet))
+    if dirichlet_components:
+        gf_bc = GridFunction(fes)
+        gf_bc.Set(bc_cf, definedon=mesh.Boundaries(dirichlet))
+        free_mask = np.asarray([bool(b) for b in fes.FreeDofs()], dtype=bool)
+        values = gfu.vec.FV().NumPy()
+        values[~free_mask] = gf_bc.vec.FV().NumPy()[~free_mask]
+    else:
+        gfu.Set(bc_cf, definedon=mesh.Boundaries(dirichlet))
+
+    external_force = None
+    if traction_cf is not None:
+        if neumann is None:
+            raise ValueError("traction_cf requires the neumann boundary name(s)")
+        v_test = fes.TestFunction()
+        lf_ext = LinearForm(fes)
+        lf_ext += InnerProduct(traction_cf, v_test) * ngs.ds(definedon=mesh.Boundaries(neumann))
+        lf_ext.Assemble()
+        external_force = lf_ext.vec
     initial_displacement_norm = float(
         np.linalg.norm(gfu.vec.FV().NumPy())
     )
@@ -226,144 +455,14 @@ def solve(mesh: Mesh, model, bc_cf: CF,
 
     def _residual_and_stiffness(gfu_current):
         """Assemble global residual R and stiffness K on free DOFs."""
-
-        # ------------------------------------------------------------
-        # One scalar integration-rule space.
-        # All F/P/A data use exactly these same integration points.
-        # ------------------------------------------------------------
-        irs = IntegrationRuleSpace(mesh, order=int_order)
-        irs_dx = dx(intrules=irs.GetIntegrationRules())
-
-        # ------------------------------------------------------------
-        # Deformation gradient
-        # ------------------------------------------------------------
-        gradu = ngs.Grad(gfu_current)
-        F_cf = ngs.Id(3) + gradu
-
-        # 9 scalar values at every integration point
-        fes_F = irs ** 9
-        gf_F = GridFunction(fes_F)
-
-        gf_F.Interpolate(F_cf.Reshape((9,)))
-
-        # NGSolve vector spaces are safest to read component-wise.
-        F_components = [
-            gf_F.components[i].vec.FV().NumPy().copy()
-            for i in range(9)
-        ]
-
-        # Convert component-major -> point-major
-        F_np = np.stack(F_components, axis=1)
-        F_np = F_np.reshape(-1, 3, 3)
-
-        if not np.isfinite(F_np).all():
-            raise FloatingPointError("non-finite deformation gradient at quadrature points")
-        jacobian_values = np.linalg.det(F_np)
-        if not np.isfinite(jacobian_values).all():
-            raise FloatingPointError("non-finite Jacobian at quadrature points")
-        minimum_jacobian = float(np.min(jacobian_values))
-        if minimum_jacobian <= 1.0e-8:
-            raise FloatingPointError(
-                "inadmissible quadrature Jacobian: "
-                f"minimum J={minimum_jacobian:.6e}"
-            )
-
-        # ------------------------------------------------------------
-        # PyTorch material evaluation
-        # ------------------------------------------------------------
-        F_t = torch.from_numpy(F_np).to(
-            dtype=torch.float64,
-            device="cpu"
-        )
-
-
-        # Do NOT use no_grad here: tangent needs autograd
-        P_t, A_t, W_t = stress_and_tangent(
-            model,
-            F_t,
-            context=context,
-            return_energy=True,
-        )
-        if not torch.isfinite(P_t).all() or not torch.isfinite(A_t).all():
-            raise FloatingPointError("non-finite constitutive stress or tangent")
-
-        P_np = P_t.detach().cpu().numpy()
-        A_np = A_t.detach().cpu().numpy()
-        total_energy = None
-        if merit_function == "energy":
-            gf_W = GridFunction(irs)
-            gf_W.vec.FV().NumPy()[:] = (
-                W_t.detach().cpu().numpy().reshape(-1)
-            )
-            total_energy = float(Integrate(gf_W * irs_dx, mesh))
-
-        # ------------------------------------------------------------
-        # Put P back into an IR GridFunction
-        # ------------------------------------------------------------
-        fes_P = irs ** 9
-        gf_P = GridFunction(fes_P)
-
-        P_flat = P_np.reshape(-1, 9)
-
-        for i in range(9):
-            gf_P.components[i].vec.FV().NumPy()[:] = P_flat[:, i]
-
-        # ------------------------------------------------------------
-        # Put A back into an IR GridFunction
-        # ------------------------------------------------------------
-        fes_A = irs ** 81
-        gf_A = GridFunction(fes_A)
-
-        A_flat = A_np.reshape(-1, 81)
-
-        for i in range(81):
-            gf_A.components[i].vec.FV().NumPy()[:] = A_flat[:, i]
-
-        # ------------------------------------------------------------
-        # Global FE trial/test functions
-        # ------------------------------------------------------------
-        u = fes.TrialFunction()
-        v = fes.TestFunction()
-
-        # ------------------------------------------------------------
-        # Residual
-        # ------------------------------------------------------------
-        P_cf = gf_P.Reshape((3, 3))
-
-        lf = LinearForm(fes)
-        lf += InnerProduct(
-            P_cf,
-            ngs.Grad(v)
-        ) * irs_dx
-
-        # Assemble NGSolve forms in a shared-memory task region. The thread
-        # count is controlled by NGS_NUM_THREADS and should match the PBS
-        # ncpus allocation for this job.
-        with ngs.TaskManager():
-            lf.Assemble()
-
-        R_full = lf.vec.CreateVector()
-        R_full.data = lf.vec
-
-        # ------------------------------------------------------------
-        # Consistent tangent / stiffness
-        # ------------------------------------------------------------
-        A_cf = gf_A.Reshape((9, 9))
-
-        bf = BilinearForm(fes)
-
-        gradu_trial = ngs.Grad(u).Reshape((9,))
-        gradv_test = ngs.Grad(v).Reshape((9,))
-
-        bf += InnerProduct(
-            gradv_test,
-            A_cf * gradu_trial
-        ) * irs_dx
-
-        with ngs.TaskManager():
-            bf.Assemble()
-
-        return R_full, bf.mat, minimum_jacobian, total_energy
+        R_full, K, minimum_jacobian, total_energy = assemble_system(
+            mesh, fes, gfu_current, model, int_order,
+            context=context, merit_function=merit_function)
+        if external_force is not None:
+            R_full.data -= external_force
+            if total_energy is not None:
+                total_energy -= float(InnerProduct(external_force, gfu_current.vec))
+        return R_full, K, minimum_jacobian, total_energy
 
     # ── Newton loop ───────────────────────────────────────────────────────────
     history = []
@@ -498,9 +597,10 @@ def solve(mesh: Mesh, model, bc_cf: CF,
             break
 
         # Solve K_ff * du = -R_f
-        inv_K = K.Inverse(freedofs=fd, inverse="umfpack")
-        du = gfu.vec.CreateVector()
-        du.data = -inv_K * R
+        with _timed("6 sparse direct solve (UMFPACK)"):
+            inv_K = K.Inverse(freedofs=fd, inverse="umfpack")
+            du = gfu.vec.CreateVector()
+            du.data = -inv_K * R
 
         if diagnose_tangent and iteration == diagnose_tangent_iteration:
             # Compare the assembled stiffness action against a centered finite

@@ -96,10 +96,15 @@ class ICNN(nn.Module):
 class HyperelasticNN(nn.Module):
     """ICNN wrapped with the stress-free, zero-energy reference normalization."""
 
-    def __init__(self, n_ctx=0):
+    def __init__(self, n_ctx=0, reference_correction="pressure"):
         super().__init__()
+        if reference_correction not in ("pressure", "affine"):
+            raise ValueError("reference_correction must be 'pressure' or 'affine'")
         self.net = ICNN(n_in=4, n_ctx=n_ctx)
         self.n_ctx = n_ctx
+        # "pressure": objective correction p_I (det F - 1) used from Phase 5 on.
+        # "affine":   legacy Phase 1 correction P_raw(I) : (F - I).
+        self.reference_correction = reference_correction
         self.register_buffer("feature_mean", torch.zeros(4))
         self.register_buffer("feature_scale", torch.ones(4))
         self.register_buffer("context_mean", torch.zeros(n_ctx))
@@ -189,7 +194,10 @@ class HyperelasticNN(nn.Module):
         if ref is None:
             ref = self.reference(F.dtype, F.device, c)
         psi_I, P_I = ref
+        psi = self._raw(F, c)
+        if self.reference_correction == "affine":
+            I = torch.eye(3, dtype=F.dtype, device=F.device)
+            return psi - psi_I - (P_I * (F - I)).sum((-1, -2))
         reference_pressure = torch.diagonal(P_I).mean()
         J = torch.linalg.det(F)
-        psi = self._raw(F, c)
         return psi - psi_I - reference_pressure * (J - 1.0)
