@@ -46,6 +46,22 @@ elsewhere. New logs are written under `Project implementation plan (2)/test_logs
 
 The GitHub Actions workflow is in `.github/workflows/tests.yml`.
 
+## Reusing archived PBS job scripts
+
+The `.pbs` files are archived job scripts from runs on the TU Freiberg cluster,
+not portable templates. Many assume the project is at
+`$HOME/PPP/Project implementation plan (2)`, use the `teachingq` queue and
+cluster-specific modules or virtual environments, and write to account-specific
+locations under `/scratch/vr80beqo` or `/scratch4/vr80beqo`. Before reusing a
+script, check and adapt its queue and resource directives, code and environment
+paths, and input/output/checkpoint locations. On another cluster, also adapt the
+scheduler directives and software setup to that system.
+
+The `PPP_*` environment variables described above override paths for
+`run_tests.sh` only; they do not change paths embedded in PBS scripts. The PBS
+files are stored at the repository root and in `Project implementation plan (2)/`,
+not in a separate `pbs/` folder.
+
 ## Archived results
 
 Datasets and checkpoints are stored alongside run-specific manifests and
