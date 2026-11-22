@@ -1,5 +1,0 @@
-CPU threads: NGSolve=12, PyTorch=12
-Macro-FE pICNN run: vf=0.05, axial stretch=0.05, load steps=100, maxh=0.25, order=1, integration order=6
-[load continuation] attempt=1, accepted_step=1, increment=5.00000000e-04, axial_stretch=5.00000000e-04
-[solve] ndof=405, free=249, constrained=156
-[solve] initial_guess=coefficient_function_interpolation, displacement_norm=2.598076e-03
