@@ -1,0 +1,13 @@
+
+deformation states:                12
+volume fractions:                 (0.02, 0.08)
+particle radii:                   [0.16838903 0.26730092]
+deterministic regeneration error: 0.000e+00
+minimum determinant:              0.788634
+maximum condition number:         1.529755
+split counts:                     {'train': 7, 'validation': 3, 'test': 2}
+cross-volume split leaks:         0
+different-seed state change:      2.843e-01
+serialization error:              0.000e+00
+serialized tangent shape:         (9, 9)
+P2-V10 PASS: deterministic dataset contract and splits are valid.

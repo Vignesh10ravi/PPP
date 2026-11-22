@@ -1,0 +1,7 @@
+     eps     rel.err
+   1e-02    1.49e-05
+   1e-04    1.49e-09
+   1e-06    1.24e-09
+   1e-08    1.20e-07
+
+V3 PASS: autograd tangent matches central difference near machine-limited optimum.

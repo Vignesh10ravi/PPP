@@ -1,0 +1,34 @@
+{
+ "elements": 399,
+ "order": 1,
+ "quadrature_points": 18354,
+ "newton_iterations": 3,
+ "wall_seconds": 5.6566665360001025,
+ "stages": {
+  "1 F interpolation + gather": {
+   "seconds": 0.03475068400030068,
+   "calls": 7
+  },
+  "2 pICNN energy, stress, tangent (AD)": {
+   "seconds": 4.6019950439999775,
+   "calls": 7
+  },
+  "3 write tangent A to quadrature points": {
+   "seconds": 0.3920594599994729,
+   "calls": 7
+  },
+  "4 residual assembly": {
+   "seconds": 0.010869004000142013,
+   "calls": 7
+  },
+  "5 stiffness assembly": {
+   "seconds": 0.45091731499951493,
+   "calls": 7
+  },
+  "6 sparse direct solve (UMFPACK)": {
+   "seconds": 0.004275895000318997,
+   "calls": 3
+  }
+ },
+ "threads": 1
+}

@@ -1,0 +1,347 @@
+{
+  "phase7_independent": {
+    "n_records": 531,
+    "models": {
+      "frozen": {
+        "energy_nrmse_training_scale": 0.0005329978156240612,
+        "stress_nrmse_training_scale": 0.0010161400772688697,
+        "groups": {
+          "ALL": {
+            "n": 531,
+            "pressure_rel_err_median_pct": 0.02509578492789604,
+            "deviatoric_rel_err_median_pct": 83.09725577055171,
+            "deviatoric_rel_err_mean_pct": 587.7093636459326,
+            "deviatoric_rel_err_p90_pct": 1929.5614331178363,
+            "rms_pressure_ref": 4527.687747643269,
+            "rms_deviator_norm_ref": 0.7882482918767998,
+            "rms_deviator_error": 3.674226621795682,
+            "deviator_error_over_stress_scale": 0.0015055332236482157
+          },
+          "compression J<0.7": {
+            "n": 150,
+            "pressure_rel_err_median_pct": 0.014451413429307638,
+            "deviatoric_rel_err_median_pct": 75.89776594508236,
+            "deviatoric_rel_err_mean_pct": 74.17102510762548,
+            "deviatoric_rel_err_p90_pct": 81.35510765093521,
+            "rms_pressure_ref": 4559.4097342962605,
+            "rms_deviator_norm_ref": 1.1907592335403163,
+            "rms_deviator_error": 0.9020787819635905,
+            "deviator_error_over_stress_scale": 0.00036963141264557053
+          },
+          "expansion J>1.4": {
+            "n": 153,
+            "pressure_rel_err_median_pct": 0.02863539054287163,
+            "deviatoric_rel_err_median_pct": 1557.3827332260194,
+            "deviatoric_rel_err_mean_pct": 1756.6818338801693,
+            "deviatoric_rel_err_p90_pct": 2920.746953089416,
+            "rms_pressure_ref": 6773.985573401895,
+            "rms_deviator_norm_ref": 0.35655047949269775,
+            "rms_deviator_error": 6.710262594429263,
+            "deviator_error_over_stress_scale": 0.0027495645520035413
+          },
+          "intermediate": {
+            "n": 201,
+            "pressure_rel_err_median_pct": 0.05546757074545051,
+            "deviatoric_rel_err_median_pct": 80.002696466962,
+            "deviatoric_rel_err_mean_pct": 149.34608338553767,
+            "deviatoric_rel_err_p90_pct": 370.35534267120295,
+            "rms_pressure_ref": 1926.950683968091,
+            "rms_deviator_norm_ref": 0.6653736090341338,
+            "rms_deviator_error": 0.866223183241445,
+            "deviator_error_over_stress_scale": 0.0003549393969681036
+          },
+          "near-isochoric |J-1|<0.02": {
+            "n": 27,
+            "pressure_rel_err_median_pct": 0.9050407435297614,
+            "deviatoric_rel_err_median_pct": 79.58917786057447,
+            "deviatoric_rel_err_mean_pct": 79.8938883587939,
+            "deviatoric_rel_err_p90_pct": 98.87760898353446,
+            "rms_pressure_ref": 88.317036884419,
+            "rms_deviator_norm_ref": 0.5710677811003726,
+            "rms_deviator_error": 0.4853996335646511,
+            "deviator_error_over_stress_scale": 0.0001988949921442515
+          }
+        }
+      },
+      "shear_adapted": {
+        "energy_nrmse_training_scale": 0.000464300718002541,
+        "stress_nrmse_training_scale": 0.0009324922671738718,
+        "groups": {
+          "ALL": {
+            "n": 531,
+            "pressure_rel_err_median_pct": 0.025545321497664537,
+            "deviatoric_rel_err_median_pct": 83.53783115664685,
+            "deviatoric_rel_err_mean_pct": 533.146335244964,
+            "deviatoric_rel_err_p90_pct": 1744.337798337238,
+            "rms_pressure_ref": 4527.687747643269,
+            "rms_deviator_norm_ref": 0.7882482918767998,
+            "rms_deviator_error": 3.334421449823615,
+            "deviator_error_over_stress_scale": 0.0013662963096983036
+          },
+          "compression J<0.7": {
+            "n": 150,
+            "pressure_rel_err_median_pct": 0.0050527690405754114,
+            "deviatoric_rel_err_median_pct": 78.7372477588864,
+            "deviatoric_rel_err_mean_pct": 77.2755455741698,
+            "deviatoric_rel_err_p90_pct": 83.61898055101337,
+            "rms_pressure_ref": 4559.4097342962605,
+            "rms_deviator_norm_ref": 1.1907592335403163,
+            "rms_deviator_error": 0.9367192281146378,
+            "deviator_error_over_stress_scale": 0.0003838255133178123
+          },
+          "expansion J>1.4": {
+            "n": 153,
+            "pressure_rel_err_median_pct": 0.02850722136768972,
+            "deviatoric_rel_err_median_pct": 1422.4022337756019,
+            "deviatoric_rel_err_mean_pct": 1591.832298553969,
+            "deviatoric_rel_err_p90_pct": 2635.205960559163,
+            "rms_pressure_ref": 6773.985573401895,
+            "rms_deviator_norm_ref": 0.35655047949269775,
+            "rms_deviator_error": 6.078684964908477,
+            "deviator_error_over_stress_scale": 0.00249077237546332
+          },
+          "intermediate": {
+            "n": 201,
+            "pressure_rel_err_median_pct": 0.05680194823259541,
+            "deviatoric_rel_err_median_pct": 61.893816362546026,
+            "deviatoric_rel_err_mean_pct": 131.0945333443927,
+            "deviatoric_rel_err_p90_pct": 325.2347459524389,
+            "rms_pressure_ref": 1926.950683968091,
+            "rms_deviator_norm_ref": 0.6653736090341338,
+            "rms_deviator_error": 0.7570214760362333,
+            "deviator_error_over_stress_scale": 0.0003101934367430913
+          },
+          "near-isochoric |J-1|<0.02": {
+            "n": 27,
+            "pressure_rel_err_median_pct": 0.5064807761334612,
+            "deviatoric_rel_err_median_pct": 58.53984309994983,
+            "deviatoric_rel_err_mean_pct": 59.59367770260238,
+            "deviatoric_rel_err_p90_pct": 76.32808098226005,
+            "rms_pressure_ref": 88.317036884419,
+            "rms_deviator_norm_ref": 0.5710677811003726,
+            "rms_deviator_error": 0.36686214893396285,
+            "deviator_error_over_stress_scale": 0.00015032364918447178
+          }
+        }
+      }
+    }
+  },
+  "fresh_holdout": {
+    "n_records": 72,
+    "models": {
+      "frozen": {
+        "energy_nrmse_training_scale": 0.00033078489528179145,
+        "stress_nrmse_training_scale": 0.0007983878161462338,
+        "groups": {
+          "ALL": {
+            "n": 72,
+            "pressure_rel_err_median_pct": 0.030857058411133627,
+            "deviatoric_rel_err_median_pct": 71.37121891926033,
+            "deviatoric_rel_err_mean_pct": 460.6564368301677,
+            "deviatoric_rel_err_p90_pct": 1875.907429256744,
+            "rms_pressure_ref": 3830.600737856853,
+            "rms_deviator_norm_ref": 0.7199515161649545,
+            "rms_deviator_error": 2.728587375613537,
+            "deviator_error_over_stress_scale": 0.001118052687127286
+          },
+          "compression J<0.7": {
+            "n": 18,
+            "pressure_rel_err_median_pct": 0.014414437871010854,
+            "deviatoric_rel_err_median_pct": 63.22377988940866,
+            "deviatoric_rel_err_mean_pct": 62.91473380023196,
+            "deviatoric_rel_err_p90_pct": 71.86123746765237,
+            "rms_pressure_ref": 3838.6509133209147,
+            "rms_deviator_norm_ref": 1.0575777608830823,
+            "rms_deviator_error": 0.6434101828649531,
+            "deviator_error_over_stress_scale": 0.0002636406260274022
+          },
+          "expansion J>1.4": {
+            "n": 15,
+            "pressure_rel_err_median_pct": 0.024061157955698534,
+            "deviatoric_rel_err_median_pct": 1892.9034070722978,
+            "deviatoric_rel_err_mean_pct": 1922.5678946554503,
+            "deviatoric_rel_err_p90_pct": 2888.9858537756345,
+            "rms_pressure_ref": 6958.0611853086675,
+            "rms_deviator_norm_ref": 0.3097084389120554,
+            "rms_deviator_error": 5.868406551121981,
+            "deviator_error_over_stress_scale": 0.002404609715736878
+          },
+          "intermediate": {
+            "n": 36,
+            "pressure_rel_err_median_pct": 0.062179462010125565,
+            "deviatoric_rel_err_median_pct": 59.26742317266611,
+            "deviatoric_rel_err_mean_pct": 85.13403394390788,
+            "deviatoric_rel_err_p90_pct": 189.88557804849177,
+            "rms_pressure_ref": 1343.9541630108768,
+            "rms_deviator_norm_ref": 0.6382981328591889,
+            "rms_deviator_error": 0.5726038945689884,
+            "deviator_error_over_stress_scale": 0.0002346273858422636
+          },
+          "near-isochoric |J-1|<0.02": {
+            "n": 3,
+            "pressure_rel_err_median_pct": 1.399188876830042,
+            "deviatoric_rel_err_median_pct": 41.988193216940864,
+            "deviatoric_rel_err_mean_pct": 43.81820051848795,
+            "deviatoric_rel_err_p90_pct": 51.38110641978244,
+            "rms_pressure_ref": 70.5159772231389,
+            "rms_deviator_norm_ref": 0.6003411285138822,
+            "rms_deviator_error": 0.2742220358249197,
+            "deviator_error_over_stress_scale": 0.0001123638871760986
+          }
+        }
+      },
+      "shear_adapted": {
+        "energy_nrmse_training_scale": 0.000333470338930328,
+        "stress_nrmse_training_scale": 0.0008283943399247342,
+        "groups": {
+          "ALL": {
+            "n": 72,
+            "pressure_rel_err_median_pct": 0.056231960808605125,
+            "deviatoric_rel_err_median_pct": 74.19771742685879,
+            "deviatoric_rel_err_mean_pct": 416.8709390697272,
+            "deviatoric_rel_err_p90_pct": 1709.7602893817857,
+            "rms_pressure_ref": 3830.600737856853,
+            "rms_deviator_norm_ref": 0.7199515161649545,
+            "rms_deviator_error": 2.472638983965159,
+            "deviator_error_over_stress_scale": 0.0010131765194788046
+          },
+          "compression J<0.7": {
+            "n": 18,
+            "pressure_rel_err_median_pct": 0.006472667941624773,
+            "deviatoric_rel_err_median_pct": 67.53612578590574,
+            "deviatoric_rel_err_mean_pct": 67.24312307614571,
+            "deviatoric_rel_err_p90_pct": 75.22655435769495,
+            "rms_pressure_ref": 3838.6509133209147,
+            "rms_deviator_norm_ref": 1.0575777608830823,
+            "rms_deviator_error": 0.6911795758297947,
+            "deviator_error_over_stress_scale": 0.0002832143800673553
+          },
+          "expansion J>1.4": {
+            "n": 15,
+            "pressure_rel_err_median_pct": 0.01864984187044729,
+            "deviatoric_rel_err_median_pct": 1726.2938814685672,
+            "deviatoric_rel_err_mean_pct": 1740.5651141736244,
+            "deviatoric_rel_err_p90_pct": 2597.97667611077,
+            "rms_pressure_ref": 6958.0611853086675,
+            "rms_deviator_norm_ref": 0.3097084389120554,
+            "rms_deviator_error": 5.311348109567523,
+            "deviator_error_over_stress_scale": 0.0021763521590856616
+          },
+          "intermediate": {
+            "n": 36,
+            "pressure_rel_err_median_pct": 0.12295261846994918,
+            "deviatoric_rel_err_median_pct": 52.41307761041681,
+            "deviatoric_rel_err_mean_pct": 72.45512177436207,
+            "deviatoric_rel_err_p90_pct": 158.30521044549877,
+            "rms_pressure_ref": 1343.9541630108768,
+            "rms_deviator_norm_ref": 0.6382981328591889,
+            "rms_deviator_error": 0.4815269074528002,
+            "deviator_error_over_stress_scale": 0.00019730812273535477
+          },
+          "near-isochoric |J-1|<0.02": {
+            "n": 3,
+            "pressure_rel_err_median_pct": 0.6602188385261906,
+            "deviatoric_rel_err_median_pct": 27.563000355139604,
+            "deviatoric_rel_err_mean_pct": 29.156767056114756,
+            "deviatoric_rel_err_p90_pct": 34.82297365792947,
+            "rms_pressure_ref": 70.5159772231389,
+            "rms_deviator_norm_ref": 0.6003411285138822,
+            "rms_deviator_error": 0.18373401446477672,
+            "deviator_error_over_stress_scale": 7.528595581178212e-05
+          }
+        }
+      }
+    }
+  },
+  "shear_final_holdout": {
+    "n_records": 12,
+    "models": {
+      "frozen": {
+        "energy_nrmse_training_scale": 1.9450517127493023e-06,
+        "stress_nrmse_training_scale": 9.612459383705592e-06,
+        "groups": {
+          "ALL": {
+            "n": 12,
+            "pressure_rel_err_median_pct": 12421.899016781055,
+            "deviatoric_rel_err_median_pct": 55.42631793922579,
+            "deviatoric_rel_err_mean_pct": 58.96757523474597,
+            "deviatoric_rel_err_p90_pct": 75.42561806980565,
+            "rms_pressure_ref": 0.00017724130402659648,
+            "rms_deviator_norm_ref": 0.10146563649937496,
+            "rms_deviator_error": 0.06284026698964919,
+            "deviator_error_over_stress_scale": 2.574912205322922e-05
+          },
+          "near-isochoric |J-1|<0.02": {
+            "n": 12,
+            "pressure_rel_err_median_pct": 12421.899016781055,
+            "deviatoric_rel_err_median_pct": 55.42631793922579,
+            "deviatoric_rel_err_mean_pct": 58.96757523474597,
+            "deviatoric_rel_err_p90_pct": 75.42561806980565,
+            "rms_pressure_ref": 0.00017724130402659648,
+            "rms_deviator_norm_ref": 0.10146563649937496,
+            "rms_deviator_error": 0.06284026698964919,
+            "deviator_error_over_stress_scale": 2.574912205322922e-05
+          }
+        }
+      },
+      "shear_adapted": {
+        "energy_nrmse_training_scale": 1.3521680511385354e-06,
+        "stress_nrmse_training_scale": 7.200435853020124e-06,
+        "groups": {
+          "ALL": {
+            "n": 12,
+            "pressure_rel_err_median_pct": 11150.417695944463,
+            "deviatoric_rel_err_median_pct": 37.16070649658917,
+            "deviatoric_rel_err_mean_pct": 40.3237464311412,
+            "deviatoric_rel_err_p90_pct": 54.59555550897661,
+            "rms_pressure_ref": 0.00017724130402659648,
+            "rms_deviator_norm_ref": 0.10146563649937496,
+            "rms_deviator_error": 0.04384682582342778,
+            "deviator_error_over_stress_scale": 1.7966462013283497e-05
+          },
+          "near-isochoric |J-1|<0.02": {
+            "n": 12,
+            "pressure_rel_err_median_pct": 11150.417695944463,
+            "deviatoric_rel_err_median_pct": 37.16070649658917,
+            "deviatoric_rel_err_mean_pct": 40.3237464311412,
+            "deviatoric_rel_err_p90_pct": 54.59555550897661,
+            "rms_pressure_ref": 0.00017724130402659648,
+            "rms_deviator_norm_ref": 0.10146563649937496,
+            "rms_deviator_error": 0.04384682582342778,
+            "deviator_error_over_stress_scale": 1.7966462013283497e-05
+          }
+        }
+      }
+    }
+  },
+  "small_strain_moduli": {
+    "frozen": {
+      "0.02": {
+        "mu_eff": 1.5264095192532887,
+        "K_eff": 10230.91200648227
+      },
+      "0.05": {
+        "mu_eff": 1.7311993392691267,
+        "K_eff": 10360.903070873968
+      },
+      "0.10": {
+        "mu_eff": 2.1473924832983387,
+        "K_eff": 10872.936615170684
+      }
+    },
+    "shear_adapted": {
+      "0.02": {
+        "mu_eff": 1.3494077302661809,
+        "K_eff": 10167.007859881192
+      },
+      "0.05": {
+        "mu_eff": 1.527113085810763,
+        "K_eff": 10478.377892946603
+      },
+      "0.10": {
+        "mu_eff": 1.891689972524594,
+        "K_eff": 10940.917952843824
+      }
+    }
+  }
+}

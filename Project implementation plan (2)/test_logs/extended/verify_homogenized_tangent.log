@@ -1,0 +1,78 @@
+P2-V6: equilibrating the base RVE
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.320704e-03, max=1.304297e-03
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+RVE Newton  0: |R| = 1.122e-03
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.544385e+03, max_abs=1.554241e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.418355e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+RVE Newton  1: |R| = 1.418e-08
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.667896e-06, max_abs=1.598763e-06
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.064738e-14, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+RVE Newton  2: |R| = 2.065e-14
+P2-V6: assembling and condensing the energy Hessian
+P2-V6: checking all nine differentiated stress columns
+  sensitivity column 1/9 checked
+  sensitivity column 2/9 checked
+  sensitivity column 3/9 checked
+  sensitivity column 4/9 checked
+  sensitivity column 5/9 checked
+  sensitivity column 6/9 checked
+  sensitivity column 7/9 checked
+  sensitivity column 8/9 checked
+  sensitivity column 9/9 checked
+P2-V6: checking nonlinear Taylor remainders
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.344164e-03, max=1.365651e-03
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.656253e+03, max_abs=1.622588e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=7.341065e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=1.732469e-05, max_abs=7.881270e-06
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=3.131722e-14, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+  step 1.00e-03: remainder 6.759589e-03
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.332434e-03, max=1.334974e-03
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.600326e+03, max_abs=1.588414e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=2.897775e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=7.182879e-06, max_abs=3.166984e-06
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.178120e-14, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+  step 5.00e-04: remainder 1.689901e-03
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.326569e-03, max=1.319635e-03
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.572357e+03, max_abs=1.571327e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.733511e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=4.414175e-06, max_abs=1.763820e-06
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.081531e-14, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+  step 2.50e-04: remainder 4.224759e-04
+
+mesh elements:                     1472
+macroscopic tangent shape:         (9, 9)
+flattening: row i*3+J, column k*3+L
+energy-gradient stress error:      7.682e-16
+major-symmetry error:              3.328e-16
+independent sensitivity error:     1.313e-15
+max condensed linear residual:     4.995e-13
+final nonlinear residual:          2.065e-14
+Taylor step 1.00e-03: remainder   6.759589e-03
+Taylor step 5.00e-04: remainder   1.689901e-03
+Taylor step 2.50e-04: remainder   4.224759e-04
+Taylor remainder orders:           2.000  2.000
+finest relative Taylor remainder:  1.554e-06
+P2-V6 PASS: exact condensed prescribed-particle tangent is consistent.

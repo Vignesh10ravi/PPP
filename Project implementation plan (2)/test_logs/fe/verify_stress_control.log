@@ -1,0 +1,235 @@
+Materials: mu = 1.0, lambda = 10.0; single trilinear hexahedron, 8-point Gauss rule
+  V7 [St. Venant-Kirchhoff] max|F - Fbar| = 2.22e-16, max rel. Gauss-point stress error = 4.19e-15
+        tangent vs central differences: eps=1e-03: 8.49e-06, eps=1e-04: 8.49e-08, eps=1e-05: 8.50e-10, eps=1e-06: 1.82e-11
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=zero, displacement_norm=0.000000e+00
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.000000e+00  energy = 0.000000000e+00
+[solve line search] iteration=0, step=1.000000e+00, residual=3.601287e-02, min(J_q)=1.002997e+00, backtracks=0, energy=-6.340509033e-03
+  iter  1  |R_free| = 3.601e-02  min(J_q) = 1.002997e+00  energy = -6.340509033e-03
+[solve line search] iteration=1, step=1.000000e+00, residual=2.862507e-04, min(J_q)=1.000229e+00, backtracks=0, energy=-6.457584106e-03
+  iter  2  |R_free| = 2.863e-04  min(J_q) = 1.000229e+00  energy = -6.457584106e-03
+[solve line search] iteration=2, step=1.000000e+00, residual=9.970505e-08, min(J_q)=1.000225e+00, backtracks=0, energy=-6.457607420e-03
+  iter  3  |R_free| = 9.971e-08  min(J_q) = 1.000225e+00  energy = -6.457607420e-03
+[solve line search] iteration=3, step=1.000000e+00, residual=3.931073e-15, min(J_q)=1.000225e+00, backtracks=0, energy=-6.457607420e-03
+  iter  4  |R_free| = 3.931e-15  min(J_q) = 1.000225e+00  energy = -6.457607420e-03
+[solve] Converged in 4 iterations.
+  V8 [St. Venant-Kirchhoff] load step 1/3, t = 0.2000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   3.601e+00     nan
+       1   3.601e-02   2.207e-01    4.73
+       2   2.863e-04   1.217e+00    1.65
+       3   9.971e-08   3.954e-01    2.14
+       4   3.931e-15         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=1.512164e-01
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.000225e+00  energy = -1.900260208e-02
+[solve line search] iteration=0, step=1.000000e+00, residual=2.695045e-02, min(J_q)=9.930189e-01, backtracks=0, energy=-2.443133590e-02
+  iter  1  |R_free| = 2.695e-02  min(J_q) = 9.930189e-01  energy = -2.443133590e-02
+[solve line search] iteration=1, step=1.000000e+00, residual=1.295525e-04, min(J_q)=9.913858e-01, backtracks=0, energy=-2.449170105e-02
+  iter  2  |R_free| = 1.296e-04  min(J_q) = 9.913858e-01  energy = -2.449170105e-02
+[solve line search] iteration=2, step=1.000000e+00, residual=1.797444e-08, min(J_q)=9.913912e-01, backtracks=0, energy=-2.449170557e-02
+  iter  3  |R_free| = 1.797e-08  min(J_q) = 9.913912e-01  energy = -2.449170557e-02
+[solve line search] iteration=3, step=1.000000e+00, residual=4.928191e-16, min(J_q)=9.913912e-01, backtracks=0, energy=-2.449170557e-02
+  iter  4  |R_free| = 4.928e-16  min(J_q) = 9.913912e-01  energy = -2.449170557e-02
+[solve] Converged in 4 iterations.
+  V8 [St. Venant-Kirchhoff] load step 2/3, t = 0.4000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   2.695e+00     nan
+       1   2.695e-02   1.784e-01    4.07
+       2   1.296e-04   1.071e+00    1.66
+       3   1.797e-08   1.525e+00    1.96
+       4   4.928e-16         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=2.842036e-01
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 9.913912e-01  energy = -4.776995466e-02
+[solve line search] iteration=0, step=1.000000e+00, residual=2.175822e-02, min(J_q)=9.773871e-01, backtracks=0, energy=-5.256294614e-02
+  iter  1  |R_free| = 2.176e-02  min(J_q) = 9.773871e-01  energy = -5.256294614e-02
+[solve line search] iteration=1, step=1.000000e+00, residual=7.006537e-05, min(J_q)=9.762984e-01, backtracks=0, energy=-5.259965813e-02
+  iter  2  |R_free| = 7.007e-05  min(J_q) = 9.762984e-01  energy = -5.259965813e-02
+[solve line search] iteration=2, step=1.000000e+00, residual=4.770312e-09, min(J_q)=9.763045e-01, backtracks=0, energy=-5.259965939e-02
+  iter  3  |R_free| = 4.770e-09  min(J_q) = 9.763045e-01  energy = -5.259965939e-02
+[solve line search] iteration=3, step=1.000000e+00, residual=1.443745e-15, min(J_q)=9.763045e-01, backtracks=0, energy=-5.259965939e-02
+  iter  4  |R_free| = 1.444e-15  min(J_q) = 9.763045e-01  energy = -5.259965939e-02
+[solve] Converged in 4 iterations.
+  V8 [St. Venant-Kirchhoff] load step 3/3, t = 0.6000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   2.176e+00     nan
+       1   2.176e-02   1.480e-01    3.76
+       2   7.007e-05   9.717e-01    1.67
+       3   4.770e-09   6.344e+01    1.56
+       4   1.444e-15         nan     nan
+  V8 [St. Venant-Kirchhoff] reference a = 1.1638045225, b = 0.9159096406  (J = 0.976305)
+        FE: max|F11 - a| = 1.11e-15, max|F22,F33 - b| = 1.55e-15, max off-diagonal |F_ij| = 1.73e-16, max|P - diag(t,0,0)|/t = 8.70e-15
+  V7 [neo-Hookean] max|F - Fbar| = 2.22e-16, max rel. Gauss-point stress error = 3.13e-15
+        tangent vs central differences: eps=1e-03: 3.54e-06, eps=1e-04: 3.54e-08, eps=1e-05: 3.54e-10, eps=1e-06: 2.38e-11
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=zero, displacement_norm=0.000000e+00
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.000000e+00  energy = 0.000000000e+00
+[solve line search] iteration=0, step=1.000000e+00, residual=3.017913e-02, min(J_q)=1.002997e+00, backtracks=0, energy=-7.107730257e-03
+  iter  1  |R_free| = 3.018e-02  min(J_q) = 1.002997e+00  energy = -7.107730257e-03
+[solve line search] iteration=1, step=1.000000e+00, residual=1.297106e-04, min(J_q)=1.006260e+00, backtracks=0, energy=-7.180894682e-03
+  iter  2  |R_free| = 1.297e-04  min(J_q) = 1.006260e+00  energy = -7.180894682e-03
+[solve line search] iteration=2, step=1.000000e+00, residual=2.315057e-08, min(J_q)=1.006272e+00, backtracks=0, energy=-7.180900447e-03
+  iter  3  |R_free| = 2.315e-08  min(J_q) = 1.006272e+00  energy = -7.180900447e-03
+[solve line search] iteration=3, step=1.000000e+00, residual=8.712204e-16, min(J_q)=1.006272e+00, backtracks=0, energy=-7.180900447e-03
+  iter  4  |R_free| = 8.712e-16  min(J_q) = 1.006272e+00  energy = -7.180900447e-03
+[solve] Converged in 4 iterations.
+  V8 [neo-Hookean] load step 1/3, t = 0.2000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   3.018e+00     nan
+       1   3.018e-02   1.424e-01    4.55
+       2   1.297e-04   1.376e+00    1.58
+       3   2.315e-08   1.626e+00    1.98
+       4   8.712e-16         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=1.720862e-01
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.006272e+00  energy = -2.185768588e-02
+[solve line search] iteration=0, step=1.000000e+00, residual=3.355863e-02, min(J_q)=1.008870e+00, backtracks=0, energy=-2.993012661e-02
+  iter  1  |R_free| = 3.356e-02  min(J_q) = 1.008870e+00  energy = -2.993012661e-02
+[solve line search] iteration=1, step=1.000000e+00, residual=1.354455e-04, min(J_q)=1.012530e+00, backtracks=0, energy=-3.001847877e-02
+  iter  2  |R_free| = 1.354e-04  min(J_q) = 1.012530e+00  energy = -3.001847877e-02
+[solve line search] iteration=2, step=1.000000e+00, residual=2.634364e-08, min(J_q)=1.012544e+00, backtracks=0, energy=-3.001848563e-02
+  iter  3  |R_free| = 2.634e-08  min(J_q) = 1.012544e+00  energy = -3.001848563e-02
+[solve line search] iteration=3, step=1.000000e+00, residual=1.019473e-15, min(J_q)=1.012544e+00, backtracks=0, energy=-3.001848563e-02
+  iter  4  |R_free| = 1.019e-15  min(J_q) = 1.012544e+00  energy = -3.001848563e-02
+[solve] Converged in 4 iterations.
+  V8 [neo-Hookean] load step 2/3, t = 0.4000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   3.356e+00     nan
+       1   3.356e-02   1.203e-01    5.05
+       2   1.354e-04   1.436e+00    1.55
+       3   2.634e-08   1.469e+00    2.00
+       4   1.019e-15         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=3.625544e-01
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.012544e+00  energy = -6.136580670e-02
+[solve line search] iteration=0, step=1.000000e+00, residual=3.706092e-02, min(J_q)=1.014674e+00, backtracks=0, energy=-7.049832116e-02
+  iter  1  |R_free| = 3.706e-02  min(J_q) = 1.014674e+00  energy = -7.049832116e-02
+[solve line search] iteration=1, step=1.000000e+00, residual=1.354059e-04, min(J_q)=1.018724e+00, backtracks=0, energy=-7.060194780e-02
+  iter  2  |R_free| = 1.354e-04  min(J_q) = 1.018724e+00  energy = -7.060194780e-02
+[solve line search] iteration=2, step=1.000000e+00, residual=2.631781e-08, min(J_q)=1.018738e+00, backtracks=0, energy=-7.060195506e-02
+  iter  3  |R_free| = 2.632e-08  min(J_q) = 1.018738e+00  energy = -7.060195506e-02
+[solve line search] iteration=3, step=1.000000e+00, residual=8.107591e-16, min(J_q)=1.018738e+00, backtracks=0, energy=-7.060195506e-02
+  iter  4  |R_free| = 8.108e-16  min(J_q) = 1.018738e+00  energy = -7.060195506e-02
+[solve] Converged in 4 iterations.
+  V8 [neo-Hookean] load step 3/3, t = 0.6000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   3.706e+00     nan
+       1   3.706e-02   9.858e-02    5.65
+       2   1.354e-04   1.435e+00    1.52
+       3   2.632e-08   1.171e+00    2.02
+       4   8.108e-16         nan     nan
+  V8 [neo-Hookean] reference a = 1.2509756617, b = 0.9024160400  (J = 1.018738)
+        FE: max|F11 - a| = 2.44e-15, max|F22,F33 - b| = 1.67e-15, max off-diagonal |F_ij| = 1.18e-16, max|P - diag(t,0,0)|/t = 7.40e-15
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=zero, displacement_norm=0.000000e+00
+  iter  0  |R_free| = 3.333e-02  min(J_q) = 1.000000e+00  energy = 0.000000000e+00
+[solve line search] iteration=0, step=1.000000e+00, residual=4.232740e-03, min(J_q)=1.001716e+00, backtracks=0, energy=-8.813532284e-04
+  iter  1  |R_free| = 4.233e-03  min(J_q) = 1.001716e+00  energy = -8.813532284e-04
+[solve line search] iteration=1, step=1.000000e+00, residual=5.060131e-06, min(J_q)=1.002192e+00, backtracks=0, energy=-8.832071397e-04
+  iter  2  |R_free| = 5.060e-06  min(J_q) = 1.002192e+00  energy = -8.832071397e-04
+[solve line search] iteration=2, step=1.000000e+00, residual=4.002010e-11, min(J_q)=1.002192e+00, backtracks=0, energy=-8.832071484e-04
+  iter  3  |R_free| = 4.002e-11  min(J_q) = 1.002192e+00  energy = -8.832071484e-04
+[solve] Converged in 3 iterations.
+  V8 [Phase 1 pICNN] load step 1/3, t = 0.0667
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   3.333e-02   3.809e+00     nan
+       1   4.233e-03   2.824e-01    3.26
+       2   5.060e-06   1.563e+00    1.75
+       3   4.002e-11         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=6.354239e-02
+  iter  0  |R_free| = 3.333e-02  min(J_q) = 1.002192e+00  energy = -2.670308508e-03
+[solve line search] iteration=0, step=1.000000e+00, residual=4.581851e-03, min(J_q)=1.003876e+00, backtracks=0, energy=-3.615430638e-03
+  iter  1  |R_free| = 4.582e-03  min(J_q) = 1.003876e+00  energy = -3.615430638e-03
+[solve line search] iteration=1, step=1.000000e+00, residual=5.662907e-06, min(J_q)=1.004394e+00, backtracks=0, energy=-3.617583593e-03
+  iter  2  |R_free| = 5.663e-06  min(J_q) = 1.004394e+00  energy = -3.617583593e-03
+[solve line search] iteration=2, step=1.000000e+00, residual=5.357781e-11, min(J_q)=1.004395e+00, backtracks=0, energy=-3.617583604e-03
+  iter  3  |R_free| = 5.358e-11  min(J_q) = 1.004395e+00  energy = -3.617583604e-03
+[solve] Converged in 3 iterations.
+  V8 [Phase 1 pICNN] load step 2/3, t = 0.1333
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   3.333e-02   4.124e+00     nan
+       1   4.582e-03   2.697e-01    3.37
+       2   5.663e-06   1.671e+00    1.73
+       3   5.358e-11         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=1.310262e-01
+  iter  0  |R_free| = 3.333e-02  min(J_q) = 1.004395e+00  energy = -7.321967223e-03
+[solve line search] iteration=0, step=1.000000e+00, residual=4.971299e-03, min(J_q)=1.006038e+00, backtracks=0, energy=-8.337134439e-03
+  iter  1  |R_free| = 4.971e-03  min(J_q) = 1.006038e+00  energy = -8.337134439e-03
+[solve line search] iteration=1, step=1.000000e+00, residual=6.318079e-06, min(J_q)=1.006603e+00, backtracks=0, energy=-8.339637737e-03
+  iter  2  |R_free| = 6.318e-06  min(J_q) = 1.006603e+00  energy = -8.339637737e-03
+[solve line search] iteration=2, step=1.000000e+00, residual=7.149806e-11, min(J_q)=1.006604e+00, backtracks=0, energy=-8.339637752e-03
+  iter  3  |R_free| = 7.150e-11  min(J_q) = 1.006604e+00  energy = -8.339637752e-03
+[solve] Converged in 3 iterations.
+  V8 [Phase 1 pICNN] load step 3/3, t = 0.2000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   3.333e-02   4.474e+00     nan
+       1   4.971e-03   2.556e-01    3.50
+       2   6.318e-06   1.791e+00    1.71
+       3   7.150e-11         nan     nan
+  V8 [Phase 1 pICNN] reference a = 1.0733839272, b = 0.9682335822  (J = 1.006272)
+        FE: max|F11 - a| = 1.31e-02, max|F22,F33 - b| = 1.14e-02, max off-diagonal |F_ij| = 2.22e-16, max|P - diag(t,0,0)|/t = 5.25e-10
+  V8 [Phase 1 pICNN] t = 0.200: a = 1.086470 (neo-Hooke 1.073384, +17.8 % of the stretch increment), b = 0.962543 (neo-Hooke 0.968234, -17.9 %)
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=zero, displacement_norm=0.000000e+00
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.000000e+00  energy = 0.000000000e+00
+[solve line search] iteration=0, step=1.000000e+00, residual=3.713123e-02, min(J_q)=1.002397e+00, backtracks=0, energy=-8.191997842e-03
+  iter  1  |R_free| = 3.713e-02  min(J_q) = 1.002397e+00  energy = -8.191997842e-03
+[solve line search] iteration=1, step=1.000000e+00, residual=3.845385e-04, min(J_q)=1.006564e+00, backtracks=0, energy=-8.339582452e-03
+  iter  2  |R_free| = 3.845e-04  min(J_q) = 1.006564e+00  energy = -8.339582452e-03
+[solve line search] iteration=2, step=1.000000e+00, residual=2.552784e-07, min(J_q)=1.006604e+00, backtracks=0, energy=-8.339637752e-03
+  iter  3  |R_free| = 2.553e-07  min(J_q) = 1.006604e+00  energy = -8.339637752e-03
+[solve line search] iteration=3, step=1.000000e+00, residual=3.607954e-14, min(J_q)=1.006604e+00, backtracks=0, energy=-8.339637752e-03
+  iter  4  |R_free| = 3.608e-14  min(J_q) = 1.006604e+00  energy = -8.339637752e-03
+[solve] Converged in 4 iterations.
+  V8 [Phase 1 pICNN] load step 1/3, t = 0.2000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   3.713e+00     nan
+       1   3.713e-02   2.789e-01    4.61
+       2   3.845e-04   1.726e+00    1.60
+       3   2.553e-07   5.536e-01    2.16
+       4   3.608e-14         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=2.028116e-01
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.006604e+00  energy = -2.563372197e-02
+[solve line search] iteration=0, step=1.000000e+00, residual=4.763415e-02, min(J_q)=1.007780e+00, backtracks=0, energy=-3.577516585e-02
+  iter  1  |R_free| = 4.763e-02  min(J_q) = 1.007780e+00  energy = -3.577516585e-02
+[solve line search] iteration=1, step=1.000000e+00, residual=5.174568e-04, min(J_q)=1.013172e+00, backtracks=0, energy=-3.600501199e-02
+  iter  2  |R_free| = 5.175e-04  min(J_q) = 1.013172e+00  energy = -3.600501199e-02
+[solve line search] iteration=2, step=1.000000e+00, residual=5.761125e-07, min(J_q)=1.013226e+00, backtracks=0, energy=-3.600513400e-02
+  iter  3  |R_free| = 5.761e-07  min(J_q) = 1.013226e+00  energy = -3.600513400e-02
+[solve line search] iteration=3, step=1.000000e+00, residual=1.567973e-13, min(J_q)=1.013226e+00, backtracks=0, energy=-3.600513400e-02
+  iter  4  |R_free| = 1.568e-13  min(J_q) = 1.013226e+00  energy = -3.600513400e-02
+[solve] Converged in 4 iterations.
+  V8 [Phase 1 pICNN] load step 2/3, t = 0.4000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   4.763e+00     nan
+       1   4.763e-02   2.281e-01    6.10
+       2   5.175e-04   2.152e+00    1.50
+       3   5.761e-07   4.724e-01    2.22
+       4   1.568e-13         nan     nan
+[solve] ndof=24, free=12, constrained=12
+[solve] initial_guess=previous_gridfunction_vector_copy, displacement_norm=4.480137e-01
+  iter  0  |R_free| = 1.000e-01  min(J_q) = 1.013226e+00  energy = -7.485308284e-02
+[solve line search] iteration=0, step=1.000000e+00, residual=6.225233e-02, min(J_q)=1.012647e+00, backtracks=0, energy=-8.752745810e-02
+  iter  1  |R_free| = 6.225e-02  min(J_q) = 1.012647e+00  energy = -8.752745810e-02
+[solve line search] iteration=1, step=1.000000e+00, residual=6.493858e-04, min(J_q)=1.019645e+00, backtracks=0, energy=-8.788323911e-02
+  iter  2  |R_free| = 6.494e-04  min(J_q) = 1.019645e+00  energy = -8.788323911e-02
+[solve line search] iteration=2, step=1.000000e+00, residual=1.154180e-06, min(J_q)=1.019712e+00, backtracks=0, energy=-8.788347791e-02
+  iter  3  |R_free| = 1.154e-06  min(J_q) = 1.019712e+00  energy = -8.788347791e-02
+[solve line search] iteration=3, step=1.000000e+00, residual=4.780370e-13, min(J_q)=1.019713e+00, backtracks=0, energy=-8.788347791e-02
+  iter  4  |R_free| = 4.780e-13  min(J_q) = 1.019713e+00  energy = -8.788347791e-02
+[solve] Converged in 4 iterations.
+  V8 [Phase 1 pICNN] load step 3/3, t = 0.6000
+      k   ||R_free||   r+1/r^2   order   (tol 1e-10)
+       0   1.000e-01   6.225e+00     nan
+       1   6.225e-02   1.676e-01    9.63
+       2   6.494e-04   2.737e+00    1.39
+       3   1.154e-06   3.589e-01    2.32
+       4   4.780e-13         nan     nan
+  V8 [Phase 1 pICNN] reference a = 1.2509756617, b = 0.9024160400  (J = 1.018738)
+        FE: max|F11 - a| = 7.88e-02, max|F22,F33 - b| = 5.34e-02, max off-diagonal |F_ij| = 2.22e-16, max|P - diag(t,0,0)|/t = 1.21e-12
+  V8 [Phase 1 pICNN] t = 0.600: a = 1.329744 (neo-Hooke 1.250976, +31.4 % of the stretch increment), b = 0.875699 (neo-Hooke 0.902416, -27.4 %)
+V7/V8 PASS: full-deformation and stress-controlled single-element responses verified.

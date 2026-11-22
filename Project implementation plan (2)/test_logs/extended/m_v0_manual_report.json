@@ -1,0 +1,47 @@
+{
+  "status": "diagnostic_complete",
+  "checkpoint": "C:\\Users\\vravi\\Downloads\\Project implementation plan\\artifacts\\phase6_phase7_final\\checkpoint\\partial_icnn_phase6_phase7_finetuned.pt",
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "volume_fraction": 0.05,
+  "requested_axial_stretch": 0.01,
+  "diagnostic_load_step": 2,
+  "diagnostic_newton_iteration": 0,
+  "diagnostic_axial_stretch": 0.01,
+  "displacement_order": 1,
+  "integration_order": 4,
+  "merit_function": "energy",
+  "load_predictor": "secant",
+  "prior_converged_load_steps": [
+    {
+      "step": 1,
+      "target_axial_stretch": 0.005,
+      "increment": 0.005,
+      "residual_history": [
+        53.03452698199632,
+        0.8918428282486417,
+        0.01832736370453175,
+        3.119179167519233e-05,
+        7.088892769465402e-10
+      ],
+      "converged": true
+    }
+  ],
+  "residual_before_diagnostic": 107.7374294461813,
+  "tangent_check": {
+    "epsilon": 1e-05,
+    "relative_directional_error": 5.189007998341171e-10,
+    "free_residual_norm": 107.7374294461813,
+    "free_tangent_action_norm": 107.7374294461813,
+    "newton_linear_solve_relative_error": 4.0511077202565005e-16,
+    "global_tangent_spectrum": {
+      "free_dofs": 249,
+      "relative_symmetry_error": 1.2020502454409898e-16,
+      "minimum_eigenvalue_symmetric_part": -1.2950745411704057,
+      "maximum_eigenvalue_symmetric_part": 14552.479329978929,
+      "negative_eigenvalue_count": 1,
+      "minimum_absolute_eigenvalue": 0.4387068772647049,
+      "maximum_absolute_eigenvalue": 14552.479329978929,
+      "absolute_condition_estimate": 33171.30431305803
+    }
+  }
+}

@@ -1,0 +1,1 @@
+python 3.13.18 | torch 2.15.0+cu132 | ngsolve 6.2.2608 | numpy 2.5.3

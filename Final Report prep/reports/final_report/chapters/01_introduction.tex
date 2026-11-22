@@ -1,50 +1,43 @@
-\chapter{Introduction}
-\label{ch:introduction}
+\chapter{Introduction}\label{ch:intro}
 
-Rigid glass beads in nearly incompressible PDMS produce a nonlinear effective
-response. Direct finite-element squared (FE\(^2\)) analysis solves an RVE at
-every macroscopic integration point and load step, which is costly for repeated
-component simulations. An offline constitutive surrogate can reduce this cost
-if it supplies a consistent stress and tangent to the finite-element solver.
+\paragraph{Motivation.} Elastomers filled with stiff particles combine
+the compliance of the matrix with a tunable stiffness. For PDMS with glass
+beads the contrast is extreme: the matrix has a shear modulus of order
+$1\,$MPa and is nearly incompressible, while glass is about five orders of
+magnitude stiffer. The macroscopic response is strongly nonlinear and depends
+on the particle content. A concurrent FE$^2$ simulation resolves this by
+solving a microstructural boundary-value problem at every macroscopic
+integration point and load step~\cite{Kouznetsova2001,Miehe2002}. Its cost scales with the product of the macroscopic and microscopic problem
+sizes. The alternative pursued here is
+\emph{offline} homogenization. Representative volume elements (RVEs) are solved
+once for many prescribed macroscopic deformations, and a surrogate learns the
+homogenized energy so that it can act as a material law in the macroscopic
+solver. For a Newton solver the surrogate must return the energy $\Psibar$
+together with the first Piola stress $\Pbar$ and the consistent tangent $\Abar$,
+and these three quantities must be mutually consistent.
 
-The primary programming objective is therefore to use a PyTorch pICNN inside
-an NGSolve nonlinear solve. Phase~1 trained the pICNN against an analytical
-compressible neo-Hookean reference, computed stress and tangent by automatic
-differentiation, transferred them through an integration-point bridge, and
-verified the resulting equilibrium solve. Only after this proof-of-concept
-gate passed did the project proceed to periodic RVE simulations, mixed
-near-incompressible matrix mechanics, exact rigid-particle kinematics,
-reaction-based homogenization, and a volume-fraction-conditioned surrogate.
-This staged work tests the FE material interface before committing to
-extensive RVE data generation.
-
-\section{Objectives and scope}
-
-The registered objective was to implement a thermodynamically consistent
-neural hyperelastic surrogate for multiscale homogenization of PDMS--glass
-bead composites. The work was organized in two stages:
+\paragraph{Objective.} The project proposal (defended in SS~2026) defined the project as a
+Python implementation of a thermodynamically consistent neural material law
+inside NGSolve, built in two phases:
 \begin{enumerate}
-  \item establish and verify the PyTorch--NGSolve material interface using an
-        analytical neo-Hookean reference problem; and
-  \item construct the periodic particle RVE, generate homogenized data, train
-        the context-dependent surrogate, and deploy it in a macroscopic
-        nonlinear finite-element problem.
+  \item \emph{Phase 1 (proof of concept):} a PyTorch--NGSolve material
+        bridge, trained on a neo-Hookean law and verified on elementary FE problems;
+  \item \emph{Phase 2 (multiscale):} periodic PDMS--glass RVEs,
+        homogenized data generation, training of a volume-fraction-conditioned
+        pICNN, and its deployment in a macroscopic FE simulation.
 \end{enumerate}
 
-The implementation replaced the proposed rigid-stiffness penalty with exact
-rigid kinematics and the proposed finite-difference homogenized tangent with
-symbolic linearization and Schur condensation. Free particle rotation and the
-periodic translation gauge were also verified. First-order macroscopic runs
-with the Phase~6/7 checkpoint reached 5\% stretch at three mesh sizes, while
-the selected shear-adapted checkpoint completed a matched run at one mesh.
-Higher-order stability, quantitative response convergence, and experimental
-validation remain open.
+\paragraph{Contributions and outcome.} All software components were
+implemented and verified. An exactly rigid, freely rotating particle replaced the
+proposed stiffness penalty, and a Schur-condensed energy Hessian replaced the
+finite-difference RVE tangent. The verification covers the guideline's mandatory
+element and single-element tests. A pressure/deviatoric split of the surrogate error
+reveals and explains a large shear error, and an analysis shows that the
+linear-element macroscopic solution is volumetrically locked.
+\Cref{tab:proposal,tab:committee} compare the proposal milestones and the
+committee's recommendations with their outcome.
 
-\section{Report organization}
-
-\Cref{ch:theory} summarizes the physical and mathematical foundations.
-\Cref{ch:provenance,ch:implementation,ch:architecture} document software
-provenance, numerical implementation, and program structure.
-\Cref{ch:results,ch:verification} present results and verification evidence.
-\Cref{ch:performance,ch:manual} cover performance and reproducibility, and
-\cref{ch:conclusion} concludes the report.
+\paragraph{Organization.} The chapters follow the order of the PPP
+guideline: theory, numerical methods, available codes, flowchart, use of AI tools,
+verification, assessment, computation time, conclusion, manual, literature and
+git log.

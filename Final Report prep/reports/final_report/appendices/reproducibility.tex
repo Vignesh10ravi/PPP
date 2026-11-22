@@ -1,83 +1,45 @@
-\chapter{Reproducibility Record}
-\label{app:reproducibility}
+\chapter{Reproducibility Record}\label{app:repro}
 
-\section{Frozen artifacts}
-
-\begin{longtable}{@{}p{0.38\textwidth}p{0.58\textwidth}@{}}
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Frozen artifacts (SHA-256).}
+\begin{tabularx}{\textwidth}{@{}p{3.6cm}X@{}}
 \toprule
-Artifact & Final identifier\\
+Artifact & File and SHA-256\\
 \midrule
-\endhead
-Source revision & \ReportPlaceholder{Git commit unavailable in cluster export}\\
-Phase 1 checkpoint & \texttt{checkpoints/phase1\_validated.pt};
-SHA-256 \texttt{33698842\allowbreak{}02b1e377\allowbreak{}2a9f1ad1\allowbreak{}890a18e1\allowbreak{}706decd5\allowbreak{}9c86148c\allowbreak{}e77cc067\allowbreak{}fd082a9c}\\
-Phase~6/7 parent checkpoint &
-\texttt{partial\_icnn\_phase6\_phase7\_finetuned.pt};
-SHA-256 \texttt{32b0a41f\allowbreak{}dd75f761\allowbreak{}0a2147c0\allowbreak{}53c01399\allowbreak{}8f8cd6cb\allowbreak{}1032ea3e\allowbreak{}8c7d1b04\allowbreak{}5c0fea70}\\
-Selected shear-adapted checkpoint &
-\texttt{partial\_icnn\_phase7\_shear\_adapted.pt};
-SHA-256 \texttt{5c1c6060\allowbreak{}57eb39e2\allowbreak{}ce779ead\allowbreak{}2872d6c0\allowbreak{}6a4d29c5\allowbreak{}a6e423d2\allowbreak{}7dd415a6\allowbreak{}81566a1e}\\
-Augmented training dataset &
-\texttt{rve\_phase6\_phase7\_training.npz};
-SHA-256 \texttt{8553db63\allowbreak{}af311e0a\allowbreak{}7e987c5c\allowbreak{}3f520b49\allowbreak{}ce0f6160\allowbreak{}a880cc03\allowbreak{}14f8d368\allowbreak{}64513336}\\
-Independent Phase~7 dataset &
-\texttt{rve\_phase7\_independent.npz};
-SHA-256 \texttt{54ccf791\allowbreak{}bad2f22e\allowbreak{}d17445d4\allowbreak{}5e150f9f\allowbreak{}55fcfe22\allowbreak{}497f23ce\allowbreak{}3d0cae4e\allowbreak{}ee361985}\\
-Final shear holdout dataset &
-\texttt{rve\_shear\_final\_holdout.npz};
-SHA-256 \ReportPlaceholder{retrieve from final cluster run}\\
-Final shear holdout manifest &
-\texttt{rve\_shear\_final\_holdout.manifest.json};
-SHA-256 \ReportPlaceholder{retrieve from final cluster run}\\
-Final shear evaluation report &
-\texttt{shear\_final\_holdout\_report.json};
-SHA-256 \ReportPlaceholder{retrieve from final cluster run}\\
-Selected-checkpoint macro-FE comparison &
-\texttt{comparison.json};
-SHA-256 \ReportPlaceholder{retrieve from final cluster run}\\
-Dataset manifest configuration &
-SHA-256 \texttt{619b3187\allowbreak{}81e1c17e\allowbreak{}fed61ee6\allowbreak{}952ff642\allowbreak{}ddf750ba\allowbreak{}ca0bdd85\allowbreak{}67ecd4c6\allowbreak{}95e7124b}\\
-P2 macro-FE script, \(h=0.25\) & SHA-256 \texttt{e054697d\allowbreak{}af7d47a3\allowbreak{}f1898cd2\allowbreak{}6a3257eb\allowbreak{}73fb75d3\allowbreak{}7b0d5bb7\allowbreak{}4390e932\allowbreak{}a0d92733}\\
-P2 macro-FE script, \(h=0.20\) & SHA-256 \texttt{de999d4d\allowbreak{}f8638074\allowbreak{}16b3a7f3\allowbreak{}a97f3a9a\allowbreak{}cd090f6d\allowbreak{}b6792723\allowbreak{}ca15b171\allowbreak{}fa02cfa7}\\
-P2 macro-FE script, \(h=0.16\) & SHA-256 \texttt{1d59ba05\allowbreak{}d196fe54\allowbreak{}6287c89f\allowbreak{}a6036487\allowbreak{}06f5c580\allowbreak{}be27f8fa\allowbreak{}caf48207\allowbreak{}26ac088a}\\
-Environment & Python 3.11.7; PyTorch 2.15.0+cpu; NumPy 2.4.6;
-NGSolve 6.2.2608\\
+Phase 1 checkpoint & \code{checkpoints\slash{}phase1\_validated.pt}\newline
+  \code{3369884202b1e3772a9f1ad1890a18e1}\newline\code{706decd59c86148ce77cc067fd082a9c}\\
+Frozen pICNN (Phase 6/7) & \code{rve\_phase7\_augmented\_finetune12\slash{}training\slash{}partial\_icnn\_phase6\_phase7\_finetuned.pt}\newline
+  \code{32b0a41fdd75f7610a2147c053c01399}\newline\code{8f8cd6cb1032ea3e8c7d1b045c0fea70}\\
+Shear-adapted pICNN & \code{rve\_shear\_adaptation\_finetune\_20261115\slash{}partial\_icnn\_phase7\_shear\_adapted.pt}\newline
+  \code{5c1c606057eb39e2ce779ead2872d6c0}\newline\code{6a4d29c5a6e423d27dd415a681566a1e}\\
+Training dataset & \code{rve\_phase6\_phase7\_training.npz}\newline
+  \code{8553db63af311e0a7e987c5c3f520b49}\newline\code{ce0f6160a880cc0314f8d36864513336}\\
+Phase 7 independent dataset & \code{rve\_phase7\_independent.npz}\newline
+  \code{54ccf791bad2f22ed17445d45e150f9f}\newline\code{55fcfe22497f23ce3d0cae4eee361985}\\
+Fresh holdout & \code{rve\_extra\_holdout.npz}\newline
+  \code{f2518241c56c36de79813ce273104964}\newline\code{3e32ac7ea9a3bfbefc23ca58fe6c8d38}\\
+Final shear holdout & \code{rve\_shear\_final\_holdout.npz}\newline
+  \code{5ae077d092c02c82e3dc0ab09e1fb290}\newline\code{6695828faf29dfaa1ff1d4de35ab3968}\\
 \bottomrule
-\end{longtable}
+\end{tabularx}
+\end{table}
 
-\paragraph{Final-run hash collection.}
-The final shear data and macro-FE outputs were generated after the earlier
-cluster export. Their file hashes must be collected from the final run before
-submission; the manifest also records the dataset, configuration, and source
-revision hashes. On the cluster, run:
-\begin{lstlisting}[language=bash]
-sha256sum \
-  /scratch4/vr80beqo/rve_shear_final_holdout_20261116/data/rve_shear_final_holdout.npz \
-  /scratch4/vr80beqo/rve_shear_final_holdout_20261116/data/rve_shear_final_holdout.manifest.json \
-  /scratch4/vr80beqo/rve_shear_final_holdout_20261116/evaluation/shear_final_holdout_report.json \
-  /scratch4/vr80beqo/rve_phase7_macro_fe_selected_shear_20261116/report.json \
-  /scratch4/vr80beqo/rve_phase7_macro_fe_selected_shear_20261116/comparison.json \
-  /scratch/vr80beqo/rve_shear_adaptation_finetune_20261115/partial_icnn_phase7_shear_adapted.pt
-python - <<'PY'
-import json
-path = "/scratch4/vr80beqo/rve_shear_final_holdout_20261116/data/rve_shear_final_holdout.manifest.json"
-manifest = json.load(open(path, encoding="utf-8"))
-for name in ("dataset_sha256", "configuration_sha256", "source_revision_sha256"):
-    print(f"{name}: {manifest.get(name)}")
-PY
-\end{lstlisting}
-
-\section{Git log}
-
-The final report must include the project history required by the PPP
-guideline. Generate the frozen log with:
-\begin{lstlisting}[language=bash]
-git log --date=short \
-  --pretty=format:"%h %ad %an %s" \
-  > reports/final_report/git-log.txt
-\end{lstlisting}
-
-No \texttt{.git} directory or frozen Git-log artifact was present in the
-cluster export. The manifest \texttt{source\_revision\_sha256} values are
-content revisions, not demonstrably Git commits, and are therefore not
-substituted for the required history. The Git log remains a release task.
+\paragraph{Where each result comes from.}
+\begin{itemize}
+  \item \Cref{tab:moduli}: \code{rve\_extra\_small\_strain\_micromechanics\_20261115\slash{}*.json}
+        (direct RVE, Mori--Tanaka); pICNN values computed by \code{figure\_sources\slash{}split\_metrics.py}.
+  \item \Cref{tab:nrmse,tab:split}, \cref{fig:split}: \code{figure\_sources\slash{}split\_metrics.py}
+        and \code{prep\_record\_data.py} on the datasets above.
+  \item \Cref{tab:shear}, \cref{fig:shear}: \code{rve\_shear\_final\_holdout\_20261116\slash{}evaluation\slash{}shear\_final\_holdout\_report.json}.
+  \item \Cref{tab:macro}, \cref{fig:macro}: \code{run.log} and \code{report.json} of
+        \code{rve\_phase7\_macro\_fe\_order1\_energy\_secant12},
+        \code{..\_order1\_energy\_secant40\_h0\{20,16\}\_mem128},
+        \code{..\_order2\_meshstudy\_\{0p5,1\}pct\_h0\{25,20,16\}\_16c},
+        parsed by \code{figure\_sources\slash{}parse\_macro\_logs.py}.
+  \item \Cref{tab:timing}: \code{rve\_extra\_surrogate\_benchmark\_retry\_20261114\slash{}*}; \cref{tab:profile}:
+        \code{benchmarks\slash{}profile\_bridge.py} (outputs in \code{figure\_sources\slash{}data\slash{}bridge\_*.json}).
+  \item \Cref{ch:verification}: test logs written by \code{run\_tests.sh} (\code{test\_logs/}).
+\end{itemize}
+All figures are regenerated by \code{python figure\_sources\slash{}make\_figures.py} from
+the files in \code{figure\_sources\slash{}data\slash{}}.

@@ -1,0 +1,84 @@
+\chapter{Conclusion}\label{ch:conclusion}
+
+\paragraph{Summary.} The project implemented a complete offline multiscale
+pipeline for rigid-particle-reinforced PDMS in Python. \Cref{tab:status} separates
+what was achieved, what was implemented without fully meeting its objective, and
+what is proposed but not implemented.
+
+{\small
+\begin{xltabular}{\textwidth}{@{}p{2.6cm}X@{}}
+\caption{Status of the project components.}\label{tab:status}\\
+\toprule
+Status & Components\\
+\midrule
+\endfirsthead
+\caption[]{\emph{(continued)}}\\
+\toprule
+Status & Components\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Achieved (implemented and verified) &
+  Periodic finite-strain RVE with mixed near-incompressible matrix and exactly
+  rigid, freely rotating particle; reaction-based Hill--Mandel homogenization;
+  exact Schur-condensed homogenized tangent; reproducible, leak-free dataset
+  generation; polyconvex, volume-fraction-conditioned neural energy with objective
+  normalization; PyTorch--NGSolve bridge with energy, stress and full $9\times9$
+  tangent; 26 passing verification tests (\cref{tab:vmatrix}); RVE moduli within
+  $1.1\,\%$ of Mori--Tanaka; median speedup of $5.8\times10^4$ for repeated RVE
+  evaluations in the tested setting (\cref{ch:performance}).\\
+Partially achieved &
+  Surrogate accuracy: accurate in energy and pressure, but not in deviatoric stress
+  (\cref{sec:accuracy}); shear fine-tuning reduced but did not remove the error.
+  Macroscopic application: $P_1$ reaches $5\,\%$ stretch but is locked, $P_2$ reaches
+  $1\,\%$ on two of three meshes (\cref{sec:macro}). No experimental validation.\\
+Proposed (not implemented) &
+  Volumetric--isochoric surrogate with balanced loss and targeted sampling
+  (\cref{sec:proposed}); mixed $u$--$p$ macroscopic formulation (\cref{sec:macro}).\\
+\end{xltabular}
+}
+
+The speedup and the accuracy are separate results: the speedup shows that the
+surrogate is cheap to evaluate, not that its constitutive response is correct.
+
+\paragraph{Main findings.}
+\begin{enumerate}
+  \item The surrogate is accurate in pressure (median error $0.03\,\%$) but not in
+        deviatoric stress (median $76$--$83\,\%$ outside expansion states). Its small-strain shear modulus is
+        $46$--$70\,\%$ too high. The cause is quantified: with $\kappa/\mu=10^4$,
+        volumetric terms dominate the training loss, and deleting the whole
+        deviatoric response changes the stress loss by only $1.5\,\%$. The headline
+        training-scale NRMSE of $\sim10^{-3}$ is correct but blind to this error.
+        Along five loading paths the four paths with a volume change agree with the
+        direct RVE to better than $1\,\%$ in stress, while the simple-shear error is
+        constant from $2.5$ to $10\,\%$ amplitude: a wrong modulus, not a missing
+        nonlinearity (\cref{sec:paths}).
+  \item Shear fine-tuning reduced the shear-holdout error from $59\,\%$ to $40\,\%$ by
+        lowering $\mu_{\mathrm{eff}}$. It did not change the general deviatoric
+        error, consistent with the diagnosis.
+  \item The $P_1$ macroscopic solution to $5\,\%$ stretch is volumetrically locked
+        (energy 25--89 times the $P_2$ value). The $P_2$ solution is plausible but
+        hard to drive beyond $1\,\%$ because of the $\kappa/\mu$ conditioning of a
+        displacement-only formulation.
+  \item The computational bottlenecks are the offline RVE solves (62 single-core
+        hours, poorly balanced across workers) and, online, the Newton iteration
+        count of the stiff macroscopic problem (2005--3084 iterations for $P_1$); the
+        AD tangent dominates only the cost of each iteration (\cref{ch:performance}).
+  \item Testing caught genuine defects that accuracy metrics could not reveal. The
+        Phase~1 network is not frame-indifferent (three negative stiffness
+        eigenvalues, V0d) and its shear modulus is $12\,\%$ too low (V8), hidden behind a
+        $3\,\%$ stress error. The Phase~5 surrogate failed objectivity (S-V1).
+\end{enumerate}
+
+\paragraph{Outlook.} The next steps follow directly from these findings:
+(i) the volumetric--isochoric energy \cref{eq:split-proposed} with the balanced
+loss \cref{eq:loss-proposed}; (ii) sampling restricted to
+physically relevant $J$ with dense isochoric coverage; (iii) a mixed $u$--$p$ or
+$\bar{\bm F}$ macroscopic formulation, re-using the RVE's Taylor--Hood
+implementation, which requires (i) and its own verification (patch test, mesh
+refinement, Newton convergence, comparison with direct RVE solutions); (iv) an analytical or vectorized tangent, which removes
+about 80\,\% of the online cost; and (v) several particles per cell, a random
+microstructure, and finally comparison with experimental PDMS--glass data. None
+of these steps requires changes to the verified RVE, homogenization or bridge
+infrastructure, which is the main durable result of this project.

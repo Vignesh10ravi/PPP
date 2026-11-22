@@ -1,0 +1,239 @@
+\chapter{User Manual}\label{ch:manual}
+
+\section{Installation}
+
+The code is pure Python and runs on Linux, macOS and Windows. A clean virtual
+environment avoids conflicts with installed packages:
+\begin{lstlisting}[language=bash]
+git clone https://github.com/Vignesh10ravi/PPP.git
+cd "PPP/Project implementation plan (2)"
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt        # torch>=2.1, numpy>=1.24, matplotlib>=3.7, ngsolve>=6.2
+\end{lstlisting}
+For bit-comparable results use the versions in \cref{tab:versions}. Thread
+counts are controlled by environment variables:
+\code{NGS\_NUM\_THREADS} for NGSolve assembly and \code{TORCH\_NUM\_THREADS}
+(or \code{--torch-threads}) for PyTorch. All commands are run from the directory
+that contains \code{src\slash{}}, \code{tests\slash{}} and \code{benchmarks\slash{}}, so that Python
+resolves these packages.
+
+\section{Repository layout}
+
+\begin{lstlisting}
+Project implementation plan (2)/
+  src/            library: picnn, ngsolve_umat, rve*, homogenization, training
+  tests/          verification tests V0-V6, P2-V1..P2-V10 (Chapter 7)
+  benchmarks/     macro-FE demo, evaluations, timing (profile_bridge.py)
+  checkpoints/    Phase 1 checkpoints (phase1_validated.pt is the frozen one)
+  reports/logs/   stored Phase 1 test logs
+  *.pbs           PBS scripts of all cluster jobs (one per reported run)
+rve_phase*_*/     stored cluster results: data/, training/, report.json, logs
+cluster_outputs/  complete cluster export (scratch4/...)
+Final Report prep/  report sources, references, guideline
+\end{lstlisting}
+
+\section{Running the verification suite}
+
+The whole suite runs with one command, on Ubuntu as well as on the cluster:
+\begin{lstlisting}[language=bash]
+./run_tests.sh quick     # V0-V8, P2-V1..V5, P2-V10, S-V1   (~5 min, 1 core)
+./run_tests.sh full      # + P2-V6..V8 and M-V0              (~15 min)
+./run_tests.sh audit     # + P2-V9 (19 full RVE re-solves)   (~1-1.5 h)
+./run_tests.sh fe        # V0-V8 only
+./run_tests.sh rve       # P2-V1..V5 and P2-V10 only
+./run_tests.sh surrogate # S-V1 only
+./run_tests.sh extended  # P2-V6..V8 and M-V0 only
+./run_tests.sh p2-v9     # long constitutive audit only
+qsub -v MODE=fe run_tests.pbs      # one batch on the TU Freiberg cluster (MODE as above)
+\end{lstlisting}
+The runner prints PASS/FAIL per test, writes one log per test and a
+\code{summary.txt} into \code{test\_logs/<date>\_<mode>/}, and exits with a non-zero
+code if any test fails. Paths to the stored checkpoints and datasets default to the
+repository layout and can be overridden by the variables \code{PPP\_PHASE1\_CKPT}, \code{PPP\_RVE\_CKPT},
+\code{PPP\_PHASE7\_NPZ}, \code{PPP\_TRAIN\_NPZ} and \code{PPP\_PILOT\_NPZ}. The workflow
+\code{.github/workflows/tests.yml} runs the quick suite on every push to GitHub.
+\code{tests/README.md} lists command, inputs, aim and expected result of every test.
+
+The individual tests are ordered by increasing complexity. Each prints its metrics and ends
+with a line \code{... PASS ...}; a failed check raises an \code{AssertionError}
+with an explanation. Run times are for one core.
+\begin{lstlisting}[language=bash]
+python -m tests.verify_fe_basics --ckpt checkpoints/phase1_validated.pt \
+       --rve-ckpt <partial_icnn_phase6_phase7_finetuned.pt>         # V0,   ~20 s
+python -m tests.verify_model_interface                               # V1
+python -m tests.verify_reference                                     # V2
+python -m tests.verify_neohooke_response --ckpt checkpoints/phase1_validated.pt  # V2b
+python -m tests.verify_tangent                                       # V3
+python -m tests.verify_element --ckpt checkpoints/phase1_validated.pt          # V4
+python -m tests.verify_patch --ckpt checkpoints/phase1_validated.pt            # V5
+python -m tests.verify_fe_comparison --ckpt checkpoints/phase1_validated.pt    # V6
+python -m tests.verify_stress_control --ckpt checkpoints/phase1_validated.pt   # V7, V8
+python -m tests.verify_periodic_rve        # P2-V1   < 1 s
+python -m tests.verify_rigid_particle      # P2-V2
+python -m tests.verify_mixed_matrix        # P2-V3
+python -m tests.verify_coupled_rve         # P2-V4   ~20 s
+python -m tests.verify_hill_mandel         # P2-V5   ~20 s
+python -m tests.verify_homogenized_tangent # P2-V6   ~3.5 min
+python -m tests.verify_free_rotation       # P2-V7   ~3.5 min
+python -m tests.verify_translation_gauge   # P2-V8   ~1 min
+python -m benchmarks.rve_constitutive_checks --dataset <data.npz> \
+       --output p2v9.json --sample-ids v001_f000047                 # P2-V9, long
+python -m tests.verify_rve_dataset         # P2-V10  < 1 s
+\end{lstlisting}
+Tests P2-V5 to P2-V8 accept \code{--maxh} and loading parameters (see \code{--help});
+the macroscopic driver exposes all solver settings (below), so that the examiner can vary mesh
+size, load, tolerances and material context without editing code.
+
+\section{Generating an RVE dataset}
+
+\begin{lstlisting}[language=bash]
+python -m src.generate_rve_dataset --output data/rve_demo.npz \
+       --volume-fractions 0.02 0.05 0.10 --n-deformations 10 --seed 1729
+python -m src.audit_rve_dataset --dataset data/rve_demo.npz \
+       --manifest data/rve_demo.json
+\end{lstlisting}
+Large campaigns use \code{src.generate\_rve\_dataset\_parallel} (one NGSolve mesh
+per worker process; targeted $J$ tails and custom shear states) via the PBS
+scripts. Interrupted runs resume from the per-sample files in
+\code{--work-directory}; \code{--no-resume} starts afresh.
+
+{\small
+\begin{xltabular}{\textwidth}{@{}lX@{}}
+\caption{Options of \code{src.generate\_rve\_dataset} (defaults in brackets).}\\
+\toprule
+Option & Meaning\\
+\midrule
+\endfirsthead
+\caption[]{\emph{(continued)}}\\
+\toprule
+Option & Meaning\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\code{--output} [\code{data\slash{}rve\_phase2.npz}] & array file; the manifest is written next to it as \code{<name>.json} (parallel generator: \code{.manifest.json})\\
+\code{--work-directory} & directory of atomic per-sample checkpoints\\
+\code{--volume-fractions} [0.02 0.05 0.10] & particle volume fractions (each state is solved at all)\\
+\code{--n-deformations} [100] & number of macroscopic deformation states\\
+\code{--seed} [1729] & seed of the deformation sampler (defines the dataset)\\
+\code{--max-strain} [0.20] & maximum perturbation $|\overline F_{ij}-\delta_{ij}|$\\
+\code{--determinant-floor} [0.50], \code{--max-condition-number} [3.0] & admissibility filters of $\Fbar$\\
+\code{--maxh} [0.22] & RVE mesh size\\
+\code{--mu} [1.0], \code{--bulk-modulus} [$10^4$] & matrix moduli\\
+\code{--microscopic-jacobian-floor} & rejection threshold for the microscopic $J$\\
+\code{--no-resume} & ignore existing per-sample files\\
+\end{xltabular}
+}
+
+\paragraph{File formats.} The \code{.npz} file contains one row per record:
+\code{sample\_id}, \code{split} (train/validation/test), \code{state\_index},
+\code{volume\_fraction}, \code{deformation\_gradient} $(n,3,3)$, \code{energy} $(n)$,
+\code{stress} $(n,3,3)$, \code{tangent} $(n,9,9)$ (row-major $3i+J$),
+\code{rotation} $(n,3,3)$, as well as the diagnostics \code{determinant},
+\code{condition\_number}, \code{mixed\_residual}, \code{rotation\_residual},
+\code{condensed\_residual}, \code{tangent\_symmetry\_error},
+\code{minimum\slash{}maximum\_microscopic\_jacobian}, \code{mixed\slash{}rotation\_iterations},
+\code{minimum\_particle\_clearance} and \code{solver\_status}. The JSON manifest
+stores the configuration, field shapes and dtypes, software versions, split
+counts and SHA-256 hashes.
+
+\section{Training a surrogate}
+
+\begin{lstlisting}[language=bash]
+python -u -m src.train_rve --dataset data/rve_phase6_phase7_training.npz \
+  --manifest data/rve_phase6_phase7_training.manifest.json \
+  --checkpoint training/model.pt --report training/report.json \
+  --initialize-from partial_icnn_phase6_targeted.pt \
+  --epochs 3000 --batch-size 64 --learning-rate 1e-4 \
+  --stress-weight 1.0 --tangent-weight 0.1 --tangent-batch-size 8 \
+  --tangent-validation-states 12 --patience 20 --validation-interval 25 \
+  --seed 4103 --device cpu --torch-threads 12
+\end{lstlisting}
+This is the exact command of the frozen checkpoint. Options without an initial
+checkpoint fit the normalization on the training split; with
+\code{--initialize-from}, the parent normalization is kept. The checkpoint is a
+dictionary with \code{state\_dict}, \code{normalization} (feature/context mean
+and scale, $s_\Psi$, $s_P$), \code{training\_config}, \code{history},
+\code{best\_epoch}, \code{best\_validation} and the hashes of the dataset, the
+manifest and the parent checkpoint. Load it with \code{HyperelasticNN(n\_ctx=1)}
+and \code{load\_state\_dict(ckpt["state\_dict"])}. Phase~1 checkpoints are loaded
+with \code{src.train.load\_model}, which restores their legacy settings
+automatically.
+
+\section{Running the macroscopic simulation}
+
+\begin{lstlisting}[language=bash]
+python -u -m benchmarks.phase6_macro_fe_demo \
+  --checkpoint partial_icnn_phase6_phase7_finetuned.pt --output report.json \
+  --volume-fraction 0.05 --stretch 0.05 --maxh 0.25 --order 1 \
+  --integration-order 4 --max-iter 200 --load-steps 100 --tolerance 1e-8 \
+  --merit-function energy --load-predictor secant
+\end{lstlisting}
+{\small
+\begin{xltabular}{\textwidth}{@{}lX@{}}
+\caption{Options of \code{benchmarks.phase6\_macro\_fe\_demo}.}\\
+\toprule
+Option & Meaning\\
+\midrule
+\endfirsthead
+\caption[]{\emph{(continued)}}\\
+\toprule
+Option & Meaning\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\code{--checkpoint}, \code{--output} & frozen pICNN; JSON result file\\
+\code{--volume-fraction} [0.05] & material context passed to every quadrature point\\
+\code{--stretch} [0.05], \code{--load-steps} [10] & final axial stretch and number of increments\\
+\code{--maxh} [0.25], \code{--order} [1], \code{--integration-order} & mesh size, element order ($P_2$ recommended, \cref{sec:macro}), quadrature order ($\ge2\,\cdot$order)\\
+\code{--max-iter} [30], \code{--tolerance} [$10^{-8}$] & Newton limits per increment\\
+\code{--merit-function} [residual$|$energy] & line-search merit (energy recommended)\\
+\code{--load-predictor} [secant] & initial guess of each increment\\
+\code{--tangent-check-*} & directional finite-difference check of the global stiffness (M-V0)\\
+\end{xltabular}
+}
+\code{report.json} contains the status, checkpoint hash, settings, mesh size,
+the residual history of every load step, the accepted and rejected load
+attempts, the final residual, and the range of sampled $J$. A failed run writes
+the failing increment and residual; such reports must not be overwritten.
+
+\section{Evaluation, profiling and report figures}
+
+\begin{lstlisting}[language=bash]
+# pressure/deviatoric error split and small-strain moduli (Section 8.3)
+python -I figure_sources/split_metrics.py <dir with picnn.py> out.json \
+       frozen=<frozen.pt> shear_adapted=<adapted.pt> -- \
+       phase7_independent=<rve_phase7_independent.npz>
+# stage timings of the bridge (Chapter 9)
+python -m benchmarks.profile_bridge --checkpoint <frozen.pt> --maxh 0.25 --order 1
+# all figures of the report from figure_sources/data/
+python figure_sources/make_figures.py
+\end{lstlisting}
+
+\section{Cluster execution}
+
+Every reported run has a PBS script in the repository (for example
+\code{rve\_phase7\_macro\_fe\_order1\_energy\_secant12.pbs}). A script requests
+resources, activates the environment, sets the thread variables, copies the code
+to scratch, and starts one command from this chapter. Results are written to
+\code{\slash{}scratch4\slash{}<user>\slash{}<run name>\slash{}}. Keep the script, the standard output and the
+JSON report of each run together. \Cref{app:repro} lists the hashes of the frozen
+artifacts.
+
+\section{A minimal end-to-end example}
+
+The following sequence reproduces the whole chain on a laptop in about one hour.
+It uses a small dataset, so the resulting model is only a demonstration.
+\begin{lstlisting}[language=bash]
+python -m tests.verify_fe_basics                                  # 1. FE basics
+python -m src.generate_rve_dataset --output data/demo.npz \
+       --n-deformations 6 --volume-fractions 0.05 --maxh 0.3       # 2. 6 RVE solves
+python -m src.audit_rve_dataset --dataset data/demo.npz \
+       --manifest data/demo.json                                  # 3. audit
+python -m src.train_rve --dataset data/demo.npz --manifest data/demo.json \
+       --checkpoint demo.pt --report demo_train.json --epochs 300  # 4. train
+python -m benchmarks.phase6_macro_fe_demo --checkpoint demo.pt \
+       --output demo_macro.json --stretch 0.01 --order 2 \
+       --integration-order 4 --load-steps 10 --merit-function energy # 5. macro solve
+\end{lstlisting}

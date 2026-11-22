@@ -1,0 +1,12 @@
+
+mesh elements:                  1644
+periodic active dofs:           891
+relative matrix-volume error:   3.571e-03
+rotation orthogonality error:   7.112e-17
+rotation determinant error:     0.000e+00
+maximum distance error:         1.110e-16
+rigid-map rank:                 6
+constraint rank:                24
+constraint residual:            7.172e-18
+increment linearization error:  7.657e-10
+P2-V2 PASS: particle geometry and exact rigid kinematics are valid.

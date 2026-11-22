@@ -1,0 +1,5 @@
+C:\Users\vravi\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\jit\_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Constitutive audit pass: 36 records across 12 independent deformation states
+Maximum errors: {"energy_gradient_relative_error": 5.320986924943364e-08, "objectivity_energy_relative_error": 6.927791673660977e-13, "objectivity_stress_relative_error": 2.249481602047997e-12, "objectivity_tangent_relative_error": 5.3189712235046285e-15, "tangent_directional_relative_error": 1.075747609542445e-09, "tangent_symmetry_error": 6.3741199904458156e-15}
+Report: C:\Users\vravi\Downloads\Project implementation plan\local_test_workspace_20261119\test_logs\surrogate\s_v1_constitutive_checks.json

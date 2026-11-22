@@ -1,0 +1,62 @@
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.320704e-02, max=1.234414e-02
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=4.600382e-01, max_abs=1.100253e-01
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=8.822400e-05, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=1.766931e-02, max_abs=6.149893e-03
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.470265e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=4.501240e-06, max_abs=1.976326e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=6.724161e-16, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  0: |moment| = 4.746e-03
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.035189e-01, max=1.160064e-01
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.103001e-01, max_abs=1.086436e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.256666e-04, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=1.440232e-02, max_abs=5.511214e-03
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=6.309531e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=7.582156e-06, max_abs=4.061300e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=3.765238e-14, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  1: |moment| = 2.590e-07
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.053366e-01, max=1.131829e-01
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=0, finite=True, norm=1.090055e-01, max_abs=1.086506e-02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.256446e-04, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=1, finite=True, norm=1.443098e-02, max_abs=5.609315e-03
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=6.322443e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+[NEWTON UPDATE] iteration=2, finite=True, norm=7.591357e-06, max_abs=4.091948e-06
+[NEWTON LINE SEARCH] iteration=2, step_length=1.000000e+00, residual_norm=3.806666e-14, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+Rotation Newton  2: |moment| = 7.972e-16
+
+mesh elements:                     1472
+rotation iterations:               3
+initial rotational residual:       4.746e-03
+final rotational residual:         7.972e-16
+rotational residual ratio:         1.680e-13
+particle z-rotation angle:          -2.492160e-02
+rotation orthogonality error:       2.487e-16
+rotation determinant error:         4.441e-16
+particle rigid-trace L2 error:      4.257e-18
+rotational Hessian symmetry error:  1.431e-17
+max condensed linear residual:      1.375e-16
+final mixed residual:               3.807e-14
+P2-V7 PASS: free finite particle rotation is moment-equilibrated.

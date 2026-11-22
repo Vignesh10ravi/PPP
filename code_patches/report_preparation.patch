@@ -1,0 +1,1317 @@
+--- "a/tests/verify_element.py"	2026-11-18 21:09:35.568881649 +0100
++++ b/tests/verify_element.py	2026-11-18 21:37:55.154263427 +0100
+@@ -1,23 +1,19 @@
+ """V4 -- Single-element UMAT benchmark (assembly check).
+ 
+-Deploys the trained (or untrained) PyTorch material onto one hexahedral element
+-under uniform Dirichlet loading, driven by the custom Newton-Raphson loop with
++Deploys the trained (or untrained) PyTorch material onto a coarse tetrahedral
++unit-cube mesh (maxh = 0.4) under displacement-controlled stretch, driven by the custom Newton-Raphson loop with
+ the exact autograd tangent. Confirms manual global-stiffness assembly and
+ quadratic convergence of the residual norm, e.g. 1e-1 -> 1e-3 -> 1e-8.
+ 
+-Run:  python -m tests.verify_element
++Run:  python -m tests.verify_element [--ckpt checkpoints/phase1_validated.pt]
+ """
+ import torch
+ from netgen.occ import Box, OCCGeometry, Pnt, X
+ from ngsolve import Mesh, CF, x
+ 
+-# Correct way to load the model in verify_element.py
++import argparse
++
+ from src.picnn import HyperelasticNN
+-model = HyperelasticNN()
+-# 1. Load the entire checkpoint file first (set weights_only=False because 'history' is likely a Python list, not a tensor)
+-checkpoint = torch.load("/home/vignesh/PPP/Project implementation plan (1)/checkpoints/phase1.pt", weights_only=False)
+-# 2. Extract strictly the weights from the dictionary and load them into the model
+-model.load_state_dict(checkpoint["state_dict"])
+ from src.ngsolve_umat import solve
+ 
+ 
+@@ -31,6 +27,20 @@
+     return drops
+ 
+ 
++def print_convergence_table(history, tol):
++    """Tabulate ||R_k||, the quadratic ratio ||R_k+1||/||R_k||^2 and the
++    empirical order q_k = log(r_k+1/r_k) / log(r_k/r_k-1) (PPP guideline 4.2.2-1a)."""
++    import math
++    print(f"\nNewton convergence (stopping tolerance ||R_free|| < {tol:.0e})")
++    print(f"{'k':>3s} {'||R_free||':>12s} {'r_k+1/r_k^2':>12s} {'order q_k':>10s}")
++    for k, r in enumerate(history):
++        ratio = history[k + 1] / r ** 2 if k + 1 < len(history) else float("nan")
++        q = float("nan")
++        if 0 < k < len(history) - 1:
++            q = math.log(history[k + 1] / r) / math.log(r / history[k - 1])
++        print(f"{k:3d} {r:12.3e} {ratio:12.3e} {q:10.2f}")
++
++
+ def main(ckpt=None):
+     torch.manual_seed(0)
+     if ckpt:
+@@ -52,9 +62,12 @@
+     gfu, history = solve(mesh, model, bc_cf=bc, dirichlet="left|right", order=1)
+ 
+     print("\nresidual history:", [f"{h:.2e}" for h in history])
++    print_convergence_table(history, tol=1e-8)
+     assert history[-1] < 1e-8, "Newton did not converge -- tangent likely inconsistent"
+     print("V4 PASS: NN-driven Newton converged; assembly + autograd tangent are consistent.")
+ 
+ 
+ if __name__ == "__main__":
+-    main()
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--ckpt", default=None, help="optional trained Phase 1 checkpoint")
++    main(parser.parse_args().ckpt)
+--- "a/src/train.py"	2026-11-18 21:09:35.565897816 +0100
++++ b/src/train.py	2026-11-18 21:33:59.583747316 +0100
+@@ -108,13 +108,25 @@
+ 
+ 
+ def load_model(ckpt, device="cpu"):
+-    model = HyperelasticNN().to(device).double()
+     checkpoint = torch.load(
+         ckpt,
+         map_location=device,
+         weights_only=True,
+     )
+-    model.load_state_dict(checkpoint["state_dict"])
++    state = dict(checkpoint["state_dict"])
++    legacy = "feature_mean" not in state
++    model = HyperelasticNN(
++        reference_correction="affine" if legacy else "pressure"
++    ).to(device).double()
++    # Phase 1 checkpoints predate the input-normalization buffers added for
++    # Phase 2 and the later objective reference correction. They were trained
++    # on raw invariant features (identity normalization) with the affine
++    # reference correction, so both are restored for legacy checkpoints.
++    for name, buffer in model.state_dict().items():
++        if name.endswith(("_mean", "_scale")) and name not in state:
++            state[name] = (torch.zeros_like(buffer) if name.endswith("_mean")
++                           else torch.ones_like(buffer))
++    model.load_state_dict(state)
+     model.eval()
+     return model
+ 
+--- "a/src/picnn.py"	2026-11-18 21:09:35.563416686 +0100
++++ b/src/picnn.py	2026-11-18 21:33:59.583491542 +0100
+@@ -96,10 +96,15 @@
+ class HyperelasticNN(nn.Module):
+     """ICNN wrapped with the stress-free, zero-energy reference normalization."""
+ 
+-    def __init__(self, n_ctx=0):
++    def __init__(self, n_ctx=0, reference_correction="pressure"):
+         super().__init__()
++        if reference_correction not in ("pressure", "affine"):
++            raise ValueError("reference_correction must be 'pressure' or 'affine'")
+         self.net = ICNN(n_in=4, n_ctx=n_ctx)
+         self.n_ctx = n_ctx
++        # "pressure": objective correction p_I (det F - 1) used from Phase 5 on.
++        # "affine":   legacy Phase 1 correction P_raw(I) : (F - I).
++        self.reference_correction = reference_correction
+         self.register_buffer("feature_mean", torch.zeros(4))
+         self.register_buffer("feature_scale", torch.ones(4))
+         self.register_buffer("context_mean", torch.zeros(n_ctx))
+@@ -189,7 +194,10 @@
+         if ref is None:
+             ref = self.reference(F.dtype, F.device, c)
+         psi_I, P_I = ref
++        psi = self._raw(F, c)
++        if self.reference_correction == "affine":
++            I = torch.eye(3, dtype=F.dtype, device=F.device)
++            return psi - psi_I - (P_I * (F - I)).sum((-1, -2))
+         reference_pressure = torch.diagonal(P_I).mean()
+         J = torch.linalg.det(F)
+-        psi = self._raw(F, c)
+         return psi - psi_I - reference_pressure * (J - 1.0)
+--- "a/src/ngsolve_umat.py"	2026-11-18 21:09:35.563416686 +0100
++++ b/src/ngsolve_umat.py	2026-11-19 00:06:53.999732121 +0100
+@@ -7,6 +7,8 @@
+     → (gfu, residual_history)
+ """
+ import os
++import time
++from collections import defaultdict
+ 
+ import numpy as np
+ import torch
+@@ -18,6 +20,37 @@
+ )
+ from ngsolve.comp import IntegrationRuleSpace
+ 
++# ── built-in timing of the bridge (computation-time study) ─────────────────
++TIMINGS = defaultdict(float)
++CALLS = defaultdict(int)
++
++
++def reset_timings():
++    """Clear the accumulated wall-clock timings of the bridge."""
++    TIMINGS.clear()
++    CALLS.clear()
++
++
++def get_timings():
++    """Return {stage: (total seconds, number of calls)} accumulated so far."""
++    return {k: (TIMINGS[k], CALLS[k]) for k in TIMINGS}
++
++
++class _timed:
++    """Context manager adding the elapsed wall time to TIMINGS[name]."""
++
++    def __init__(self, name):
++        self.name = name
++
++    def __enter__(self):
++        self.t0 = time.perf_counter()
++
++    def __exit__(self, *exc):
++        TIMINGS[self.name] += time.perf_counter() - self.t0
++        CALLS[self.name] += 1
++        return False
++
++
+ # ── autograd stress + tangent ──────────────────────────────────────────────────
+ 
+ def _F_to_features(F: torch.Tensor) -> torch.Tensor:
+@@ -120,6 +153,161 @@
+     return P_flat.detach(), A.detach()
+ 
+ 
++def assemble_system(mesh, fes, gfu_current, model, int_order,
++                    context=None, merit_function="residual"):
++    """Assemble the total-Lagrange residual R and consistent stiffness K.
++
++    This is the production assembly used by :func:`solve` at every Newton
++    iteration. It is exposed at module level so that element-level
++    verification tests (e.g. rigid-body zero eigenvalues of an
++    unconstrained element) exercise exactly the same code path.
++
++    Returns (R_full, K, minimum_jacobian, total_energy).
++    """
++    """Assemble global residual R and stiffness K on free DOFs."""
++
++    # ------------------------------------------------------------
++    # One scalar integration-rule space.
++    # All F/P/A data use exactly these same integration points.
++    # ------------------------------------------------------------
++    irs = IntegrationRuleSpace(mesh, order=int_order)
++    irs_dx = dx(intrules=irs.GetIntegrationRules())
++
++    # ------------------------------------------------------------
++    # Deformation gradient
++    # ------------------------------------------------------------
++    gradu = ngs.Grad(gfu_current)
++    F_cf = ngs.Id(3) + gradu
++
++    # 9 scalar values at every integration point
++    fes_F = irs ** 9
++    gf_F = GridFunction(fes_F)
++
++    with _timed("1 F interpolation + gather"):
++        gf_F.Interpolate(F_cf.Reshape((9,)))
++
++    # NGSolve vector spaces are safest to read component-wise.
++    F_components = [
++        gf_F.components[i].vec.FV().NumPy().copy()
++        for i in range(9)
++    ]
++
++    # Convert component-major -> point-major
++    F_np = np.stack(F_components, axis=1)
++    F_np = F_np.reshape(-1, 3, 3)
++
++    if not np.isfinite(F_np).all():
++        raise FloatingPointError("non-finite deformation gradient at quadrature points")
++    jacobian_values = np.linalg.det(F_np)
++    if not np.isfinite(jacobian_values).all():
++        raise FloatingPointError("non-finite Jacobian at quadrature points")
++    minimum_jacobian = float(np.min(jacobian_values))
++    if minimum_jacobian <= 1.0e-8:
++        raise FloatingPointError(
++            "inadmissible quadrature Jacobian: "
++            f"minimum J={minimum_jacobian:.6e}"
++        )
++
++    # ------------------------------------------------------------
++    # PyTorch material evaluation
++    # ------------------------------------------------------------
++    F_t = torch.from_numpy(F_np).to(
++        dtype=torch.float64,
++        device="cpu"
++    )
++
++
++    # Do NOT use no_grad here: tangent needs autograd
++    with _timed("2 pICNN energy, stress, tangent (AD)"):
++        P_t, A_t, W_t = stress_and_tangent(
++            model,
++            F_t,
++            context=context,
++            return_energy=True,
++        )
++    if not torch.isfinite(P_t).all() or not torch.isfinite(A_t).all():
++        raise FloatingPointError("non-finite constitutive stress or tangent")
++
++    P_np = P_t.detach().cpu().numpy()
++    A_np = A_t.detach().cpu().numpy()
++    total_energy = None
++    if merit_function == "energy":
++        gf_W = GridFunction(irs)
++        gf_W.vec.FV().NumPy()[:] = (
++            W_t.detach().cpu().numpy().reshape(-1)
++        )
++        total_energy = float(Integrate(gf_W * irs_dx, mesh))
++
++    # ------------------------------------------------------------
++    # Put P back into an IR GridFunction
++    # ------------------------------------------------------------
++    fes_P = irs ** 9
++    gf_P = GridFunction(fes_P)
++
++    P_flat = P_np.reshape(-1, 9)
++
++    for i in range(9):
++        gf_P.components[i].vec.FV().NumPy()[:] = P_flat[:, i]
++
++    # ------------------------------------------------------------
++    # Put A back into an IR GridFunction
++    # ------------------------------------------------------------
++    with _timed("3 write tangent A to quadrature points"):
++        fes_A = irs ** 81
++        gf_A = GridFunction(fes_A)
++
++        A_flat = A_np.reshape(-1, 81)
++
++        for i in range(81):
++            gf_A.components[i].vec.FV().NumPy()[:] = A_flat[:, i]
++
++    # ------------------------------------------------------------
++    # Global FE trial/test functions
++    # ------------------------------------------------------------
++    u = fes.TrialFunction()
++    v = fes.TestFunction()
++
++    # ------------------------------------------------------------
++    # Residual
++    # ------------------------------------------------------------
++    P_cf = gf_P.Reshape((3, 3))
++
++    lf = LinearForm(fes)
++    lf += InnerProduct(
++        P_cf,
++        ngs.Grad(v)
++    ) * irs_dx
++
++    # Assemble NGSolve forms in a shared-memory task region. The thread
++    # count is controlled by NGS_NUM_THREADS and should match the PBS
++    # ncpus allocation for this job.
++    with ngs.TaskManager(), _timed("4 residual assembly"):
++        lf.Assemble()
++
++    R_full = lf.vec.CreateVector()
++    R_full.data = lf.vec
++
++    # ------------------------------------------------------------
++    # Consistent tangent / stiffness
++    # ------------------------------------------------------------
++    A_cf = gf_A.Reshape((9, 9))
++
++    bf = BilinearForm(fes)
++
++    gradu_trial = ngs.Grad(u).Reshape((9,))
++    gradv_test = ngs.Grad(v).Reshape((9,))
++
++    bf += InnerProduct(
++        gradv_test,
++        A_cf * gradu_trial
++    ) * irs_dx
++
++    with ngs.TaskManager(), _timed("5 stiffness assembly"):
++        bf.Assemble()
++
++    return R_full, bf.mat, minimum_jacobian, total_energy
++
++
+ # ── Newton-Raphson solve ───────────────────────────────────────────────────────
+ 
+ def solve(mesh: Mesh, model, bc_cf: CF,
+@@ -133,7 +321,10 @@
+           diagnose_tangent_only: bool = False,
+           diagnose_tangent_iteration: int = 0,
+           integration_order: int | None = None,
+-          merit_function: str = "residual"):
++          merit_function: str = "residual",
++          dirichlet_components: dict | None = None,
++          traction_cf: CF | None = None,
++          neumann: str | None = None):
+     """
+     Total-Lagrange Newton solver for a hyperelastic body.
+ 
+@@ -153,14 +344,35 @@
+     `initial_cf`, when supplied, initializes the displacement throughout the
+     mesh before the prescribed boundary values are applied. An affine loading
+     field is a useful initial guess for finite-strain Newton solves.
++
++    `dirichlet_components`, e.g. ``{"x": "left", "y": "bottom", "z": "back"}``,
++    constrains individual displacement components (symmetry / minimal support
++    conditions for stress-controlled tests). It replaces `dirichlet`; the
++    prescribed values are taken from `bc_cf` on the constrained components only.
++
++    `traction_cf` with `neumann` adds a dead-load nominal traction
++    ``-int_{neumann} t . v dA`` (reference configuration) to the residual and
++    ``-int t . u dA`` to the potential used by the energy merit function.
+     """
+     # ── FE space ──────────────────────────────────────────────────────────────
+-    fes = VectorH1(mesh, order=order, dirichlet=dirichlet)
++    if dirichlet_components:
++        unknown = set(dirichlet_components) - {"x", "y", "z"}
++        if unknown:
++            raise ValueError(f"dirichlet_components keys must be x, y, z; got {unknown}")
++        fes = VectorH1(
++            mesh, order=order,
++            **{f"dirichlet{k}": v for k, v in dirichlet_components.items()},
++        )
++        dirichlet = "|".join(sorted(set(dirichlet_components.values())))
++    else:
++        fes = VectorH1(mesh, order=order, dirichlet=dirichlet)
+     ndof = fes.ndof
+ 
+     # Diagnostic: confirm boundary names exist
+     bnd_names = set(mesh.GetBoundaries())
+     requested = set(dirichlet.replace("|", " ").split())
++    if neumann is not None:
++        requested |= set(neumann.replace("|", " ").split())
+     missing = requested - bnd_names
+     if missing:
+         raise ValueError(
+@@ -214,7 +426,24 @@
+             gfu.Set(initial_cf)
+             initial_guess_source = "coefficient_function_interpolation"
+     # Apply Dirichlet BC: project bc_cf onto constrained DOFs
+-    gfu.Set(bc_cf, definedon=mesh.Boundaries(dirichlet))
++    if dirichlet_components:
++        gf_bc = GridFunction(fes)
++        gf_bc.Set(bc_cf, definedon=mesh.Boundaries(dirichlet))
++        free_mask = np.asarray([bool(b) for b in fes.FreeDofs()], dtype=bool)
++        values = gfu.vec.FV().NumPy()
++        values[~free_mask] = gf_bc.vec.FV().NumPy()[~free_mask]
++    else:
++        gfu.Set(bc_cf, definedon=mesh.Boundaries(dirichlet))
++
++    external_force = None
++    if traction_cf is not None:
++        if neumann is None:
++            raise ValueError("traction_cf requires the neumann boundary name(s)")
++        v_test = fes.TestFunction()
++        lf_ext = LinearForm(fes)
++        lf_ext += InnerProduct(traction_cf, v_test) * ngs.ds(definedon=mesh.Boundaries(neumann))
++        lf_ext.Assemble()
++        external_force = lf_ext.vec
+     initial_displacement_norm = float(
+         np.linalg.norm(gfu.vec.FV().NumPy())
+     )
+@@ -226,144 +455,14 @@
+ 
+     def _residual_and_stiffness(gfu_current):
+         """Assemble global residual R and stiffness K on free DOFs."""
+-
+-        # ------------------------------------------------------------
+-        # One scalar integration-rule space.
+-        # All F/P/A data use exactly these same integration points.
+-        # ------------------------------------------------------------
+-        irs = IntegrationRuleSpace(mesh, order=int_order)
+-        irs_dx = dx(intrules=irs.GetIntegrationRules())
+-
+-        # ------------------------------------------------------------
+-        # Deformation gradient
+-        # ------------------------------------------------------------
+-        gradu = ngs.Grad(gfu_current)
+-        F_cf = ngs.Id(3) + gradu
+-
+-        # 9 scalar values at every integration point
+-        fes_F = irs ** 9
+-        gf_F = GridFunction(fes_F)
+-
+-        gf_F.Interpolate(F_cf.Reshape((9,)))
+-
+-        # NGSolve vector spaces are safest to read component-wise.
+-        F_components = [
+-            gf_F.components[i].vec.FV().NumPy().copy()
+-            for i in range(9)
+-        ]
+-
+-        # Convert component-major -> point-major
+-        F_np = np.stack(F_components, axis=1)
+-        F_np = F_np.reshape(-1, 3, 3)
+-
+-        if not np.isfinite(F_np).all():
+-            raise FloatingPointError("non-finite deformation gradient at quadrature points")
+-        jacobian_values = np.linalg.det(F_np)
+-        if not np.isfinite(jacobian_values).all():
+-            raise FloatingPointError("non-finite Jacobian at quadrature points")
+-        minimum_jacobian = float(np.min(jacobian_values))
+-        if minimum_jacobian <= 1.0e-8:
+-            raise FloatingPointError(
+-                "inadmissible quadrature Jacobian: "
+-                f"minimum J={minimum_jacobian:.6e}"
+-            )
+-
+-        # ------------------------------------------------------------
+-        # PyTorch material evaluation
+-        # ------------------------------------------------------------
+-        F_t = torch.from_numpy(F_np).to(
+-            dtype=torch.float64,
+-            device="cpu"
+-        )
+-
+-
+-        # Do NOT use no_grad here: tangent needs autograd
+-        P_t, A_t, W_t = stress_and_tangent(
+-            model,
+-            F_t,
+-            context=context,
+-            return_energy=True,
+-        )
+-        if not torch.isfinite(P_t).all() or not torch.isfinite(A_t).all():
+-            raise FloatingPointError("non-finite constitutive stress or tangent")
+-
+-        P_np = P_t.detach().cpu().numpy()
+-        A_np = A_t.detach().cpu().numpy()
+-        total_energy = None
+-        if merit_function == "energy":
+-            gf_W = GridFunction(irs)
+-            gf_W.vec.FV().NumPy()[:] = (
+-                W_t.detach().cpu().numpy().reshape(-1)
+-            )
+-            total_energy = float(Integrate(gf_W * irs_dx, mesh))
+-
+-        # ------------------------------------------------------------
+-        # Put P back into an IR GridFunction
+-        # ------------------------------------------------------------
+-        fes_P = irs ** 9
+-        gf_P = GridFunction(fes_P)
+-
+-        P_flat = P_np.reshape(-1, 9)
+-
+-        for i in range(9):
+-            gf_P.components[i].vec.FV().NumPy()[:] = P_flat[:, i]
+-
+-        # ------------------------------------------------------------
+-        # Put A back into an IR GridFunction
+-        # ------------------------------------------------------------
+-        fes_A = irs ** 81
+-        gf_A = GridFunction(fes_A)
+-
+-        A_flat = A_np.reshape(-1, 81)
+-
+-        for i in range(81):
+-            gf_A.components[i].vec.FV().NumPy()[:] = A_flat[:, i]
+-
+-        # ------------------------------------------------------------
+-        # Global FE trial/test functions
+-        # ------------------------------------------------------------
+-        u = fes.TrialFunction()
+-        v = fes.TestFunction()
+-
+-        # ------------------------------------------------------------
+-        # Residual
+-        # ------------------------------------------------------------
+-        P_cf = gf_P.Reshape((3, 3))
+-
+-        lf = LinearForm(fes)
+-        lf += InnerProduct(
+-            P_cf,
+-            ngs.Grad(v)
+-        ) * irs_dx
+-
+-        # Assemble NGSolve forms in a shared-memory task region. The thread
+-        # count is controlled by NGS_NUM_THREADS and should match the PBS
+-        # ncpus allocation for this job.
+-        with ngs.TaskManager():
+-            lf.Assemble()
+-
+-        R_full = lf.vec.CreateVector()
+-        R_full.data = lf.vec
+-
+-        # ------------------------------------------------------------
+-        # Consistent tangent / stiffness
+-        # ------------------------------------------------------------
+-        A_cf = gf_A.Reshape((9, 9))
+-
+-        bf = BilinearForm(fes)
+-
+-        gradu_trial = ngs.Grad(u).Reshape((9,))
+-        gradv_test = ngs.Grad(v).Reshape((9,))
+-
+-        bf += InnerProduct(
+-            gradv_test,
+-            A_cf * gradu_trial
+-        ) * irs_dx
+-
+-        with ngs.TaskManager():
+-            bf.Assemble()
+-
+-        return R_full, bf.mat, minimum_jacobian, total_energy
++        R_full, K, minimum_jacobian, total_energy = assemble_system(
++            mesh, fes, gfu_current, model, int_order,
++            context=context, merit_function=merit_function)
++        if external_force is not None:
++            R_full.data -= external_force
++            if total_energy is not None:
++                total_energy -= float(InnerProduct(external_force, gfu_current.vec))
++        return R_full, K, minimum_jacobian, total_energy
+ 
+     # ── Newton loop ───────────────────────────────────────────────────────────
+     history = []
+@@ -498,9 +597,10 @@
+             break
+ 
+         # Solve K_ff * du = -R_f
+-        inv_K = K.Inverse(freedofs=fd, inverse="umfpack")
+-        du = gfu.vec.CreateVector()
+-        du.data = -inv_K * R
++        with _timed("6 sparse direct solve (UMFPACK)"):
++            inv_K = K.Inverse(freedofs=fd, inverse="umfpack")
++            du = gfu.vec.CreateVector()
++            du.data = -inv_K * R
+ 
+         if diagnose_tangent and iteration == diagnose_tangent_iteration:
+             # Compare the assembled stiffness action against a centered finite
+--- /dev/null	2026-11-18 00:27:56.045175318 +0100
++++ b/tests/verify_fe_basics.py	2026-11-18 21:37:38.479810908 +0100
+@@ -0,0 +1,250 @@
++"""V0 -- Mandatory finite-element basics (PPP guideline, Sec. 4.2.2, item 2).
++
++Checks the discretisation layer that every later solve relies on, using the
++same NGSolve spaces and the same production assembly routine
++(`src.ngsolve_umat.assemble_system`) as the Phase 1 and macro-FE solvers.
++
++  V0a  Partition of unity of the vertex basis (sum N_i = 1, sum dN_i = 0)
++       for H1 order 1 and 2 on an unstructured tetrahedral mesh.
++  V0b  Exact reproduction of a linear field and of its gradient (B-matrix
++       check) for order 1 and 2.
++  V0c  Volume and face area from numerical quadrature of the mapping
++       Jacobian after an affine deformation of the mesh; compared with
++       det(Fa) and with Nanson's formula.
++  V0d  Zero eigenvalues of the unconstrained element stiffness at F = I:
++       exactly six (three translations + three rotations) for a single
++       irregular tetrahedron and a single hexahedron, for the analytical
++       neo-Hookean law and for the Phase 1 pICNN; the six null vectors must
++       span the rigid-body modes.
++       The legacy Phase 1 checkpoint (affine reference correction) is
++       reported, not asserted: its energy is not frame-indifferent, so only
++       the three translations are zero modes (see report, Test V0d).
++  V0e  Under-integration: a hexahedron with a one-point rule must show the
++       12 additional zero-energy (hourglass) modes, i.e. 18 zero eigenvalues.
++
++Run:  python -m tests.verify_fe_basics [--ckpt checkpoints/phase1_validated.pt]
++                                       [--rve-ckpt <partial_icnn_*.pt> --vf 0.05]
++"""
++import argparse
++
++import numpy as np
++import torch
++import ngsolve as ngs
++from netgen.meshing import Element2D, Element3D, FaceDescriptor, MeshPoint
++from netgen.meshing import Mesh as NetgenMesh
++from netgen.csg import Pnt
++from netgen.occ import Box, OCCGeometry, X
++from netgen.occ import Pnt as OPnt
++
++from src.ngsolve_umat import assemble_system
++from tests.verify_fe_comparison import AnalyticalNeoHooke
++
++torch.set_default_dtype(torch.float64)
++TOL = 1.0e-12
++
++
++def unit_cube_mesh(maxh=0.35):
++    box = Box(OPnt(0, 0, 0), OPnt(1, 1, 1))
++    box.faces.Min(X).name = "left"
++    box.faces.Max(X).name = "right"
++    return ngs.Mesh(OCCGeometry(box).GenerateMesh(maxh=maxh))
++
++
++def single_element_mesh(kind):
++    """One irregular tetrahedron or one (affinely distorted) hexahedron."""
++    m = NetgenMesh(dim=3)
++    m.SetMaterial(1, "solid")
++    m.Add(FaceDescriptor(surfnr=1, domin=1, bc=1))
++    m.SetBCName(0, "outer")
++    if kind == "tet":
++        xyz = [(0.0, 0.0, 0.0), (1.2, 0.1, 0.0), (0.2, 0.9, 0.1), (0.1, 0.3, 1.1)]
++        p = [m.Add(MeshPoint(Pnt(*c))) for c in xyz]
++        m.Add(Element3D(1, p))
++        for f in ((p[0], p[2], p[1]), (p[0], p[1], p[3]), (p[1], p[2], p[3]), (p[0], p[3], p[2])):
++            m.Add(Element2D(1, list(f)))
++    else:
++        base = np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
++                         [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]], float)
++        distort = np.array([[1.10, 0.15, 0.00], [0.05, 0.95, 0.10], [0.00, 0.08, 1.20]])
++        p = [m.Add(MeshPoint(Pnt(*(distort @ c)))) for c in base]
++        m.Add(Element3D(1, p))
++        quads = ((0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7))
++        for q in quads:
++            m.Add(Element2D(1, [p[i] for i in q]))
++    return ngs.Mesh(m)
++
++
++def sample_points(mesh, n=200, seed=0):
++    """Random points inside elements, returned as mesh points for evaluation."""
++    rng = np.random.default_rng(seed)
++    pts = []
++    for el in mesh.Elements(ngs.VOL):
++        verts = np.array([mesh[v].point for v in el.vertices])
++        for _ in range(max(1, n // mesh.ne)):
++            w = rng.dirichlet(np.ones(len(verts)))
++            pts.append(w @ verts)
++    return [mesh(*p) for p in pts]
++
++
++def v0a_partition_of_unity(mesh):
++    rows = []
++    for order in (1, 2):
++        fes = ngs.H1(mesh, order=order)
++        gf = ngs.GridFunction(fes)
++        gf.vec[:] = 0.0
++        # In NGSolve's hierarchical H1 basis the first nv DOFs are the vertex
++        # (barycentric) functions; their sum must be one everywhere.
++        for i in range(mesh.nv):
++            gf.vec[i] = 1.0
++        pts = sample_points(mesh)
++        val = max(abs(gf(p) - 1.0) for p in pts)
++        grad = max(np.max(np.abs(ngs.Grad(gf)(p))) for p in pts)
++        rows.append((order, fes.ndof, val, grad))
++        assert val < TOL and grad < 1e-10, f"partition of unity violated for order {order}"
++    return rows
++
++
++def v0b_linear_field(mesh):
++    a = np.array([0.3, -1.2, 0.7])
++    rows = []
++    for order in (1, 2):
++        fes = ngs.H1(mesh, order=order)
++        gf = ngs.GridFunction(fes)
++        gf.Set(0.4 + a[0] * ngs.x + a[1] * ngs.y + a[2] * ngs.z)
++        pts = sample_points(mesh, seed=1)
++        err_v = max(abs(gf(p) - (0.4 + a @ np.array(mesh_point_xyz(mesh, p)))) for p in pts)
++        err_g = max(np.max(np.abs(np.array(ngs.Grad(gf)(p)) - a)) for p in pts)
++        rows.append((order, err_v, err_g))
++        assert err_g < 1e-10, f"linear-field gradient not reproduced for order {order}"
++    return rows
++
++
++def mesh_point_xyz(mesh, mp):
++    return ngs.CF((ngs.x, ngs.y, ngs.z))(mp)
++
++
++def v0c_volume_and_area():
++    mesh = unit_cube_mesh(0.4)
++    Fa = np.array([[1.10, 0.05, 0.00], [0.02, 0.95, 0.04], [0.00, 0.03, 1.07]])
++    fes = ngs.VectorH1(mesh, order=1)
++    disp = ngs.GridFunction(fes)
++    H = Fa - np.eye(3)
++    disp.Set(ngs.CF(tuple(H[i, 0] * ngs.x + H[i, 1] * ngs.y + H[i, 2] * ngs.z for i in range(3))))
++    vol0 = ngs.Integrate(ngs.CF(1.0), mesh)
++    area0 = ngs.Integrate(ngs.CF(1.0), mesh, ngs.BND, definedon=mesh.Boundaries("right"))
++    mesh.SetDeformation(disp)
++    vol1 = ngs.Integrate(ngs.CF(1.0), mesh)
++    area1 = ngs.Integrate(ngs.CF(1.0), mesh, ngs.BND, definedon=mesh.Boundaries("right"))
++    mesh.UnsetDeformation()
++    N = np.array([1.0, 0.0, 0.0])
++    area_nanson = np.linalg.det(Fa) * np.linalg.norm(np.linalg.inv(Fa).T @ N)
++    errs = (abs(vol0 - 1.0), abs(area0 - 1.0), abs(vol1 - np.linalg.det(Fa)), abs(area1 - area_nanson))
++    assert max(errs) < 1e-12, "volume/area quadrature check failed"
++    return {"V_ref": vol0, "A_ref": area0, "V_def": vol1, "detFa": float(np.linalg.det(Fa)),
++            "A_def": area1, "A_nanson": float(area_nanson), "max_error": float(max(errs))}
++
++
++def rigid_modes(fes, mesh):
++    """Columns: three translations and three infinitesimal rotations."""
++    vecs = []
++    for cf in [ngs.CF((1, 0, 0)), ngs.CF((0, 1, 0)), ngs.CF((0, 0, 1)),
++               ngs.CF((-ngs.y, ngs.x, 0)), ngs.CF((0, -ngs.z, ngs.y)), ngs.CF((ngs.z, 0, -ngs.x))]:
++        g = ngs.GridFunction(fes)
++        g.Set(cf)
++        vecs.append(g.vec.FV().NumPy().copy())
++    return np.array(vecs).T
++
++
++def stiffness_spectrum(mesh, model, order, int_order, context=None):
++    fes = ngs.VectorH1(mesh, order=order)
++    gfu = ngs.GridFunction(fes)  # u = 0  ->  F = I
++    _, K, _, _ = assemble_system(mesh, fes, gfu, model, int_order, context=context)
++    Kd = np.array(K.ToDense()) if hasattr(K, "ToDense") else _to_dense(K, fes.ndof)
++    Kd = 0.5 * (Kd + Kd.T)
++    lam, vec = np.linalg.eigh(Kd)
++    thresh = 1e-9 * np.max(np.abs(lam))
++    nzero = int(np.sum(np.abs(lam) < thresh))
++    R = rigid_modes(fes, mesh)
++    rigid_residual = float(np.linalg.norm(Kd @ R) / (np.linalg.norm(Kd) * np.linalg.norm(R)))
++    # every rigid mode must lie in the numerical null space
++    null = vec[:, np.abs(lam) < thresh]
++    proj = null @ (null.T @ R)
++    span_err = float(np.linalg.norm(R - proj) / np.linalg.norm(R))
++    nonzero = np.abs(lam[np.abs(lam) >= thresh])
++    return {"ndof": fes.ndof, "n_zero": nzero, "n_negative": int(np.sum(lam < -thresh)), "smallest_nonzero": float(nonzero.min()) if nonzero.size else 0.0,
++            "largest": float(np.abs(lam).max()), "rigid_residual": rigid_residual, "rigid_span_error": span_err,
++            "threshold": float(thresh)}
++
++
++def _to_dense(K, n):
++    D = np.zeros((n, n))
++    e = K.CreateColVector()
++    y = K.CreateColVector()
++    for j in range(n):
++        e[:] = 0.0
++        e[j] = 1.0
++        y.data = K * e
++        D[:, j] = y.FV().NumPy()
++    return D
++
++
++def load_rve_model(path):
++    from src.picnn import HyperelasticNN
++    ck = torch.load(path, map_location="cpu", weights_only=True)
++    model = HyperelasticNN(n_ctx=1).double()
++    model.load_state_dict(ck["state_dict"])
++    model.eval()
++    return model
++
++
++def main(ckpt=None, rve_ckpt=None, vf=0.05):
++    print("V0a/V0b on an unstructured unit-cube tetrahedral mesh")
++    mesh = unit_cube_mesh()
++    print(f"  mesh: {mesh.ne} tetrahedra, {mesh.nv} vertices")
++    for order, ndof, val, grad in v0a_partition_of_unity(mesh):
++        print(f"  V0a order {order}: ndof={ndof:4d}  max|sum N_i - 1|={val:.3e}  max|sum grad N_i|={grad:.3e}")
++    for order, ev, eg in v0b_linear_field(mesh):
++        print(f"  V0b order {order}: max value error={ev:.3e}  max gradient error={eg:.3e}")
++    r = v0c_volume_and_area()
++    print("V0c affine mesh deformation")
++    print(f"  reference volume {r['V_ref']:.15f}, reference face area {r['A_ref']:.15f}")
++    print(f"  deformed volume  {r['V_def']:.15f} vs det(Fa) {r['detFa']:.15f}")
++    print(f"  deformed area    {r['A_def']:.15f} vs Nanson {r['A_nanson']:.15f}")
++    print(f"  max error {r['max_error']:.3e}")
++
++    models = {"analytical neo-Hookean": (AnalyticalNeoHooke(), None, True)}
++    if rve_ckpt:
++        models["RVE pICNN (vf=%.2f)" % vf] = (load_rve_model(rve_ckpt), vf, True)
++    if ckpt:
++        from src.train import load_model
++        models["Phase 1 pICNN (legacy)"] = (load_model(ckpt), None, False)
++    print("V0d/V0e unconstrained element stiffness at F = I (production assemble_system)")
++    print(f"  {'element':6s} {'order':>5s} {'quad':>4s} {'model':24s} {'ndof':>4s} {'#zero':>5s} "
++          f"{'#neg':>4s} {'min|lam|>0':>11s} {'max|lam|':>9s} {'|K R|':>9s} {'span err':>9s}")
++    cases = [("tet", 1, 2), ("tet", 2, 4), ("hex", 1, 2), ("hex", 2, 4)]
++    for kind, order, q in cases:
++        em = single_element_mesh(kind)
++        for name, (model, ctx, must_pass) in models.items():
++            s = stiffness_spectrum(em, model, order, q, context=ctx)
++            print(f"  {kind:6s} {order:5d} {q:4d} {name:24s} {s['ndof']:4d} {s['n_zero']:5d} {s['n_negative']:4d} "
++                  f"{s['smallest_nonzero']:11.3e} {s['largest']:9.3e} {s['rigid_residual']:9.2e} {s['rigid_span_error']:9.2e}")
++            if not must_pass:
++                continue
++            assert s["n_zero"] == 6, f"{kind} order {order}: expected 6 zero eigenvalues, found {s['n_zero']}"
++            assert s["rigid_span_error"] < 1e-8, "null space does not span the rigid-body modes"
++    em = single_element_mesh("hex")
++    s = stiffness_spectrum(em, models["analytical neo-Hookean"][0], 1, 0)  # IRS order 0 = one point
++    print(f"  hex        1    0 {'analytical neo-Hookean':24s} {s['ndof']:4d} {s['n_zero']:5d} {s['n_negative']:4d} "
++          f"{s['smallest_nonzero']:11.3e} {s['largest']:9.3e} {s['rigid_residual']:9.2e} {s['rigid_span_error']:9.2e}"
++          "   <- one-point rule")
++    assert s["n_zero"] == 18, f"one-point hexahedron: expected 18 zero eigenvalues, found {s['n_zero']}"
++    print("V0 PASS: shape functions, quadrature, rigid-body modes and hourglass detection verified.")
++
++
++if __name__ == "__main__":
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--ckpt", default=None, help="optional legacy Phase 1 checkpoint (reported only)")
++    parser.add_argument("--rve-ckpt", default=None, help="optional RVE-trained pICNN checkpoint (asserted)")
++    parser.add_argument("--vf", type=float, default=0.05, help="volume-fraction context for --rve-ckpt")
++    a = parser.parse_args()
++    main(a.ckpt, a.rve_ckpt, a.vf)
+--- /dev/null	2026-11-18 00:27:56.045175318 +0100
++++ b/tests/verify_stress_control.py	2026-11-19 00:14:56.252090803 +0100
+@@ -0,0 +1,225 @@
++"""V7/V8 -- Single-element constitutive response under full deformation control
++and under stress control (PPP guideline Sec. 4.2.2, item 2).
++
++Following the guideline's recommendation, the physically linear but
++geometrically nonlinear St. Venant--Kirchhoff (SVK) law is tested first,
++then the compressible neo-Hookean law, and optionally the trained Phase 1 pICNN.
++All cases use the production assembly (`assemble_system`) and the production
++Newton solver (`solve`) on ONE trilinear hexahedron (unit cube).
++
++  V7   Full deformation control: every nodal DOF follows an affine map with a
++       prescribed non-symmetric F. The stress at every Gauss point must equal
++       the analytical P(F), and the assembled stiffness must match central
++       differences of the assembled residual (consistent tangent check).
++  V8   Stress control: uniaxial nominal traction t on the face x = 1, minimal
++       symmetry supports (u_x = 0 on x = 0, u_y = 0 on y = 0, u_z = 0 on z = 0),
++       all other faces traction-free. The homogeneous solution F = diag(a, b, b)
++       is computed independently by a scalar/2x2 Newton solve of P11 = t,
++       P22 = P33 = 0. The FE solution must reproduce a and b, the Gauss-point
++       stress must equal diag(t, 0, 0), and the global Newton iteration must
++       converge quadratically (table printed for every load step).
++
++Run:  python -m tests.verify_stress_control [--ckpt checkpoints/phase1_validated.pt]
++          [--traction 0.6] [--load-steps 3] [--materials svk neohooke]
++"""
++import argparse
++import math
++
++import numpy as np
++import torch
++import ngsolve as ngs
++from ngsolve.meshes import MakeStructured3DMesh
++
++from src.ngsolve_umat import assemble_system, solve
++from src.neohooke import LAM, MU, psi_neohooke
++
++torch.set_default_dtype(torch.float64)
++
++
++# ── materials exposing the neural-material API (energy, reference) ──────────
++class _Analytical(torch.nn.Module):
++    n_ctx = 0
++
++    def reference(self, dtype, device, c=None):
++        return (torch.zeros((), dtype=dtype, device=device),
++                torch.zeros((3, 3), dtype=dtype, device=device))
++
++
++class StVenantKirchhoff(_Analytical):
++    """Psi = lam/2 (tr E)^2 + mu tr(E^2),  E = (F^T F - I)/2."""
++
++    def energy(self, F, c=None, ref=None):
++        E = 0.5 * (F.transpose(-1, -2) @ F - torch.eye(3, dtype=F.dtype))
++        trE = E.diagonal(dim1=-2, dim2=-1).sum(-1)
++        return 0.5 * LAM * trE ** 2 + MU * (E * E).sum((-1, -2))
++
++
++class NeoHooke(_Analytical):
++    def energy(self, F, c=None, ref=None):
++        return psi_neohooke(F)
++
++
++def P_svk(F):
++    E = 0.5 * (F.T @ F - np.eye(3))
++    S = LAM * np.trace(E) * np.eye(3) + 2 * MU * E
++    return F @ S
++
++
++def P_nh(F):
++    FinvT = np.linalg.inv(F).T
++    return MU * (F - FinvT) + LAM * math.log(np.linalg.det(F)) * FinvT
++
++
++# ── independent uniaxial reference solution ─────────────────────────────────
++def uniaxial_reference(P_fun, t):
++    """Solve P11(diag(a,b,b)) = t, P22 = 0 for (a, b) by Newton with FD Jacobian."""
++    x = np.array([1.0 + t / (3 * MU), 1.0])
++    for _ in range(50):
++        def g(z):
++            P = P_fun(np.diag([z[0], z[1], z[1]]))
++            return np.array([P[0, 0] - t, P[1, 1]])
++        r = g(x)
++        if np.linalg.norm(r) < 1e-14:
++            break
++        J = np.zeros((2, 2))
++        for j in range(2):
++            h = 1e-7
++            xp, xm = x.copy(), x.copy()
++            xp[j] += h
++            xm[j] -= h
++            J[:, j] = (g(xp) - g(xm)) / (2 * h)
++        x = x - np.linalg.solve(J, r)
++    return x
++
++
++# ── helpers ─────────────────────────────────────────────────────────────────
++def unit_hex():
++    mesh = MakeStructured3DMesh(hexes=True, nx=1, ny=1, nz=1)
++    names = {}
++    for b in mesh.GetBoundaries():
++        area = ngs.Integrate(ngs.CF(1.0), mesh, ngs.BND, definedon=mesh.Boundaries(b))
++        c = [ngs.Integrate(v, mesh, ngs.BND, definedon=mesh.Boundaries(b)) / area for v in (ngs.x, ngs.y, ngs.z)]
++        for k, axis in enumerate("xyz"):
++            if abs(c[k]) < 1e-12:
++                names[axis + "0"] = b
++            if abs(c[k] - 1) < 1e-12:
++                names[axis + "1"] = b
++    return mesh, names
++
++
++def gauss_point_F_P(mesh, gfu, model, int_order=2):
++    from src.ngsolve_umat import stress_and_tangent
++    from ngsolve.comp import IntegrationRuleSpace
++    irs = IntegrationRuleSpace(mesh, order=int_order)
++    gf = ngs.GridFunction(irs ** 9)
++    gf.Interpolate((ngs.Id(3) + ngs.Grad(gfu)).Reshape((9,)))
++    F = np.stack([gf.components[i].vec.FV().NumPy() for i in range(9)], axis=1).reshape(-1, 3, 3)
++    P, _ = stress_and_tangent(model, torch.from_numpy(F.copy()))
++    return F, P.numpy()
++
++
++def newton_table(history, tol):
++    rows = []
++    for k, r in enumerate(history):
++        ratio = history[k + 1] / r ** 2 if k + 1 < len(history) else float("nan")
++        q = (math.log(history[k + 1] / r) / math.log(r / history[k - 1])
++             if 0 < k < len(history) - 1 else float("nan"))
++        rows.append(f"      {k:2d}  {r:10.3e}  {ratio:10.3e}  {q:6.2f}")
++    return "\n".join([f"      k   ||R_free||   r+1/r^2   order   (tol {tol:.0e})"] + rows)
++
++
++# ── V7 ─────────────────────────────────────────────────────────────────────
++def v7a_full_deformation_control(name, model, P_fun):
++    mesh, _ = unit_hex()
++    Fbar = np.array([[1.10, 0.06, -0.02], [0.03, 0.92, 0.05], [-0.04, 0.02, 1.05]])
++    H = Fbar - np.eye(3)
++    fes = ngs.VectorH1(mesh, order=1)
++    gfu = ngs.GridFunction(fes)
++    gfu.Set(ngs.CF(tuple(H[i, 0] * ngs.x + H[i, 1] * ngs.y + H[i, 2] * ngs.z for i in range(3))))
++    F, P = gauss_point_F_P(mesh, gfu, model)
++    err_F = np.max(np.abs(F - Fbar))
++    P_ref = P_fun(Fbar)
++    err_P = np.max(np.abs(P - P_ref)) / np.max(np.abs(P_ref))
++    # consistent tangent: K d  vs  [R(u + eps d) - R(u - eps d)] / (2 eps)
++    R0, K, _, _ = assemble_system(mesh, fes, gfu, model, 2)
++    rng = np.random.default_rng(3)
++    d = rng.standard_normal(fes.ndof)
++    errs = []
++    for eps in (1e-3, 1e-4, 1e-5, 1e-6):
++        u0 = gfu.vec.FV().NumPy().copy()
++        gfu.vec.FV().NumPy()[:] = u0 + eps * d
++        Rp, _, _, _ = assemble_system(mesh, fes, gfu, model, 2)
++        gfu.vec.FV().NumPy()[:] = u0 - eps * d
++        Rm, _, _, _ = assemble_system(mesh, fes, gfu, model, 2)
++        gfu.vec.FV().NumPy()[:] = u0
++        fd = (Rp.FV().NumPy() - Rm.FV().NumPy()) / (2 * eps)
++        dv = gfu.vec.CreateVector()
++        dv.FV().NumPy()[:] = d
++        Kd = gfu.vec.CreateVector()
++        Kd.data = K * dv
++        errs.append(np.linalg.norm(Kd.FV().NumPy() - fd) / np.linalg.norm(fd))
++    print(f"  V7 [{name}] max|F - Fbar| = {err_F:.2e}, max rel. Gauss-point stress error = {err_P:.2e}")
++    print("        tangent vs central differences: " +
++          ", ".join(f"eps={e:.0e}: {v:.2e}" for e, v in zip((1e-3, 1e-4, 1e-5, 1e-6), errs)))
++    assert err_F < 1e-13 and err_P < 1e-12, "full deformation control: stress mismatch"
++    assert min(errs) < 1e-7, "assembled stiffness inconsistent with residual"
++    return err_P, min(errs)
++
++
++# ── V8 ─────────────────────────────────────────────────────────────────────
++def v7b_stress_control(name, model, P_fun, traction, load_steps, tol=1e-10, ab_tol=1e-10):
++    mesh, nm = unit_hex()
++    supports = {"x": nm["x0"], "y": nm["y0"], "z": nm["z0"]}
++    gfu = None
++    for step in range(1, load_steps + 1):
++        t = traction * step / load_steps
++        gfu, hist = solve(mesh, model, bc_cf=ngs.CF((0, 0, 0)), dirichlet_components=supports,
++                          traction_cf=ngs.CF((t, 0, 0)), neumann=nm["x1"], order=1,
++                          integration_order=2, tol=tol, max_iter=30,
++                          initial_cf=gfu, merit_function="energy")
++        print(f"  V8 [{name}] load step {step}/{load_steps}, t = {t:.4f}")
++        print(newton_table(hist, tol))
++    a, b = uniaxial_reference(P_fun, traction)
++    F, P = gauss_point_F_P(mesh, gfu, model)
++    err_a = np.max(np.abs(F[:, 0, 0] - a))
++    err_b = np.max(np.abs(F[:, 1, 1] - b)) + np.max(np.abs(F[:, 2, 2] - b))
++    off = np.max(np.abs(F - np.diag(np.diag(F[0])))) if F.shape[0] else 0.0
++    P_err = np.max(np.abs(P - np.diag([traction, 0, 0]))) / traction
++    print(f"  V8 [{name}] reference a = {a:.10f}, b = {b:.10f}  (J = {a * b * b:.6f})")
++    print(f"        FE: max|F11 - a| = {err_a:.2e}, max|F22,F33 - b| = {err_b:.2e}, "
++          f"max off-diagonal |F_ij| = {off:.2e}, max|P - diag(t,0,0)|/t = {P_err:.2e}")
++    assert err_a < ab_tol and err_b < ab_tol, "stress-controlled stretches differ from the reference"
++    assert P_err < 1e-8, "Gauss-point stress is not the applied uniaxial state"
++    return float(F[:, 0, 0].mean()), float(F[:, 1, 1].mean()), a, b
++
++
++def main(ckpt=None, traction=0.6, load_steps=3, materials=("svk", "neohooke")):
++    print(f"Materials: mu = {MU}, lambda = {LAM}; single trilinear hexahedron, 8-point Gauss rule")
++    lib = {"svk": ("St. Venant-Kirchhoff", StVenantKirchhoff(), P_svk),
++           "neohooke": ("neo-Hookean", NeoHooke(), P_nh)}
++    for key in materials:
++        name, model, P_fun = lib[key]
++        v7a_full_deformation_control(name, model, P_fun)
++        v7b_stress_control(name, model, P_fun, traction, load_steps)
++    if ckpt:
++        # Reported, not asserted: the trained network only approximates the
++        # neo-Hookean law (V2b), so its stretches differ by its constitutive error.
++        from src.train import load_model
++        model = load_model(ckpt)
++        for t in (traction / 3, traction):
++            a_nn, b_nn, a, b = v7b_stress_control("Phase 1 pICNN", model, P_nh, t, load_steps,
++                                                  ab_tol=float("inf"))
++            print(f"  V8 [Phase 1 pICNN] t = {t:.3f}: a = {a_nn:.6f} (neo-Hooke {a:.6f}, "
++                  f"{100 * (a_nn - a) / (a - 1):+.1f} % of the stretch increment), "
++                  f"b = {b_nn:.6f} (neo-Hooke {b:.6f}, {100 * (b_nn - b) / abs(b - 1):+.1f} %)")
++    print("V7/V8 PASS: full-deformation and stress-controlled single-element responses verified.")
++
++
++if __name__ == "__main__":
++    p = argparse.ArgumentParser(description=__doc__)
++    p.add_argument("--ckpt", default=None, help="optional Phase 1 checkpoint (compared with neo-Hooke)")
++    p.add_argument("--traction", type=float, default=0.6, help="final nominal traction t (units of mu)")
++    p.add_argument("--load-steps", type=int, default=3)
++    p.add_argument("--materials", nargs="+", default=["svk", "neohooke"], choices=["svk", "neohooke"])
++    a = p.parse_args()
++    main(a.ckpt, a.traction, a.load_steps, tuple(a.materials))
+--- /dev/null	2026-11-18 00:27:56.045175318 +0100
++++ b/tests/README.md	2026-11-19 00:13:38.007959605 +0100
+@@ -0,0 +1,31 @@
++# Verification tests (report Chapter 7)
++
++Run everything with `./run_tests.sh quick|full|audit` from the folder that contains
++`src/`, `tests/`, `benchmarks/` (see the header of `run_tests.sh` for paths to the
++archived checkpoints/datasets; on the cluster use `MODE=full qsub -v MODE run_tests.pbs`).
++Every test prints its metrics and ends with `... PASS ...`; a failed check raises an
++`AssertionError` with an explanation. Inputs are generated inside the test unless listed.
++
++| ID | Command | Inputs | Aim | Expected result | Time |
++|---|---|---|---|---|---|
++| V0a-e | `python -m tests.verify_fe_basics --ckpt checkpoints/phase1_validated.pt --rve-ckpt <frozen.pt>` | both checkpoints (optional) | partition of unity, linear-field reproduction, Jacobian volume/area, 6 rigid-body zero eigenvalues (tet/hex, P1/P2), 18 zero modes with a one-point hex rule | errors ~1e-14; 6 zero modes for analytic law and RVE pICNN; legacy Phase 1 net reported (3 zero, 3 negative) | 20 s |
++| V1 | `python -m tests.verify_model_interface` | - | API shapes, dtypes, finiteness | shapes (4), (4,3,3), (4,3,3,3,3), float64 | 3 s |
++| V2 | `python -m tests.verify_reference` | - | Psi(I)=0, P(I)=0 | exactly 0 | 3 s |
++| V2b | `python -m tests.verify_neohooke_response --ckpt checkpoints/phase1_validated.pt` | Phase 1 ckpt | trained net vs analytic neo-Hooke, 256 states | 5.367 / 3.274 / 3.865 % < 10 / 10 / 25 % | 2 s |
++| V3 | `python -m tests.verify_tangent` | - | AD tangent vs central differences | V-curve, min error < 1e-6 near eps = 1e-6 | 4 s |
++| V4 | `python -m tests.verify_element --ckpt checkpoints/phase1_validated.pt` | Phase 1 ckpt | Newton convergence of the FE solve | 4 iterations, order -> 1.9, residual 4e-11 | 3 s |
++| V5 | `python -m tests.verify_patch --ckpt checkpoints/phase1_validated.pt` | Phase 1 ckpt | affine patch test, 206 irregular tets | F error 4e-16, free residual 3e-16 | 5 s |
++| V6 | `python -m tests.verify_fe_comparison --ckpt checkpoints/phase1_validated.pt` | Phase 1 ckpt | neural vs analytic FE solution | errors 2.0 / 0.35 / 13.4 % < 15 % | 5 s |
++| V7/V8 | `python -m tests.verify_stress_control --ckpt checkpoints/phase1_validated.pt` | Phase 1 ckpt (optional) | single hex: full deformation control (stress + tangent vs FD) and uniaxial stress control, St. Venant-Kirchhoff then neo-Hooke | stretches = analytic to 1e-15, P = diag(t,0,0), quadratic Newton per load step | 30 s |
++| P2-V1 | `python -m tests.verify_periodic_rve` | - | periodic fluctuation space | opposite-face jump ~2e-16 | 1 s |
++| P2-V2 | `python -m tests.verify_rigid_particle` | - | exact rigid kinematics | rank 6, residual ~1e-17 | 1 s |
++| P2-V3 | `python -m tests.verify_mixed_matrix` | - | Taylor-Hood patch, kappa/mu = 1e4 | F, J, p exact to ~1e-13 | 1 s |
++| P2-V4 | `python -m tests.verify_coupled_rve` | - | coupled periodic RVE equilibrium | residual ~2e-14 | 20 s |
++| P2-V5 | `python -m tests.verify_hill_mandel` | - | Hill-Mandel macro-homogeneity | relative error ~1e-15 | 20 s |
++| P2-V6 | `python -m tests.verify_homogenized_tangent` | - | condensed tangent: symmetry, Taylor order | orders 2.000, 2.000 | 3.5 min |
++| P2-V7 | `python -m tests.verify_free_rotation` | - | free rotation under simple shear | 3 iterations, R in SO(3) | 3.5 min |
++| P2-V8 | `python -m tests.verify_translation_gauge` | - | translation-gauge invariance | changes ~1e-15 | 1 min |
++| P2-V9 | `python -m benchmarks.rve_constitutive_checks --dataset <pilot.npz> --output p2v9.json --sample-ids v001_f000047` | pilot dataset | free-rotation tangent vs re-solved central differences (9 directions) | status pass, error ~5e-12 | ~1 h |
++| P2-V10 | `python -m tests.verify_rve_dataset` | - | deterministic dataset, leak-free splits | 0 leaks | 1 s |
++| S-V1 | `python -m benchmarks.rve_surrogate_constitutive_checks --dataset <phase7.npz> --manifest <phase7.manifest.json> --checkpoint <frozen.pt> --training-dataset <training.npz> --report sv1.json --states-per-det-bin 2 --fd-step 1e-5` | frozen ckpt, datasets | surrogate energy gradient, tangent, objectivity, symmetry | status pass, all errors <= 5e-8 | 6 s |
++| M-V0 | `python -m benchmarks.phase6_macro_fe_demo --checkpoint <frozen.pt> --output mv0.json --stretch 0.01 --load-steps 2 --order 1 --integration-order 4 --merit-function energy --tangent-check-at-load-step 2 --tangent-check-iteration 0 --tangent-check-only` | frozen ckpt | macro stiffness vs directional differences of the residual | directional error ~6e-10, symmetry ~1e-16 | 10 s |
+--- /dev/null	2026-11-18 00:27:56.045175318 +0100
++++ b/benchmarks/profile_bridge.py	2026-11-18 21:56:51.682066403 +0100
+@@ -0,0 +1,77 @@
++"""Computation-time study of the macroscopic PyTorch--NGSolve bridge.
++
++Solves the first load increment (axial stretch 5e-4) of the clamped-cube
++macro problem with the RVE-trained pICNN and prints the built-in stage
++timings of src.ngsolve_umat (TIMINGS), per Newton iteration.
++
++Run:  python -m benchmarks.profile_bridge --checkpoint <frozen.pt> \
++          [--maxh 0.25] [--order 1] [--threads 1] [--output timings.json]
++"""
++import argparse
++import json
++import os
++import time
++
++import torch
++from netgen.occ import Box, OCCGeometry, Pnt, X
++from ngsolve import CF, Mesh, x
++
++
++def main():
++    p = argparse.ArgumentParser(description=__doc__)
++    p.add_argument("--checkpoint", required=True)
++    p.add_argument("--maxh", type=float, default=0.25)
++    p.add_argument("--order", type=int, default=1)
++    p.add_argument("--integration-order", type=int, default=4)
++    p.add_argument("--stretch", type=float, default=5e-4)
++    p.add_argument("--volume-fraction", type=float, default=0.05)
++    p.add_argument("--threads", type=int, default=1)
++    p.add_argument("--output", default=None)
++    a = p.parse_args()
++    os.environ["NGS_NUM_THREADS"] = str(a.threads)
++    torch.set_num_threads(a.threads)
++    torch.set_default_dtype(torch.float64)
++
++    from src import ngsolve_umat as um
++    from src.picnn import HyperelasticNN
++
++    ck = torch.load(a.checkpoint, map_location="cpu", weights_only=True)
++    model = HyperelasticNN(n_ctx=1).double()
++    model.load_state_dict(ck["state_dict"])
++    model.eval()
++
++    box = Box(Pnt(0, 0, 0), Pnt(1, 1, 1))
++    box.faces.Min(X).name = "left"
++    box.faces.Max(X).name = "right"
++    mesh = Mesh(OCCGeometry(box).GenerateMesh(maxh=a.maxh))
++    bc = CF((a.stretch * x, 0, 0))
++
++    um.reset_timings()
++    t0 = time.perf_counter()
++    gfu, history = um.solve(mesh, model, bc_cf=bc, dirichlet="left|right", order=a.order,
++                            context=a.volume_fraction, initial_cf=bc,
++                            integration_order=a.integration_order, merit_function="energy",
++                            max_iter=60, tol=1e-8)
++    wall = time.perf_counter() - t0
++    t = um.get_timings()
++    n_assembly = t["2 pICNN energy, stress, tangent (AD)"][1]
++    from ngsolve.comp import IntegrationRuleSpace
++    nq = IntegrationRuleSpace(mesh, order=a.integration_order).ndof
++    print(f"mesh: {mesh.ne} elements, order {a.order}, quadrature points {nq}, "
++          f"Newton iterations {len(history) - 1}, assemblies {n_assembly}")
++    print(f"{'stage':42s} {'total s':>9s} {'calls':>6s} {'ms/call':>9s} {'share':>6s}")
++    total_timed = sum(v[0] for v in t.values())
++    for k in sorted(t):
++        s, c = t[k]
++        print(f"{k:42s} {s:9.3f} {c:6d} {1e3 * s / c:9.2f} {100 * s / wall:5.1f}%")
++    print(f"{'other (Python control, line search, BCs)':42s} {wall - total_timed:9.3f}")
++    print(f"{'total wall time':42s} {wall:9.3f}")
++    if a.output:
++        json.dump({"elements": mesh.ne, "order": a.order, "quadrature_points": nq,
++                   "newton_iterations": len(history) - 1, "wall_seconds": wall,
++                   "stages": {k: {"seconds": v[0], "calls": v[1]} for k, v in t.items()},
++                   "threads": a.threads}, open(a.output, "w"), indent=1)
++
++
++if __name__ == "__main__":
++    main()
+--- /dev/null	2026-11-18 00:27:56.045175318 +0100
++++ b/run_tests.sh	2026-11-19 00:11:34.771952279 +0100
+@@ -0,0 +1,98 @@
++#!/usr/bin/env bash
++# Run the PPP verification suite (Chapter 7 of the report) on Ubuntu or on the cluster.
++#
++#   ./run_tests.sh quick    # V0-V8, P2-V1..V5, P2-V10, S-V1           (~5 min, 1 core)
++#   ./run_tests.sh full     # quick + P2-V6..P2-V8 + M-V0              (~15 min)
++#   ./run_tests.sh audit    # full + P2-V9 (19 full RVE re-solves)      (~1-1.5 h)
++#
++# Run from the folder that contains src/, tests/ and benchmarks/.
++# Paths to archived artifacts can be overridden by environment variables (defaults
++# follow the GitHub repository layout, one level above this folder):
++#   PPP_PHASE1_CKPT, PPP_RVE_CKPT, PPP_PHASE7_NPZ, PPP_PHASE7_MANIFEST,
++#   PPP_TRAIN_NPZ, PPP_PILOT_NPZ, PPP_LOG_DIR
++set -uo pipefail
++MODE="${1:-quick}"
++ROOT="$(cd "$(dirname "$0")" && pwd)"
++cd "$ROOT"
++REPO="$(cd "$ROOT/.." && pwd)"
++
++PHASE1_CKPT="${PPP_PHASE1_CKPT:-checkpoints/phase1_validated.pt}"
++RVE_CKPT="${PPP_RVE_CKPT:-$REPO/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt}"
++PHASE7_NPZ="${PPP_PHASE7_NPZ:-$REPO/rve_phase7_independent_20261107/data/rve_phase7_independent.npz}"
++PHASE7_MANIFEST="${PPP_PHASE7_MANIFEST:-$REPO/rve_phase7_independent_20261107/data/rve_phase7_independent.manifest.json}"
++TRAIN_NPZ="${PPP_TRAIN_NPZ:-$REPO/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.npz}"
++PILOT_NPZ="${PPP_PILOT_NPZ:-$REPO/rve_phase2_solver_revision_oR3pd5/data/rve_phase2.npz}"
++LOG_DIR="${PPP_LOG_DIR:-test_logs/$(date +%Y%m%d_%H%M%S)_$MODE}"
++mkdir -p "$LOG_DIR"
++
++export NGS_NUM_THREADS="${NGS_NUM_THREADS:-1}"
++export TORCH_NUM_THREADS="${TORCH_NUM_THREADS:-1}"
++export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONUNBUFFERED=1
++
++declare -a RESULTS=()
++FAILED=0
++
++run() {  # run <ID> <log name> <command...>
++  local id="$1" name="$2"; shift 2
++  local log="$LOG_DIR/$name.log" t0=$SECONDS
++  printf '%-7s %-38s ... ' "$id" "$name"
++  if "$@" > "$log" 2>&1; then
++    printf 'PASS  (%ds)\n' $((SECONDS - t0)); RESULTS+=("$id PASS $name")
++  else
++    printf 'FAIL  (%ds)  -> %s\n' $((SECONDS - t0)) "$log"; RESULTS+=("$id FAIL $name"); FAILED=1
++  fi
++}
++
++need() { [ -f "$1" ] || { echo "missing file: $1 (set the corresponding PPP_* variable)"; exit 2; }; }
++need "$PHASE1_CKPT"; need "$RVE_CKPT"
++
++echo "PPP verification suite, mode=$MODE, logs in $LOG_DIR"
++python -c "import sys, torch, ngsolve, numpy; print('python', sys.version.split()[0], '| torch', torch.__version__, '| ngsolve', ngsolve.__version__, '| numpy', numpy.__version__)" | tee "$LOG_DIR/environment.txt"
++
++# ---- finite-element basics and Phase 1 bridge --------------------------------
++run V0     verify_fe_basics         python -m tests.verify_fe_basics --ckpt "$PHASE1_CKPT" --rve-ckpt "$RVE_CKPT"
++run V1     verify_model_interface   python -m tests.verify_model_interface
++run V2     verify_reference         python -m tests.verify_reference
++run V2b    verify_neohooke_response python -m tests.verify_neohooke_response --ckpt "$PHASE1_CKPT"
++run V3     verify_tangent           python -m tests.verify_tangent
++run V4     verify_element           python -m tests.verify_element --ckpt "$PHASE1_CKPT"
++run V5     verify_patch             python -m tests.verify_patch --ckpt "$PHASE1_CKPT"
++run V6     verify_fe_comparison     python -m tests.verify_fe_comparison --ckpt "$PHASE1_CKPT"
++run V7/V8  verify_stress_control    python -m tests.verify_stress_control --ckpt "$PHASE1_CKPT"
++# ---- Phase 2 RVE --------------------------------------------------------------
++run P2-V1  verify_periodic_rve      python -m tests.verify_periodic_rve
++run P2-V2  verify_rigid_particle    python -m tests.verify_rigid_particle
++run P2-V3  verify_mixed_matrix      python -m tests.verify_mixed_matrix
++run P2-V4  verify_coupled_rve       python -m tests.verify_coupled_rve
++run P2-V5  verify_hill_mandel       python -m tests.verify_hill_mandel
++run P2-V10 verify_rve_dataset       python -m tests.verify_rve_dataset
++# ---- surrogate ------------------------------------------------------------------
++if [ -f "$PHASE7_NPZ" ] && [ -f "$TRAIN_NPZ" ]; then
++  run S-V1 surrogate_constitutive_checks python -m benchmarks.rve_surrogate_constitutive_checks \
++      --dataset "$PHASE7_NPZ" --manifest "$PHASE7_MANIFEST" --checkpoint "$RVE_CKPT" \
++      --training-dataset "$TRAIN_NPZ" --report "$LOG_DIR/s_v1_constitutive_checks.json" \
++      --states-per-det-bin 2 --fd-step 1e-5 --torch-threads "$TORCH_NUM_THREADS"
++else
++  echo "S-V1    skipped (Phase 7 / training datasets not found)"
++fi
++
++if [ "$MODE" = full ] || [ "$MODE" = audit ]; then
++  run P2-V6 verify_homogenized_tangent python -m tests.verify_homogenized_tangent
++  run P2-V7 verify_free_rotation       python -m tests.verify_free_rotation
++  run P2-V8 verify_translation_gauge   python -m tests.verify_translation_gauge
++  run M-V0  macro_tangent_check        python -m benchmarks.phase6_macro_fe_demo \
++      --checkpoint "$RVE_CKPT" --output "$LOG_DIR/m_v0_report.json" --volume-fraction 0.05 \
++      --stretch 0.01 --maxh 0.25 --order 1 --integration-order 4 --load-steps 2 --max-iter 50 \
++      --merit-function energy --load-predictor secant \
++      --tangent-check-at-load-step 2 --tangent-check-iteration 0 --tangent-check-only
++fi
++
++if [ "$MODE" = audit ]; then
++  need "$PILOT_NPZ"
++  run P2-V9 rve_constitutive_checks python -m benchmarks.rve_constitutive_checks \
++      --dataset "$PILOT_NPZ" --output "$LOG_DIR/p2_v9_rve_constitutive_checks.json" \
++      --sample-ids v001_f000047
++fi
++
++echo; echo "Summary ($MODE):"; printf '  %s\n' "${RESULTS[@]}" | tee "$LOG_DIR/summary.txt"
++exit $FAILED
+--- /dev/null	2026-11-18 00:27:56.045175318 +0100
++++ b/run_tests.pbs	2026-11-19 00:11:40.623952627 +0100
+@@ -0,0 +1,30 @@
++#!/bin/bash
++#PBS -N ppp_tests
++#PBS -q teachingq
++#PBS -l select=1:ncpus=4:mem=16GB
++#PBS -l walltime=03:00:00
++#PBS -o /scratch/vr80beqo/ppp_tests.out
++#PBS -e /scratch/vr80beqo/ppp_tests.err
++#
++# Verification suite on the TU Freiberg cluster.
++# Submit:  MODE=audit qsub -v MODE run_tests.pbs      (MODE = quick | full | audit)
++# Adjust the artifact paths below if your scratch layout differs.
++
++set -euo pipefail
++cd "$HOME/PPP/Project implementation plan (2)" || exit 1
++
++module load openmpi/gcc/11.4.0/4.1.6
++module load python/gcc/11.4.0/3.11.7
++source "$HOME/venvs/ppp-ngsolve/bin/activate"
++
++export NGS_NUM_THREADS=4
++export TORCH_NUM_THREADS=4
++
++export PPP_RVE_CKPT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
++export PPP_PHASE7_NPZ=/scratch4/vr80beqo/rve_phase7_independent_20261107/data/rve_phase7_independent.npz
++export PPP_PHASE7_MANIFEST=/scratch4/vr80beqo/rve_phase7_independent_20261107/data/rve_phase7_independent.manifest.json
++export PPP_TRAIN_NPZ=/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.npz
++export PPP_PILOT_NPZ=/scratch4/vr80beqo/rve_phase2_solver_revision_oR3pd5/data/rve_phase2.npz
++export PPP_LOG_DIR=/scratch/vr80beqo/ppp_tests_${MODE:-full}_$(date +%Y%m%d_%H%M%S)
++
++bash ./run_tests.sh "${MODE:-full}"
+--- /dev/null	2026-11-18 00:27:56.045175318 +0100
++++ b/requirements-pinned.txt	2026-11-19 00:11:58.685074301 +0100
+@@ -0,0 +1,5 @@
++# Exact versions of the cluster production environment (Phase 7 runs).
++# PyTorch is installed separately; CPU wheel: pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
++ngsolve==6.2.2608
++numpy==2.4.6
++matplotlib==3.11.0

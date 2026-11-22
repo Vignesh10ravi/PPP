@@ -1,0 +1,4 @@
+feature interface: model.net(invariant_features(F))
+material interface: model.energy(F), model.reference(...), stress_and_tangent(model, F)
+dtype: torch.float64
+V1 PASS: model interfaces, shapes, dtype, and derivatives are consistent.

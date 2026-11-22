@@ -1,0 +1,210 @@
+\chapter{Code(s) Available and Used}\label{ch:codes}
+
+\section{Closest existing codes on the World Wide Web}
+
+The guideline requires an explicit answer to the question of which existing
+code comes closest to this project. A search over Python, Julia, MATLAB,
+Fortran/Abaqus and C++ resources found \emph{no} public code that combines all
+four ingredients of this project: (i) a periodic finite-strain RVE with an
+exactly rigid, freely rotating inclusion; (ii) a condensed consistent tangent;
+(iii) a polyconvex neural energy trained on that data; and (iv) deployment of the
+network as a material law inside NGSolve. Each ingredient on its own, however,
+has close precedents, summarized in \cref{tab:available}. The closest code to the
+neural material law in NGSolve is the forum example~\cite{NGSolveForumTF}; the
+closest RVE formulations are the COMET and Ferrite.jl homogenization examples.
+
+{\small
+\begin{xltabular}{\textwidth}{@{}p{3.1cm}p{1.9cm}X@{}}
+\caption{Closest publicly available codes and their relation to this project.}\label{tab:available}\\
+\toprule
+Code & Language & Functionality and relation to this project\\
+\midrule
+\endfirsthead
+\caption[]{\emph{(continued)}}\\
+\toprule
+Code & Language & Functionality and relation to this project\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+COMET / comet-fenicsx tours~\cite{CometFenics} & Python (FEniCSx, \code{dolfinx\_mpc}) &
+  Periodic homogenization of a 2D plane-strain \emph{linear} elastic composite with
+  deformable circular inclusions; the periodic fluctuation is the unknown, as in
+  \cref{eq:kin}. Closest RVE formulation, but small strain, two-dimensional, no
+  rigid inclusion and no neural surrogate.\\
+Ferrite.jl tutorial ``Computational homogenization''~\cite{Ferrite} & Julia &
+  2D small-strain RVE with inclusions ten times stiffer than the matrix, Dirichlet and
+  periodic boundary conditions. The homogenized stiffness follows from sensitivity
+  fields for unit macroscopic strains with one reused factorization, the linear
+  counterpart of the condensed tangent \cref{eq:schur}.\\
+Andreassen \& Andreasen~\cite{Andreassen2014} & MATLAB &
+  Short educational code for the homogenized elasticity tensor of periodic
+  two-phase composites (small strain, voxel mesh).\\
+EasyPBC~\cite{Omairey2019} & Python plug-in for Abaqus/CAE &
+  Automatic periodic boundary conditions and effective elastic constants of
+  user RVEs in Abaqus (linear elasticity).\\
+MonolithFE$^2$~\cite{MonolithFE2} & Fortran (Abaqus UMAT/UEL) &
+  Open-source FE$^2$ toolbox from TU Bergakademie Freiberg with monolithic and
+  staggered algorithms and periodic micro boundary conditions. It solves the micro
+  problem concurrently instead of using an offline surrogate, and is the reference
+  point for the concurrent alternative discussed in \cref{ch:intro}.\\
+CANN~\cite{Linka2021} & Python (TensorFlow) &
+  Constitutive artificial neural networks for hyperelasticity trained on stress
+  data; invariant-based, physics-structured, but not coupled to an FE solver in
+  the public code and not trained on RVE data.\\
+Physics-augmented NNs~\cite{Klein2022,Linden2023,Kalina2022} & method papers &
+  Polyconvex invariant-based ICNN energies with stress normalization; the
+  methodological basis of the pICNN (features, non-negative weights,
+  normalization). Not a reusable package for NGSolve.\\
+NGSolve i-tutorial 10.2 ``NGSolve with tensor-flow''~\cite{NGSolveTF} & Python (NGSolve + Keras/TensorFlow) &
+  The precedent named by the committee. NGSolve solves a Poisson problem on a
+  domain deformed by two parameters; a Keras network is trained to map the
+  parameters to the nodal solution and is compared with a new NGSolve solve. Same
+  offline-surrogate idea (FE data generation, then training), but the network
+  replaces the whole solution and is not evaluated inside the FE solver.\\
+NGSolve forum example~\cite{NGSolveForumTF} & Python (NGSolve + TensorFlow) &
+  \emph{Closest code to the material-law coupling}: a trained network for the
+  strain energy as a function of the Green--Lagrange strain is rebuilt from its
+  weights as NGSolve coefficient functions and used in a nonlinear elasticity
+  solve, with stresses from symbolic differentiation. The reported nonzero energy
+  in the undeformed state is the defect removed by the normalization
+  \cref{eq:norm}. No PyTorch, no quadrature-point transfer, no RVE data.\\
+DNN in sequential multiscale FE~\cite{Troeger2023} & Python surrogate in Fortran FE &
+  A purely data-based DNN surrogate of the RVE response (tangent by reverse-mode
+  AD), integrated into a Fortran FE code and used in load-step-controlled simulations
+  (2D plane strain, small strain). Reported speed-ups over FE$^2$ are 524$\times$
+  (TensorFlow) and 6048$\times$ (JAX with just-in-time compilation) for a plate with a hole;
+  these are not comparable with the present figures (other problem, hardware and
+  reference). Same offline-surrogate idea; different strain regime, no physics
+  constraints, other software.\\
+\end{xltabular}
+}
+
+\section{Code(s) used in original or adapted form}
+
+No source file of the codes in \cref{tab:available} was copied. The following
+parts were used or adapted, as declared in the source documentation.
+
+{\small
+\begin{xltabular}{\textwidth}{@{}p{3.4cm}p{2.2cm}X@{}}
+\caption{Software used in original or adapted form.}\label{tab:adapted}\\
+\toprule
+Source & Form & Use in this project\\
+\midrule
+\endfirsthead
+\caption[]{\emph{(continued)}}\\
+\toprule
+Source & Form & Use in this project\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+NGSolve periodicity tutorial~\cite{NGSolvePeriodic} & adapted &
+  Face identification before meshing and the \code{Periodic} space wrapper
+  (\code{src\slash{}rve.py}, \code{src\slash{}mixed\_matrix.py}).\\
+NGSolve API (\code{IntegrationRuleSpace}, \code{NumberSpace}, symbolic forms) & original library &
+  Quadrature-point data transfer, global macroscopic coordinates, exact
+  linearization of the RVE residual.\\
+ICNN architecture~\cite{Amos2017} & re-implemented &
+  Non-negative hidden weights through softplus and input passthrough at every
+  layer (\code{src\slash{}picnn.py}).\\
+Invariant features and normalization~\cite{Linden2023,Klein2022} & adapted &
+  Feature set $[I_1,I_2,J,-\ln J]$ and stress-free normalization, here in the
+  objective pressure form \cref{eq:norm}.\\
+PyTorch (\code{nn.Module}, \code{autograd}, \code{torch.func}, Adam) & original library &
+  Network definition, AD stress and tangent, training loops.\\
+Netgen OCC geometry kernel & original library & Cube with spherical cavity.\\
+\end{xltabular}
+}
+
+\section{Original contributions}\label{sec:contrib}
+
+The codes in \cref{tab:available} served as references for individual ideas; none
+of their source was copied, and none provides any of the components below. The
+project code (\RepositoryURL) comprises about 17\,000 non-blank, non-comment lines of
+Python in \code{src/}, \code{tests/} (18 verification scripts) and \code{benchmarks/}
+(20 study scripts). \Cref{tab:contrib} lists the components written for this project,
+the closest precedent of each and what is new.
+
+{\small
+\begin{xltabular}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.5cm}@{}}
+\caption[Components developed in this project]{Components developed in this project. Lines: non-blank, non-comment lines of the main module(s).}\label{tab:contrib}\\
+\toprule
+Component & Module(s), lines & New compared with the closest precedent & Verified by\\
+\midrule
+\endfirsthead
+\caption[]{\emph{(continued)}}\\
+\toprule
+Component & Module(s), lines & New compared with the closest precedent & Verified by\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+PyTorch--NGSolve material bridge &
+  \code{ngsolve\_umat.py} (939) &
+  The forum example~\cite{NGSolveForumTF} rebuilds a fixed network as symbolic
+  coefficient functions. Here the PyTorch model is evaluated batch-wise at all
+  quadrature points through \code{IntegrationRuleSpace}; stress and the full
+  $9\times9$ AD tangent are returned to NGSolve, with energy line search, secant
+  predictor and spectral shift. & V0a--e, V1, V4--V8, M-V0\\
+Constrained energy network &
+  \code{picnn.py} (171) &
+  ICNN~\cite{Amos2017} with invariant features~\cite{Linden2023,Klein2022}; added
+  volume-fraction context and the objective pressure normalization \cref{eq:norm}. & V2, V2b, V3, V0d, S-V1\\
+Periodic mixed RVE with exactly rigid particle &
+  \code{rve.py}, \code{mixed\_matrix.py}, \code{rve\_solver.py} (594) &
+  COMET~\cite{CometFenics} and Ferrite.jl~\cite{Ferrite} treat small-strain elastic
+  inclusions. Here: finite strain, Taylor--Hood $u$--$p$ matrix, rigid trace
+  \cref{eq:rigid} imposed exactly, load continuation. & P2-V1--V4, P2-V8\\
+Free particle rotation &
+  \code{free\_particle.py} (569) &
+  No precedent found: rotation as global unknown on $SO(3)$, condensed rotational
+  Newton system from moment equilibrium. & P2-V2, P2-V7\\
+Work-conjugate homogenization &
+  \code{homogenization.py} (153) &
+  Particle-reaction term of \cref{eq:hm}, required because the particle is a
+  constraint and not a material phase. & P2-V5\\
+Consistent homogenized tangent &
+  \code{rve\_tangent.py} (315) &
+  Ferrite.jl uses linear sensitivity fields; here the finite-strain Schur complement
+  \cref{eq:schur} including the rotational unknowns. & P2-V6, P2-V9\\
+Dataset generation and audit &
+  \code{rve\_dataset.py}, \code{generate\_rve\_dataset\_parallel.py},
+  \code{audit\_rve\_dataset.py}, \code{merge\_rve\_training\_data.py} (1459) &
+  Deterministic, checkpointed, parallel generation; splits grouped by deformation
+  state; hash-based provenance and audit. & P2-V10\\
+Training and fine-tuning &
+  \code{train.py}, \code{train\_rve.py}, \code{train\_rve\_shear\_adaptation.py} (1630) &
+  Energy--stress--tangent loss with training-split scaling, early stopping, frozen
+  checkpoints, shear fine-tuning with data replay. & Sec.~\ref{sec:trainperf}\\
+Macroscopic application &
+  \code{phase6\_macro\_fe\_demo.py} (347) &
+  Surrogate as material law in a 3D finite-strain macro problem, $P_1$ and $P_2$. & M-V0, Sec.~\ref{sec:macro}\\
+Verification and benchmarks &
+  \code{tests/}, \code{benchmarks/} &
+  26 tests (\cref{tab:vmatrix}), micromechanics, timing and holdout studies. & --\\
+\end{xltabular}
+}
+
+\section{External libraries and versions}
+
+\begin{table}[htbp]
+\centering\small
+\caption[External software]{External software. ``Cluster'' denotes the environment of all production runs; ``Local'' the clean environment of the final test runs and timing study.}
+\label{tab:versions}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Software & Role & Cluster (production) & Local (final tests)\\
+\midrule
+Python & language & 3.11.7 & 3.13.18\\
+NGSolve / Netgen & FEM, geometry, symbolic forms & 6.2.2608 & 6.2.2608\\
+PyTorch & network, AD, training & 2.15.0+cpu & 2.15.0 (CPU use)\\
+NumPy & arrays & 2.4.6 & 2.5.3\\
+Matplotlib & plots & 3.11.0 (Phase 1) & 3.11.2\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All packages are freely available from PyPI (\code{pip install ngsolve torch
+numpy matplotlib}); \code{requirements.txt} in the repository lists minimum
+versions (\cref{ch:manual}).

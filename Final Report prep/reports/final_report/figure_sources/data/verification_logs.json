@@ -1,0 +1,105 @@
+{
+ "_source": "values transcribed from the test logs of the final test run (test_logs/*/verify_*.log)",
+ "newton": {
+  "V4 Phase 1 pICNN, stretched block": [
+   0.9058,
+   0.1043,
+   0.003463,
+   6.412e-06,
+   4.023e-11
+  ],
+  "V6 analytical neo-Hooke": [
+   0.8392,
+   0.2863,
+   0.02973,
+   0.0005071,
+   1.966e-07,
+   3.668e-14
+  ],
+  "V6 Phase 1 pICNN": [
+   0.8106,
+   0.2126,
+   0.02092,
+   0.0003083,
+   9.797e-08,
+   1.133e-14
+  ],
+  "V8 SVK, step 3": [
+   0.1,
+   0.02176,
+   7.007e-05,
+   4.77e-09,
+   7.646e-16
+  ],
+  "P2-V3 mixed patch": [
+   0.0001447,
+   6.272e-16
+  ],
+  "P2-V4 coupled RVE": [
+   0.001122,
+   1.418e-08,
+   1.906e-14
+  ],
+  "P2-V7 rotation (moment)": [
+   0.004746,
+   2.59e-07,
+   7.972e-16
+  ],
+  "M-V0 macro, step 1": [
+   53.03,
+   0.8918,
+   0.01833,
+   3.119e-05,
+   7.089e-10
+  ]
+ },
+ "v7_fd": {
+  "eps": [
+   0.001,
+   0.0001,
+   1e-05,
+   1e-06
+  ],
+  "St. Venant-Kirchhoff": [
+   8.49e-06,
+   8.49e-08,
+   8.49e-10,
+   1.66e-11
+  ],
+  "neo-Hookean": [
+   3.54e-06,
+   3.54e-08,
+   3.55e-10,
+   1.81e-11
+  ]
+ },
+ "p2v6_taylor": {
+  "step": [
+   0.001,
+   0.0005,
+   0.00025
+  ],
+  "remainder": [
+   0.006759589,
+   0.001689901,
+   0.0004224759
+  ]
+ },
+ "consistency": {
+  "P2-V1 periodic jump": 2.22e-16,
+  "P2-V2 rigid constraint residual": 7.172e-18,
+  "P2-V2 rotation orthogonality": 7.112e-17,
+  "P2-V3 pressure error": 2.895e-13,
+  "P2-V4 periodic jump": 4.447e-20,
+  "P2-V4 rigid-trace error": 7.971e-19,
+  "P2-V5 Hill-Mandel": 1.207e-15,
+  "P2-V5 alternative virtual field": 1.448e-15,
+  "P2-V5 constant-stress recovery": 3.997e-14,
+  "P2-V6 energy-gradient stress": 6.693e-16,
+  "P2-V6 major symmetry": 3.02e-16,
+  "P2-V7 rotation orthogonality": 2.487e-16,
+  "P2-V7 Hessian symmetry": 1.275e-17,
+  "P2-V8 homogenized stress change": 1.164e-15,
+  "P2-V8 pointwise stress change": 8.864e-15
+ }
+}

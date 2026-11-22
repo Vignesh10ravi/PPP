@@ -1,0 +1,38 @@
+# Continuous integration: runs the fast verification tests on every push.
+# Place this file at the repository root as .github/workflows/tests.yml.
+name: verification-tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  quick-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: "Project implementation plan (2)"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies (CPU-only PyTorch)
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements-pinned.txt
+      - name: Run quick verification suite
+        run: bash ./run_tests.sh quick
+        env:
+          PPP_LOG_DIR: test_logs/ci
+      - name: Upload test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs
+          path: "Project implementation plan (2)/test_logs/ci"

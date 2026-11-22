@@ -1,0 +1,7 @@
+
+mesh elements:              371
+unconstrained active dofs:  2208
+periodic active dofs:       1485
+eliminated active dofs:     723
+max opposite-face jump:     2.220e-16
+P2-V1 PASS: the unit-cell displacement space is triply periodic.

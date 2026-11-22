@@ -1,0 +1,102 @@
+\chapter{Program Flowchart and Software Architecture}\label{ch:flow}
+
+\Cref{fig:flow} shows the complete workflow. The offline part produces and
+audits data and trains the surrogate; the online part uses the frozen surrogate
+as a material law. The two parts communicate only through two files with
+SHA-256 hashes: the dataset (\code{.npz} with its manifest) and the checkpoint
+(\code{.pt}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=4mm and 6mm,
+  box/.style={draw, rounded corners=2pt, fill=white, align=center, font=\scriptsize, minimum width=3.3cm, minimum height=7mm, inner sep=2pt},
+  dec/.style={draw, diamond, aspect=2.4, fill=white, align=center, font=\scriptsize, inner sep=1pt},
+  file/.style={draw, fill=black!6, align=center, font=\scriptsize\ttfamily, minimum width=3.0cm, minimum height=6mm},
+  arr/.style={-{Latex[length=2mm]}, thick},
+  lab/.style={font=\scriptsize\itshape, text=black!60}]
+  % offline column
+  \node[box] (s1) {sample $\Fbar$ (seeded),\\filter $J>0$, cond.\ number};
+  \node[box, below=of s1] (s2) {for each $\vfrac$: periodic mesh\\with spherical cavity};
+  \node[box, below=of s2] (s3) {solve mixed RVE\\(Newton, exact Jacobian)};
+  \node[box, below=of s3] (s4) {moment $\bm m$, rotational\\Hessian, update $\Rten$};
+  \node[dec, below=of s4] (d1) {$\|\bm m\|<$ tol?};
+  \node[box, below=of d1] (s5) {$\Psibar$, $\Pbar$ (reaction-based),\\$\Abar$ (Schur condensation)};
+  \node[dec, below=of s5] (d2) {residuals, $J_{\min}$,\\clearance OK?};
+  \node[file, below=of d2] (f1) {dataset.npz + manifest};
+  \node[box, below=of f1] (s6) {audit; grouped splits;\\train pICNN, eq.~\eqref{eq:loss}};
+  \node[file, below=of s6] (f2) {checkpoint.pt};
+  \draw[arr] (s1)--(s2); \draw[arr] (s2)--(s3); \draw[arr] (s3)--(s4); \draw[arr] (s4)--(d1);
+  \draw[arr] (d1)--node[right,lab]{yes}(s5); \draw[arr] (s5)--(d2);
+  \draw[arr] (d2)--node[right,lab]{yes}(f1); \draw[arr] (f1)--(s6); \draw[arr] (s6)--(f2);
+  \draw[arr] (d1.west) -- ++(-0.45,0) |- node[pos=0.25,left,lab]{no} (s3.west);
+  \draw[arr] (d2.east) -- ++(0.35,0) |- node[pos=0.25,right,lab]{no} (s3.east);
+  % online column
+  \node[box, right=3.6cm of s1] (m1) {macro mesh, BCs,\\load step $n$, predictor};
+  \node[box, below=of m1] (m2) {$\F_q=\Iten+\nabla\bm u$ at\\quadrature points};
+  \node[box, below=of m2] (m3) {pICNN: $\widehat\Psi(\F_q,\vfrac)$;\\AD $\to\Pstress_q$, $\Aten_q$ (9$\times$9)};
+  \node[box, below=of m3] (m4) {assemble $\bm R$, $\bm K$\\(same integration rule)};
+  \node[dec, below=of m4] (d3) {$\|\bm R_\mathrm{free}\|<10^{-8}$?};
+  \node[box, below=of d3] (m5) {Newton step + energy\\line search / shifted Newton};
+  \node[dec, below=of m5] (d4) {final load?};
+  \node[box, below=of d4] (m6) {report.json: residuals,\\energy, $J$ range};
+  \draw[arr] (m1)--(m2); \draw[arr] (m2)--(m3); \draw[arr] (m3)--(m4); \draw[arr] (m4)--(d3);
+  \draw[arr] (d3)--node[right,lab]{no}(m5);
+  \draw[arr] (m5.east) -- ++(0.35,0) |- (m2.east);
+  \draw[arr] (d3.west) -- ++(-0.3,0) |- node[pos=0.25,left,lab]{yes} (d4.west);
+  \draw[arr] (d4)--node[right,lab]{yes}(m6);
+  \draw[arr] (d4.east) -- ++(0.6,0) |- node[pos=0.2,right,lab]{no: $n{+}1$} (m1.east);
+  \draw[arr, dashed, tubafblue] (f2.east) -| ++(1.2,0) |- (m3.west);
+  % frames
+  \begin{scope}[on background layer]
+    \node[draw=tubafblue!60, fill=tubafblue!4, rounded corners, fit=(s1)(f2)(d2), inner sep=6pt, label={[font=\small\bfseries]above:Offline (cluster, NGSolve + PyTorch)}] {};
+    \node[draw=black!40, fill=black!3, rounded corners, fit=(m1)(m6)(d3), inner sep=6pt, label={[font=\small\bfseries]above:Online (macro FE, NGSolve + PyTorch)}] {};
+  \end{scope}
+\end{tikzpicture}
+\caption[Program flowchart]{Program flowchart. Left: offline RVE data generation and training.
+Right: online macroscopic Newton solve with the frozen pICNN as material law.
+The dashed arrow is the only coupling: the frozen checkpoint.}
+\label{fig:flow}
+\end{figure}
+
+\section{Module responsibilities}
+
+{\small
+\begin{xltabular}{\textwidth}{@{}p{4.4cm}X@{}}
+\caption[Principal modules of the repository]{Principal modules of the repository (\code{Project implementation plan (2)\slash{}}).}\label{tab:modules}\\
+\toprule
+Module & Responsibility\\
+\midrule
+\endfirsthead
+\caption[]{\emph{(continued)}}\\
+\toprule
+Module & Responsibility\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\code{src\slash{}picnn.py} & ICNN/pICNN energy, input normalization, reference correction\\
+\code{src\slash{}constitutive.py}, \code{src\slash{}neohooke.py} & AD stress/tangent helpers; analytical Phase~1 law and data\\
+\code{src\slash{}ngsolve\_umat.py} & quadrature-point bridge, \code{assemble\_system}, globalized Newton \code{solve}\\
+\code{src\slash{}train.py} & Phase~1 training and checkpoint loading\\
+\code{src\slash{}rve.py} & periodic cell with cavity, rigid kinematics utilities\\
+\code{src\slash{}mixed\_matrix.py} & Taylor--Hood mixed PDMS formulation\\
+\code{src\slash{}rve\_solver.py}, \code{src\slash{}free\_particle.py} & coupled periodic RVE solve; free finite particle rotation\\
+\code{src\slash{}homogenization.py} & homogenized energy, reaction-based stress, Hill--Mandel checks\\
+\code{src\slash{}rve\_tangent.py} & Schur-condensed tangent incl.\ rotational condensation\\
+\code{src\slash{}rve\_dataset.py}, \code{src\slash{}generate\_rve\_dataset*.py}, \code{src\slash{}audit\_rve\_dataset.py} & sampling, checkpointing, manifests, parallel campaigns, audit\\
+\code{src\slash{}train\_rve*.py} & pICNN training, fine-tuning and shear adaptation\\
+\code{benchmarks\slash{}} & macro-FE demo, evaluations, timing and diagnostic studies\\
+\code{tests\slash{}} & verification tests V0--V6 and P2-V1--P2-V10 (\cref{ch:verification})\\
+\code{*.pbs} & PBS job scripts of every cluster run\\
+\end{xltabular}
+}
+
+\paragraph{Design decisions.} (i) The production code and the tests share the
+same functions; there is no separate test copy of any routine, as the
+guideline demands. For example, V0d calls the production
+\code{assemble\_system}. (ii) The two derivative paths are deliberately
+separate: PyTorch AD for the learned energy, NGSolve symbolic differentiation
+for the RVE. Each path is verified on its own (V3 and P2-V6). (iii) Every cluster
+run writes a JSON report containing hashes of its inputs, so that every number in
+\cref{ch:assessment} can be traced to an artifact (\cref{app:repro}).

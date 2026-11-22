@@ -1,0 +1,886 @@
+{
+  "checkpoint_best_epoch": 2750,
+  "checkpoint_sha256": "32b0a41fdd75f7610a2147c053c013998f8cd6cb1032ea3e8c7d1b045c0fea70",
+  "dataset_sha256": "54ccf791bad2f22ed17445d45e150f9f55fcfe22497f23ce3d0cae4eee361985",
+  "evaluated_split": "test",
+  "evaluation_manifest_configuration_sha256": "fc7b64ec8fefd1c8656ae21ad78feefcb0ee1c07cbc337f5a0fde8fad6a337a6",
+  "finite_difference_step": 1e-05,
+  "identity_reference_state_excluded": true,
+  "independent_evaluation": true,
+  "maximum_errors": {
+    "energy_gradient_relative_error": 5.320986924943364e-08,
+    "objectivity_energy_relative_error": 6.927791673660977e-13,
+    "objectivity_stress_relative_error": 2.249481602047997e-12,
+    "objectivity_tangent_relative_error": 5.3189712235046285e-15,
+    "tangent_directional_relative_error": 1.075747609542445e-09,
+    "tangent_symmetry_error": 6.3741199904458156e-15
+  },
+  "n_deformation_states_checked": 12,
+  "n_test_records_checked": 36,
+  "records": [
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.8487508613458367,
+      "metrics": {
+        "energy_gradient_relative_error": 3.015507814302434e-11,
+        "objectivity_energy_relative_error": 0.0,
+        "objectivity_stress_relative_error": 1.1128650158876699e-15,
+        "objectivity_tangent_relative_error": 6.715090518134577e-16,
+        "tangent_directional_relative_error": 1.1340900621357918e-10,
+        "tangent_symmetry_error": 4.5311350729520455e-16
+      },
+      "sample_id": "v000_f000014",
+      "state_index": 14,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.8508999536494116,
+      "metrics": {
+        "energy_gradient_relative_error": 2.8860786251019407e-11,
+        "objectivity_energy_relative_error": 6.022162335145604e-15,
+        "objectivity_stress_relative_error": 7.085519487692544e-16,
+        "objectivity_tangent_relative_error": 2.106611407468801e-15,
+        "tangent_directional_relative_error": 1.2445940363553566e-10,
+        "tangent_symmetry_error": 1.5599191153399354e-15
+      },
+      "sample_id": "v000_f000021",
+      "state_index": 21,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.7162994060408838,
+      "metrics": {
+        "energy_gradient_relative_error": 1.7154908137396564e-11,
+        "objectivity_energy_relative_error": 1.1095494385891755e-15,
+        "objectivity_stress_relative_error": 6.767941161349973e-16,
+        "objectivity_tangent_relative_error": 1.5892753331338846e-15,
+        "tangent_directional_relative_error": 1.049676092182302e-10,
+        "tangent_symmetry_error": 1.0836578709898241e-15
+      },
+      "sample_id": "v000_f000027",
+      "state_index": 27,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.00015469082494,
+      "metrics": {
+        "energy_gradient_relative_error": 3.3171354667348453e-08,
+        "objectivity_energy_relative_error": 6.927791673660977e-13,
+        "objectivity_stress_relative_error": 1.2612239180506014e-12,
+        "objectivity_tangent_relative_error": 1.2573635577336708e-15,
+        "tangent_directional_relative_error": 3.054919222570432e-10,
+        "tangent_symmetry_error": 9.570157806713963e-16
+      },
+      "sample_id": "v000_f000061",
+      "state_index": 61,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.2495648364385301,
+      "metrics": {
+        "energy_gradient_relative_error": 5.369314178581437e-11,
+        "objectivity_energy_relative_error": 3.580786854637824e-15,
+        "objectivity_stress_relative_error": 2.7565113140470064e-15,
+        "objectivity_tangent_relative_error": 1.448083456925565e-15,
+        "tangent_directional_relative_error": 5.140984095967105e-10,
+        "tangent_symmetry_error": 6.130255128416568e-16
+      },
+      "sample_id": "v000_f000080",
+      "state_index": 80,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.6029224689362348,
+      "metrics": {
+        "energy_gradient_relative_error": 9.44119886029354e-12,
+        "objectivity_energy_relative_error": 1.1328249407267447e-15,
+        "objectivity_stress_relative_error": 8.735369492559385e-16,
+        "objectivity_tangent_relative_error": 1.5723350305134427e-15,
+        "tangent_directional_relative_error": 7.715781896942452e-11,
+        "tangent_symmetry_error": 1.1803614036561623e-15
+      },
+      "sample_id": "v000_f000083",
+      "state_index": 83,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.993170197227305,
+      "metrics": {
+        "energy_gradient_relative_error": 9.507526750834988e-10,
+        "objectivity_energy_relative_error": 2.5579538487363607e-13,
+        "objectivity_stress_relative_error": 8.919834256773111e-14,
+        "objectivity_tangent_relative_error": 2.398640560715039e-15,
+        "tangent_directional_relative_error": 1.005362100892358e-10,
+        "tangent_symmetry_error": 7.913486361535909e-16
+      },
+      "sample_id": "v000_f000084",
+      "state_index": 84,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.6991295324834581,
+      "metrics": {
+        "energy_gradient_relative_error": 1.8417150902646732e-11,
+        "objectivity_energy_relative_error": 1.973143259551744e-15,
+        "objectivity_stress_relative_error": 2.3554857182127827e-15,
+        "objectivity_tangent_relative_error": 1.4825995319173469e-15,
+        "tangent_directional_relative_error": 1.7549829621156133e-10,
+        "tangent_symmetry_error": 1.2377810237571514e-15
+      },
+      "sample_id": "v000_f000097",
+      "state_index": 97,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.2503559613087079,
+      "metrics": {
+        "energy_gradient_relative_error": 7.232952093994144e-11,
+        "objectivity_energy_relative_error": 0.0,
+        "objectivity_stress_relative_error": 1.5428900926170369e-15,
+        "objectivity_tangent_relative_error": 1.7677578310248697e-15,
+        "tangent_directional_relative_error": 5.065058946852573e-10,
+        "tangent_symmetry_error": 9.145143257564988e-16
+      },
+      "sample_id": "v000_f000098",
+      "state_index": 98,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.5128751922792302,
+      "metrics": {
+        "energy_gradient_relative_error": 1.9919784809212833e-11,
+        "objectivity_energy_relative_error": 3.7636962132008093e-16,
+        "objectivity_stress_relative_error": 2.253810077805468e-15,
+        "objectivity_tangent_relative_error": 2.32392889236894e-15,
+        "tangent_directional_relative_error": 2.3935072735572883e-10,
+        "tangent_symmetry_error": 1.7025382801622728e-15
+      },
+      "sample_id": "v000_f000136",
+      "state_index": 136,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.5995365076420822,
+      "metrics": {
+        "energy_gradient_relative_error": 1.3509747479070516e-11,
+        "objectivity_energy_relative_error": 1.1137698932270503e-15,
+        "objectivity_stress_relative_error": 1.135984782228103e-15,
+        "objectivity_tangent_relative_error": 2.7806091655196753e-15,
+        "tangent_directional_relative_error": 1.0957799015666231e-10,
+        "tangent_symmetry_error": 1.9950300460530654e-15
+      },
+      "sample_id": "v000_f000137",
+      "state_index": 137,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.7949666836331357,
+      "metrics": {
+        "energy_gradient_relative_error": 1.7745555024423435e-11,
+        "objectivity_energy_relative_error": 1.1308044210963569e-15,
+        "objectivity_stress_relative_error": 1.570432828530547e-15,
+        "objectivity_tangent_relative_error": 4.00071022797362e-15,
+        "tangent_directional_relative_error": 8.135064556766536e-10,
+        "tangent_symmetry_error": 4.0924385001489616e-15
+      },
+      "sample_id": "v000_f000184",
+      "state_index": 184,
+      "status": "pass",
+      "volume_fraction": 0.02
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.8487508613458367,
+      "metrics": {
+        "energy_gradient_relative_error": 3.051282885466756e-11,
+        "objectivity_energy_relative_error": 0.0,
+        "objectivity_stress_relative_error": 8.831837232595935e-16,
+        "objectivity_tangent_relative_error": 7.832376040690258e-16,
+        "tangent_directional_relative_error": 2.0787473334785234e-10,
+        "tangent_symmetry_error": 6.016186398734035e-16
+      },
+      "sample_id": "v001_f000014",
+      "state_index": 14,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.8508999536494116,
+      "metrics": {
+        "energy_gradient_relative_error": 4.042156720856438e-11,
+        "objectivity_energy_relative_error": 7.813533569715139e-15,
+        "objectivity_stress_relative_error": 5.662852914107393e-16,
+        "objectivity_tangent_relative_error": 1.7024444231200643e-15,
+        "tangent_directional_relative_error": 2.037253325553302e-10,
+        "tangent_symmetry_error": 1.0892320426268532e-15
+      },
+      "sample_id": "v001_f000021",
+      "state_index": 21,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.7162994060408838,
+      "metrics": {
+        "energy_gradient_relative_error": 1.1908020749926898e-11,
+        "objectivity_energy_relative_error": 2.1588461413434584e-15,
+        "objectivity_stress_relative_error": 1.183118665420713e-15,
+        "objectivity_tangent_relative_error": 1.4278275418622083e-15,
+        "tangent_directional_relative_error": 1.245890596279359e-10,
+        "tangent_symmetry_error": 9.14412407166837e-16
+      },
+      "sample_id": "v001_f000027",
+      "state_index": 27,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.00015469082494,
+      "metrics": {
+        "energy_gradient_relative_error": 5.320986924943364e-08,
+        "objectivity_energy_relative_error": 3.113065361048939e-13,
+        "objectivity_stress_relative_error": 5.662043729433418e-13,
+        "objectivity_tangent_relative_error": 1.1405900849634006e-15,
+        "tangent_directional_relative_error": 6.875346016615524e-10,
+        "tangent_symmetry_error": 1.0877666745261825e-15
+      },
+      "sample_id": "v001_f000061",
+      "state_index": 61,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.2495648364385301,
+      "metrics": {
+        "energy_gradient_relative_error": 7.235197374137857e-11,
+        "objectivity_energy_relative_error": 6.967844870866931e-16,
+        "objectivity_stress_relative_error": 3.926983665960092e-15,
+        "objectivity_tangent_relative_error": 1.3668277638403624e-15,
+        "tangent_directional_relative_error": 6.379379477414989e-10,
+        "tangent_symmetry_error": 5.079131830790392e-16
+      },
+      "sample_id": "v001_f000080",
+      "state_index": 80,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.6029224689362348,
+      "metrics": {
+        "energy_gradient_relative_error": 1.3401738830158678e-11,
+        "objectivity_energy_relative_error": 1.102026888836943e-15,
+        "objectivity_stress_relative_error": 7.024941396346746e-16,
+        "objectivity_tangent_relative_error": 1.2839036717319904e-15,
+        "tangent_directional_relative_error": 8.294261736258413e-11,
+        "tangent_symmetry_error": 1.2562124554537943e-15
+      },
+      "sample_id": "v001_f000083",
+      "state_index": 83,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.993170197227305,
+      "metrics": {
+        "energy_gradient_relative_error": 1.8343648979778854e-09,
+        "objectivity_energy_relative_error": 2.842170943040401e-14,
+        "objectivity_stress_relative_error": 8.83137389588761e-14,
+        "objectivity_tangent_relative_error": 1.8764427854488607e-15,
+        "tangent_directional_relative_error": 4.8569313495951476e-11,
+        "tangent_symmetry_error": 9.051346940139879e-16
+      },
+      "sample_id": "v001_f000084",
+      "state_index": 84,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.6991295324834581,
+      "metrics": {
+        "energy_gradient_relative_error": 1.6643820266144957e-11,
+        "objectivity_energy_relative_error": 1.919475685474291e-15,
+        "objectivity_stress_relative_error": 1.6983702374103676e-15,
+        "objectivity_tangent_relative_error": 1.822468895118053e-15,
+        "tangent_directional_relative_error": 6.236445409889247e-11,
+        "tangent_symmetry_error": 1.3804255033537333e-15
+      },
+      "sample_id": "v001_f000097",
+      "state_index": 97,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.2503559613087079,
+      "metrics": {
+        "energy_gradient_relative_error": 7.86773673061245e-11,
+        "objectivity_energy_relative_error": 0.0,
+        "objectivity_stress_relative_error": 1.1819070696460157e-15,
+        "objectivity_tangent_relative_error": 1.5159837776162242e-15,
+        "tangent_directional_relative_error": 5.875281945612682e-10,
+        "tangent_symmetry_error": 7.048195124985404e-16
+      },
+      "sample_id": "v001_f000098",
+      "state_index": 98,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.5128751922792302,
+      "metrics": {
+        "energy_gradient_relative_error": 1.6405541375368765e-11,
+        "objectivity_energy_relative_error": 3.66151305938415e-16,
+        "objectivity_stress_relative_error": 2.035123164309875e-15,
+        "objectivity_tangent_relative_error": 2.722580664186774e-15,
+        "tangent_directional_relative_error": 1.452152750634235e-10,
+        "tangent_symmetry_error": 2.003925372756793e-15
+      },
+      "sample_id": "v001_f000136",
+      "state_index": 136,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.5995365076420822,
+      "metrics": {
+        "energy_gradient_relative_error": 1.1761720866156386e-11,
+        "objectivity_energy_relative_error": 1.0834933751148e-15,
+        "objectivity_stress_relative_error": 1.0952472037021567e-15,
+        "objectivity_tangent_relative_error": 2.559549148439712e-15,
+        "tangent_directional_relative_error": 1.0409276084176876e-10,
+        "tangent_symmetry_error": 2.4892361139806656e-15
+      },
+      "sample_id": "v001_f000137",
+      "state_index": 137,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.7949666836331357,
+      "metrics": {
+        "energy_gradient_relative_error": 2.7564955071027544e-11,
+        "objectivity_energy_relative_error": 2.2003784545755865e-15,
+        "objectivity_stress_relative_error": 1.996709480924902e-15,
+        "objectivity_tangent_relative_error": 5.3189712235046285e-15,
+        "tangent_directional_relative_error": 7.598097248417972e-10,
+        "tangent_symmetry_error": 6.3741199904458156e-15
+      },
+      "sample_id": "v001_f000184",
+      "state_index": 184,
+      "status": "pass",
+      "volume_fraction": 0.05
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.8487508613458367,
+      "metrics": {
+        "energy_gradient_relative_error": 3.3696940564765714e-11,
+        "objectivity_energy_relative_error": 0.0,
+        "objectivity_stress_relative_error": 1.0080316869207657e-15,
+        "objectivity_tangent_relative_error": 7.436614258717827e-16,
+        "tangent_directional_relative_error": 6.646562116214532e-11,
+        "tangent_symmetry_error": 9.33476596548748e-16
+      },
+      "sample_id": "v002_f000014",
+      "state_index": 14,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.8508999536494116,
+      "metrics": {
+        "energy_gradient_relative_error": 4.5613920360128647e-11,
+        "objectivity_energy_relative_error": 5.577255117856902e-15,
+        "objectivity_stress_relative_error": 2.194388463085595e-15,
+        "objectivity_tangent_relative_error": 2.1898463799179412e-15,
+        "tangent_directional_relative_error": 8.181387250289996e-11,
+        "tangent_symmetry_error": 1.9892736726888417e-15
+      },
+      "sample_id": "v002_f000021",
+      "state_index": 21,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.7162994060408838,
+      "metrics": {
+        "energy_gradient_relative_error": 1.9830150127905717e-11,
+        "objectivity_energy_relative_error": 2.0557429031837606e-15,
+        "objectivity_stress_relative_error": 7.603927118483437e-16,
+        "objectivity_tangent_relative_error": 1.398612065945504e-15,
+        "tangent_directional_relative_error": 4.954865026114495e-11,
+        "tangent_symmetry_error": 1.2184045983513452e-15
+      },
+      "sample_id": "v002_f000027",
+      "state_index": 27,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.00015469082494,
+      "metrics": {
+        "energy_gradient_relative_error": 3.712451084474703e-08,
+        "objectivity_energy_relative_error": 7.949196856316121e-14,
+        "objectivity_stress_relative_error": 2.249481602047997e-12,
+        "objectivity_tangent_relative_error": 1.1800549068378347e-15,
+        "tangent_directional_relative_error": 8.82861506954136e-11,
+        "tangent_symmetry_error": 1.1203471168540788e-15
+      },
+      "sample_id": "v002_f000061",
+      "state_index": 61,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.2495648364385301,
+      "metrics": {
+        "energy_gradient_relative_error": 2.375154019838774e-11,
+        "objectivity_energy_relative_error": 0.0,
+        "objectivity_stress_relative_error": 2.2204887496324024e-15,
+        "objectivity_tangent_relative_error": 8.566753923171497e-16,
+        "tangent_directional_relative_error": 1.075747609542445e-09,
+        "tangent_symmetry_error": 4.523440882324038e-16
+      },
+      "sample_id": "v002_f000080",
+      "state_index": 80,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.6029224689362348,
+      "metrics": {
+        "energy_gradient_relative_error": 1.6664375225159657e-11,
+        "objectivity_energy_relative_error": 5.248512219551908e-16,
+        "objectivity_stress_relative_error": 5.671092948466907e-16,
+        "objectivity_tangent_relative_error": 1.0862366874899782e-15,
+        "tangent_directional_relative_error": 7.818064361603436e-11,
+        "tangent_symmetry_error": 1.1896392167475287e-15
+      },
+      "sample_id": "v002_f000083",
+      "state_index": 83,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.993170197227305,
+      "metrics": {
+        "energy_gradient_relative_error": 1.1205123673891995e-09,
+        "objectivity_energy_relative_error": 6.679101716144942e-13,
+        "objectivity_stress_relative_error": 1.2011312883641861e-13,
+        "objectivity_tangent_relative_error": 1.9779390114907342e-15,
+        "tangent_directional_relative_error": 9.68710087015056e-11,
+        "tangent_symmetry_error": 1.1800645968352603e-15
+      },
+      "sample_id": "v002_f000084",
+      "state_index": 84,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.6991295324834581,
+      "metrics": {
+        "energy_gradient_relative_error": 1.4701769626316925e-11,
+        "objectivity_energy_relative_error": 1.8279458178646214e-15,
+        "objectivity_stress_relative_error": 2.4233111376168872e-15,
+        "objectivity_tangent_relative_error": 1.712914098298798e-15,
+        "tangent_directional_relative_error": 8.172344298448427e-11,
+        "tangent_symmetry_error": 1.1750206397919283e-15
+      },
+      "sample_id": "v002_f000097",
+      "state_index": 97,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.2503559613087079,
+      "metrics": {
+        "energy_gradient_relative_error": 2.756418974733407e-11,
+        "objectivity_energy_relative_error": 0.0,
+        "objectivity_stress_relative_error": 1.3002433229119652e-15,
+        "objectivity_tangent_relative_error": 1.5403578105581487e-15,
+        "tangent_directional_relative_error": 1.0523806703365863e-09,
+        "tangent_symmetry_error": 7.839175290574151e-16
+      },
+      "sample_id": "v002_f000098",
+      "state_index": 98,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.5128751922792302,
+      "metrics": {
+        "energy_gradient_relative_error": 1.9574083386369177e-11,
+        "objectivity_energy_relative_error": 6.975496536903964e-16,
+        "objectivity_stress_relative_error": 2.4816801384844788e-15,
+        "objectivity_tangent_relative_error": 2.605971802583597e-15,
+        "tangent_directional_relative_error": 2.04596302935864e-10,
+        "tangent_symmetry_error": 1.4760437349380669e-15
+      },
+      "sample_id": "v002_f000136",
+      "state_index": 136,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 0.5995365076420822,
+      "metrics": {
+        "energy_gradient_relative_error": 1.710332779959841e-11,
+        "objectivity_energy_relative_error": 5.1602565377912e-16,
+        "objectivity_stress_relative_error": 1.0147081846245403e-15,
+        "objectivity_tangent_relative_error": 4.0632383357049565e-15,
+        "tangent_directional_relative_error": 1.0668897654754741e-10,
+        "tangent_symmetry_error": 2.4359976570884463e-15
+      },
+      "sample_id": "v002_f000137",
+      "state_index": 137,
+      "status": "pass",
+      "volume_fraction": 0.1
+    },
+    {
+      "checks": {
+        "energy_gradient_relative_error": true,
+        "objectivity_energy_relative_error": true,
+        "objectivity_stress_relative_error": true,
+        "objectivity_tangent_relative_error": true,
+        "tangent_directional_relative_error": true,
+        "tangent_symmetry_error": true
+      },
+      "determinant": 1.7949666836331357,
+      "metrics": {
+        "energy_gradient_relative_error": 4.1808297315020306e-11,
+        "objectivity_energy_relative_error": 1.5724528046339128e-15,
+        "objectivity_stress_relative_error": 1.4324978167784184e-15,
+        "objectivity_tangent_relative_error": 4.917015982116318e-15,
+        "tangent_directional_relative_error": 5.648059925453279e-10,
+        "tangent_symmetry_error": 5.086013032421622e-15
+      },
+      "sample_id": "v002_f000184",
+      "state_index": 184,
+      "status": "pass",
+      "volume_fraction": 0.1
+    }
+  ],
+  "selected_states_by_determinant_bin": {
+    "[0.50, 0.60)": [
+      136,
+      137
+    ],
+    "[0.60, 0.70)": [
+      83,
+      97
+    ],
+    "[0.70, 0.85)": [
+      27,
+      14
+    ],
+    "[0.85, 1.00)": [
+      21,
+      84
+    ],
+    "[1.00, 1.25)": [
+      61,
+      80
+    ],
+    "[1.25, inf)": [
+      98,
+      184
+    ]
+  },
+  "status": "pass",
+  "thresholds": {
+    "energy_gradient_relative_error": 1e-06,
+    "objectivity_energy_relative_error": 1e-10,
+    "objectivity_stress_relative_error": 1e-10,
+    "objectivity_tangent_relative_error": 1e-09,
+    "tangent_directional_relative_error": 1e-05,
+    "tangent_symmetry_error": 1e-10
+  },
+  "training_dataset_sha256": "8553db63af311e0a7e987c5c3f520b49ce0f6160a880cc0314f8d36864513336"
+}

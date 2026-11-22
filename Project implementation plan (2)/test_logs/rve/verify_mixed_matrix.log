@@ -1,0 +1,13 @@
+Mixed Newton  0: |R| = 1.447e-04
+Mixed Newton  1: |R| = 6.812e-16
+
+mesh elements:                    206
+bulk/shear ratio:                 1.000e+04
+target J:                         1.001000
+expected pressure:                1.000000e+01
+max deformation-gradient error:   3.465e-15
+max Jacobian error:               2.665e-15
+max pressure error:               9.415e-14
+pressure variation:               1.776e-15
+final mixed residual:             6.812e-16
+P2-V3 PASS: the near-incompressible Taylor-Hood patch is exact.

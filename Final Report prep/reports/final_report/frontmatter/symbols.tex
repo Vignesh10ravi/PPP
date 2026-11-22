@@ -1,40 +1,63 @@
 \chapter*{List of Symbols and Abbreviations}
 \addcontentsline{toc}{chapter}{List of Symbols and Abbreviations}
 
-\begin{longtable}{@{}p{0.18\textwidth}p{0.72\textwidth}@{}}
+\begin{longtable}{@{}p{0.2\textwidth}p{0.74\textwidth}@{}}
 \toprule
 Symbol & Meaning\\
 \midrule
 \endhead
-\(\F,\Fbar\) & Microscopic and macroscopic deformation gradients\\
-\(J\) & Local volume ratio, \(J=\det\F\)\\
-\(\Cten\) & Right Cauchy--Green tensor, \(\Cten=\F^\mathsf T\F\)\\
-\(I_1,I_2\) & First and second principal invariants of \(\Cten\)\\
-\(\Psi,\overline{\Psi}\) & Microscopic and homogenized strain-energy densities\\
-\(\Pstress,\Pbar\) & Microscopic and homogenized first-Piola stresses\\
-\(\Aten,\Abar\) & Microscopic and homogenized total-Lagrange tangents\\
-\(\bm w\) & Periodic displacement fluctuation\\
-\(p\) & Mixed pressure field\\
-\(\Rten\) & Proper orthogonal particle rotation\\
-\(\vfrac\) & Rigid-particle volume fraction\\
-\(\mu,\kappa\) & Matrix shear and bulk moduli\\
-\bottomrule
-\end{longtable}
-
-\begin{longtable}{@{}p{0.18\textwidth}p{0.72\textwidth}@{}}
-\toprule
+$\F,\ \Fbar$ & microscopic and macroscopic deformation gradient\\
+$J=\det\F$ & volume ratio\\
+$\Cten=\F^{\mathsf T}\F$ & right Cauchy--Green tensor\\
+$I_1,\ I_2$ & first and second principal invariants of $\Cten$\\
+$\Psi,\ \Psibar$ & microscopic and homogenized strain-energy density\\
+$\Pstress,\ \Pbar$ & microscopic and homogenized first Piola--Kirchhoff stress\\
+$\Aten,\ \Abar$ & microscopic and homogenized material tangent $\partial\Pstress/\partial\F$ (stored as $9\times9$)\\
+$\bm\sigma,\ p,\ \bm s$ & Cauchy stress, pressure $\tfrac13\operatorname{tr}\bm\sigma$, deviator $\bm\sigma-p\Iten$\\
+$\bm w$ & periodic displacement fluctuation in the RVE\\
+$\Rten\in SO(3)$ & particle rotation\\
+$\vfrac$ & particle volume fraction\\
+$\mu,\ \kappa$ & matrix shear and bulk modulus ($\mu=1$, $\kappa=10^4$)\\
+$\mu_{\mathrm{eff}},\ K_{\mathrm{eff}}$ & effective small-strain shear and bulk modulus\\
+$h$ & maximum element size of the macroscopic mesh\\
+$\bm X,\ \bm x=\bm\varphi(\bm X)$ & reference and current position; $\bm\varphi$ is the deformation map\\
+$\Omega_0,\ \Omega$ & reference body of the macroscopic problem; RVE (unit cube)\\
+$\bm u,\ \delta\bm u$ & displacement and test function\\
+$\bar I_1,\ \bar I_2$ & invariants of the isochoric part: $I_1=J^{2/3}\bar I_1$, $I_2=J^{4/3}\bar I_2$\\
+$\bm\varepsilon$ & small-strain tensor\\
+$\Pi,\ p$ & mixed (displacement--pressure) functional; Lagrange pressure\\
+$\lambda$ & Lam\'e constant of the neo-Hookean reference law ($\lambda=10$, \cref{ch:theory}); in \cref{ch:methods} also an eigenvalue ($\lambda_{\min}(\bm K)$)\\
+$K_{\mathrm{MT}},\ \mu_{\mathrm{MT}},\ \eta$ & Mori--Tanaka bulk and shear modulus; auxiliary modulus in \cref{eq:mt}\\
+$\bm y,\ \hat{\bm y},\ \hat c$ & invariant features $[I_1,I_2,J,-\ln J]$, their standardized values, standardized volume fraction\\
+$W^{+}=\mathrm{softplus}(W)$ & non-negative network weights (the symbol $\sigma$ also denotes the softplus activation in the network equations)\\
+$\bm\beta,\ \bm b_l$ & biases of the energy network; bias shifts produced by the context network\\
+$\Psi_{\mathrm{raw}},\ \widehat\Psi$ & network output and its normalized value (zero energy and stress at $\F=\Iten$)\\
+$\mathcal L,\ w_P,\ s_\Psi,\ s_P$ & training loss, stress weight, energy and stress scales\\
+$\Psi_{\mathrm{iso}},\ \Psi_{\mathrm{vol}}$ & isochoric and volumetric energy of the proposed split\\
+$\bm K,\ \bm R,\ \alpha$ & tangent stiffness matrix, residual, spectral shift of the Newton fallback\\
+$\bm\theta$ & rotation increment of the particle\\
+$\gamma$ & amount of simple shear\\
+$\epsilon,\ \varepsilon_{\mathrm{mach}}$ & finite-difference step; machine epsilon\\
+$\rho$ & Spearman rank correlation\\
+\midrule
 Abbreviation & Meaning\\
 \midrule
-\endhead
-AD & Automatic differentiation\\
-CMS & Computational Materials Science\\
-FEM & Finite Element Method\\
-ICNN & Input-Convex Neural Network\\
-pICNN & Partially Input-Convex Neural Network\\
-PDMS & Polydimethylsiloxane\\
-PBC & Periodic boundary condition\\
-PPP & Personal Programming Project\\
-RVE & Representative volume element\\
+AD & automatic differentiation\\
+DOF & degree of freedom\\
+FD & finite difference\\
+MT & Mori--Tanaka\\
+NH, SVK & neo-Hookean, Saint~Venant--Kirchhoff (reference material laws)\\
+OCC & Open CASCADE geometry kernel used by Netgen\\
+PBS & portable batch system (cluster job scheduler)\\
+RMS & root mean square\\
+$SO(3)$ & group of three-dimensional rotations\\
+FE, FEM & finite element(s), finite-element method\\
+FE$^2$ & concurrent two-scale finite-element method\\
+ICNN / pICNN & (partially) input-convex neural network\\
+NRMSE & normalized root-mean-square error\\
+PBC & periodic boundary condition\\
+PDMS & polydimethylsiloxane\\
+RVE & representative volume element\\
+$P_1,\ P_2$ & linear / quadratic Lagrange elements\\
 \bottomrule
 \end{longtable}
-\clearpage

@@ -1,0 +1,14 @@
+\chapter{Git Log}\label{app:git}
+
+Output of \code{git log} on \RepositoryURL, branch \code{main}, as of
+18~November~2026:
+
+\lstinputlisting[basicstyle=\ttfamily\footnotesize]{appendices/git-log.txt}
+
+\paragraph{Remark on the history.} The public repository contains six commits.
+Development took place in a local working copy and on the cluster, and the
+results were uploaded to GitHub in November 2026. Intermediate source
+states are preserved as dated backup files (\code{*.before\_<change>}) and in
+the per-run code snapshots of \code{cluster\_outputs\slash{}}, but not as individual
+commits. Every reported number is traceable through the input hashes stored in its JSON
+report (\cref{app:repro}).

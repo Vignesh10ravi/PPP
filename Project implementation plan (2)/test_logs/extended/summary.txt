@@ -1,0 +1,4 @@
+P2-V6 PASS verify_homogenized_tangent
+P2-V7 PASS verify_free_rotation
+P2-V8 PASS verify_translation_gauge
+M-V0 PASS macro_tangent_check (direct rerun; diagnostic_complete)

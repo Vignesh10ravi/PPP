@@ -1,16 +1,16 @@
-\documentclass[11pt,a4paper,oneside]{report}
+\documentclass[11pt,a4paper,oneside,english]{tubaf-report}
 
-\usepackage[margin=25mm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
+\usepackage[english]{babel}
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,mathtools,bm}
-\usepackage{booktabs,longtable,tabularx,array}
+\usepackage{booktabs,longtable,tabularx,xltabular,array,multirow}
 \usepackage{graphicx,float,caption,subcaption}
 \usepackage{xcolor}
 \usepackage{enumitem}
 \usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc,backgrounds}
+\usepackage[most]{tcolorbox}
 \usepackage[hidelinks]{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
 
@@ -18,21 +18,26 @@
 
 \graphicspath{{figures/}}
 \setlist{nosep}
+\setlength{\emergencystretch}{3em}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
+\captionsetup{font=small,labelfont=bf}
 
 \lstset{
   basicstyle=\ttfamily\small,
   frame=single,
   breaklines=true,
   columns=fullflexible,
-  showstringspaces=false
+  showstringspaces=false,
+  backgroundcolor=\color{black!3}
 }
 
+% ---------- notation -------------------------------------------------------
 \newcommand{\F}{\bm F}
 \newcommand{\Fbar}{\overline{\bm F}}
 \newcommand{\Pstress}{\bm P}
 \newcommand{\Pbar}{\overline{\bm P}}
+\newcommand{\Psibar}{\overline{\Psi}}
 \newcommand{\Aten}{\mathbb A}
 \newcommand{\Abar}{\overline{\mathbb A}}
 \newcommand{\Iten}{\bm I}
@@ -40,47 +45,81 @@
 \newcommand{\Rten}{\bm R}
 \newcommand{\vfrac}{v_{\mathrm f}}
 \newcommand{\dd}{\,\mathrm d}
+\makeatletter
+\DeclareRobustCommand{\code}[1]{{\ttfamily\let\@origus\_%
+  \def\_{\@origus\allowbreak}\def\slash{/\allowbreak}#1}}
+\makeatother
 \newcommand{\ReportPlaceholder}[1]{%
   \textcolor{red!70!black}{\textbf{[TO COMPLETE: #1]}}%
 }
 
-\hypersetup{
-  pdftitle={\ReportTitle},
-  pdfauthor={\ReportAuthor}
+% ---------- boxes ----------------------------------------------------------
+\definecolor{tubafblue}{HTML}{0069B4}
+\newtcolorbox{keybox}[1][]{colback=tubafblue!5,colframe=tubafblue!70,
+  boxrule=0.6pt,arc=1pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+  fonttitle=\bfseries\small,title={#1}}
+\newtcolorbox{intuition}{colback=black!3,colframe=black!25,boxrule=0.4pt,arc=1pt,
+  left=6pt,right=6pt,top=3pt,bottom=3pt,fontupper=\small}
+
+% ---------- test-case layout (PPP guideline, Ch. 5, item 10) ---------------
+\newcommand{\testcase}[2]{\subsubsection*{Test Case #1: #2}\addcontentsline{toc}{subsubsection}{Test Case #1: #2}}
+\newcommand{\taim}{\par\noindent\textbf{Aim.}~}
+\newcommand{\tsetup}{\par\noindent\textbf{Setup.}~}
+\newcommand{\trun}{\par\noindent\textbf{How to run.}~}
+\newcommand{\texpect}{\par\noindent\textbf{Expected result.}~}
+\newcommand{\tobtain}{\par\noindent\textbf{Obtained result.}~}
+\newcommand{\tinfer}{\par\noindent\textbf{Inference.}~}
+
+\title[Neural Hyperelasticity for Multiscale Homogenization]{\ReportTitle}
+\subtitle{\ReportSubtitle}
+\subject{Personal Programming Project Report -- \Semester}
+\author{\ReportAuthor}
+\date{\SubmissionDate}
+\publishers{\University}
+\titlefoot{%
+  \begin{tabular}{@{}ll@{}}
+    Degree programme: & \DegreeProgramme\\
+    Matriculation number: & \MatriculationNumber\\
+    Supervisor: & \Supervisor\\
+    Examiners: & \Examiners
+  \end{tabular}%
 }
+
+\hypersetup{pdftitle={\ReportTitle}, pdfauthor={\ReportAuthor}}
 
 \begin{document}
 
 \pagenumbering{roman}
-\input{frontmatter/titlepage}
+\maketitle
 \input{frontmatter/abstract}
 \input{frontmatter/declaration}
 \input{frontmatter/symbols}
 
 \tableofcontents
 \clearpage
-\listoffigures
-\clearpage
+{\setlength{\parskip}{0pt}\renewcommand{\baselinestretch}{0.95}\selectfont
+\listoffigures}
 \listoftables
 \clearpage
 
 \pagenumbering{arabic}
 \input{chapters/01_introduction}
 \input{chapters/02_theory}
-\input{chapters/03_code_provenance}
-\input{chapters/04_methods_implementation}
-\input{chapters/05_architecture}
-\input{chapters/06_ai_tools}
-\input{chapters/07_results}
-\input{chapters/08_verification_validation}
+\input{chapters/03_methods}
+\input{chapters/04_codes}
+\input{chapters/05_flowchart}
+\input{chapters/06_chatbots}
+\input{chapters/07_verification}
+\input{chapters/08_assessment}
 \input{chapters/09_performance}
-\input{chapters/10_manual}
-\input{chapters/11_conclusion}
-
-\appendix
-\input{appendices/reproducibility}
+\input{chapters/10_conclusion}
+\input{chapters/11_manual}
 
 \bibliographystyle{unsrt}
 \bibliography{references}
+
+\appendix
+\input{appendices/gitlog}
+\input{appendices/reproducibility}
 
 \end{document}

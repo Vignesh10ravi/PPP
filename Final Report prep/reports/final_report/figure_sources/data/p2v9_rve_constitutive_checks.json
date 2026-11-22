@@ -1,0 +1,71 @@
+{
+  "audit_script_sha256": "f3b630746d358d0e38b761e42d164d236a8e7283b3b283e595e034f4093e6cc6",
+  "configuration": {
+    "bulk_modulus": 10000.0,
+    "fd_step": 0.0001,
+    "integration_order": 10,
+    "maxh": 0.22,
+    "microscopic_jacobian_floor": 1e-08,
+    "mu": 1.0,
+    "sample_ids": [
+      "v001_f000047"
+    ],
+    "tolerances": {
+      "energy_gradient": 0.0005,
+      "objectivity_energy": 1e-06,
+      "objectivity_stress": 5e-05,
+      "stress_agreement": 5e-05,
+      "tangent_directional": 0.005
+    }
+  },
+  "dataset_path": "/home/claude/report/figure_sources/data/phase2_pilot.npz",
+  "dataset_sha256": "005e12f958b6f7431cd96b9dd4d2a22015682cd082d7253ec1b06abfae5fb7ef",
+  "results": [
+    {
+      "checks": {
+        "energy_gradient": true,
+        "microscopic_jacobian": true,
+        "objectivity_energy": true,
+        "objectivity_stress": true,
+        "stress_agreement": true,
+        "tangent_directional": true
+      },
+      "deformation_gradient": [
+        [
+          1.1930653042037076,
+          0.0693848364083956,
+          0.09975975865163134
+        ],
+        [
+          0.10354310283285945,
+          0.8041663877406635,
+          0.15564092845614352
+        ],
+        [
+          -0.1056132032148804,
+          0.18499003495714889,
+          1.1594573457705741
+        ]
+      ],
+      "metrics": {
+        "base_stress_work_vs_condensed_relative_error": 7.615378623816186e-16,
+        "condensed_residual": 6.244119267410055e-13,
+        "direction_count": 9,
+        "finite_difference_step": 0.0001,
+        "max_energy_gradient_relative_error": 1.750558755018418e-11,
+        "max_tangent_directional_relative_error": 5.170687385129765e-12,
+        "maximum_sampled_microscopic_j": 1.5861343794143483,
+        "minimum_sampled_microscopic_j": 0.6513902528671152,
+        "mixed_residual": 1.3359582022714746e-13,
+        "objectivity_energy_relative_error": 1.29844083921553e-15,
+        "objectivity_stress_relative_error": 1.1825487094229412e-15,
+        "rotation_residual": 6.503539158348216e-15
+      },
+      "sample_id": "v001_f000047",
+      "status": "pass",
+      "volume_fraction": 0.05
+    }
+  ],
+  "source_revision_sha256": "b907f7946a365305bb067cc8432dcfbdc12b4b65071920479b817f4967807d08",
+  "status": "pass"
+}

@@ -1,231 +1,200 @@
-\chapter{Theory}
-\label{ch:theory}
+\chapter{Theory}\label{ch:theory}
 
 \section{Finite-strain hyperelasticity}
 
-Let \(\bm X\) denote a material point in the reference configuration and
-\(\bm x=\bm\varphi(\bm X)\) its current position. The deformation gradient and
-local volume ratio are
+A material point $\bm X$ of the reference body $\Omega_0$ moves to
+$\bm x=\bm\varphi(\bm X)$. With the deformation gradient
+$\F=\partial\bm\varphi/\partial\bm X$, $J=\det\F>0$ and $\Cten=\F^{\mathsf T}\F$,
+a hyperelastic material is defined by a stored-energy density $\Psi(\F)$, from
+which stress and tangent follow~\cite{Holzapfel2000}:
 \begin{equation}
-  \F=\frac{\partial\bm\varphi}{\partial\bm X},
-  \qquad J=\det\F>0.
+  P_{iJ}=\frac{\partial\Psi}{\partial F_{iJ}},\qquad
+  \Aten_{iJkL}=\frac{\partial^2\Psi}{\partial F_{iJ}\,\partial F_{kL}}.
+  \label{eq:PA}
 \end{equation}
-For a hyperelastic material, the first-Piola stress and total-Lagrange
-material tangent follow from a stored energy,
+Because $\F$ and $\Pstress$ are not symmetric, the implementation keeps all nine
+components and stores the tangent row-major as
+$A^{9\times9}_{3i+J,\;3k+L}=\Aten_{iJkL}$. The proposal's $6\times6$ Voigt map
+applies to symmetric strain--stress pairs and was therefore replaced. In the
+total-Lagrangian setting, equilibrium is the stationarity of the potential,
 \begin{equation}
-  P_{iJ}=\frac{\partial\Psi}{\partial F_{iJ}},
-  \qquad
-  A_{iJkL}
-  =\frac{\partial^2\Psi}{\partial F_{iJ}\partial F_{kL}}.
-  \label{eq:stress-tangent}
+  \int_{\Omega_0}\Pstress(\F):\nabla_{\!X}\delta\bm u\dd V=\delta W_{\mathrm{ext}}
+  \quad\forall\,\delta\bm u,
+  \label{eq:weak}
 \end{equation}
-Because \(\F\) and \(\Pstress\) are generally unsymmetric, the implementation
-retains all nine components and uses
+and Newton's method needs $\Aten$ at exactly the same quadrature points as
+$\Pstress$. The Phase~1 reference is the compressible neo-Hookean law
 \begin{equation}
-  A^{9\times9}_{3i+J,\,3k+L}=A_{iJkL}.
-  \label{eq:flattening}
+  \Psi_{\mathrm{NH}}=\tfrac{\mu}{2}(I_1-3)-\mu\ln J+\tfrac{\lambda}{2}(\ln J)^2,
+  \qquad \mu=1,\ \lambda=10.
+  \label{eq:nh}
 \end{equation}
-This is not a \(6\times6\) Voigt representation of symmetric stress and
-strain measures.
-
-In a total-Lagrangian finite-element formulation, equilibrium follows from
-stationarity of the potential with respect to an admissible displacement
-variation \(\delta\bm u\):
-\begin{equation}
-  \int_{\Omega_0} \Pstress(\F):\nabla_X\delta\bm u\,\dd V
-  = \delta W_{\mathrm{ext}}.
-  \label{eq:weak-equilibrium}
-\end{equation}
-The internal contribution to the Newton matrix is the derivative of this
-residual with respect to displacement coefficients. It contains
-\(\Aten=\partial\Pstress/\partial\F\) contracted with the trial and test
-gradients. Returning an energy value alone is therefore insufficient for a
-nonlinear FE material interface: its first and second derivatives must use
-the same quadrature locations and tensor ordering.
-
-The Phase~1 analytical reference is the compressible neo-Hookean energy
-\begin{equation}
-  \Psi_{\mathrm{NH}}(\F)
-  =\frac{\mu}{2}(I_1-3)-\mu\ln J
-   +\frac{\lambda}{2}(\ln J)^2,
-  \qquad I_1=\operatorname{tr}(\F^\mathsf T\F),
-  \label{eq:neo-hooke}
-\end{equation}
-following the finite-strain framework summarized by
-Holzapfel~\cite{holzapfel2000}.
-Its analytical first-Piola stress is
-\begin{equation}
-  \Pstress_{\mathrm{NH}}
-  =\mu(\F-\F^{-\mathsf T})
-   +\lambda\ln J\,\F^{-\mathsf T}.
-  \label{eq:neo-hooke-stress}
-\end{equation}
-This closed-form response is used as the Phase~1 target and as an independent
-reference for testing PyTorch differentiation. The purpose of that stage is
-not to identify the composite material; it verifies the software path from a
-scalar learned energy through stress and tangent evaluation to a converged
-NGSolve equilibrium problem.
 
 \section{Polyconvex neural energy}
 
-Convexity directly in \(\F\) is too restrictive for finite elasticity.
-Polyconvexity instead represents the energy as a convex function of suitable
-minors of \(\F\) and provides an important existence framework
-\cite{ball1977}. The neural model uses the isotropic feature vector
+A stored energy is \emph{polyconvex} if it is a convex function of
+$(\F,\operatorname{cof}\F,\det\F)$. Polyconvexity implies rank-one convexity and
+hence ellipticity of the tangent, and together with suitable coercivity and growth
+conditions it guarantees the existence of minimizers~\cite{Ball1977}.
+Following~\cite{Klein2022,Linden2023}, the network receives the feature vector
 \begin{equation}
-  \bm y(\F)=\left[I_1,I_2,J,-\ln J\right],
+  \bm y=\bigl[\,I_1,\ I_2,\ J,\ -\ln J\,\bigr],\qquad
+  I_1=\|\F\|^2,\quad I_2=\|\operatorname{cof}\F\|^2 .
 \end{equation}
-where
+$I_1$ is convex in $\F$, $I_2$ is convex in $\operatorname{cof}\F$, and both $J$
+and $-\ln J$ are convex in $J$. An input-convex network~\cite{Amos2017} with
+non-negative weights $W^+=\mathrm{softplus}(W)$ and convex, non-decreasing
+softplus activations is convex and non-decreasing in $\bm y$, so the composite
+energy is polyconvex. The particle volume fraction $\vfrac$ enters only through
+an unconstrained sub-network that shifts the hidden-layer biases. This makes
+the network \emph{partially} input-convex: convex in the kinematic inputs for
+every fixed $\vfrac$. The network uses three hidden layers of width 32 and has
+5793 trainable parameters (2561 without the context sub-network, as in Phase~1). Following~\cite{Linden2023}, the raw output is normalized so that the reference
+state is energy- and stress-free:
 \begin{equation}
-  I_2=\frac12\left[
-    I_1^2-\operatorname{tr}\!\left((\F^\mathsf T\F)^2\right)
-  \right].
+  \widehat\Psi(\F,\vfrac)=\Psi_{\mathrm{raw}}(\F,\vfrac)-\Psi_{\mathrm{raw}}(\Iten,\vfrac)
+  -p_I(\vfrac)\,(J-1),\qquad
+  p_I=\tfrac13\operatorname{tr}\Pstress_{\mathrm{raw}}(\Iten,\vfrac).
+  \label{eq:norm}
 \end{equation}
-In three dimensions, \(I_2=\|\operatorname{cof}\F\|^2\). The feature map thus
-uses the squared norms of \(\F\) and its cofactor, the determinant, and a
-volumetric term. The first two features describe distortional deformation;
-\(J\) and \(-\ln J\) allow the network to represent the asymmetric energetic
-cost of volume change. The admissibility condition \(J>0\) is essential
-because both the logarithm and the elastic model require an
-orientation-preserving deformation.
+The correction depends on $\F$ only through $J$, so it is objective and affine in
+a polyconvex argument. The Phase~1 network instead used the correction
+$\Pstress_{\mathrm{raw}}(\Iten):(\F-\Iten)$, which is \emph{not} objective,
+because $\operatorname{tr}(\Rten-\Iten)\neq0$ for a rotation $\Rten$. The
+consequence is quantified in Test~V0d (\cref{sec:v0}).
 
-An ICNN architecture~\cite{amos2017} constrains relevant weights through
-\(W^+=\operatorname{softplus}(\theta)>0\). In the multiscale surrogate,
-\(\vfrac\) acts as a non-convex context variable while convexity is retained
-with respect to the deformation features. This construction follows the
-physics-constrained neural hyperelasticity literature
-\cite{kalina2022,linden2023}; it does not by itself establish positive
-definiteness of the tangent at every deformation.
+\section{Periodic RVE with an exactly rigid particle}
 
-For each fixed context, nonnegative hidden-to-hidden and feature-to-hidden
-weights together with the convex, nondecreasing softplus activation preserve
-convexity of the scalar network in its feature inputs. In Phase~2, volume
-fraction changes the learned effective response as context; it is not a
-spatial field solved by the macroscopic finite-element model. The architecture
-therefore imposes a useful energy structure while numerical tests are still
-needed for stability, admissibility, and accuracy over the intended
-deformation range.
+The RVE is the unit cube $\Omega=[0,1]^3$ with a centred spherical cavity of
+radius $r=(3\vfrac/4\pi)^{1/3}$, $\vfrac\in\{0.02,0.05,0.10\}$
+(\cref{fig:rve}).
 
-The raw network is normalized at the reference state:
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=2.1, line join=round]
+  % (a) cube with sphere
+  \begin{scope}
+    \def\d{0.45}
+    \fill[tubafblue!8] (0,0)--(1,0)--(1,1)--(0,1)--cycle;
+    \fill[tubafblue!14] (1,0)--(1+\d,\d)--(1+\d,1+\d)--(1,1)--cycle;
+    \fill[tubafblue!4] (0,1)--(1,1)--(1+\d,1+\d)--(\d,1+\d)--cycle;
+    \draw[thick] (0,0)--(1,0)--(1,1)--(0,1)--cycle;
+    \draw[thick] (1,0)--(1+\d,\d)--(1+\d,1+\d)--(1,1);
+    \draw[thick] (0,1)--(\d,1+\d)--(1+\d,1+\d);
+    \draw[dashed,black!50] (0,0)--(\d,\d)--(1+\d,\d); \draw[dashed,black!50] (\d,\d)--(\d,1+\d);
+    \shade[ball color=black!35] (0.5+\d/2,0.5+\d/2) circle (0.27);
+    \node[font=\small] at (0.72,-0.18) {(a) unit-cell RVE, $\Omega=[0,1]^3$};
+    \draw[{Latex}-{Latex},red!70!black,thick] (-0.12,0.5) to[bend left=50] node[above,font=\scriptsize,pos=0.5]{} (1.0+\d+0.12,0.5+\d/2);
+    \node[red!70!black,font=\scriptsize,align=center] at (0.72,1.72) {opposite faces identified:\\ $\bm w(\bm X^+)=\bm w(\bm X^-)$};
+  \end{scope}
+  % (b) cross-section
+  \begin{scope}[xshift=2.35cm]
+    \fill[tubafblue!8] (0,0) rectangle (1.4,1.4);
+    \draw[thick] (0,0) rectangle (1.4,1.4);
+    \fill[black!35] (0.7,0.7) circle (0.36);
+    \draw[thick] (0.7,0.7) circle (0.36);
+    \draw[->,thick] (0.7,0.7) -- ++(25:0.32) node[pos=1.15,font=\scriptsize]{$\Rten$};
+    \draw[thick,->] (0.7,0.7) ++(160:0.2) arc (160:250:0.2);
+    \node[font=\scriptsize,align=center] at (0.7,1.2) {PDMS: $\mu=1$, $\kappa=10^4$\\ mixed $P_2/P_1$};
+    \node[font=\scriptsize,align=center,white] at (0.7,0.58) {rigid};
+    \node[font=\scriptsize,align=center] at (0.7,0.17) {$\F=\Fbar+\nabla\bm w$};
+    \node[font=\small] at (0.7,-0.18) {(b) cross-section};
+  \end{scope}
+\end{tikzpicture}
+\caption[Microscale problem]{Microscale problem. (a) Periodic unit cell with one centred spherical
+particle; opposite faces share their fluctuation degrees of freedom. (b) The
+particle surface follows the exact rigid map \cref{eq:rigid}; the free rotation
+$\Rten$ is found from moment equilibrium. Volume fractions
+$\vfrac=0.02,0.05,0.10$ correspond to radii $0.168$, $0.229$ and $0.288$.
+Schematic, not to scale.}
+\label{fig:rve}
+\end{figure}
+
+The microscopic deformation splits into the prescribed
+macroscopic part and a periodic fluctuation,
 \begin{equation}
-  \widehat\Psi(\F,\vfrac)
-  =
-  \Psi_{\mathrm{raw}}(\F,\vfrac)
-  -\Psi_{\mathrm{raw}}(\Iten,\vfrac)
-  -p_I(\vfrac)\bigl(\det\F-1\bigr),
-  \qquad
-  p_I(\vfrac)=\frac{1}{3}
-  \operatorname{tr}\Pstress_{\mathrm{raw}}(\Iten,\vfrac).
-  \label{eq:normalization}
+  \bm\varphi(\bm X)=\Fbar\bm X+\bm w(\bm X),\qquad
+  \F=\Fbar+\nabla\bm w,\qquad \bm w(\bm X^+)=\bm w(\bm X^-),
+  \label{eq:kin}
 \end{equation}
-For an isotropic raw model,
-\(\Pstress_{\mathrm{raw}}(\Iten,\vfrac)=p_I(\vfrac)\Iten\), so the correction
-gives \(\widehat\Psi(\Iten,\vfrac)=0\) and
-\(\partial\widehat\Psi/\partial\F|_{\Iten}=\bm 0\) while remaining objective.
-It is affine in the determinant feature and therefore does not change
-convexity with respect to the independent polyconvex features. Since
-\(\det\F\) is nonlinear in \(\F\), however, this correction does change the
-Hessian with respect to \(\F\); the constitutive tangent is differentiated
-from the normalized energy itself. Positive affine feature and context
-scalings are estimated from training data only and are stored with the model;
-inference uses the same scalings.
-
-\section{Mixed near-incompressible matrix}
-
-The PDMS matrix is represented by an isochoric neo-Hookean energy with an
-independent pressure:
+so that tractions are anti-periodic in the weak sense. The near-incompressible
+PDMS matrix is described by the mixed potential
 \begin{equation}
-  \Pi(\F,p)
-  =
-  \frac{\mu}{2}\left(J^{-2/3}I_1-3\right)
-  +p(J-1)-\frac{p^2}{2\kappa}.
-  \label{eq:mixed-energy}
+  \Pi(\F,p)=\tfrac{\mu}{2}\bigl(J^{-2/3}I_1-3\bigr)+p\,(J-1)-\frac{p^2}{2\kappa},
+  \qquad \mu=1,\ \kappa=10^4 ,
+  \label{eq:mixed}
 \end{equation}
-Stationarity with respect to \(p\) gives
-\(p=\kappa(J-1)\). A Taylor--Hood \(P_2/P_1\)
-displacement--pressure pair is used to reduce the risk of volumetric locking
-as \(\kappa/\mu\) becomes large. Locking also depends on mesh resolution,
-quadrature, and the chosen finite-element approximation; the mixed affine
-patch test verifies consistency but is not itself a mesh-convergence study.
-
-Eliminating \(p\) analytically recovers the volumetric penalty
-\(\frac{\kappa}{2}(J-1)^2\). Keeping pressure as an independent FE field
-instead gives a mixed saddle-point system, so a low-order displacement field
-does not have to represent the near-incompressibility constraint by itself.
-The implemented displacement stress consists of the isochoric contribution
-plus \(p\,\operatorname{cof}\F\), while the pressure equation enforces
-\(J-1-p/\kappa=0\). The selected ratio \(\kappa/\mu=10^4\) represents a
-nearly incompressible matrix; it does not remove the need to check element
-order, mesh density, integration, and conditioning.
-
-\section{Periodic homogenization and rigid particles}
-
-The microscopic deformation is decomposed as
+whose stationarity in $p$ gives $p=\kappa(J-1)$. The particle is not modelled as
+a stiff elastic phase. Instead, the cavity surface undergoes the exact finite
+rigid motion
 \begin{equation}
-  \F(\bm X)=\Fbar+\nabla_{\!X}\bm w(\bm X),
+  \bm u_{\mathrm p}(\bm X)=(\Fbar-\Iten)\bm X_c+(\Rten-\Iten)(\bm X-\bm X_c),\qquad
+  \Rten\in SO(3),
+  \label{eq:rigid}
 \end{equation}
-with periodic fluctuation \(\bm w\). Opposing boundary traces coincide, and
-their tractions are anti-periodic in the weak equilibrium sense. The rigid
-particle motion is
+where the centre $\bm X_c$ follows the macroscopic map; a common translation is a
+gauge mode of the periodic problem. The rotation is free and is determined by a
+vanishing resultant moment on the particle. The Hill--Mandel condition demands
+equality of macroscopic and averaged microscopic power~\cite{Hill1963}; at finite
+strain the work-conjugate pair is $(\Pbar,\Fbar)$~\cite{Hill1972}:
 \begin{equation}
-  \bm u_{\mathrm p}(\bm X)
-  =
-  \bm t+(\Rten-\Iten)(\bm X-\bm X_{\mathrm c}),
-  \qquad
-  \Rten\in\mathrm{SO}(3).
-  \label{eq:rigid-motion}
+  \Pbar:\dot{\Fbar}=\frac{1}{|\Omega|}\int_{\Omega_{\mathrm m}}\Pstress:\dot{\F}\dd V
+  \quad\Longrightarrow\quad
+  \Pbar=\frac{1}{|\Omega|}\Bigl(\int_{\Omega_{\mathrm m}}\Pstress\dd V
+  +\textstyle\sum_{iJ}(\bm r\cdot\bm b_{iJ})\,\bm e_i\otimes\bm E_J\Bigr),
+  \label{eq:hm}
 \end{equation}
-The total displacement is
-\(\bm u(\bm X)=(\Fbar-\Iten)\bm X+\bm w(\bm X)\). On the cavity surface,
-\(\bm w\) is constrained so that the particle undergoes a rigid motion while
-the matrix follows the imposed cell deformation. The inclusion is not
-approximated as an extremely stiff elastic phase: its surface has no
-deformational degrees of freedom, and its free orientation is determined by
-zero resultant moment. A constant translation shared by the periodic
-fluctuation and particle is a gauge mode; the macroscopic deformation maps
-the particle center.
+where $\bm r$ is the assembled nodal residual of the matrix, which contains the
+particle reactions, and $\bm b_{iJ}$ is the nodal lift of the particle trace
+$-(\bm e_i\otimes\bm E_J)(\bm X-\bm X_c)$ produced by a unit increment of
+$\bar F_{iJ}$. The second term is therefore the work of the particle reactions in
+the macroscopic modes. Integrating the stress over the
+deformable matrix alone would omit this work, and the result would not be
+conjugate to $\Fbar$.
 
-The Hill--Mandel condition requires equality of macroscopic and volume-averaged
-microscopic power:
+\section{Consistent homogenized tangent}
+
+Let $\bm z$ collect the free fluctuation, pressure and rotation unknowns of the
+discretized RVE and let $\bm H$ be the Hessian of its discrete energy with
+respect to $(\Fbar,\bm z)$. Eliminating the equilibrated internal unknowns gives
+the exact derivative of the homogenized stress as a Schur
+complement~\cite{Miehe2002},
 \begin{equation}
-  \Pbar:\dot{\Fbar}
-  =
-  \frac{1}{|\Omega|}
-  \int_{\Omega_{\mathrm m}}
-  \Pstress:\dot{\F}\,\dd V.
-  \label{eq:hill-mandel}
-\end{equation}
-For the cavity representation of a rigid inclusion, work-conjugate
-macrostress requires both matrix-volume stress and assembled particle-reaction
-work. Raw constitutive boundary tractions are retained only as a diagnostic.
-Periodic fluctuation contributions cancel on opposing faces. The remaining
-rigid-particle constraint contributes through its assembled reaction. Using
-only the stress integrated over the deformable matrix would omit this work
-and need not produce a stress conjugate to \(\Fbar\).
-
-\section{Condensed macroscopic tangent}
-
-Let \(\bm z\) collect free fluctuation, pressure, and rotational coordinates.
-The exact consistent macroscopic tangent is the Schur complement of the
-discrete energy Hessian,
-\begin{equation}
-  \Abar
-  =
-  \frac{1}{|\Omega|}
-  \left(
-    \bm H_{FF}
-    -\bm H_{Fz}\bm H_{zz}^{-1}\bm H_{zF}
-  \right).
+  \Abar=\frac{1}{|\Omega|}\Bigl(\bm H_{\bar F\bar F}-\bm H_{\bar Fz}\,
+  \bm H_{zz}^{-1}\,\bm H_{z\bar F}\Bigr).
   \label{eq:schur}
 \end{equation}
-Here \(\bm H\) is the Hessian of the discrete mixed energy with respect to the
-nine macroscopic coordinates and internal variables \(\bm z\). The formula
-is the derivative of the energy after the internal state has relaxed to
-equilibrium: each macroscopic perturbation induces a microscopic
-displacement, pressure, and, for a freely rotating particle, rotation
-increment. The resulting matrix is the Hessian of the discrete
-homogenized energy divided by total cell volume. It should therefore be
-major-symmetric up to linear-solver and floating-point tolerances.
-NGSolve symbolically differentiates the discrete energy. Consequently,
-\(\Abar\) is not constructed from finite perturbations of separately solved
-RVE states.
+It is a Hessian of the relaxed energy and must therefore be major-symmetric.
+Finite perturbations of $\Fbar$ serve only as verification.
+
+\section{Small-strain reference and scale separation}\label{sec:scales}
+
+At $\Fbar=\Iten$ the homogenized tangent of an isotropic composite reduces to an
+effective bulk modulus $K_{\mathrm{eff}}$ and shear modulus $\mu_{\mathrm{eff}}$.
+For rigid spheres in a matrix $(\kappa,\mu)$, the Mori--Tanaka
+estimate~\cite{MoriTanaka1973}, in the form given by Benveniste~\cite{Benveniste1987},
+gives
+\begin{equation}
+  K_{\mathrm{MT}}=\kappa+\frac{\vfrac\,(\kappa+\tfrac43\mu)}{1-\vfrac},\qquad
+  \mu_{\mathrm{MT}}=\mu+\frac{\vfrac\,(\mu+\eta)}{1-\vfrac},\qquad
+  \eta=\frac{\mu\,(9\kappa+8\mu)}{6(\kappa+2\mu)} .
+  \label{eq:mt}
+\end{equation}
+For a stiffer inclusion this estimate coincides with the Hashin--Shtrikman lower
+bound~\cite{HashinShtrikman1963}, and it serves as an independent check of the RVE.
+
+Of equal importance for the following chapters is the separation of scales
+inside the energy. For small strains $\bm\varepsilon$,
+\begin{equation}
+  \Psibar\approx\tfrac12K_{\mathrm{eff}}(\operatorname{tr}\bm\varepsilon)^2
+  +\mu_{\mathrm{eff}}\,\|\operatorname{dev}\bm\varepsilon\|^2,\qquad
+  K_{\mathrm{eff}}/\mu_{\mathrm{eff}}\approx(0.87\text{--}0.97)\times10^4 ,
+  \label{eq:split}
+\end{equation}
+where the ratio follows from \cref{eq:mt} for $\vfrac=0.10$ to $0.02$.
+Any measure that adds volumetric and deviatoric contributions, such as a
+training loss or an error norm normalized by the total energy or stress, is
+dominated by the volumetric part unless the volumetric strains are smaller than
+the deviatoric ones by a factor of about $\sqrt{\mu/K}\approx10^{-2}$.
+\Cref{ch:assessment} shows that this is precisely what limits the present
+surrogate.

@@ -1,0 +1,31 @@
+\chapter{Usage of Chatbots and Other Tools}\label{ch:chatbots}
+
+ChatGPT and Codex (OpenAI) and Claude (Anthropic), all AI-based language models,
+were used as supporting tools throughout this project for understanding technical
+concepts, programming, and scientific writing. They were mainly used to understand
+the theoretical foundations on which this project builds (\cref{ch:theory}):
+polyconvexity and input-convex neural networks, periodic homogenization and the
+Hill--Mandel condition, and the condensation of internal variables for a consistent
+homogenized tangent. In addition, they were used to understand the NGSolve and
+PyTorch interfaces that this project connects, in particular the
+\code{IntegrationRuleSpace}, periodic and \code{NumberSpace} function spaces and the
+automatic-differentiation interface of PyTorch (\cref{ch:methods}).
+
+During implementation, these tools were used to discuss code structure, investigate
+programming errors, and evaluate possible solutions. Specific attention was given to
+the consistent transfer of stress and tangent between PyTorch and NGSolve at the
+quadrature points, the work-conjugate homogenized stress including the particle
+reactions (\cref{eq:hm}), the objective form of the reference normalization
+(\cref{eq:norm}), and the globalization of the macroscopic Newton solver
+(\cref{sec:macro-method}). The tools also assisted in preparing the PBS job scripts
+for the TU~Freiberg cluster and in developing the verification test cases
+(\cref{ch:verification}). All suggestions were critically reviewed against the
+governing equations and the library documentation, and were tested before being
+used in the project.
+
+Furthermore, these tools helped improve the clarity of the report, correct
+grammatical errors, and structure the chapters. Additional support was provided for
+\LaTeX{} formatting, TikZ diagrams, the program flowchart (\cref{ch:flow}) and the
+plotting scripts. All suggested content was carefully reviewed against the
+implemented methods, their mathematical formulations, the stored results
+(\cref{app:repro}) and the verification results (\cref{ch:verification}).

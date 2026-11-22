@@ -1,0 +1,33 @@
+[INITIAL STATE] solution_size=7604, finite=True, min=-1.320704e-03, max=1.304297e-03
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+RVE Newton  0: |R| = 1.122e-03
+[NEWTON UPDATE] iteration=0, finite=True, norm=2.544385e+03, max_abs=1.554241e+02
+[NEWTON LINE SEARCH] iteration=0, step_length=1.000000e+00, residual_norm=1.418355e-08, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+RVE Newton  1: |R| = 1.418e-08
+[NEWTON UPDATE] iteration=1, finite=True, norm=3.667896e-06, max_abs=1.598763e-06
+[NEWTON LINE SEARCH] iteration=1, step_length=1.000000e+00, residual_norm=2.064738e-14, positive_measure=9.699408e-01, inadmissible_measure=0.000000e+00, backtracks=0
+[RESIDUAL BEFORE PROJECTION] finite=True, nan_count=0, inf_count=0
+[RESIDUAL AFTER PROJECTION] finite=True, nan_count=0, inf_count=0
+RVE Newton  2: |R| = 2.065e-14
+
+mesh elements:                    1472
+homogenization: FE volume + particle reaction work
+homogenized first-Piola stress:
+[[ 1.56981887e+02 -3.54800649e-06  4.45009771e-07]
+ [-3.38109064e-06  1.56981885e+02 -4.36471752e-07]
+ [ 4.90683281e-07 -5.26249286e-07  1.56981889e+02]]
+microscopic virtual power:        4.709456611477e+02
+macroscopic virtual power:        4.709456611477e+02
+Hill-Mandel relative error:       1.569e-15
+alternative virtual-field error:  3.621e-16
+virtual-field independence error: 1.931e-15
+constant-stress recovery error:   4.174e-14
+raw-boundary error (diagnostic):  3.861e-06
+macrostress asymmetry:            1.014e-09
+cubic normal-stress variation:    1.278e-08
+relative shear stress:            2.260e-08
+final RVE residual:               2.065e-14
+P2-V5 PASS: homogenized stress satisfies Hill-Mandel equality.

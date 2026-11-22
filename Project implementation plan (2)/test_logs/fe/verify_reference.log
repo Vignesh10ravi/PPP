@@ -1,0 +1,6 @@
+dtype: torch.float64
+|Psi(I)|            = 0.000e+00
+max |P_ij(I)|       = 0.000e+00
+max |P_raw,ij(I)|   = 1.000e+00
+stress tolerance    = 2.220e-15
+V2 PASS: the normalized model is energy-free and stress-free at F = I.

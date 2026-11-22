@@ -1,0 +1,27 @@
+V0a/V0b on an unstructured unit-cube tetrahedral mesh
+  mesh: 112 tetrahedra, 55 vertices
+  V0a order 1: ndof=  55  max|sum N_i - 1|=2.220e-16  max|sum grad N_i|=0.000e+00
+  V0a order 2: ndof= 274  max|sum N_i - 1|=2.220e-16  max|sum grad N_i|=0.000e+00
+  V0b order 1: max value error=3.331e-16  max gradient error=2.220e-15
+  V0b order 2: max value error=1.998e-15  max gradient error=3.375e-14
+V0c affine mesh deformation
+  reference volume 1.000000000000020, reference face area 0.999999999999996
+  deformed volume  1.115760000000022 vs det(Fa) 1.115760000000000
+  deformed area    1.016710548779736 vs Nanson 1.016710548779740
+  max error 2.220e-14
+V0d/V0e unconstrained element stiffness at F = I (production assemble_system)
+  element order quad model                    ndof #zero #neg  min|lam|>0  max|lam|     |K R|  span err
+  tet        1    2 analytical neo-Hookean     12     6    0   3.721e-01 9.792e+00  5.26e-17  1.59e-15
+  tet        1    2 RVE pICNN (vf=0.05)        12     6    0   6.487e-01 9.411e+03  5.97e-17  6.08e-13
+  tet        1    2 Phase 1 pICNN (legacy)     12     3    3   5.666e-02 9.324e+00  3.90e-03  4.86e-01
+  tet        2    4 analytical neo-Hookean     30     6    0   6.734e-04 1.010e+01  1.98e-16  6.37e-13
+  tet        2    4 RVE pICNN (vf=0.05)        30     6    0   1.186e-03 9.705e+03  1.99e-16  5.61e-10
+  tet        2    4 Phase 1 pICNN (legacy)     30     3    3   3.580e-05 9.616e+00  3.84e-03  4.86e-01
+  hex        1    2 analytical neo-Hookean     24     6    0   1.371e-01 1.804e+01  7.75e-17  1.94e-15
+  hex        1    2 RVE pICNN (vf=0.05)        24     6    0   2.374e-01 1.742e+04  7.71e-17  1.01e-12
+  hex        1    2 Phase 1 pICNN (legacy)     24     3    3   4.757e-02 1.719e+01  3.98e-03  5.07e-01
+  hex        2    4 analytical neo-Hookean     81     6    0   1.887e-06 1.855e+01  2.38e-16  5.02e-11
+  hex        2    4 RVE pICNN (vf=0.05)        81     6    0   1.049e-04 1.791e+04  2.38e-16  2.53e-09
+  hex        2    4 Phase 1 pICNN (legacy)     81     3    3   1.705e-06 1.767e+01  3.90e-03  5.07e-01
+  hex        1    0 analytical neo-Hookean     24    18    0   8.694e-01 1.804e+01  6.23e-17  1.23e-15   <- one-point rule
+V0 PASS: shape functions, quadrature, rigid-body modes and hourglass detection verified.

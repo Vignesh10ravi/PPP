@@ -1,0 +1,4 @@
+{"v3_tangent_fd": {"eps": [1e-2, 1e-4, 1e-6, 1e-8], "rel_err_archived": [1.25e-5, 1.25e-9, 1.69e-10, 1.42e-8], "rel_err_rerun": [1.49e-5, 1.49e-9, 2.32e-10, 2.28e-8]},
+ "v4_newton_checkpoint": [9.058e-01, 1.043e-01, 3.463e-03, 6.412e-06, 4.023e-11],
+ "v4_newton_seeded": [9.278e-02, 3.375e-03, 1.672e-05, 4.813e-10, 1.266e-16],
+ "rve_free_rotation_moment": [4.751e-3, null, null, 1.436e-15]}

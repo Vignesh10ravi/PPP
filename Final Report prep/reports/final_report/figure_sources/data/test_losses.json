@@ -1,0 +1,50 @@
+{
+ "phase7_independent": {
+  "n": 531,
+  "frozen": {
+   "energy_loss_normalized": 2.8408667146002083e-07,
+   "stress_loss_normalized": 1.0325406566319844e-06,
+   "tangent_relative_frobenius_mse": 3.0632742266588594e-05,
+   "loss_energy_plus_stress": 1.3166273280920052e-06,
+   "objective": 4.379901554750865e-06
+  },
+  "parent_phase6": {
+   "energy_loss_normalized": 1.965547021238473e-06,
+   "stress_loss_normalized": 5.531529581901429e-06,
+   "tangent_relative_frobenius_mse": 0.00016743460189079087,
+   "loss_energy_plus_stress": 7.4970766031399024e-06,
+   "objective": 2.424053679221899e-05
+  },
+  "shear_adapted": {
+   "energy_loss_normalized": 2.1557515673767504e-07,
+   "stress_loss_normalized": 8.695418283390675e-07,
+   "tangent_relative_frobenius_mse": 3.384851869984499e-05,
+   "loss_energy_plus_stress": 1.0851169850767425e-06,
+   "objective": 4.469968855061241e-06
+  }
+ },
+ "fresh_holdout": {
+  "n": 72,
+  "frozen": {
+   "energy_loss_normalized": 1.0941864694658574e-07,
+   "stress_loss_normalized": 6.374231049707524e-07,
+   "tangent_relative_frobenius_mse": 6.89712826906763e-05,
+   "loss_energy_plus_stress": 7.468417519173381e-07,
+   "objective": 7.643970020984968e-06
+  },
+  "parent_phase6": {
+   "energy_loss_normalized": 1.6487473993503316e-06,
+   "stress_loss_normalized": 4.187255358146785e-06,
+   "tangent_relative_frobenius_mse": 0.00017542852341630364,
+   "loss_energy_plus_stress": 5.836002757497116e-06,
+   "objective": 2.3378855099127484e-05
+  },
+  "shear_adapted": {
+   "energy_loss_normalized": 1.1120246694630784e-07,
+   "stress_loss_normalized": 6.862371824193359e-07,
+   "tangent_relative_frobenius_mse": 6.059366522251356e-05,
+   "loss_energy_plus_stress": 7.974396493656437e-07,
+   "objective": 6.856806171617e-06
+  }
+ }
+}

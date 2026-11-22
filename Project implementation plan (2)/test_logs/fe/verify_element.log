@@ -1,0 +1,23 @@
+[solve] ndof=135, free=48, constrained=87
+[solve] initial_guess=zero, displacement_norm=3.872983e-01
+  iter  0  |R_free| = 9.058e-01  min(J_q) = 1.000000e+00
+[solve line search] iteration=0, step=1.000000e+00, residual=1.043423e-01, min(J_q)=9.573164e-01, backtracks=0
+  iter  1  |R_free| = 1.043e-01  min(J_q) = 9.573164e-01
+[solve line search] iteration=1, step=1.000000e+00, residual=3.463052e-03, min(J_q)=9.780221e-01, backtracks=0
+  iter  2  |R_free| = 3.463e-03  min(J_q) = 9.780221e-01
+[solve line search] iteration=2, step=1.000000e+00, residual=6.412386e-06, min(J_q)=9.781852e-01, backtracks=0
+  iter  3  |R_free| = 6.412e-06  min(J_q) = 9.781852e-01
+[solve line search] iteration=3, step=1.000000e+00, residual=4.022937e-11, min(J_q)=9.781848e-01, backtracks=0
+  iter  4  |R_free| = 4.023e-11  min(J_q) = 9.781848e-01
+[solve] Converged in 4 iterations.
+
+residual history: ['9.06e-01', '1.04e-01', '3.46e-03', '6.41e-06', '4.02e-11']
+
+Newton convergence (stopping tolerance ||R_free|| < 1e-08)
+  k   ||R_free||  r_k+1/r_k^2  order q_k
+  0    9.058e-01    1.272e-01        nan
+  1    1.043e-01    3.181e-01       1.58
+  2    3.463e-03    5.347e-01       1.85
+  3    6.412e-06    9.784e-01       1.90
+  4    4.023e-11          nan        nan
+V4 PASS: NN-driven Newton converged; assembly + autograd tangent are consistent.

@@ -1,0 +1,30 @@
+#!/bin/bash
+#PBS -N ppp_tests
+#PBS -q teachingq
+#PBS -l select=1:ncpus=4:mem=16GB
+#PBS -l walltime=03:00:00
+#PBS -o /scratch/vr80beqo/ppp_tests.out
+#PBS -e /scratch/vr80beqo/ppp_tests.err
+#
+# Verification suite on the TU Freiberg cluster.
+# Submit:  MODE=audit qsub -v MODE run_tests.pbs      (MODE = quick | full | audit)
+# Adjust the artifact paths below if your scratch layout differs.
+
+set -euo pipefail
+cd "$HOME/PPP/Project implementation plan (2)" || exit 1
+
+module load openmpi/gcc/11.4.0/4.1.6
+module load python/gcc/11.4.0/3.11.7
+source "$HOME/venvs/ppp-ngsolve/bin/activate"
+
+export NGS_NUM_THREADS=4
+export TORCH_NUM_THREADS=4
+
+export PPP_RVE_CKPT=/scratch4/vr80beqo/rve_phase7_augmented_finetune12/training/partial_icnn_phase6_phase7_finetuned.pt
+export PPP_PHASE7_NPZ=/scratch4/vr80beqo/rve_phase7_independent_20261107/data/rve_phase7_independent.npz
+export PPP_PHASE7_MANIFEST=/scratch4/vr80beqo/rve_phase7_independent_20261107/data/rve_phase7_independent.manifest.json
+export PPP_TRAIN_NPZ=/scratch4/vr80beqo/rve_phase7_augmented_training_20261109/data/rve_phase6_phase7_training.npz
+export PPP_PILOT_NPZ=/scratch4/vr80beqo/rve_phase2_solver_revision_oR3pd5/data/rve_phase2.npz
+export PPP_LOG_DIR=/scratch/vr80beqo/ppp_tests_${MODE:-full}_$(date +%Y%m%d_%H%M%S)
+
+bash ./run_tests.sh "${MODE:-full}"
