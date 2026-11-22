@@ -231,7 +231,17 @@ def main(ckpt=None, rve_ckpt=None, vf=0.05):
             if not must_pass:
                 continue
             assert s["n_zero"] == 6, f"{kind} order {order}: expected 6 zero eigenvalues, found {s['n_zero']}"
-            assert s["rigid_span_error"] < 1e-8, "null space does not span the rigid-body modes"
+            assert s["n_negative"] == 0, f"{kind} order {order}: expected no negative eigenvalues, found {s['n_negative']}"
+            assert s["rigid_residual"] < 1e-10, (
+                f"{kind} order {order}: rigid modes are not in the numerical null space "
+                f"(relative residual {s['rigid_residual']:.3e})"
+            )
+            # Eigenspace projection varies slightly across LAPACK implementations,
+            # especially for the ill-conditioned quadratic hexahedron stiffness.
+            assert s["rigid_span_error"] < 1e-7, (
+                f"{kind} order {order}: null space does not span the rigid-body modes "
+                f"(relative span error {s['rigid_span_error']:.3e})"
+            )
     em = single_element_mesh("hex")
     s = stiffness_spectrum(em, models["analytical neo-Hookean"][0], 1, 0)  # IRS order 0 = one point
     print(f"  hex        1    0 {'analytical neo-Hookean':24s} {s['ndof']:4d} {s['n_zero']:5d} {s['n_negative']:4d} "
